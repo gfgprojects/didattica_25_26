@@ -1,0 +1,119 @@
+# Richiami sulle matrici
+
+- Una matrice è un insieme di numeri ordinati per linee e colonne
+
+$$\includegraphics[scale=0.1]{matrix01}$$
+
+- Matrice quadrata: ha lo stesso numero di righe e colonne 
+
+- Alcuni tipi speciali di matrici quadrate sono: le matrici diagonali, triangolari e la matrice identità 
+$$\includegraphics[scale=0.1]{matrix02}$$
+
+#
+
+- Matrice Trasposta: si ottiene scambiando le colonne con le righe:
+	- la prima riga diventa la prima colonna,
+	- la seconda riga diventa la seconda colonna, ecc.
+	- ad es. la trasposta di una matrice triangolare superiore è triangolare inferiore.
+	- la trasposta di una matrice $A$ si indica con $A^T$ o $A'$
+- Matrice Simmetrica: se la matrice e la sua trasposta sono uguali: $A=A^T$
+
+# Algebra delle matrici
+
+- la somma di due matrici si ottiene sommando gli elementi di stessa posizione: date due matrici $\mathbf{A}$ e $\mathbf{B}$, gli elementi di
+$$\mathbf{C}=\mathbf{A}+\mathbf{B}$$
+si ottengono come segue: $c_{i,j}=a_{i,j}+b_{i,j}$
+- il prodotto di una matrice per un numero si ottiene moltiplicando ogni elemento della matrice per il numero dato: data una matrice $\mathbf{A}$ e un numero $d$, gli elementi di $\mathbf{C}=d\mathbf{A}$ si ottengono come segue $c_{i,j}=da_{i,j}$
+
+
+#
+
+- il prodotto tra due matrici: date due matrici $\mathbf{A}$ e $\mathbf{B}$, gli elementi di
+$$\mathbf{C}=\mathbf{A}\mathbf{B}$$
+si ottengono come segue
+$$c_{i,j}=\sum_z a_{i,z}b_{z,j}$$
+	- Non è necessario che le due matrici siano quadrate, ma occorre che il numero di colonne della prima sia uguale al numero di righe della seconda,
+	- la matrice $\mathbf{C}$ avrà un numero di righe pari a quello di $\mathbf{A}$ e un numero di colonne pari a quello di $\mathbf{B}$,
+	- Si noti inoltre che $\mathbf{AB}\neq \mathbf{BA}$.
+
+# Alcuni valori rilevanti di una matrice
+
+- Possiamo inserire i numeri che compongono una matrice in funzioni matematiche o procedure complesse che restituiscono un numero reale. 
+- tali numeri hanno una precisa denominazione. Due di questi sono:
+	- la traccia: costituita dalla somma degli elementi che costituiscono la diagonale della matrice. 
+	- il determinante: come verrà illustrato nelle diapositive seguenti, il suo calcolo non è agevole, salvo in casi particolari. 
+
+# L'importanza del determinante
+
+\textbf{La soluzione di un sistema di equazioni lineari è possibile solo se il determinante della matrice non è uguale a zero}
+
+- Una matrice con determinante non nullo si dice non singolare.
+- Una matrice $\mathbf{A}$ ha un'inversa se e solo se è non singolare.
+- def: l'inversa di $\mathbf{A}$, denotata con $\mathbf{A}^{-1}$, è una matrice tale che: $\mathbf{A}^{-1}\mathbf{A}=\mathbf{I}$\newline dove $\mathbf{I}$ è la matrice identità (si veda diapositiva 2).
+
+# Calcolo del determinante
+
+- Sia $\mathbf{A}$ una matrice quadrata $n\times n$.
+- Come ricordato prima, il calcolo del determinante è una procedura complicata.
+- Il modo più agevole per calcolare il determinante è la regola di Laplace
+- Essa prevede i seguenti passi:
+	- scegliere una riga qualsiasi (indicata con $i$)
+	- usare la seguente formula ricorsiva:
+$$det(\mathbf{A})=\sum_{j=1}^n a_{ij}(-1)^{i+j}det(\mathbf{A_{ij}})$$
+dove $\mathbf{A_{ij}}$ è la matrice che si ottiene da $\mathbf{A}$ eliminando la riga $i$ e la colonna $j$.
+	- il risultato non dipende dalla scelta iniziale della riga.
+
+# Calcolo del determinante 
+- In alternativa:
+	- scegliere una colonna qualsiasi (indicata con $j$)
+	- usare la seguente formula ricorsiva:
+$$det(\mathbf{A})=\sum_{i=1}^n a_{ij}(-1)^{i+j}det(\mathbf{A_{ij}})$$
+dove $\mathbf{A_{ij}}$ è la matrice che si ottiene da $\mathbf{A}$ eliminando la riga $i$ e la colonna $j$.
+	- il risultato non dipende dalla scelta iniziale della colonna.
+
+# Calcolo del determinante 
+
+- Il calcolo del determinante si semplifica nel caso di matrici diagonali o  triangolari.
+- In questi casi, applicando la procedura vista nelle diapositive precedenti, ci si accorge che il determinante è il prodotto dei termini della diagonale.
+$$\det(\mathbf{A})=\prod_{i=1}^n a_{ii}$$
+- Ne segue che le matrici diagonali o triangolari sono non singolari se tutti i termini nella diagonali sono non nulli.
+
+# Soluzione di un sistema lineare
+
+Dato il sistema
+$$\mathbf{Ax=b}$$
+Se $det(\mathbf{A})\neq 0$ si calcola $\mathbf{A}^{-1}$
+
+Premoltiplichiamo ambo i lati del sistema per l'inversa:
+$$\mathbf{A^{-1}Ax=A^{-1}b}$$
+ovvero
+$$\mathbf{Ix=A^{-1}b}$$
+poiché $\mathbf{Ix=x}$, la soluzione si trova dunque moltiplicando l'inversa per il vettore $\mathbf{b}$:
+$$\mathbf{x=A^{-1}b}$$
+
+# Esercizio
+
+- Definire una matrice con tre righe e tre colonne; 
+- utilizzando le funzioni che il software che avete scelto mette a disposizione per calcolare il determinante, stabilire se la matrice è non singolare;
+- qualora sia non singolare, utilizzando le funzioni che il software che avete scelto mette a disposizione, calcolare l'inversa. 
+
+# In R
+
+#definiamo una matrice
+
+A <- matrix(data = c(1.2, 2.3, 4.5, 6.5, 7.6, 1.1, 2.3, 4.5,6.7), nrow = 3, ncol = 3)
+
+#calcoliamo il determinante
+
+det(A)
+
+#calcoliamo l'inversa
+
+inversaDiA<-solve(A)
+
+#verifica che premoltiplicando la matrice per la sua inversa si ottiene la matrice identità
+
+inversaDiA%*%A
+
+
+
