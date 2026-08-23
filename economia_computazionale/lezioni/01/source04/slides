@@ -1,0 +1,217 @@
+# I mercati nazionali
+
+Domanda e offerta sul mercato nazionale ($H=$ Home)
+
+$Q_{d,H}=\bar{Q}_{d,H}-a_HP_H$
+
+$Q_{s,H}=\bar{Q}_{s,H}+b_HP_H$
+
+Domanda e offerta sul mercato straniero ($F=$ Foreign)
+
+$Q_{d,F}=\bar{Q}_{d,F}-a_FP_F$
+
+$Q_{s,F}=\bar{Q}_{s,F}+b_FP_F$
+
+# Il mercato internazionale
+
+Dobbiamo identificare la curva di domanda e di offerta nel mercato internazionale.
+
+Occorre prima determinare i prezzi in autarchia.
+
+Se infatti i prezzi in H risultano essere più alti che in F,
+
+- i consumatori in H hanno convenienza ad acquistare in F:
+	- la domanda nel mercato internazionale sarà rappresentata da $Q_{d,H}-Q_{s,H}$
+- le imprese in F hanno convenienza a vendere in H
+	- l'offerta nel mercato internazionale sarà rappresentata da $Q_{s,F}-Q_{d,H}$
+
+Il contrario accade se i prezzi sono più bassi in H che in F.
+
+# Il caso $P_{eH}>P_{eF}$ (domanda nel mercato internazionale)
+
+
+Il paese $H$ domanda all'estero l'eccesso di domanda interna
+
+$M_H=Q_{d,H}-Q_{s,H}=\bar{Q}_{d,H}-a_HP_H-(\bar{Q}_{s,H}+b_HP_H)$
+
+$M_H=(\bar{Q}_{d,H}-\bar{Q}_{s,H})-(a_H+b_H)P$
+
+Che per semplicità di notazione esprimiamo utilizzando il pedice $W$ come segue:
+
+$M_H=\bar{Q}_{d,W}-a_WP_W$
+
+\includegraphics[scale=0.25]{domanda_internaz_H}
+
+# Il caso $P_{eH}>P_{eF}$ (offerta nel mercato internazionale)
+
+Il paese $F$ offre all'estero l'eccesso di offerta interna
+
+
+$E_F=Q_{s,F}-Q_{d,F}=\bar{Q}_{s,F}+b_FP_F-(\bar{Q}_{d,F}-a_FP_F)$
+
+$E_F=(\bar{Q}_{s,F}-\bar{Q}_{d,F})+(b_F+a_F)P$
+
+Che per semplicità di notazione esprimiamo utilizzando il pedice $W$ come segue:
+
+$E_F=\bar{Q}_{s,W}+b_WP_w$
+
+# Il caso $P_{eH}>P_{eF}$ (equilibrio)
+
+
+Il sistema da risolvere è dunque
+
+$M_H=\bar{Q}_{d,W}-a_WP_W$
+
+$E_F=\bar{Q}_{s,W}+b_WP_W$
+
+Poiché In equilibrio deve essere $M_H=E_F=Q_W$ il sistema può essere espresso come
+
+$Q_W=\bar{Q}_{d,W}-a_WP_W$
+
+$Q_W=\bar{Q}_{s,W}+b_WP_W$
+
+La soluzione è $Q^*_W$ e $P^*_W$
+
+il prezzo $P^*_W$ deve valere anche per le economie $H$ e $F$.
+
+Nell'economia $H$, al prezzo $P^*_W$, la domanda supera l'offerta esattamente di $Q^*_W$.
+
+Nell'economia $F$, al prezzo $P^*_W$, l'offerta supera la domanda esattamente di $Q^*_W$.
+
+Il che significa che $F$ esporta in $H$ la quantità $Q^*_W$.
+
+# H impone una tariffa per limitare le esportazioni
+
+- Gli esportatori residenti in $F$ dovranno pagare una tariffa $t$ per ogni bene venduto in $H$.
+
+- Essi possono ricavare $P_{eW}$ vendendo in $F$ e $P_{eW}-t$ vendendo in $H$
+
+- Le esportazioni di F in H non sono convenienti e vengono sospese
+
+- In H ci sarà eccesso di domanda di beni, dunque, il prezzo in H tende ad aumentare
+
+- In F ci sarà eccesso di offerta, dunque, il prezzo tenderà a diminuire
+
+- Questo processo andrà avanti finché $P_H=P_F+t$
+
+# Grafica
+
+\includegraphics[scale=0.25]{tariffa}
+
+# F eroga un sussidio per aumentare le esportazioni
+
+- Gli esportatori residenti in $F$ riscuoteranno un sussidio $t$ per ogni bene vendeduto in $H$.
+
+- Essi possono ricavare $P_{eW}$ vendendo in $F$ e $P_{eW}+t$ vendendo in $H$
+
+- Le imprese in F cercano di vendere in H e non nel mercato interno
+
+- In F ci sarà eccesso di somanda di beni, dunque, il prezzo in F tende ad aumentare
+
+- In H ci sarà eccesso di offerta, dunque, il prezzo tenderà a diminuire
+
+- Questo processo andrà avanti finché $P_F=P_H+t$
+
+# Grafica
+
+\includegraphics[scale=0.25]{sussidio}
+
+# Calcolo del prezzo in H e in F
+
+Algoritmo
+
+- date le curve di domanda e di offerta nel mercato internazionale
+- determinare equilibrio (nel mercato internazionale)
+- stabilire una quantità diversa da quella di equilibrio (inferiore per la tariffa; superiore per il sussidio, diciamo Qexchanged)
+- il prezzo in H si ottiene dalla curva di domanda internazionale
+- il prezzo in F si ottiene dalla curva di offerta
+- ammontare della tariffa o del sussidio: $priceGap=|P_H-P_F|$ 
+
+# Surplus dei consumatori e dei produttori
+
+\includegraphics[scale=0.3]{surplus}
+
+# Calcolo dei surplus dei consumatori e dei produttori
+
+Algoritmo
+
+- dato il prezzo calcolato precedentemente (diciamo Pnaz)
+- surplus dei consumatori
+	- determinare la quantità corrispondente a Pnaz usando la curva di domanda nazionale (diciamo Qdnaz)
+	- determinare Pmax
+	- Cs=Qdnaz*(Pmax-Pnax)/2
+- surplus dei produttori
+	- determinare la quantità corrispondente a Pnaz usando la curva di offerta nazionale (diciamo Qsnaz)
+	- se Qsbar>0, Ps=Qsbar\*Pnaz+(Qsnaz-Qsbar)\*Pnaz/2
+	- altrimenti
+		- calcolo Pmin
+		- Ps=Qsnaz*(Pnaz-Pmin)/2
+
+# Calcolo del surplus del governo
+
+- Per la tariffa
+	- il surplus del governo in H è GsH=priceGap*Qexchanged
+	- il surplus del governo in F è GsF=0
+- per il sussidio
+	- il surplus del governo in H è GsH=0
+	- il surplus del governo in F è GsF=-priceGap*Qexchanged
+
+\hskip2cm
+Il surplus totale è dato dalla somma del surplus dei consumatori, del surplus dei produttori e del surplus del governo.
+
+# Variazione dei suplus
+
+Al fine di valutare l'effetto della tariffa sul benessere dobbiamo calcolare:
+
+- il surplus totale in H prima della tariffa
+- il surplus totale in H dopo la tariffa
+- la variazione del surplus in H (surplus dopo - surplus prima)
+- il surplus totale in F prima della tariffa
+- il surplus totale in F dopo la tariffa
+- la variazione del surplus in F (surplus dopo - surplus prima)
+
+Poiché dobbiamo calcolare più volte i suplus, è conveniente procedere attraverso le funzioni definite dall'utente.
+
+# funzioni definite dall'utente
+
+Consentono di riutilizzare lo stesso codice quando: 
+
+- la procedura di calcolo è generale 
+- il calcolo deve essere fatto più volte, ma con diversi valori di input.
+
+ alla diapositiva 13 abbiamo definito una procedura generale per calcolare i surplus dei consumatori e produttori.
+
+#
+
+La procedura può essere eseguita conoscendo:
+
+- il prezzo
+- la curva di domanda ($\bar{A}_d$ e $a$) 
+- la curva di offerta ($\bar{A}_s$ e $b$) 
+
+che sono gli input
+
+Si ottiene alla fine il surplus dei consumatori e quello dei produttori
+
+che sono gli output.
+
+# La funzione
+
+Una funzione prevede di specificare gli input, manipolarli con il codice e restituire all'utilizzatore gli output.
+
+\vskip5mm
+Definizione
+
+\vskip5mm
+nomeFunzione<-function(input1, input2, ..){
+
+codice che usa le variabili input1, input2 ecc restituzione output
+
+	}
+
+\vskip10mm
+Chiamata alla funzione
+
+\vskip5mm
+output<-nomeFunzione(valore1, valore2, ...)
+
