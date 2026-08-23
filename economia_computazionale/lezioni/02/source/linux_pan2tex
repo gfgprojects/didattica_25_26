@@ -1,0 +1,4 @@
+pandoc -t beamer slides -o slides.tex
+#sed -i '' 's/\\tightlist/ /g' slides.tex
+sed -i 's/\\tightlist/ /g' slides.tex
+pdflatex presentazione.tex

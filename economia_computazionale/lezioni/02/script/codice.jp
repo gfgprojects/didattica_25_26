@@ -1,0 +1,31 @@
+c=0.63
+b=1500
+k=0.6
+h=2700
+
+C_bar=55
+I_bar=75
+G_bar=200
+T_bar=110
+M_bar=200
+P_bar=1
+
+xNames=["Y";"C";"I";"R"] 
+A=[
+1 -1 -1 0 
+-c 1 0 0
+0 0 1 b 
+k 0 0 -h
+]
+d=[G_bar;C_bar-c*T_bar;I_bar;M_bar/P_bar]
+
+using LinearAlgebra
+
+L,U,p=lu(A)
+y=L\d[p]
+x=U\y
+stamp=hcat(xNames,x)
+for i in 1:4
+println(stamp[i,1]*"  "*string(round(stamp[i,2];digits=4)))
+end
+

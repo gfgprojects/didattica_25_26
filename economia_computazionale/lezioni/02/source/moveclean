@@ -1,0 +1,2 @@
+mv presentazione.pdf ../show
+rm presentazione.aux presentazione.log presentazione.nav presentazione.out presentazione.snm presentazione.toc
