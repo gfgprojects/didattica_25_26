@@ -1,0 +1,127 @@
+# Domanda e offerta
+
+$Q_{d}=\bar{Q}_{d}-aP$
+
+$Q_{s}=\bar{Q}_{s}+bP$
+
+dove $\bar{Q}_d, \bar{Q}_s, a, b$ sono i parametri.
+
+La condizione di equilibrio è
+
+$Q_d=Q_s=Q$
+
+Le variabili endogene sono: $Q$ e $P$. 
+
+Per una data parametrizzazione, ad es. $\bar{Q}_d=1000$, $\bar{Q}_s=250$, $a=10$, $b=5$,
+Trovare 
+
+- equilibrio
+- social welfare
+
+Cosa accade al social welfare se $\bar{Q}_{d}$ passa da 1000 a 750? 
+
+# Soluzione Algebrica
+
+imponiamo la condizione di equilibrio $Q_d=Q_s$
+$$\bar{Q}_{d}-aP=\bar{Q}_{s}+bP$$
+raccogliamo $P$
+$$\bar{Q}_{d}-\bar{Q}_{s}=(a+b)P$$
+$$P_e=\frac{\bar{Q}_{d}-\bar{Q}_{s}}{a+b}$$
+sostituendo nelle curve di domanda e di offerta
+$$Q_e=\bar{Q}_{d}-aP_e=\bar{Q}_{s}+bP_e$$
+
+# Surplus del consumatore
+
+\textnormal{\`E} l'area al di sotto della curva di domanda che sta al di sopra del prezzo di equilibrio.
+
+Con la curva di domanda lineare è l'area del triangolo di base $Q_e$ e altezza $P_{\max}-P_e$
+
+dove $P_{\max}$ è quel livello di prezzo che corrisponde ad una domanda nulla
+
+Ponenedo $Q_d=0$ nella curva di domanda troviamo $P_{\max}=\frac{\bar{Q}_{d}}{a}$
+
+Il surplus del consumatore è dunque dato da
+$$Cs=\frac{1}{2}Q_e\left(p_{\max}-p_e\right)$$
+
+# Surplus del produttore
+
+\textnormal{\`E} l'area al di sopra della curva di offerta che sta al di sotto del prezzo di equilibrio.
+
+Il calcolo dipende dal segno di $\bar{Q}_{s}$
+
+- se  $\bar{Q}_{s}<0$ è l'area di un triangolo di base $Q_e$ e altezza $P_e-P_{\min}$ dove $P_{\min}$ è quel livello di prezzo che corrisponde ad un'offerta nulla: $P_{\min}=-\frac{\bar{Q}_{s}}{b}$
+$$Ps=\frac{1}{2}Q_e(P_e-P_{\min})$$
+- se  $\bar{Q}_{s}>0$ è l'area di un trapezio (rettangolo + triangolo)
+	- rettangolo di base $\bar{Q}_{s}$ e altezza $P_e$
+	- triangolo di base $Q_e-\bar{Q}_{s}$ e altezza $P_e$
+$$Ps=\bar{Q}_{s}P_e+\frac{1}{2}(Q_e-\bar{Q}_{s})p_e$$
+
+# Algoritmo
+
+- assegnazione parametri $\bar{Q}_{s}$, $\bar{Q}_{s},\ a,\ b$
+- calcolo $P_e=\frac{\bar{Q}_{d}-\bar{Q}_{s}}{a+b}$
+- calcolo $Q_e=\bar{Q}_{d}-aP_e$
+- calcolo $P_{\max}=\frac{\bar{Q}_{d}}{a}$
+- calcolo $Cs=\frac{1}{2}Q_e\left(p_{\max}-p_e\right)$
+- if $\bar{Q}_{s}<0$
+	- $P_{\min}=-\frac{\bar{Q}_{s}}{b}$
+	- $Ps=\frac{1}{2}Q_e(P_e-P_{\min})$
+- else 
+	- $Ps=\bar{Q}_{s}P_e+\frac{1}{2}(Q_e-\bar{Q}_{s})p_e$
+- report testuale e grafico
+
+# Esercizio
+
+Scrivere il codice relativo all'algoritmo della diapositiva precedente.
+
+# Rappresentazione attraverso matrici
+
+Esprimiamo il sistema con le variabili endovene a sinistra e il termine noto a destra dell'uguale
+
+$Q+aP=\bar{Q}_{d}$
+
+$Q-bP=\bar{Q}_{s}$
+
+utilizzando le matrici il sistema è espresso come segue
+
+$$\mathbf{Ax=b}$$
+
+dove
+
+$$
+\mathbf{A}=\left[
+\begin{array}{cc}
+1&a\\
+1&-b
+\end{array}
+\right]
+\qquad 
+\mathbf{x}=\left[
+\begin{array}{c}
+Q\\
+P
+\end{array}
+\right]
+\qquad 
+\mathbf{b}=\left[
+\begin{array}{c}
+\bar{Q}_d\\
+\bar{Q}_s
+\end{array}
+\right]
+$$
+
+# Perché?
+
+Perché il prodotto tra matrici viene effettuato riga per colonna.
+
+Ovvero date due matrici $\mathbf{A}$ e $\mathbf{B}$, gli elementi di
+$$\mathbf{C}=\mathbf{A}\mathbf{B}$$
+si ottengono come segue
+$$c_{i,j}=\sum_z a_{i,z}b_{z,j}$$
+
+Possiamo dunque verificare che 
+$$\mathbf{Ax=b}$$
+come definito nella diapositiva precedente, equivale al sistema di equazioni da cui siamo partiti.
+
+
