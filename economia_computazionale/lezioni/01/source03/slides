@@ -1,0 +1,168 @@
+- La soluzione del sistema lineare
+$$\mathbf{Ax=b}$$
+esiste ed è unica se e solo se la matrice $\mathbf{A}$ è non singolare. 
+- Si potrebbe calcolare anche usando la regola di Cramer
+$$x_i=\frac{det(\mathbf{A_i})}{det(\mathbf{A})} \qquad i \in 1, 2,...,n$$
+dove $\mathbf{A_i}$ è la matrice ottenuta da $\mathbf{A}$ sostituendo la i-esima colonna con $\mathbf{b}$.
+- ma, servirebbero poco meno di 11 minuti per risolvere un sistema di dimensione n = 15, 48 anni se n = 20 e $10^{141}$ anni se n = 100 con un normale PC.
+
+# Soluzione di sistemi di equazioni lineari
+
+- La soluzione utilizzando la matrice inversa o il metodo di cramer non è efficiente
+
+- Vedremo ora il metodo dell'eliminazione gaussiana
+
+# Eliminazione Gaussiana
+
+Trasformazione del sistema in triangolare superiore o inferiore.
+
+Si considera la matrice
+$$\mathbf{C}=\mathbf{A|b}$$
+
+Si evolve C utilizzando delle operazioni che ci conducono di volta in volta a matrici equivalenti a quella precedente.
+
+Le operazioni in questioni sono le seguenti:
+
+- Scambio di due righe;
+
+- sostituzione di una riga con la riga avente stessa posizione, ma moltiplicata per un numero;
+
+- sostituzione di una riga con una riga ottenuta dalla somma della stessa riga con un altra riga moltiplicata per un numero;
+
+# Esempio: il nostro sistema
+$$
+\mathbf{A}=\left[
+\begin{array}{cc}
+1&a\\
+1&-b
+\end{array}
+\right]
+\qquad 
+\mathbf{x}=\left[
+\begin{array}{c}
+Q\\
+P
+\end{array}
+\right]
+\qquad 
+\mathbf{b}=\left[
+\begin{array}{c}
+\bar{Q}_d\\
+\bar{Q}_s
+\end{array}
+\right]
+$$
+con $\bar{Q}_d=1000$, $\bar{Q}_s=250$, $a=10$, $b=5$ 
+$$
+\mathbf{A}=\left[
+\begin{array}{cc}
+1&10\\
+1&-5
+\end{array}
+\right]
+\qquad 
+\mathbf{x}=\left[
+\begin{array}{c}
+Q\\
+P
+\end{array}
+\right]
+\qquad 
+\mathbf{b}=\left[
+\begin{array}{c}
+1000\\
+250
+\end{array}
+\right]
+$$
+
+$$\mathbf{C}=\mathbf{A|b}=
+\left[
+\begin{array}{ccc}
+1&10&1000\\
+1&-5&250
+\end{array}
+\right]
+$$
+
+Ci sono molti modi di procedere
+
+# Una prima possibilità
+
+Sostituiamo la prima riga con la somma della prima riga e la seconda riga moltiplicata per 2
+
+$$\mathbf{C}=\mathbf{A|b}=
+\left[
+\begin{array}{ccc}
+1&10&1000\\
+1&-5&250
+\end{array}
+\right]=
+\left[
+\begin{array}{ccc}
+3&0&1500\\
+1&-5&250
+\end{array}
+\right]
+$$
+
+Dalla prima equazione otteniamo
+$$Q=\frac{1500}{3}=500$$
+e, utilizzando questo risultato nella secondo, si ha
+$$500-5P=250 \Rightarrow P=\frac{250-500}{-5}=50$$
+
+# Una seconda possibilità
+
+Sostituiamo la prima riga con la somma della prima riga e la seconda riga moltiplicata per -1
+
+$$\mathbf{C}=\mathbf{A|b}=
+\left[
+\begin{array}{ccc}
+1&10&1000\\
+1&-5&250
+\end{array}
+\right]=
+\left[
+\begin{array}{ccc}
+0&15&750\\
+1&-5&250
+\end{array}
+\right]
+$$
+
+Dalla prima equazione otteniamo
+$$P=\frac{750}{15}=50$$
+e, utilizzando questo risultato nella secondo, si ha
+$$Q-5\times 50=250 \Rightarrow Q=250+250=500$$
+
+# Soluzione al calcolatore
+
+\noindent\textbf{R}
+
+A<-matrix(c(1,10,1,-5),ncol=2,byrow=T)
+
+#or A<-rbind(c(1,10),c(1,-5))
+
+b<-c(1000,250)
+
+solve(A,b)
+
+\noindent\textbf{Python}
+
+import numpy as np
+
+A=[[1,10],[1,-5]]
+
+b=[[1000],[250]]
+
+np.linalg.solve(A,b)
+
+**Julia** & **Octave**
+
+A=[1 10;1 -5]
+
+b=[1000; 250]
+
+A\\b
+
+
