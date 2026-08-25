@@ -1,0 +1,783 @@
+# La struttura a termine dei tassi di interesse
+
+Un principio fondamentale della finanza è che un euro ricevuto oggi vale più di un euro ricevuto in futuro.
+
+Se un ammontare $FV$ viene ricevuto al tempo $T$, il suo valore attuale è:
+
+$$PV=\frac{FV}{(1+r_T)^T}$$
+
+Possiamo definire il **fattore di sconto** relativo alla scadenza $T$ come:
+$$d_T=\frac{1}{(1+r_T)^T}$$
+Pertanto:
+$$PV=d_TFV$$
+Il fattore di sconto $d_T$ rappresenta il valore oggi di una unità monetaria ricevuta con certezza al tempo $T$.
+
+
+# La struttura a termine dei tassi di interesse
+
+I mercati finanziari generalmente non utilizzano lo stesso tasso di interesse per scontare flussi di cassa che si verificano in date diverse.
+
+$$r_1\neq r_2\neq\cdots\neq r_T$$
+
+La relazione tra il tasso di interesse e la scadenza prende il nome di **struttura a termine dei tassi di interesse**.
+
+$$T\longmapsto r_T$$
+
+La sua rappresentazione grafica viene comunemente chiamata **curva dei rendimenti** (*yield curve*).
+
+I tassi $r_T$ associati a singoli pagamenti alle diverse scadenze sono chiamati **tassi spot** o **tassi zero-coupon**.
+
+
+# Tassi spot e rendimento a scadenza
+
+Il **tasso spot** $r_T$ è il tasso utilizzato per scontare un singolo pagamento che avviene al tempo $T$.
+$$PV=\frac{FV}{(1+r_T)^T}$$
+Il **rendimento a scadenza** (*yield to maturity*, YTM) di un'obbligazione con cedole è invece l'unico tasso $y$ che rende il valore attuale di tutti i flussi di cassa futuri uguale al prezzo di mercato dell'obbligazione.
+$$P=\sum_{t=1}^{T}\frac{CF_t}{(1+y)^t}$$
+Il rendimento a scadenza e i tassi spot hanno quindi significati differenti.
+
+Per costruire la struttura a termine siamo interessati ai **tassi spot** e ai corrispondenti **fattori di sconto**.
+
+
+# Valutazione di un'obbligazione mediante i fattori di sconto
+
+Consideriamo un'obbligazione che genera i seguenti flussi di cassa:
+
+$$CF_1,CF_2,\ldots,CF_T$$
+
+Ogni flusso di cassa deve essere scontato utilizzando il fattore di sconto corrispondente alla sua scadenza.
+
+$$P=CF_1d_1+CF_2d_2+\cdots+CF_Td_T$$
+
+---
+
+Equivalentemente:
+
+$$P=\sum_{t=1}^{T}CF_td_t$$
+
+Consideriamo, ad esempio, un'obbligazione triennale con cedola annuale pari a 5 e valore nominale pari a 100.
+
+I suoi flussi di cassa sono:
+
+$$CF_1=5,\qquad CF_2=5,\qquad CF_3=105$$
+
+Il suo prezzo è quindi:
+
+$$P=5d_1+5d_2+105d_3$$
+
+
+# Dai prezzi delle obbligazioni ai fattori di sconto
+
+I prezzi delle obbligazioni e i loro flussi di cassa futuri possono essere osservati sui mercati finanziari.
+
+I fattori di sconto, invece, non sono direttamente osservabili.
+
+Supponiamo di osservare $N$ obbligazioni e di considerare $N$ diverse scadenze.
+
+Per ogni obbligazione possiamo scrivere un'equazione di valutazione:
+
+$$P_i=\sum_{t=1}^{N}CF_{it}d_t$$
+
+Osservando più obbligazioni otteniamo quindi più equazioni che possono essere utilizzate per determinare i fattori di sconto incogniti.
+
+**Problema finanziario:** possiamo ricavare la struttura a termine dei tassi di interesse dai prezzi delle obbligazioni osservati sul mercato?
+
+
+# Un esempio con tre obbligazioni
+
+Supponiamo di osservare tre obbligazioni con i seguenti flussi di cassa e prezzi:
+
+| Obbligazione | $t=1$ | $t=2$ | $t=3$ | Prezzo |
+|:-------------:|------:|------:|------:|------:|
+| A | 105 | 0 | 0 | 100 |
+| B | 4 | 104 | 0 | 99 |
+| C | 5 | 5 | 105 | 98 |
+
+Le equazioni di valutazione sono:
+$$105d_1=100$$
+$$4d_1+104d_2=99$$
+$$5d_1+5d_2+105d_3=98$$
+Le incognite sono i tre fattori di sconto: $d=(d_1,d_2,d_3)'$
+
+# Dai prezzi delle obbligazioni a un sistema lineare
+
+Le tre equazioni di valutazione possono essere scritte in forma matriciale:
+
+$$\begin{pmatrix}105&0&0\\4&104&0\\5&5&105\end{pmatrix}\begin{pmatrix}d_1\\d_2\\d_3\end{pmatrix}=\begin{pmatrix}100\\99\\98\end{pmatrix}$$
+
+Definendo con $C$ la **matrice dei flussi di cassa**, con $d$ il vettore dei fattori di sconto e con $P$ il vettore dei prezzi osservati, otteniamo:
+
+$$Cd=P$$
+
+Abbiamo quindi trasformato il problema finanziario in un **sistema di equazioni lineari**.
+
+Nel nostro esempio la matrice dei flussi di cassa è triangolare inferiore.
+
+I fattori di sconto possono pertanto essere determinati sequenzialmente.
+
+
+# Bootstrapping della struttura a termine
+
+Dalla prima obbligazione otteniamo:
+$$d_1=\frac{100}{105}$$
+Una volta conosciuto $d_1$, dalla seconda equazione otteniamo:
+$$d_2=\frac{99-4d_1}{104}$$
+Infine, dalla terza equazione otteniamo:
+$$d_3=\frac{98-5d_1-5d_2}{105}$$
+Questa procedura sequenziale prende il nome di **bootstrapping**.
+
+La procedura è particolarmente semplice in questo esempio perché la matrice dei flussi di cassa è triangolare.
+
+Più in generale, il problema può essere scritto e risolto come: $Cd=P$
+
+
+# Dai fattori di sconto alla curva dei rendimenti
+
+Una volta calcolati i fattori di sconto, possiamo ricavare i corrispondenti tassi spot.
+
+Partendo da:
+$$d_t=\frac{1}{(1+r_t)^t}$$
+otteniamo:
+$$r_t=d_t^{-1/t}-1$$
+
+La procedura può quindi essere sintetizzata come:
+$$\text{Prezzi e flussi di cassa}\longrightarrow\text{fattori di sconto}\longrightarrow\text{tassi spot}\longrightarrow\text{curva dei rendimenti}$$
+Lo stesso problema numerico $Ax=b$ incontrato nei modelli economici compare quindi anche in un'importante applicazione finanziaria.
+
+# Un'applicazione
+
+Informazioni sui titoli di Stato italiani: 
+
+- Borsa italiana:
+
+	https://www.borsaitaliana.it/borsa/obbligazioni/mot/obbligazioni-euro/lista.html
+
+- Simple tools for investors:
+	https://www.simpletoolsforinvestors.eu/index.shtml
+	
+	(scegli Bond tools - Monitors, poi scegli Italia)
+
+# Titoli di Stato italiani
+
+Il Ministero dell'Economia e delle Finanze emette diverse tipologie di titoli di Stato, caratterizzate da differenti strutture dei flussi di cassa.
+
+Nel dataset che utilizzeremo troviamo principalmente:
+
+- **BOT**: titoli zero-coupon
+- **BTP**: titoli nominali a tasso fisso
+- **BTP Green**: BTP destinati al finanziamento di spese con finalità ambientali
+- **BTP Italia**: titoli indicizzati all'inflazione italiana
+- **BTP€i**: titoli indicizzati all'inflazione dell'area euro
+- **BTP Valore**: titoli retail con struttura cedolare step-up
+- **BTP Futura**: titoli retail con struttura cedolare step-up
+- **BTP Più**: titoli retail con struttura cedolare step-up
+
+Le diverse strutture contrattuali determinano differenti flussi di cassa.
+
+
+# BOT: titoli zero-coupon
+
+I **Buoni Ordinari del Tesoro (BOT)** sono titoli zero-coupon: non pagano cedole periodiche.
+
+L'investitore acquista il titolo a un prezzo $P_T$ e alla scadenza riceve il valore nominale.
+
+Assumendo un valore nominale pari a 100:
+
+$$P_T=100d_T$$
+
+dove $d_T$ è il fattore di sconto relativo alla scadenza $T$.
+
+Pertanto:
+
+$$d_T=\frac{P_T}{100}$$
+
+Il prezzo di un BOT permette quindi di ricavare direttamente un punto della struttura a termine dei fattori di sconto.
+
+
+# BTP: titoli a cedola fissa
+
+I **Buoni del Tesoro Poliennali (BTP)** tradizionali pagano cedole periodiche a tasso fisso e rimborsano il valore nominale alla scadenza.
+
+Consideriamo, ad esempio:
+
+**BTP 01/11/2029 5,25%**
+
+Con valore nominale pari a 100 e cedole semestrali, il pagamento cedolare è:
+
+$$C=\frac{5.25}{2}=2.625$$
+
+Il titolo genera quindi una successione di cedole pari a 2,625 e, alla scadenza, il rimborso del capitale più l'ultima cedola:
+
+$$CF_T=100+2.625=102.625$$
+
+
+# BTP e fattori di sconto
+
+A differenza di un BOT, un BTP genera diversi flussi di cassa in date differenti.
+
+Il suo prezzo dipende quindi da diversi fattori di sconto:
+
+$$P=C_1d_1+C_2d_2+\cdots+(100+C_T)d_T$$
+
+Nel caso di un BTP plain vanilla a tasso fisso:
+
+$$C_1=C_2=\cdots=C_T=C$$
+
+e quindi:
+
+$$P=Cd_1+Cd_2+\cdots+(100+C)d_T$$
+
+Per valutare il titolo dobbiamo conoscere il fattore di sconto corrispondente a ciascuna data di pagamento.
+
+
+# Titoli plain vanilla
+
+In finanza, l'espressione **plain vanilla** indica la versione standard e più semplice di uno strumento finanziario.
+
+Un **BTP plain vanilla** è un BTP nominale standard a tasso fisso:
+
+- il tasso cedolare rimane costante;
+- le cedole sono note;
+- il valore nominale viene rimborsato alla scadenza;
+- non vi è indicizzazione all'inflazione;
+- non vi è una struttura cedolare step-up.
+
+Questi titoli sono particolarmente adatti alla costruzione della matrice dei flussi di cassa.
+
+
+# Titoli indicizzati all'inflazione
+
+Nel dataset troviamo anche titoli il cui valore dipende dall'andamento dei prezzi.
+
+I **BTP Italia** sono indicizzati all'inflazione italiana.
+
+I **BTP€i** sono indicizzati all'inflazione dell'area euro.
+
+In questi casi i flussi di cassa futuri non sono determinati esclusivamente dal tasso cedolare indicato nel titolo.
+
+Per mantenere semplice la nostra prima applicazione, escluderemo i titoli indicizzati dalla costruzione della curva.
+
+
+# Titoli con struttura step-up
+
+Alcuni titoli prevedono tassi cedolari che cambiano nel corso della vita del titolo.
+
+Nel dataset troviamo, ad esempio:
+
+**BTP VALORE 2 10/10/2028 STEP UP 4,10%-4,50%**
+
+Il tasso cedolare aumenta secondo una sequenza prestabilita:
+
+$$r_1\longrightarrow r_2\qquad\text{con}\qquad r_2>r_1$$
+
+Di conseguenza, le cedole non sono costanti nel tempo.
+
+Per la nostra prima applicazione escluderemo anche i titoli con struttura step-up.
+
+
+# BTP Green
+
+I **BTP Green** sono titoli i cui proventi sono destinati al finanziamento di spese pubbliche con finalità ambientali.
+
+La caratteristica "green" riguarda la destinazione delle risorse raccolte e non implica necessariamente una diversa struttura dei flussi di cassa.
+
+Un BTP Green a tasso fisso può quindi avere la stessa struttura finanziaria di un BTP plain vanilla.
+
+Per semplicità, nella prima applicazione utilizzeremo comunque soltanto BOT e BTP nominali tradizionali a tasso fisso.
+
+
+# Gli strumenti utilizzati nell'applicazione
+
+Per costruire il nostro esempio utilizzeremo:
+
+| Strumento | Struttura | Utilizzato |
+|---|---|:---:|
+| BOT | Zero-coupon | Sì |
+| BTP nominale a tasso fisso | Cedola fissa | Sì |
+| BTP Green a tasso fisso | Cedola fissa | No |
+| BTP Italia | Indicizzato | No |
+| BTP€i | Indicizzato | No |
+| BTP Valore | Step-up | No |
+| BTP Futura | Step-up | No |
+| BTP Più | Step-up | No |
+
+La scelta non dipende dall'importanza finanziaria dei diversi strumenti, ma dalla necessità di partire da strutture di cash flow semplici e note.
+
+
+# Dalla teoria ai dati reali
+
+Utilizzeremo dati relativi a titoli di Stato italiani realmente negoziati.
+
+Il procedimento sarà:
+
+$$\text{dati di mercato}\rightarrow\text{BOT e BTP}\rightarrow\text{fattori di sconto}\rightarrow\text{interpolazione}\rightarrow\text{curva spot}$$
+
+Successivamente utilizzeremo i fattori di sconto per costruire e risolvere problemi di pricing.
+
+L'obiettivo computazionale rimane ricondurre il problema finanziario alla soluzione di sistemi lineari:
+
+$$Ax=b$$
+
+
+# Dai punti osservati alla curva
+
+I BOT permettono di osservare direttamente i fattori di sconto soltanto per alcune maturities.
+
+Supponiamo di dover valutare un cash flow che si verifica alla maturity $T^*$.
+
+Se non esiste un BOT con quella esatta scadenza, il fattore di sconto:
+
+$$d(T^*)$$
+
+non è direttamente osservabile.
+
+Come possiamo stimarlo utilizzando i fattori di sconto che conosciamo?
+
+# Interpolazione lineare
+
+Supponiamo di conoscere due fattori di sconto:
+
+$$(T_1,d_1)\qquad\text{e}\qquad(T_2,d_2)$$
+
+e di voler stimare il fattore di sconto relativo a una maturity intermedia:
+
+$$T_1<T^*<T_2$$
+
+Assumiamo che tra $T_1$ e $T_2$ la funzione di sconto possa essere approssimata da una funzione lineare:
+
+$$d(T)=a+bT$$
+
+Le incognite sono i coefficienti $a$ e $b$.
+
+# Interpolazione come sistema lineare
+
+La funzione deve passare attraverso i due punti osservati:
+$$a+bT_1=d_1$$
+$$a+bT_2=d_2$$
+Possiamo scrivere le due equazioni in forma matriciale:
+$$\begin{pmatrix}1&T_1\\1&T_2\end{pmatrix}\begin{pmatrix}a\\b\end{pmatrix}=\begin{pmatrix}d_1\\d_2\end{pmatrix}$$
+Abbiamo nuovamente un sistema lineare:
+
+$$Ax=b$$
+Risolvendo il sistema otteniamo $a$ e $b$ e possiamo calcolare il fattore di sconto per qualsiasi maturity compresa tra $T_1$ e $T_2$:
+$$d(T^*)=a+bT^*$$
+
+# Un problema con i dati reali
+
+I BOT permettono di osservare direttamente alcuni fattori di sconto.
+
+Consideriamo ora un BTP presente nel nostro dataset:
+
+**BTP 01/11/2026 7,25%**
+
+Per valutare il pagamento alla scadenza abbiamo bisogno del fattore di sconto relativo al 1 novembre 2026.
+
+Ma nel nostro dataset non esiste un BOT con questa esatta scadenza.
+
+I BOT più vicini sono:
+
+| Titolo | Scadenza | Discount factor |
+|---|---|---:|
+| BOT 14/10/2026 ZC | 14/10/2026 | $d_1$ |
+| BOT 13/11/2026 ZC | 13/11/2026 | $d_2$ |
+
+Come possiamo ottenere il fattore di sconto al 01/11/2026?
+
+# Soluzione
+
+usiamo lo script <nome dello script>
+
+# Interpolazione con più punti
+
+L'interpolazione lineare utilizza due punti osservati per determinare una retta:
+
+$$d(T)=a_0+a_1T$$
+
+Possiamo generalizzare l'idea utilizzando più BOT.
+
+Con tre punti possiamo cercare un polinomio di secondo grado:
+
+$$d(T)=a_0+a_1T+a_2T^2$$
+
+Imponendo il passaggio attraverso i tre punti osservati otteniamo tre equazioni nelle tre incognite $a_0$, $a_1$ e $a_2$.
+
+# Interpolazione polinomiale e sistemi lineari
+
+Consideriamo $n$ BOT dai quali abbiamo ricavato i punti:
+
+$$(T_1,d_1),(T_2,d_2),\ldots,(T_n,d_n)$$
+
+Cerchiamo un polinomio di grado $n-1$:
+
+$$d(T)=a_0+a_1T+a_2T^2+\cdots+a_{n-1}T^{n-1}$$
+
+Imponiamo che il polinomio passi attraverso tutti i punti osservati:
+
+$$d(T_i)=d_i\qquad i=1,\ldots,n$$
+
+Otteniamo un sistema di $n$ equazioni in $n$ incognite.
+
+# La matrice di Vandermonde
+
+Il problema può essere scritto come:
+
+$$\begin{pmatrix}1&T_1&T_1^2&\cdots&T_1^{n-1}\\1&T_2&T_2^2&\cdots&T_2^{n-1}\\\vdots&\vdots&\vdots&&\vdots\\1&T_n&T_n^2&\cdots&T_n^{n-1}\end{pmatrix}\begin{pmatrix}a_0\\a_1\\\vdots\\a_{n-1}\end{pmatrix}=\begin{pmatrix}d_1\\d_2\\\vdots\\d_n\end{pmatrix}$$
+
+La matrice dei coefficienti è detta **matrice di Vandermonde**.
+
+Ancora una volta abbiamo ricondotto il problema alla forma:
+
+$$Ax=b$$
+
+
+# Possiamo utilizzare molti punti?
+
+Matematicamente possiamo aumentare il numero di BOT utilizzati.
+
+Con $n$ BOT otteniamo un polinomio di grado $n-1$ e risolviamo un sistema $n\times n$.
+
+Ma questo introduce un problema numerico.
+
+Le colonne della matrice di Vandermonde contengono potenze crescenti della maturity:
+
+$$1,T,T^2,T^3,\ldots,T^{n-1}$$
+
+All'aumentare di $n$, la matrice può diventare mal condizionata.
+
+Possiamo misurare il problema attraverso il numero di condizionamento:
+
+$$\kappa(A)=\lVert A\rVert\lVert A^{-1}\rVert$$
+
+# Numero di condizionamento
+
+Il **numero di condizionamento** misura la sensibilità della soluzione di un sistema lineare a piccole perturbazioni nei dati.
+
+Per il sistema:
+$$Ax=b$$
+il numero di condizionamento della matrice $A$ è:
+$$\kappa(A)=\|A\|\|A^{-1}\|$$
+Una perturbazione di $b$ può produrre una variazione della soluzione che soddisfa:
+$$\frac{\|\Delta x\|}{\|x\|}\leq\kappa(A)\frac{\|\Delta b\|}{\|b\|}$$
+
+---
+
+Interpretazione:
+
+- $\kappa(A)\approx 1$: sistema **ben condizionato**
+- $\kappa(A)\gg 1$: sistema **mal condizionato**
+- $\kappa(A)=\infty$: matrice **singolare**
+
+Un elevato numero di condizionamento implica che piccoli errori nei dati possono essere fortemente amplificati nella soluzione.
+
+**Importante:** un sistema può avere una soluzione unica ma essere numericamente mal condizionato.
+
+# È possibile fare meglio?
+
+Vorremmo utilizzare molti punti osservati senza costruire un unico polinomio di grado elevato.
+
+Una possibile soluzione consiste nell'utilizzare polinomi di basso grado su intervalli differenti.
+
+Questa è l'idea alla base delle **spline**.
+
+Invece di cercare un unico polinomio globale:
+
+$$p_{n-1}(T)$$
+
+costruiamo diversi polinomi locali collegati tra loro in modo opportuno.
+
+# Spline cubica
+
+Tra due nodi consecutivi $T_i$ e $T_{i+1}$ definiamo un polinomio cubico:
+
+$$S_i(T)=a_i+b_iT+c_iT^2+d_iT^3$$
+
+I diversi polinomi devono:
+
+- passare attraverso i punti osservati;
+- essere continui nei nodi;
+- avere derivata prima continua;
+- avere derivata seconda continua.
+
+Queste condizioni sono lineari nei coefficienti.
+
+La costruzione della spline può quindi essere ricondotta ancora una volta alla soluzione di un sistema lineare:
+
+$$Ax=b$$
+
+# Dimensione del problema
+
+Con $n$ nodi abbiamo $n-1$ intervalli.
+
+Ogni polinomio cubico contiene quattro coefficienti:
+$$S_i(T)=a_i+b_iT+c_iT^2+e_iT^3$$
+Il numero totale di coefficienti incogniti è quindi:
+$$4(n-1)$$
+Nel nostro dataset abbiamo 15 BOT:
+$$n=15$$
+e quindi:
+$$4(15-1)=56$$
+La costruzione diretta della spline richiede quindi di determinare **56 coefficienti**.
+
+# Condizione 1: interpolazione dei nodi
+
+Ogni polinomio deve passare attraverso i due nodi che delimitano il proprio intervallo:
+$$S_i(T_i)=d_i$$
+$$S_i(T_{i+1})=d_{i+1}$$
+per $i=1,\ldots,n-1$.
+
+Otteniamo quindi:
+$2(n-1)$
+equazioni.
+
+Con 15 BOT:
+$2(15-1)=28$
+equazioni.
+
+# Condizione 2: continuità della derivata prima
+
+Vogliamo che la curva sia regolare nei nodi interni.
+
+Imponiamo quindi:
+
+$$S'_{i-1}(T_i)=S'_i(T_i)$$
+
+per $i=2,\ldots,n-1$.
+
+Poiché:
+
+$$S'_i(T)=b_i+2c_iT+3e_iT^2$$
+
+queste condizioni sono lineari nei coefficienti della spline.
+
+Otteniamo:
+$n-2$
+ulteriori equazioni.
+
+Con 15 BOT abbiamo 13 equazioni.
+
+# Condizione 3: continuità della derivata seconda
+
+Richiediamo anche continuità della curvatura nei nodi interni:
+
+$$S''_{i-1}(T_i)=S''_i(T_i)$$
+
+per $i=2,\ldots,n-1$.
+
+Poiché:
+
+$$S''_i(T)=2c_i+6e_iT$$
+
+otteniamo altre:
+$n-2$
+equazioni.
+
+Con 15 BOT abbiamo altre 13 equazioni.
+
+# Condizioni al contorno
+
+Abbiamo finora:
+
+$$2(n-1)+(n-2)+(n-2)=4n-6$$
+
+equazioni.
+
+Ma le incognite sono:
+
+$$4(n-1)=4n-4$$
+
+Mancano quindi **due condizioni**.
+
+Per una **natural cubic spline** imponiamo:
+$$S_1''(T_1)=0$$
+$$S_{n-1}''(T_n)=0$$
+Otteniamo così un sistema quadrato.
+
+# Il sistema lineare della spline
+
+Per i nostri 15 BOT:
+
+| Condizioni | Equazioni |
+|---|---:|
+| Interpolazione dei nodi | 28 |
+| Continuità di $S'$ | 13 |
+| Continuità di $S''$ | 13 |
+| Condizioni al contorno | 2 |
+| **Totale** | **56** |
+
+Abbiamo quindi:
+$$56\text{ equazioni}\qquad56\text{ incognite}$$
+
+---
+
+Il problema può essere scritto nella forma:
+
+$$A_{56\times56}x_{56\times1}=b_{56\times1}$$
+
+Ancora una volta, un problema finanziario viene ricondotto alla soluzione di un sistema lineare.
+
+# BTP e sistemi lineari
+
+Per un BTP, il prezzo è uguale al valore attuale dei cash flow futuri:
+
+$$P_i=\sum_{j=1}^{m_i}CF_{ij}d(T_{ij})$$
+
+dove:
+
+- $P_i$ è il prezzo del BTP $i$;
+- $CF_{ij}$ è il cash flow $j$ del BTP $i$;
+- $T_{ij}$ è il tempo al quale viene pagato il cash flow;
+- $d(T_{ij})$ è il corrispondente fattore di sconto.
+
+Il prezzo di un BTP contiene quindi informazioni sulla struttura a termine dei fattori di sconto.
+
+
+# Una rappresentazione della funzione di sconto
+
+Un BTP genera cash flow in numerose date differenti.
+
+Per limitare il numero delle incognite, possiamo rappresentare la funzione di sconto mediante un polinomio di terzo grado:
+
+$$d(T)=a_0+a_1T+a_2T^2+a_3T^3$$
+
+Le incognite diventano i quattro coefficienti:
+
+$$a_0,\quad a_1,\quad a_2,\quad a_3$$
+
+Una volta determinati i coefficienti possiamo calcolare $d(T)$ per qualsiasi maturity nell'intervallo considerato.
+
+
+# Dall'equazione di pricing al sistema lineare
+
+Per il BTP $i$:
+
+$$P_i=\sum_jCF_{ij}d(T_{ij})$$
+
+Sostituendo la rappresentazione polinomiale:
+
+$$P_i=\sum_jCF_{ij}(a_0+a_1T_{ij}+a_2T_{ij}^2+a_3T_{ij}^3)$$
+
+Raccogliendo i coefficienti:
+
+$$P_i=a_0\sum_jCF_{ij}+a_1\sum_jCF_{ij}T_{ij}+a_2\sum_jCF_{ij}T_{ij}^2+a_3\sum_jCF_{ij}T_{ij}^3$$
+
+L'equazione di pricing è quindi lineare nelle incognite $a_0,a_1,a_2,a_3$.
+
+
+# Costruzione della matrice
+
+Definiamo:
+
+$$B_{ik}=\sum_jCF_{ij}T_{ij}^{k}\qquad k=0,1,2,3$$
+
+L'equazione di pricing del titolo $i$ diventa:
+
+$$B_{i0}a_0+B_{i1}a_1+B_{i2}a_2+B_{i3}a_3=P_i$$
+
+Ogni BTP fornisce quindi una equazione lineare.
+
+Utilizzando quattro BTP otteniamo quattro equazioni nelle quattro incognite $a_0,a_1,a_2,a_3$.
+
+
+# I BTP utilizzati
+
+Consideriamo quattro BTP plain vanilla presenti nel dataset:
+
+- BTP 01/04/2027 1,10%
+- BTP 01/04/2028 3,40%
+- BTP 01/04/2030 1,35%
+- BTP 01/04/2031 0,90%
+
+I quattro titoli hanno date cedolari appartenenti alla stessa griglia: 1 aprile e 1 ottobre.
+
+I loro prezzi e cash flow permettono di costruire un sistema lineare $4\times4$.
+
+
+# Clean price e dirty price
+
+I BTP sono quotati attraverso il clean price, mentre l'attualizzazione dei cash flow determina il dirty price.
+
+La relazione è:
+
+$$P_{\mathrm{dirty}}=P_{\mathrm{clean}}+AI$$
+
+dove $AI$ rappresenta il rateo di interesse maturato.
+
+Se $C$ è la cedola semestrale, una rappresentazione semplificata del rateo è:
+
+$$AI=C\frac{t-t_0}{t_1-t_0}$$
+
+dove $t_0$ è la data dell'ultima cedola, $t$ la data di valutazione e $t_1$ la data della prossima cedola.
+
+Nel sistema di pricing utilizziamo quindi i dirty prices.
+
+
+# Il sistema con i dati reali
+
+Utilizzando i cash flow e i dirty prices dei quattro BTP otteniamo:
+
+$$\begin{pmatrix}101.10&61.7707&37.8770&23.2415\\106.80&167.5263&268.5057&432.2873\\105.40&371.7208&1333.7667&4804.6339\\104.50&472.2922&2165.6402&9963.9030\end{pmatrix}\begin{pmatrix}a_0\\a_1\\a_2\\a_3\end{pmatrix}=\begin{pmatrix}99.4838\\101.9798\\94.2901\\89.9567\end{pmatrix}$$
+
+In forma compatta:
+
+$$Ba=P$$
+
+Il problema finanziario è stato quindi trasformato in un sistema di quattro equazioni lineari.
+
+
+# Soluzione del sistema
+
+La soluzione del sistema è:
+
+$$a_0=1.003381,\qquad a_1=-0.032421,\qquad a_2=0.001329,\qquad a_3=-0.000247$$
+
+Otteniamo quindi la funzione di sconto:
+
+$$d(T)=1.003381-0.032421T+0.001329T^2-0.000247T^3$$
+
+I prezzi osservati dei BTP permettono quindi di ricavare una funzione continua dei fattori di sconto.
+
+
+# Interpretazione della soluzione
+
+Le incognite del sistema non sono direttamente i discount factors.
+
+Le incognite sono i coefficienti:
+
+$$a_0,\quad a_1,\quad a_2,\quad a_3$$
+
+che determinano l'intera funzione:
+
+$$d(T)=a_0+a_1T+a_2T^2+a_3T^3$$
+
+Una volta risolto il sistema possiamo quindi ottenere il fattore di sconto per qualsiasi maturity:
+
+$$T\longrightarrow d(T)$$
+
+
+# Residuo della soluzione
+
+Una volta ottenuta la soluzione $\hat{a}$ possiamo verificare quanto essa soddisfa il sistema attraverso il residuo:
+$$r(\hat{a})=B\hat{a}-P$$
+La norma del residuo:
+$$\|r(\hat{a})\|$$
+misura quanto i prezzi ricostruiti dal sistema differiscono dai prezzi utilizzati per la stima.
+
+Nel caso di un sistema quadrato risolto numericamente, ci aspettiamo:
+$$\|r(\hat{a})\|\approx0$$
+Un residuo piccolo indica che il sistema è stato risolto accuratamente, ma non garantisce che la specificazione della funzione di sconto sia economicamente appropriata.
+
+# Il messaggio computazionale
+
+Le equazioni di pricing dei BTP possono essere trasformate in un sistema lineare:
+
+$$\text{prezzi}+\text{cash flow}\longrightarrow Ba=P\longrightarrow a\longrightarrow d(T)$$
+
+La soluzione numerica del sistema permette quindi di ricavare informazioni sulla struttura a termine dei fattori di sconto.
+
+La qualità del risultato dipende non soltanto dall'algoritmo utilizzato per risolvere il sistema, ma anche dalla rappresentazione scelta per $d(T)$.
+
+
+
+
+
+
