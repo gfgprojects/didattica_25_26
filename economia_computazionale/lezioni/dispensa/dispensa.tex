@@ -1,0 +1,7305 @@
+\documentclass{book}
+\usepackage{amsmath,amssymb}
+
+\begin{document}
+
+\tableofcontents
+
+\chapter{Sistemi di equazioni lineari}
+\section{Un primo problema economico: domanda, offerta ed equilibrio}\label{sec:domanda-offerta}
+
+\subsection{Il problema economico}
+
+Uno dei problemi più semplici dell'analisi economica consiste nella
+determinazione del prezzo e della quantità di equilibrio di un mercato.
+Nonostante la sua semplicità, questo problema costituisce un utile punto
+di partenza per introdurre alcuni degli strumenti computazionali che
+utilizzeremo nel corso.
+
+Consideriamo un mercato nel quale la domanda e l'offerta sono descritte
+dalle seguenti funzioni lineari:
+
+\begin{equation}
+    Q_d = \bar{Q}_d - aP,
+    \label{eq:domanda}
+\end{equation}
+
+e
+
+\begin{equation}
+    Q_s = \bar{Q}_s + bP,
+    \label{eq:offerta}
+\end{equation}
+
+dove $Q_d$ rappresenta la quantità domandata, $Q_s$ la quantità
+offerta e $P$ il prezzo del bene.
+
+I parametri $\bar{Q}_d$ e $\bar{Q}_s$ rappresentano rispettivamente
+le intercette delle funzioni di domanda e di offerta, mentre $a$ e
+$b$ ne determinano la sensibilità rispetto al prezzo.
+
+Assumiamo
+
+\begin{equation}
+    a > 0,
+    \qquad
+    b > 0.
+\end{equation}
+
+La quantità domandata diminuisce quindi all'aumentare del prezzo,
+mentre la quantità offerta aumenta.
+
+L'equilibrio del mercato si verifica quando la quantità che i
+consumatori desiderano acquistare coincide con quella che i produttori
+desiderano vendere. Indicando la quantità di equilibrio con $Q$, la
+condizione di equilibrio è pertanto
+
+\begin{equation}
+    Q_d = Q_s = Q.
+    \label{eq:equilibrio}
+\end{equation}
+
+Le due variabili endogene del modello sono dunque $Q$ e $P$.
+Una volta assegnati i valori dei parametri
+$\bar{Q}_d$, $\bar{Q}_s$, $a$ e $b$, il nostro problema consiste nel
+determinare il prezzo e la quantità che soddisfano simultaneamente
+le equazioni di domanda e di offerta.
+
+
+\subsection{Un esempio numerico}
+
+Consideriamo la seguente parametrizzazione:
+
+\begin{equation}
+    \bar{Q}_d = 1000,
+    \qquad
+    \bar{Q}_s = 250,
+    \qquad
+    a = 10,
+    \qquad
+    b = 5.
+\end{equation}
+
+Le funzioni di domanda e di offerta diventano quindi
+
+\begin{equation}
+    Q_d = 1000 - 10P
+\end{equation}
+
+e
+
+\begin{equation}
+    Q_s = 250 + 5P.
+\end{equation}
+
+Per determinare l'equilibrio imponiamo l'uguaglianza tra domanda
+e offerta:
+
+\begin{equation}
+    1000 - 10P = 250 + 5P.
+\end{equation}
+
+Riorganizzando i termini otteniamo
+
+\begin{equation}
+    750 = 15P,
+\end{equation}
+
+da cui segue
+
+\begin{equation}
+    P^* = 50.
+\end{equation}
+
+Una volta determinato il prezzo di equilibrio, possiamo sostituirlo
+in una delle due equazioni. Utilizzando, ad esempio, la funzione di
+domanda otteniamo
+
+\begin{equation}
+    Q^* = 1000 - 10(50) = 500.
+\end{equation}
+
+La soluzione del modello è pertanto
+
+\begin{equation}
+    P^* = 50,
+    \qquad
+    Q^* = 500.
+\end{equation}
+
+Il punto $(P^*,Q^*)$ rappresenta l'equilibrio del mercato.
+Graficamente, esso corrisponde al punto di intersezione tra la curva
+di domanda e la curva di offerta.
+
+Per prezzi differenti da $P^*$, domanda e offerta non coincidono.
+Se il prezzo è inferiore al prezzo di equilibrio, la quantità
+domandata è superiore alla quantità offerta e si verifica un
+\emph{eccesso di domanda}. Se, al contrario, il prezzo è superiore
+al prezzo di equilibrio, la quantità offerta è superiore alla
+quantità domandata e si verifica un \emph{eccesso di offerta}.
+
+
+\subsection{Dall'equilibrio al benessere sociale}
+
+La determinazione di $P^*$ e $Q^*$ non esaurisce necessariamente
+l'analisi economica. Una volta conosciuto l'equilibrio possiamo,
+ad esempio, valutare il benessere generato dal mercato attraverso
+il surplus dei consumatori e il surplus dei produttori.
+
+Il \emph{surplus del consumatore} misura la differenza tra quanto
+i consumatori sarebbero disposti a pagare per le unità acquistate
+e quanto effettivamente pagano al prezzo di equilibrio.
+
+Il \emph{surplus del produttore} misura invece la differenza tra
+quanto i produttori ricevono dalla vendita delle unità prodotte
+e il prezzo minimo al quale sarebbero disposti a offrirle.
+
+Possiamo quindi definire il benessere sociale come
+
+\begin{equation}
+    SW = CS + PS,
+    \label{eq:social_welfare}
+\end{equation}
+
+dove $CS$ indica il surplus dei consumatori e $PS$ il surplus
+dei produttori.
+
+Nel caso di funzioni lineari, questi surplus possono essere
+rappresentati graficamente come aree comprese tra le curve di
+domanda e offerta e il prezzo di equilibrio.
+
+Questo passaggio mette in evidenza un aspetto importante
+dell'analisi computazionale: la soluzione del modello non
+rappresenta necessariamente il risultato finale dell'analisi.
+Le variabili di equilibrio ottenute dalla soluzione del modello
+possono diventare, a loro volta, input per il calcolo di ulteriori
+grandezze di interesse economico.
+
+
+\subsection{Esperimenti sul modello}
+
+Una volta costruito e risolto il modello, possiamo utilizzarlo per
+studiare come cambia l'equilibrio in seguito a una modifica dei
+parametri.
+
+Supponiamo, ad esempio, che l'intercetta della funzione di domanda
+si riduca da
+
+\begin{equation}
+    \bar{Q}_d = 1000
+\end{equation}
+
+a
+
+\begin{equation}
+    \bar{Q}_d = 750.
+\end{equation}
+
+La funzione di domanda diventa
+
+\begin{equation}
+    Q_d = 750 - 10P.
+\end{equation}
+
+Possiamo quindi risolvere nuovamente il modello, determinare il
+nuovo prezzo e la nuova quantità di equilibrio e, successivamente,
+ricalcolare il surplus dei consumatori, il surplus dei produttori
+e il benessere sociale.
+
+Questo semplice esperimento introduce una delle idee fondamentali
+dell'economia computazionale. Una volta specificato un modello,
+possiamo assegnare valori ai suoi parametri, calcolarne la soluzione
+e ripetere il calcolo modificando uno o più parametri per studiare
+come cambiano i risultati.
+
+
+\subsection{Dal modello economico al sistema di equazioni}
+
+Nel semplice esempio precedente il prezzo e la quantità di equilibrio
+possono essere determinati facilmente attraverso pochi passaggi
+algebrici. Questa strategia diventa tuttavia progressivamente meno
+pratica quando aumenta il numero delle equazioni e delle variabili
+del modello.
+
+È quindi utile introdurre una rappresentazione più generale del
+problema.
+
+Utilizzando la condizione di equilibrio, le equazioni
+\eqref{eq:domanda} e \eqref{eq:offerta} possono essere scritte come
+
+\begin{equation}
+    Q = \bar{Q}_d - aP
+\end{equation}
+
+e
+
+\begin{equation}
+    Q = \bar{Q}_s + bP.
+\end{equation}
+
+Portando le variabili endogene a sinistra e i termini noti a destra
+otteniamo
+
+\begin{equation}
+    Q + aP = \bar{Q}_d
+\end{equation}
+
+e
+
+\begin{equation}
+    Q - bP = \bar{Q}_s.
+\end{equation}
+
+Le due equazioni possono essere raccolte in un'unica espressione
+matriciale:
+
+\begin{equation}
+    \begin{pmatrix}
+        1 & a \\
+        1 & -b
+    \end{pmatrix}
+    \begin{pmatrix}
+        Q \\
+        P
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        \bar{Q}_d \\
+        \bar{Q}_s
+    \end{pmatrix}.
+    \label{eq:domanda_offerta_matrice}
+\end{equation}
+
+Definiamo ora
+
+\begin{equation}
+    A =
+    \begin{pmatrix}
+        1 & a \\
+        1 & -b
+    \end{pmatrix},
+    \qquad
+    x =
+    \begin{pmatrix}
+        Q \\
+        P
+    \end{pmatrix},
+    \qquad
+    d =
+    \begin{pmatrix}
+        \bar{Q}_d \\
+        \bar{Q}_s
+    \end{pmatrix}.
+\end{equation}
+
+Il modello può quindi essere scritto nella forma compatta
+
+\begin{equation}
+    \boxed{Ax=d}.
+    \label{eq:sistema_lineare_generale}
+\end{equation}
+
+La rappresentazione matriciale non modifica il contenuto economico
+del modello. Il prodotto matrice-vettore $Ax$ ricostruisce infatti,
+riga per riga, le equazioni originarie.
+
+Il vantaggio della rappresentazione \eqref{eq:sistema_lineare_generale}
+è che permette di riconoscere nel nostro semplice modello di domanda
+e offerta un problema matematico molto più generale: la soluzione
+di un sistema di equazioni lineari.
+
+
+\subsection{Il problema computazionale}
+
+Il modello di domanda e offerta ci ha quindi condotto a un problema
+che incontreremo ripetutamente nel corso.
+
+Data una matrice $A$ e un vettore $d$, vogliamo determinare il
+vettore $x$ tale che
+
+\begin{equation}
+    Ax=d.
+\end{equation}
+
+Nel nostro esempio, $x$ contiene soltanto due elementi, il prezzo
+e la quantità di equilibrio. Nei modelli più complessi, tuttavia,
+$x$ può contenere decine, centinaia o anche migliaia di incognite.
+
+Diventa allora necessario disporre di procedure sistematiche ed
+efficienti per risolvere il sistema.
+
+Prima di studiare queste procedure è opportuno richiamare alcuni
+concetti dell'algebra matriciale che saranno utilizzati nella
+costruzione degli algoritmi numerici. Essi costituiscono l'oggetto
+del prossimo paragrafo.
+
+\section{Strumenti di algebra matriciale}
+
+Nel paragrafo precedente abbiamo visto che un semplice modello di
+domanda e offerta può essere rappresentato mediante un sistema di
+equazioni lineari della forma
+
+\begin{equation}
+    Ax=b.
+    \label{eq:sistema_lineare}
+\end{equation}
+
+Questa rappresentazione sarà utilizzata ripetutamente nel corso.
+Prima di affrontare i metodi numerici che consentono di calcolare
+la soluzione di un sistema lineare, è quindi utile richiamare alcuni
+concetti fondamentali dell'algebra matriciale.
+
+L'obiettivo di questo capitolo non è fornire una trattazione completa
+dell'algebra lineare, ma introdurre gli strumenti che saranno
+necessari per comprendere i metodi numerici presentati nei capitoli
+successivi.
+
+
+\subsection{Matrici e vettori}
+
+Una matrice è un insieme di numeri organizzati in righe e colonne.
+Una matrice con $m$ righe e $n$ colonne può essere rappresentata come
+
+\begin{equation}
+A =
+\begin{pmatrix}
+a_{11} & a_{12} & \cdots & a_{1n} \\
+a_{21} & a_{22} & \cdots & a_{2n} \\
+\vdots & \vdots & \ddots & \vdots \\
+a_{m1} & a_{m2} & \cdots & a_{mn}
+\end{pmatrix}.
+\end{equation}
+
+L'elemento $a_{ij}$ indica l'elemento che si trova nella riga $i$
+e nella colonna $j$.
+
+Quando il numero delle righe coincide con quello delle colonne,
+la matrice viene detta \emph{quadrata}. Una matrice quadrata di
+dimensione $n$ appartiene all'insieme delle matrici
+$\mathbb{R}^{n\times n}$.
+
+Alcune particolari matrici quadrate avranno un ruolo importante
+nei metodi numerici che studieremo.
+
+
+\subsubsection{Matrice diagonale}
+
+Una matrice è detta \emph{diagonale} quando tutti gli elementi
+al di fuori della diagonale principale sono nulli:
+
+\begin{equation}
+D =
+\begin{pmatrix}
+d_{11} & 0      & \cdots & 0 \\
+0      & d_{22} & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0      & 0      & \cdots & d_{nn}
+\end{pmatrix}.
+\end{equation}
+
+
+\subsubsection{Matrici triangolari}
+
+Una matrice è \emph{triangolare superiore} quando tutti gli
+elementi al di sotto della diagonale principale sono nulli:
+
+\begin{equation}
+U =
+\begin{pmatrix}
+u_{11} & u_{12} & \cdots & u_{1n} \\
+0      & u_{22} & \cdots & u_{2n} \\
+\vdots & \ddots & \ddots & \vdots \\
+0      & \cdots & 0      & u_{nn}
+\end{pmatrix}.
+\end{equation}
+
+Analogamente, una matrice è \emph{triangolare inferiore} quando
+sono nulli tutti gli elementi al di sopra della diagonale:
+
+\begin{equation}
+L =
+\begin{pmatrix}
+l_{11} & 0      & \cdots & 0 \\
+l_{21} & l_{22} & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+l_{n1} & l_{n2} & \cdots & l_{nn}
+\end{pmatrix}.
+\end{equation}
+
+Queste matrici avranno particolare importanza quando introdurremo
+i metodi numerici per la soluzione dei sistemi lineari.
+
+
+\subsubsection{Matrice identità}
+
+Un caso particolare di matrice diagonale è la matrice identità,
+
+\begin{equation}
+I =
+\begin{pmatrix}
+1 & 0 & \cdots & 0 \\
+0 & 1 & \cdots & 0 \\
+\vdots & \vdots & \ddots & \vdots \\
+0 & 0 & \cdots & 1
+\end{pmatrix}.
+\end{equation}
+
+La matrice identità svolge nel prodotto tra matrici un ruolo
+analogo a quello svolto dal numero $1$ nella moltiplicazione
+tra numeri. Per una matrice $A$ di dimensioni compatibili vale
+
+\begin{equation}
+AI=IA=A.
+\end{equation}
+
+
+\subsection{Matrice trasposta e matrici simmetriche}
+
+La \emph{trasposta} di una matrice $A$ si ottiene scambiando
+le righe con le colonne. Essa viene indicata con $A^T$.
+
+Se, ad esempio,
+
+\begin{equation}
+A =
+\begin{pmatrix}
+a & b \\
+c & d
+\end{pmatrix},
+\end{equation}
+
+allora
+
+\begin{equation}
+A^T =
+\begin{pmatrix}
+a & c \\
+b & d
+\end{pmatrix}.
+\end{equation}
+
+La trasposta di una matrice triangolare superiore è quindi una
+matrice triangolare inferiore, e viceversa.
+
+Una matrice quadrata è detta \emph{simmetrica} quando coincide
+con la propria trasposta:
+
+\begin{equation}
+A=A^T.
+\end{equation}
+
+Equivalentemente, in una matrice simmetrica vale
+
+\begin{equation}
+a_{ij}=a_{ji}.
+\end{equation}
+
+La simmetria sarà una proprietà importante perché alcune tecniche
+numeriche possono essere utilizzate in modo particolarmente
+efficiente quando la matrice del sistema possiede questa
+caratteristica.
+
+
+\subsection{Operazioni tra matrici}
+
+Per utilizzare la rappresentazione matriciale dei modelli è
+necessario conoscere alcune operazioni fondamentali.
+
+
+\subsubsection{Somma}
+
+Due matrici $A$ e $B$ con le stesse dimensioni possono essere
+sommate elemento per elemento. Se
+
+\begin{equation}
+C=A+B,
+\end{equation}
+
+allora
+
+\begin{equation}
+c_{ij}=a_{ij}+b_{ij}.
+\end{equation}
+
+
+\subsubsection{Moltiplicazione per uno scalare}
+
+Se $d$ è un numero reale e $A$ una matrice, il prodotto
+
+\begin{equation}
+C=dA
+\end{equation}
+
+si ottiene moltiplicando ogni elemento di $A$ per $d$:
+
+\begin{equation}
+c_{ij}=d\,a_{ij}.
+\end{equation}
+
+
+\subsubsection{Prodotto tra matrici}
+
+Il prodotto tra matrici richiede maggiore attenzione. Date due
+matrici $A$ e $B$, il prodotto
+
+\begin{equation}
+C=AB
+\end{equation}
+
+è definito se il numero di colonne di $A$ coincide con il numero
+di righe di $B$.
+
+Ogni elemento della matrice risultante viene ottenuto moltiplicando
+gli elementi della corrispondente riga di $A$ per quelli della
+corrispondente colonna di $B$ e sommando i prodotti:
+
+\begin{equation}
+c_{ij}=\sum_z a_{iz}b_{zj}.
+\label{eq:prodotto_matrici}
+\end{equation}
+
+Se $A$ ha dimensione $m\times n$ e $B$ ha dimensione $n\times p$,
+la matrice risultante $C=AB$ avrà dimensione $m\times p$.
+
+È importante osservare che, in generale,
+
+\begin{equation}
+AB \neq BA.
+\end{equation}
+
+Il prodotto tra matrici non gode quindi della proprietà commutativa.
+
+Questa regola di moltiplicazione spiega perché il sistema
+
+\begin{equation}
+Ax=b
+\end{equation}
+
+rappresenta simultaneamente tutte le equazioni di un modello.
+Ogni riga della matrice $A$, moltiplicata per il vettore $x$,
+genera infatti una delle equazioni del sistema.
+
+
+\subsection{Alcune grandezze associate a una matrice}
+
+A una matrice quadrata possono essere associate alcune grandezze
+scalari. Tra queste consideriamo la traccia e il determinante.
+
+
+\subsubsection{Traccia}
+
+La \emph{traccia} di una matrice quadrata è la somma degli elementi
+della diagonale principale:
+
+\begin{equation}
+\operatorname{tr}(A)
+=
+\sum_{i=1}^{n}a_{ii}.
+\end{equation}
+
+Ad esempio, se
+
+\begin{equation}
+A=
+\begin{pmatrix}
+2 & 3 \\
+4 & 5
+\end{pmatrix},
+\end{equation}
+
+allora
+
+\begin{equation}
+\operatorname{tr}(A)=2+5=7.
+\end{equation}
+
+
+\subsubsection{Determinante}
+
+Il \emph{determinante} associa a una matrice quadrata $A$ un
+numero reale, indicato con
+
+\begin{equation}
+\det(A).
+\end{equation}
+
+Il determinante avrà un ruolo importante nello studio dei sistemi
+lineari perché consente, tra le altre cose, di stabilire se una
+matrice quadrata è invertibile.
+
+
+\subsection{Calcolo del determinante}
+
+Per una matrice generale di dimensione $n\times n$, il determinante
+può essere calcolato mediante lo sviluppo di Laplace.
+
+Scegliendo una qualsiasi riga $i$,
+
+\begin{equation}
+\det(A)
+=
+\sum_{j=1}^{n}
+a_{ij}(-1)^{i+j}\det(A_{ij}),
+\label{eq:laplace_riga}
+\end{equation}
+
+dove $A_{ij}$ è la matrice ottenuta eliminando da $A$ la riga $i$
+e la colonna $j$.
+
+In modo equivalente, scegliendo una colonna $j$,
+
+\begin{equation}
+\det(A)
+=
+\sum_{i=1}^{n}
+a_{ij}(-1)^{i+j}\det(A_{ij}).
+\label{eq:laplace_colonna}
+\end{equation}
+
+Il risultato non dipende dalla riga o dalla colonna scelta per
+effettuare lo sviluppo.
+
+La natura ricorsiva di questa procedura rende tuttavia il calcolo
+del determinante progressivamente più laborioso all'aumentare
+della dimensione della matrice. Questo aspetto sarà importante
+quando passeremo dalla soluzione algebrica di piccoli sistemi
+alla loro soluzione numerica.
+
+
+\subsubsection{Il caso delle matrici triangolari}
+
+Il calcolo del determinante è particolarmente semplice nel caso
+delle matrici diagonali e triangolari.
+
+Se $A$ è triangolare, vale infatti
+
+\begin{equation}
+\det(A)=\prod_{i=1}^{n}a_{ii}.
+\label{eq:det_triangolare}
+\end{equation}
+
+Il determinante è quindi semplicemente il prodotto degli elementi
+della diagonale principale.
+
+
+
+\subsection{Matrici singolari e non singolari}
+
+Una matrice quadrata $A$ è detta \emph{non singolare} quando
+
+\begin{equation}
+\det(A)\neq 0.
+\end{equation}
+
+Se invece
+
+\begin{equation}
+\det(A)=0,
+\end{equation}
+
+la matrice è detta \emph{singolare}.
+
+Questa distinzione è fondamentale per il problema che stiamo
+studiando. Una matrice $A$ possiede infatti una matrice inversa
+se e solo se è non singolare.
+
+Ricordando quanto detto al paragrafo precedente, possiamo dire che una matrice triangolare è non singolare se tutti gli elementi della sua diagonale sono diversi da zero.
+
+\subsection{La matrice inversa}
+
+L'inversa di una matrice quadrata $A$, indicata con $A^{-1}$,
+è definita come la matrice che soddisfa
+
+\begin{equation}
+A^{-1}A=I.
+\end{equation}
+
+dove $I$ è la matrice identità definita in precedenza.
+
+Vale inoltre
+
+\begin{equation}
+AA^{-1}=I.
+\end{equation}
+
+L'analogia con i numeri reali è immediata. Se $a\neq0$, il suo
+inverso $a^{-1}=1/a$ soddisfa
+
+\begin{equation}
+a^{-1}a=1.
+\end{equation}
+
+Come ricordato in precedenza, nel caso delle matrici, il ruolo del numero $1$ è svolto dalla
+matrice identità $I$.
+
+
+\subsection{Soluzione di un sistema mediante la matrice inversa}
+
+Torniamo ora al problema dal quale siamo partiti:
+
+\begin{equation}
+Ax=b.
+\end{equation}
+
+Se $A$ è non singolare, esiste $A^{-1}$. Possiamo quindi
+premoltiplicare entrambi i membri dell'equazione per $A^{-1}$:
+
+\begin{equation}
+A^{-1}Ax=A^{-1}b.
+\end{equation}
+
+Poiché
+
+\begin{equation}
+A^{-1}A=I,
+\end{equation}
+
+otteniamo
+
+\begin{equation}
+Ix=A^{-1}b.
+\end{equation}
+
+Infine, dato che $Ix=x$,
+
+\begin{equation}
+\boxed{x=A^{-1}b}.
+\label{eq:soluzione_inversa}
+\end{equation}
+
+Abbiamo quindi ottenuto una formula che, almeno dal punto di vista
+algebrico, permette di risolvere il sistema lineare.
+
+
+\subsection{Dal risultato al problema computazionale}
+
+La relazione
+
+\begin{equation}
+x=A^{-1}b
+\end{equation}
+
+fornisce una soluzione elegante del problema dal punto di vista
+matematico. Potrebbe quindi sembrare che il problema posto alla
+fine del capitolo precedente sia già risolto: basta calcolare
+l'inversa di $A$ e moltiplicarla per $b$.
+
+Dal punto di vista computazionale, tuttavia, rimane una questione
+fondamentale:
+
+Il calcolo della matrice inversa è agevole dal punto di vista computazionale?
+
+Purtroppo, il numero di operazioni che il calcolatore deve effettuare, cresce molto rapidamente all'aumentare della dimensione del sistema.
+
+Dunque, ancorché calcolare l'inversa sia possibile per piccoli sistemi, occorre identificare strategie alternative. 
+
+%Per sistemi di piccole dimensioni la distinzione può sembrare poco importante. Quando il numero delle equazioni cresce, invece, il numero di operazioni richieste e il modo in cui esse vengono organizzate diventano elementi centrali.
+
+La formula $x=A^{-1}b$ deve quindi essere interpretata innanzitutto
+come una caratterizzazione matematica della soluzione. Non implica
+necessariamente che il calcolo esplicito dell'inversa sia il modo
+più conveniente per ottenere numericamente $x$.
+
+Questo ci conduce direttamente al problema affrontato nel prossimo
+capitolo: individuare procedure più adatte per risolvere un sistema
+lineare senza dover necessariamente calcolare esplicitamente
+$A^{-1}$.
+
+\section{Soluzione di sistemi lineari mediante eliminazione gaussiana}
+\label{sec:eliminazione-gaussiana}
+
+Nella sezione precedente abbiamo visto che, se la matrice $A$ è
+non singolare, il sistema lineare
+
+\begin{equation}
+    Ax=b
+\end{equation}
+
+ammette una soluzione unica, che può essere espressa formalmente come
+
+\begin{equation}
+    x=A^{-1}b.
+\end{equation}
+
+Questa espressione caratterizza la soluzione dal punto di vista
+matematico, ma non implica che il calcolo esplicito della matrice
+inversa rappresenti il modo più conveniente per determinarla.
+
+Un'altra possibilità, nota dall'algebra lineare, è rappresentata
+dalla regola di Cramer. Per un sistema di $n$ equazioni in $n$
+incognite, ciascun elemento della soluzione può essere scritto come
+
+\begin{equation}
+    x_i =
+    \frac{\det(A_i)}{\det(A)},
+    \qquad i=1,\ldots,n,
+    \label{eq:cramer}
+\end{equation}
+
+dove $A_i$ è la matrice ottenuta sostituendo la $i$-esima colonna
+di $A$ con il vettore $b$.
+
+Anche questa formula fornisce una caratterizzazione esatta della
+soluzione. Tuttavia, il suo utilizzo richiede il calcolo di numerosi
+determinanti. Il costo computazionale cresce quindi molto rapidamente
+all'aumentare della dimensione del sistema. La regola di Cramer è
+utile per comprendere alcune proprietà teoriche dei sistemi lineari,
+ma non costituisce un metodo efficiente per la soluzione numerica di
+sistemi di grandi dimensioni.
+
+Occorre quindi cercare una procedura che permetta di ottenere la
+soluzione senza calcolare esplicitamente l'inversa di $A$ e senza
+dover calcolare un determinante per ogni incognita.
+
+Una delle procedure fondamentali per raggiungere questo obiettivo è
+l'\emph{eliminazione gaussiana}.
+
+
+\subsection{L'idea dell'eliminazione gaussiana}
+
+L'idea alla base dell'eliminazione gaussiana consiste nel trasformare
+il sistema originario in un sistema equivalente, ma più semplice da
+risolvere.
+
+In particolare, si cerca di trasformare la matrice del sistema in una
+matrice triangolare. Come vedremo, un sistema caratterizzato da una
+matrice triangolare può essere risolto in modo particolarmente
+semplice, procedendo sequenzialmente da un'equazione all'altra.
+
+Per descrivere contemporaneamente i coefficienti del sistema e i
+termini noti, è conveniente costruire la \emph{matrice aumentata}
+
+\begin{equation}
+    C = [A \mid b].
+    \label{eq:matrice-aumentata}
+\end{equation}
+
+L'eliminazione gaussiana modifica progressivamente questa matrice
+attraverso operazioni che non modificano la soluzione del sistema.
+In questo modo otteniamo una successione di sistemi equivalenti,
+fino a raggiungere una forma che può essere risolta facilmente.
+
+
+\subsection{Operazioni elementari sulle righe}
+
+Le trasformazioni utilizzate nell'eliminazione gaussiana sono
+costituite da tre operazioni elementari sulle righe della matrice
+aumentata:
+
+\begin{enumerate}
+    \item scambiare la posizione di due righe;
+    
+    \item moltiplicare tutti gli elementi di una riga per uno
+    scalare non nullo;
+    
+    \item sostituire una riga con la somma della stessa riga e
+    di un multiplo di un'altra riga.
+\end{enumerate}
+
+Queste operazioni trasformano il sistema in un sistema equivalente:
+cambiano cioè la forma nella quale le equazioni sono rappresentate,
+ma non l'insieme delle loro soluzioni.
+
+La terza operazione è particolarmente importante. Scegliendo
+opportunamente il coefficiente con il quale moltiplicare una riga,
+possiamo infatti annullare uno degli elementi della matrice.
+Ripetendo questa operazione possiamo progressivamente ottenere una
+matrice triangolare.
+
+
+\subsection{Applicazione al modello di domanda e offerta}
+
+Riprendiamo il modello di domanda e offerta introdotto nella
+Sezione~\ref{sec:domanda-offerta}. Il sistema è
+
+\begin{equation}
+    Ax=b,
+\end{equation}
+
+con
+
+\begin{equation}
+    A=
+    \begin{pmatrix}
+        1 & a\\
+        1 & -b
+    \end{pmatrix},
+    \qquad
+    x=
+    \begin{pmatrix}
+        Q\\
+        P
+    \end{pmatrix},
+    \qquad
+    b=
+    \begin{pmatrix}
+        \bar Q_d\\
+        \bar Q_s
+    \end{pmatrix}.
+\end{equation}
+
+Utilizzando i valori
+
+\begin{equation}
+    \bar Q_d=1000,
+    \qquad
+    \bar Q_s=250,
+    \qquad
+    a=10,
+    \qquad
+    b=5,
+\end{equation}
+
+otteniamo
+
+\begin{equation}
+    \begin{pmatrix}
+        1 & 10\\
+        1 & -5
+    \end{pmatrix}
+    \begin{pmatrix}
+        Q\\
+        P
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        1000\\
+        250
+    \end{pmatrix}.
+    \label{eq:sistema-domanda-offerta-gauss}
+\end{equation}
+
+La corrispondente matrice aumentata è
+
+\begin{equation}
+    C=[A\mid b]
+    =
+    \left(
+    \begin{array}{cc|c}
+        1 & 10 & 1000\\
+        1 & -5 & 250
+    \end{array}
+    \right).
+    \label{eq:matrice-aumentata-domanda-offerta}
+\end{equation}
+
+Il nostro obiettivo è trasformare questa matrice in modo da
+eliminare una delle due incognite da una delle equazioni.
+
+
+\subsection{Una prima trasformazione}
+
+Una prima possibilità consiste nel sostituire la prima riga con la
+somma della prima riga e due volte la seconda riga. Indicando le
+righe con $R_1$ e $R_2$, l'operazione può essere scritta come
+
+\begin{equation}
+    R_1 \leftarrow R_1+2R_2.
+\end{equation}
+
+Applicando l'operazione alla matrice aumentata otteniamo
+
+\begin{equation}
+    \left(
+    \begin{array}{cc|c}
+        1 & 10 & 1000\\
+        1 & -5 & 250
+    \end{array}
+    \right)
+    \longrightarrow
+    \left(
+    \begin{array}{cc|c}
+        3 & 0 & 1500\\
+        1 & -5 & 250
+    \end{array}
+    \right).
+\end{equation}
+
+La prima equazione del nuovo sistema è quindi
+
+\begin{equation}
+    3Q=1500,
+\end{equation}
+
+da cui otteniamo immediatamente
+
+\begin{equation}
+    Q=500.
+\end{equation}
+
+Conosciuto $Q$, possiamo utilizzare la seconda equazione,
+
+\begin{equation}
+    Q-5P=250,
+\end{equation}
+
+e sostituire il valore appena calcolato:
+
+\begin{equation}
+    500-5P=250.
+\end{equation}
+
+Da cui
+
+\begin{equation}
+    P=50.
+\end{equation}
+
+Otteniamo pertanto nuovamente la soluzione
+
+\begin{equation}
+    x^*=
+    \begin{pmatrix}
+        500\\
+        50
+    \end{pmatrix}.
+\end{equation}
+
+
+\subsection{Una seconda trasformazione}
+
+La sequenza di operazioni utilizzata per risolvere un sistema non è
+necessariamente unica. Nel nostro semplice esempio possiamo, ad
+esempio, scegliere di sostituire la prima riga con la differenza tra
+la prima e la seconda riga:
+
+\begin{equation}
+    R_1 \leftarrow R_1-R_2.
+\end{equation}
+
+Otteniamo
+
+\begin{equation}
+    \left(
+    \begin{array}{cc|c}
+        1 & 10 & 1000\\
+        1 & -5 & 250
+    \end{array}
+    \right)
+    \longrightarrow
+    \left(
+    \begin{array}{cc|c}
+        0 & 15 & 750\\
+        1 & -5 & 250
+    \end{array}
+    \right).
+\end{equation}
+
+La prima equazione è ora
+
+\begin{equation}
+    15P=750,
+\end{equation}
+
+da cui
+
+\begin{equation}
+    P=50.
+\end{equation}
+
+Sostituendo questo valore nella seconda equazione,
+
+\begin{equation}
+    Q-5P=250,
+\end{equation}
+
+otteniamo
+
+\begin{equation}
+    Q-5(50)=250,
+\end{equation}
+
+e quindi
+
+\begin{equation}
+    Q=500.
+\end{equation}
+
+Anche questa sequenza di trasformazioni conduce dunque alla stessa
+soluzione:
+
+\begin{equation}
+    Q^*=500,
+    \qquad
+    P^*=50.
+\end{equation}
+
+
+\subsection{Dall'esempio all'algoritmo}
+
+Il sistema di domanda e offerta contiene soltanto due equazioni e
+una singola operazione di eliminazione è sufficiente per renderlo
+immediatamente risolvibile. Tuttavia, la stessa idea può essere
+applicata a sistemi con un numero maggiore di equazioni.
+
+In termini generali, l'eliminazione gaussiana utilizza le operazioni
+elementari sulle righe per eliminare progressivamente le incognite
+dalle diverse equazioni. L'obiettivo è trasformare il sistema
+originario
+
+\begin{equation}
+    Ax=b
+\end{equation}
+
+in un sistema equivalente
+
+\begin{equation}
+    Ux=c,
+\end{equation}
+
+nel quale $U$ è una matrice triangolare superiore.
+
+La trasformazione non modifica la soluzione del problema, ma produce
+un sistema la cui struttura rende molto più semplice il calcolo delle
+incognite.
+
+Una volta raggiunta la forma triangolare, la soluzione può essere
+determinata partendo dall'ultima equazione e procedendo verso la
+prima. Questa procedura prende il nome di \emph{sostituzione
+all'indietro}.
+
+Nel caso di una matrice triangolare inferiore si può procedere in
+modo analogo, partendo dalla prima equazione. La procedura prende
+in questo caso il nome di \emph{sostituzione in avanti}.
+
+
+\subsection{Soluzione mediante software}
+
+Nelle applicazioni non è normalmente necessario eseguire
+manualmente tutte le operazioni di eliminazione. I principali
+software per il calcolo scientifico dispongono di funzioni
+specifiche per la soluzione di sistemi lineari.
+
+Ad esempio, in \textsf{R} il sistema può essere risolto mediante
+
+\begin{verbatim}
+A <- matrix(c(1,10,1,-5), ncol=2, byrow=TRUE)
+b <- c(1000,250)
+solve(A,b)
+\end{verbatim}
+
+In \textsf{Python}, utilizzando \textsf{NumPy}, possiamo scrivere
+
+\begin{verbatim}
+import numpy as np
+
+A = [[1,10],
+     [1,-5]]
+
+b = [[1000],
+     [250]]
+
+np.linalg.solve(A,b)
+\end{verbatim}
+
+mentre in \textsf{Julia} e \textsf{Octave} il sistema può essere
+risolto attraverso l'operatore \texttt{\textbackslash}:
+
+\begin{verbatim}
+A = [1 10; 1 -5]
+b = [1000; 250]
+A\b
+\end{verbatim}
+
+In tutti i casi il risultato è
+
+\begin{equation}
+    x^*=
+    \begin{pmatrix}
+        500\\
+        50
+    \end{pmatrix}.
+\end{equation}
+
+L'utilizzo di una funzione software nasconde all'utente molte delle
+operazioni numeriche necessarie per ottenere la soluzione. Comprendere
+l'eliminazione gaussiana rimane tuttavia importante, perché permette
+di capire la logica sulla quale si basano i metodi più efficienti
+che utilizzeremo successivamente.
+
+\section{Il modello di domanda e offerta con scambi tra due paesi}
+\label{sec:commercio-due-paesi}
+
+Il modello di domanda e offerta introdotto nella
+Sezione~\ref{sec:domanda-offerta} può essere esteso considerando
+due paesi che producono e consumano lo stesso bene e che hanno
+la possibilità di commerciare tra loro.
+
+Questa estensione permette di utilizzare gli strumenti introdotti
+nelle sezioni precedenti per studiare un problema economico più
+articolato. In particolare, vogliamo determinare la direzione degli
+scambi, il prezzo che si forma in presenza di commercio
+internazionale e la quantità scambiata tra i due paesi.
+
+Successivamente utilizzeremo il modello per studiare gli effetti
+di due interventi di politica commerciale: una tariffa sulle
+importazioni e un sussidio alle esportazioni.
+
+
+\subsection{I mercati nazionali}
+
+Consideriamo due paesi, che indichiamo con $H$ (\emph{Home}) e
+$F$ (\emph{Foreign}).
+
+Nel paese $H$, domanda e offerta sono descritte dalle funzioni
+
+\begin{equation}
+    Q_{d,H} = \bar{Q}_{d,H} - a_H P_H,
+    \label{eq:domanda-H}
+\end{equation}
+
+\begin{equation}
+    Q_{s,H} = \bar{Q}_{s,H} + b_H P_H.
+    \label{eq:offerta-H}
+\end{equation}
+
+Analogamente, nel paese $F$ abbiamo
+
+\begin{equation}
+    Q_{d,F} = \bar{Q}_{d,F} - a_F P_F,
+    \label{eq:domanda-F}
+\end{equation}
+
+\begin{equation}
+    Q_{s,F} = \bar{Q}_{s,F} + b_F P_F.
+    \label{eq:offerta-F}
+\end{equation}
+
+Se i due paesi non possono commerciare tra loro, ciascun mercato
+raggiunge autonomamente il proprio equilibrio. Possiamo quindi
+calcolare un prezzo di equilibrio per $H$, che indichiamo con
+$P_{e,H}$, e un prezzo di equilibrio per $F$, indicato con
+$P_{e,F}$.
+
+Il confronto tra questi due prezzi permette di determinare quale
+paese avrà convenienza a importare il bene e quale avrà convenienza
+a esportarlo.
+
+
+\subsection{Dall'autarchia al commercio internazionale}
+
+Supponiamo che il prezzo di equilibrio in $H$ sia maggiore del
+prezzo di equilibrio in $F$:
+
+\begin{equation}
+    P_{e,H} > P_{e,F}.
+    \label{eq:prezzi-autarchia}
+\end{equation}
+
+Prima dell'apertura al commercio, il bene è quindi relativamente
+più costoso in $H$ e relativamente meno costoso in $F$.
+
+Se diventa possibile commerciare tra i due paesi, i consumatori
+di $H$ hanno convenienza ad acquistare il bene prodotto in $F$.
+Allo stesso tempo, i produttori di $F$ hanno convenienza a vendere
+parte della propria produzione nel mercato di $H$.
+
+Il paese $H$ diventa quindi importatore, mentre il paese $F$
+diventa esportatore.
+
+Per determinare l'equilibrio internazionale dobbiamo costruire
+una domanda e un'offerta sul mercato mondiale a partire dalle
+curve di domanda e offerta dei due mercati nazionali.
+
+
+\subsection{La domanda di importazioni}
+
+La quantità che il paese $H$ desidera importare corrisponde alla
+differenza tra la quantità domandata e quella prodotta internamente.
+Definiamo quindi la domanda di importazioni di $H$ come
+
+\begin{equation}
+    M_H = Q_{d,H} - Q_{s,H}.
+\end{equation}
+
+Sostituendo le funzioni di domanda e offerta otteniamo
+
+\begin{align}
+    M_H
+    &=
+    \bar{Q}_{d,H}-a_HP_H
+    -
+    \left(\bar{Q}_{s,H}+b_HP_H\right)
+    \\
+    &=
+    \left(\bar{Q}_{d,H}-\bar{Q}_{s,H}\right)
+    -
+    \left(a_H+b_H\right)P_H.
+\end{align}
+
+Possiamo semplificare la notazione definendo
+
+\begin{equation}
+    \bar{Q}_{d,W}
+    =
+    \bar{Q}_{d,H}-\bar{Q}_{s,H}
+\end{equation}
+
+e
+
+\begin{equation}
+    a_W=a_H+b_H.
+\end{equation}
+
+La domanda sul mercato internazionale può quindi essere scritta
+come
+
+\begin{equation}
+    M_H=\bar{Q}_{d,W}-a_WP_W.
+    \label{eq:domanda-mondiale}
+\end{equation}
+
+Essa è decrescente rispetto al prezzo: all'aumentare del prezzo
+internazionale, la differenza tra domanda e offerta interna di $H$
+si riduce e, di conseguenza, diminuisce la quantità che il paese
+desidera importare.
+
+
+\subsection{L'offerta di esportazioni}
+
+Il paese $F$, al contrario, può esportare la parte della propria
+produzione che eccede la domanda interna.
+
+Definiamo quindi l'offerta di esportazioni come
+
+\begin{equation}
+    E_F=Q_{s,F}-Q_{d,F}.
+\end{equation}
+
+Sostituendo le rispettive funzioni otteniamo
+
+\begin{align}
+    E_F
+    &=
+    \bar{Q}_{s,F}+b_FP_F
+    -
+    \left(\bar{Q}_{d,F}-a_FP_F\right)
+    \\
+    &=
+    \left(\bar{Q}_{s,F}-\bar{Q}_{d,F}\right)
+    +
+    \left(b_F+a_F\right)P_F.
+\end{align}
+
+Definiamo
+
+\begin{equation}
+    \bar{Q}_{s,W}
+    =
+    \bar{Q}_{s,F}-\bar{Q}_{d,F}
+\end{equation}
+
+e
+
+\begin{equation}
+    b_W=b_F+a_F.
+\end{equation}
+
+L'offerta sul mercato internazionale diventa quindi
+
+\begin{equation}
+    E_F=\bar{Q}_{s,W}+b_WP_W.
+    \label{eq:offerta-mondiale}
+\end{equation}
+
+A differenza della domanda di importazioni, l'offerta di
+esportazioni è crescente rispetto al prezzo.
+
+
+\subsection{L'equilibrio sul mercato internazionale}
+
+In equilibrio, la quantità che $H$ desidera importare deve
+coincidere con la quantità che $F$ desidera esportare:
+
+\begin{equation}
+    M_H=E_F=Q_W.
+\end{equation}
+
+Il problema può pertanto essere scritto come
+
+\begin{equation}
+    Q_W=\bar{Q}_{d,W}-a_WP_W,
+\end{equation}
+
+\begin{equation}
+    Q_W=\bar{Q}_{s,W}+b_WP_W.
+\end{equation}
+
+Ritroviamo quindi esattamente la stessa struttura del modello di
+domanda e offerta studiato nella Sezione~\ref{sec:domanda-offerta}.
+Anche il mercato internazionale può essere rappresentato mediante
+un sistema lineare:
+
+\begin{equation}
+    \begin{pmatrix}
+        1 & a_W\\
+        1 & -b_W
+    \end{pmatrix}
+    \begin{pmatrix}
+        Q_W\\
+        P_W
+    \end{pmatrix}
+    =
+    \begin{pmatrix}
+        \bar{Q}_{d,W}\\
+        \bar{Q}_{s,W}
+    \end{pmatrix}.
+    \label{eq:sistema-mercato-internazionale}
+\end{equation}
+
+La soluzione del sistema determina la quantità scambiata
+$Q_W^*$ e il prezzo internazionale $P_W^*$.
+
+In assenza di costi o impedimenti al commercio, il prezzo
+internazionale vale per entrambi i paesi:
+
+\begin{equation}
+    P_H=P_F=P_W^*.
+\end{equation}
+
+Al prezzo $P_W^*$, nel paese $H$ la domanda supera la produzione
+nazionale esattamente di $Q_W^*$, mentre nel paese $F$ la produzione
+supera la domanda interna della stessa quantità. Il paese $F$
+esporta pertanto $Q_W^*$ unità del bene verso il paese $H$.
+
+
+\subsection{Introduzione di una tariffa}
+
+Supponiamo ora che il paese $H$ voglia limitare le importazioni
+introducendo una tariffa $t$ per ogni unità del bene importata da
+$F$.
+
+In assenza della tariffa, un produttore di $F$ può vendere il bene
+nel proprio paese oppure in $H$ allo stesso prezzo internazionale.
+Con l'introduzione della tariffa, invece, l'esportatore deve
+sostenere un costo aggiuntivo pari a $t$ per ogni unità venduta
+in $H$.
+
+Immediatamente dopo l'introduzione della tariffa, esportare verso
+$H$ diventa quindi meno conveniente. La riduzione degli scambi
+produce due effetti.
+
+Nel paese $H$ si genera un eccesso di domanda e il prezzo tende
+ad aumentare. Nel paese $F$ si genera invece un eccesso di offerta
+e il prezzo tende a diminuire.
+
+Il processo continua fino a quando la differenza tra i prezzi nei
+due paesi è esattamente pari alla tariffa:
+
+\begin{equation}
+    P_H=P_F+t.
+    \label{eq:tariffa-prezzi}
+\end{equation}
+
+La tariffa crea quindi un divario tra i prezzi nazionali e riduce
+la quantità scambiata rispetto all'equilibrio di libero commercio.
+
+
+\subsection{Introduzione di un sussidio alle esportazioni}
+
+Consideriamo ora una politica differente. Supponiamo che il paese
+$F$ eroghi ai propri produttori un sussidio $t$ per ogni unità
+esportata verso $H$.
+
+Il sussidio aumenta la convenienza a vendere nel mercato estero.
+Le imprese di $F$ cercano quindi di aumentare le esportazioni verso
+$H$.
+
+Nel paese $F$ si genera una pressione al rialzo sul prezzo interno,
+mentre in $H$ la maggiore disponibilità di beni importati esercita
+una pressione al ribasso sul prezzo.
+
+Il processo continua fino a quando
+
+\begin{equation}
+    P_F=P_H+t.
+    \label{eq:sussidio-prezzi}
+\end{equation}
+
+A differenza della tariffa, il sussidio determina quindi una
+quantità scambiata superiore a quella che si avrebbe in assenza
+dell'intervento.
+
+
+\subsection{Dal modello economico a una procedura di calcolo}
+
+Possiamo ora tradurre il ragionamento economico in una sequenza
+ordinata di operazioni.
+
+Date le curve di domanda e offerta dei due paesi, la procedura
+consiste innanzitutto nel costruire le curve di domanda e offerta
+sul mercato internazionale e nel determinarne l'equilibrio.
+
+Indichiamo con $Q_{\mathrm{ex}}$ la quantità che viene effettivamente
+scambiata dopo l'intervento. Nel caso di una tariffa scegliamo una
+quantità inferiore alla quantità di libero scambio:
+
+\begin{equation}
+    Q_{\mathrm{ex}}<Q_W^*,
+\end{equation}
+
+mentre nel caso di un sussidio consideriamo
+
+\begin{equation}
+    Q_{\mathrm{ex}}>Q_W^*.
+\end{equation}
+
+Una volta determinata $Q_{\mathrm{ex}}$, il prezzo nel paese $H$
+può essere ricavato dalla curva di domanda internazionale, mentre
+il prezzo nel paese $F$ può essere ricavato dalla curva di offerta
+internazionale.
+
+La differenza tra i due prezzi determina l'ammontare della tariffa
+o del sussidio:
+
+\begin{equation}
+    \mathrm{priceGap}
+    =
+    \left|P_H-P_F\right|.
+    \label{eq:price-gap}
+\end{equation}
+
+Abbiamo così trasformato il modello teorico in una vera e propria
+\emph{procedura di calcolo}: a partire da determinati dati di input,
+eseguiamo una sequenza di operazioni per ottenere gli output di
+interesse.
+
+
+\subsection{Valutazione degli effetti sul benessere}
+
+Conoscere i nuovi prezzi e le quantità scambiate permette di
+studiare gli effetti delle politiche commerciali sul benessere
+dei due paesi.
+
+Come nel modello di un singolo mercato, consideriamo il surplus
+dei consumatori e quello dei produttori. In questo caso dobbiamo
+però calcolarli separatamente per $H$ e per $F$, utilizzando i
+rispettivi prezzi nazionali.
+
+
+\subsubsection{Surplus dei consumatori}
+
+Consideriamo genericamente uno dei due paesi e indichiamo con
+$P_{\mathrm{naz}}$ il prezzo nazionale.
+
+Utilizzando la curva di domanda
+
+\begin{equation}
+    Q_d=\bar Q_d-aP,
+\end{equation}
+
+determiniamo innanzitutto la quantità domandata al prezzo
+$P_{\mathrm{naz}}$:
+
+\begin{equation}
+    Q_{d,\mathrm{naz}}
+    =
+    \bar Q_d-aP_{\mathrm{naz}}.
+\end{equation}
+
+Indicando con $P_{\max}$ l'intercetta della curva di domanda
+sull'asse dei prezzi, il surplus dei consumatori è
+
+\begin{equation}
+    CS
+    =
+    \frac{
+        Q_{d,\mathrm{naz}}
+        \left(P_{\max}-P_{\mathrm{naz}}\right)
+    }{2}.
+    \label{eq:consumer-surplus-internazionale}
+\end{equation}
+
+
+\subsubsection{Surplus dei produttori}
+
+Utilizzando la curva di offerta
+
+\begin{equation}
+    Q_s=\bar Q_s+bP,
+\end{equation}
+
+calcoliamo la quantità offerta al prezzo nazionale:
+
+\begin{equation}
+    Q_{s,\mathrm{naz}}
+    =
+    \bar Q_s+bP_{\mathrm{naz}}.
+\end{equation}
+
+Quando $\bar Q_s>0$, il surplus dei produttori può essere
+calcolato come
+
+\begin{equation}
+    PS
+    =
+    \bar Q_s P_{\mathrm{naz}}
+    +
+    \frac{
+        \left(Q_{s,\mathrm{naz}}-\bar Q_s\right)
+        P_{\mathrm{naz}}
+    }{2}.
+    \label{eq:producer-surplus-positive-intercept}
+\end{equation}
+
+Se invece l'intercetta quantitativa dell'offerta non è positiva,
+possiamo individuare l'intercetta della curva di offerta sull'asse
+dei prezzi, $P_{\min}$, e calcolare
+
+\begin{equation}
+    PS
+    =
+    \frac{
+        Q_{s,\mathrm{naz}}
+        \left(P_{\mathrm{naz}}-P_{\min}\right)
+    }{2}.
+    \label{eq:producer-surplus-negative-intercept}
+\end{equation}
+
+
+\subsection{Il surplus del governo}
+
+L'introduzione di una tariffa o di un sussidio coinvolge anche il
+governo.
+
+Nel caso della tariffa, il governo di $H$ riceve un gettito pari
+alla tariffa unitaria moltiplicata per la quantità importata:
+
+\begin{equation}
+    GS_H
+    =
+    \mathrm{priceGap}\,Q_{\mathrm{ex}},
+\end{equation}
+
+mentre
+
+\begin{equation}
+    GS_F=0.
+\end{equation}
+
+Nel caso del sussidio, il governo di $F$ sostiene invece una spesa.
+Possiamo rappresentarla come un surplus negativo:
+
+\begin{equation}
+    GS_F
+    =
+    -\mathrm{priceGap}\,Q_{\mathrm{ex}},
+\end{equation}
+
+mentre
+
+\begin{equation}
+    GS_H=0.
+\end{equation}
+
+Per ciascun paese il surplus totale è quindi dato dalla somma di
+surplus dei consumatori, surplus dei produttori e surplus del
+governo:
+
+\begin{equation}
+    TS=CS+PS+GS.
+    \label{eq:total-surplus-trade}
+\end{equation}
+
+
+\subsection{Confrontare scenari alternativi}
+
+Per valutare l'effetto di una politica commerciale non è sufficiente
+calcolare il surplus dopo l'intervento. È necessario confrontarlo
+con una situazione di riferimento.
+
+Nel caso di una tariffa, ad esempio, dobbiamo calcolare per ciascun
+paese il surplus totale prima e dopo la sua introduzione.
+
+Per il paese $H$ avremo
+
+\begin{equation}
+    \Delta TS_H
+    =
+    TS_H^{\mathrm{dopo}}
+    -
+    TS_H^{\mathrm{prima}},
+\end{equation}
+
+mentre per il paese $F$
+
+\begin{equation}
+    \Delta TS_F
+    =
+    TS_F^{\mathrm{dopo}}
+    -
+    TS_F^{\mathrm{prima}}.
+\end{equation}
+
+Il confronto tra questi valori permette di valutare come
+l'intervento modifica il benessere nei due paesi.
+
+Questo esempio evidenzia una caratteristica tipica dell'analisi
+computazionale. Una stessa procedura, come il calcolo dei surplus,
+deve essere eseguita ripetutamente: per paesi diversi, per prezzi
+diversi e per scenari diversi.
+
+Riscrivere ogni volta le stesse operazioni sarebbe inefficiente
+e aumenterebbe la possibilità di commettere errori. È quindi utile
+organizzare la procedura di calcolo in modo che possa essere
+riutilizzata.
+
+
+\subsection{Funzioni definite dall'utente}
+
+Una \emph{funzione} permette di raccogliere una sequenza di
+operazioni che deve essere eseguita più volte.
+
+Una funzione riceve uno o più valori di \emph{input}, li elabora
+attraverso una procedura definita dall'utente e restituisce uno o
+più valori di \emph{output}.
+
+Nel nostro caso, una procedura generale per il calcolo dei surplus
+può ricevere come input:
+
+\begin{itemize}
+    \item il prezzo del bene;
+    \item i parametri della curva di domanda;
+    \item i parametri della curva di offerta.
+\end{itemize}
+
+Utilizzando questi valori, la funzione calcola le quantità domandate
+e offerte e restituisce come output il surplus dei consumatori e il
+surplus dei produttori.
+
+In forma schematica possiamo quindi rappresentare la funzione come
+
+\begin{equation}
+\boxed{
+\text{input}
+\longrightarrow
+\text{procedura di calcolo}
+\longrightarrow
+\text{output}
+}
+\end{equation}
+
+In \textsf{R}, la struttura generale di una funzione definita
+dall'utente è
+
+\begin{verbatim}
+nomeFunzione <- function(input1, input2, ...) {
+
+    # operazioni sugli input
+
+    return(output)
+}
+\end{verbatim}
+
+Una volta definita, la stessa funzione può essere richiamata
+assegnando valori differenti agli input:
+
+\begin{verbatim}
+output <- nomeFunzione(valore1, valore2, ...)
+\end{verbatim}
+
+Il vantaggio non consiste soltanto nel ridurre la quantità di
+codice. La funzione separa una procedura generale dai valori
+specifici sui quali viene applicata. Possiamo quindi utilizzare
+lo stesso algoritmo per analizzare paesi, prezzi e scenari
+differenti senza dover riscrivere ogni volta la procedura di
+calcolo.
+
+
+\subsection{Dal problema economico all'algoritmo}
+
+L'estensione del modello di domanda e offerta a due paesi permette
+di mettere in evidenza una distinzione importante.
+
+Il \emph{modello economico} specifica le relazioni tra domanda,
+offerta, prezzi e quantità e descrive le condizioni che
+caratterizzano l'equilibrio. L'\emph{algoritmo} specifica invece
+la sequenza di operazioni attraverso la quale, a partire dai
+parametri del modello, il computer determina i risultati.
+
+Nel problema considerato in questa sezione possiamo sintetizzare
+il procedimento come
+
+\begin{equation}
+\boxed{
+\begin{array}{c}
+\text{domanda e offerta nazionali}\\
+\downarrow\\
+\text{prezzi di autarchia}\\
+\downarrow\\
+\text{domanda di importazioni e offerta di esportazioni}\\
+\downarrow\\
+\text{equilibrio internazionale}\\
+\downarrow\\
+\text{tariffa o sussidio}\\
+\downarrow\\
+\text{nuovi prezzi e quantità}\\
+\downarrow\\
+\text{surplus e variazione del benessere}
+\end{array}}
+\end{equation}
+
+Il problema economico è quindi tradotto in una successione
+ordinata di operazioni che possono essere implementate in un
+programma. Questa traduzione dal modello all'algoritmo costituisce
+uno degli elementi centrali dell'economia computazionale.
+
+\section{Il modello IS--LM e la fattorizzazione LU}
+\label{sec:islm-lu}
+
+Nelle sezioni precedenti abbiamo visto come un problema economico
+possa essere rappresentato mediante un sistema di equazioni lineari
+
+\begin{equation}
+    Ax=b.
+\end{equation}
+
+Abbiamo inoltre introdotto l'eliminazione gaussiana, che permette
+di trasformare il sistema originario in un sistema equivalente
+caratterizzato da una matrice triangolare. La struttura triangolare
+è particolarmente utile perché consente di determinare le incognite
+in modo sequenziale.
+
+Consideriamo ora un modello economico più articolato. Il modello
+IS--LM in economia chiusa contiene più variabili endogene e ci
+permette di mostrare come la soluzione di un sistema lineare possa
+essere organizzata attraverso la \emph{fattorizzazione LU}.
+
+
+\subsection{Il modello IS--LM}
+
+Consideriamo il seguente modello:
+
+\begin{align}
+    Y &= C + I + \hat{G},
+    \label{eq:islm-reddito}\\
+    C &= \bar{C} + c(Y-\hat{T}),
+    \label{eq:islm-consumo}\\
+    I &= \bar{I} - bR,
+    \label{eq:islm-investimento}\\
+    \frac{\hat{M}}{\bar{P}} &= kY-hR.
+    \label{eq:islm-moneta}
+\end{align}
+
+Le variabili endogene sono
+
+\begin{equation}
+    Y,\qquad C,\qquad I,\qquad R,
+\end{equation}
+
+dove $Y$ rappresenta il reddito, $C$ il consumo, $I$
+l'investimento e $R$ il tasso di interesse.
+
+Il modello contiene inoltre alcune variabili esogene. Seguendo la
+distinzione adottata nel modello, $\bar C$, $\bar I$ e $\bar P$
+sono considerate variabili esogene non controllabili, mentre
+
+\begin{equation}
+    \hat G,\qquad \hat T,\qquad \hat M
+\end{equation}
+
+sono variabili esogene controllabili dalle autorità.
+
+Infine,
+
+\begin{equation}
+    c,\qquad b,\qquad k,\qquad h
+\end{equation}
+
+sono i parametri del modello.
+
+Le quattro equazioni descrivono simultaneamente il funzionamento
+del mercato dei beni e del mercato della moneta. Il problema
+consiste nel determinare i valori di $Y$, $C$, $I$ e $R$ che
+soddisfano contemporaneamente tutte le relazioni del modello.
+
+
+\subsection{Dal modello economico al sistema lineare}
+
+Per utilizzare gli strumenti numerici introdotti in precedenza,
+riorganizziamo le equazioni portando le variabili endogene a
+sinistra e i termini esogeni a destra.
+
+Dall'equazione del reddito otteniamo
+
+\begin{equation}
+    Y-C-I=\hat G.
+\end{equation}
+
+Dalla funzione del consumo,
+
+\begin{equation}
+    C=\bar C+c(Y-\hat T),
+\end{equation}
+
+otteniamo
+
+\begin{equation}
+    -cY+C=\bar C-c\hat T.
+\end{equation}
+
+La funzione degli investimenti può essere scritta come
+
+\begin{equation}
+    I+bR=\bar I.
+\end{equation}
+
+Infine, l'equilibrio sul mercato monetario è
+
+\begin{equation}
+    kY-hR=\frac{\hat M}{\bar P}.
+\end{equation}
+
+Ordinando in ogni equazione le variabili secondo la sequenza
+$Y,C,I,R$, il sistema diventa
+
+\begin{align}
+    Y-C-I+0R
+        &=\hat G,\\
+    -cY+C+0I+0R
+        &=\bar C-c\hat T,\\
+    0Y+0C+I+bR
+        &=\bar I,\\
+    kY+0C+0I-hR
+        &=\frac{\hat M}{\bar P}.
+\end{align}
+
+Possiamo quindi scrivere il modello in forma matriciale:
+
+\begin{equation}
+    Ax=b,
+    \label{eq:islm-matrix}
+\end{equation}
+
+dove
+
+\begin{equation}
+A=
+\begin{pmatrix}
+    1  & -1 & -1 & 0\\
+    -c & 1  & 0  & 0\\
+    0  & 0  & 1  & b\\
+    k  & 0  & 0  & -h
+\end{pmatrix},
+\end{equation}
+
+\begin{equation}
+x=
+\begin{pmatrix}
+    Y\\
+    C\\
+    I\\
+    R
+\end{pmatrix},
+\end{equation}
+
+e
+
+\begin{equation}
+b=
+\begin{pmatrix}
+    \hat G\\
+    \bar C-c\hat T\\
+    \bar I\\
+    \dfrac{\hat M}{\bar P}
+\end{pmatrix}.
+\end{equation}
+
+Il problema economico è stato quindi ricondotto ancora una volta
+alla soluzione di un sistema lineare. Rispetto al semplice modello
+di domanda e offerta, il numero delle variabili è aumentato, ma la
+struttura matematica del problema rimane la stessa.
+
+
+\subsection{La fattorizzazione LU}
+
+Una delle tecniche utilizzate per risolvere un sistema lineare con
+matrice quadrata consiste nel fattorizzare la matrice $A$ come
+prodotto di due matrici triangolari:
+
+\begin{equation}
+    \boxed{A=LU},
+    \label{eq:lu-factorization}
+\end{equation}
+
+dove $L$ è una matrice triangolare inferiore
+(\emph{lower triangular}) e $U$ è una matrice triangolare superiore
+(\emph{upper triangular}).
+
+La fattorizzazione LU è strettamente collegata all'idea incontrata
+nell'eliminazione gaussiana. Anche in questo caso, infatti,
+sfruttiamo il fatto che i sistemi caratterizzati da matrici
+triangolari sono particolarmente semplici da risolvere.
+
+La differenza è che ora la trasformazione viene rappresentata
+esplicitamente attraverso la decomposizione della matrice $A$ nelle
+due componenti $L$ e $U$.
+
+
+\subsection{Come la fattorizzazione LU permette di risolvere il sistema}
+
+Partiamo dal sistema
+
+\begin{equation}
+    Ax=b.
+\end{equation}
+
+Poiché $A=LU$, possiamo sostituire la fattorizzazione ottenendo
+
+\begin{equation}
+    LUx=b.
+\end{equation}
+
+Definiamo ora un vettore ausiliario
+
+\begin{equation}
+    y=Ux.
+\end{equation}
+
+Il problema può essere risolto attraverso due sistemi triangolari.
+
+Nel primo passaggio risolviamo
+
+\begin{equation}
+    Ly=b.
+    \label{eq:forward-substitution}
+\end{equation}
+
+Poiché $L$ è triangolare inferiore, il vettore $y$ può essere
+determinato mediante \emph{sostituzione in avanti}.
+
+Una volta noto $y$, risolviamo
+
+\begin{equation}
+    Ux=y.
+    \label{eq:back-substitution}
+\end{equation}
+
+Poiché $U$ è triangolare superiore, possiamo determinare $x$
+mediante \emph{sostituzione all'indietro}.
+
+La procedura può quindi essere sintetizzata come
+
+\begin{equation}
+\boxed{
+Ax=b
+\quad\Longrightarrow\quad
+LUx=b
+\quad\Longrightarrow\quad
+\begin{cases}
+Ly=b,\\
+Ux=y.
+\end{cases}}
+\end{equation}
+
+Il problema originario viene così sostituito da due problemi
+triangolari, che possono essere risolti in modo sequenziale.
+
+
+\subsection{Esistenza della fattorizzazione LU}
+
+La non singolarità della matrice $A$ non è, da sola, sufficiente
+a garantire l'esistenza di una fattorizzazione LU nella forma
+considerata.
+
+Data una matrice
+
+\begin{equation}
+    A\in\mathbb{R}^{n\times n},
+\end{equation}
+
+la fattorizzazione LU esiste ed è unica se e solo se le
+sottomatrici principali di ordine
+
+\begin{equation}
+    i=1,\ldots,n-1
+\end{equation}
+
+sono non singolari.
+
+Le sottomatrici principali sono ottenute considerando
+progressivamente le prime $i$ righe e le prime $i$ colonne della
+matrice $A$.
+
+Esistono tuttavia alcune classi di matrici per le quali l'esistenza
+della fattorizzazione può essere stabilita attraverso proprietà
+note. Tra queste sono particolarmente importanti le matrici a
+dominanza diagonale stretta e le matrici reali simmetriche definite
+positive.
+
+
+\subsection{Dominanza diagonale}
+
+Una matrice $A$ è detta \emph{a dominanza diagonale per righe} se,
+per ogni riga $i$,
+
+\begin{equation}
+    |a_{ii}|
+    \geq
+    \sum_{j\neq i}|a_{ij}|.
+    \label{eq:diagonal-dominance}
+\end{equation}
+
+In altri termini, il valore assoluto dell'elemento sulla diagonale
+deve essere almeno pari alla somma dei valori assoluti degli altri
+elementi appartenenti alla stessa riga.
+
+La dominanza diagonale è detta \emph{stretta} quando
+
+\begin{equation}
+    |a_{ii}|
+    >
+    \sum_{j\neq i}|a_{ij}|.
+    \label{eq:strict-diagonal-dominance}
+\end{equation}
+
+La stessa idea può essere applicata alle colonne, ottenendo la
+definizione di dominanza diagonale per colonne.
+
+
+\subsection{Matrici definite positive}
+
+Un'altra proprietà importante è la definita positività.
+
+Una matrice $A$ è detta \emph{definita positiva} se
+
+\begin{equation}
+    x^T A x>0
+    \qquad
+    \forall x\neq 0.
+    \label{eq:positive-definite}
+\end{equation}
+
+L'espressione $x^TAx$ restituisce uno scalare. Infatti, se
+$x\in\mathbb{R}^{n}$, allora $x^T$ ha dimensione $1\times n$,
+$A$ ha dimensione $n\times n$ e $x$ ha dimensione $n\times1$.
+Di conseguenza,
+
+\begin{equation}
+    x^TAx
+\end{equation}
+
+ha dimensione $1\times1$ e il suo segno può essere valutato.
+
+Se si richiede invece
+
+\begin{equation}
+    x^TAx\geq0,
+\end{equation}
+
+la matrice viene detta \emph{semidefinita positiva}.
+
+
+\subsection{Il caso particolare della fattorizzazione di Cholesky}
+
+Quando $A$ è una matrice reale, simmetrica e definita positiva,
+è possibile utilizzare una particolare fattorizzazione:
+
+\begin{equation}
+    \boxed{A=R^TR},
+    \label{eq:cholesky}
+\end{equation}
+
+dove $R$ è una matrice triangolare superiore con elementi positivi
+sulla diagonale.
+
+Questa decomposizione prende il nome di
+\emph{fattorizzazione di Cholesky}.
+
+Rispetto alla fattorizzazione LU generale, in questo caso è
+sufficiente determinare una sola matrice triangolare, poiché
+l'altra è ottenuta mediante trasposizione. Questo riduce il numero
+di operazioni necessarie.
+
+
+\subsection{Come si ottengono le matrici $L$ e $U$}
+
+Per comprendere l'idea della fattorizzazione, consideriamo per
+semplicità una matrice $3\times3$.
+
+Cerchiamo due matrici
+
+\begin{equation}
+L=
+\begin{pmatrix}
+    l_{11} & 0      & 0\\
+    l_{21} & l_{22} & 0\\
+    l_{31} & l_{32} & l_{33}
+\end{pmatrix}
+\end{equation}
+
+e
+
+\begin{equation}
+U=
+\begin{pmatrix}
+    u_{11} & u_{12} & u_{13}\\
+    0      & u_{22} & u_{23}\\
+    0      & 0      & u_{33}
+\end{pmatrix}
+\end{equation}
+
+tali che
+
+\begin{equation}
+    LU=A.
+\end{equation}
+
+Se lasciassimo liberi tutti gli elementi non nulli di $L$ e $U$,
+avremmo più incognite che equazioni. Una possibile normalizzazione
+consiste quindi nell'imporre che gli elementi della diagonale di
+$L$ siano uguali a uno:
+
+\begin{equation}
+L=
+\begin{pmatrix}
+    1      & 0 & 0\\
+    l_{21} & 1 & 0\\
+    l_{31} & l_{32} & 1
+\end{pmatrix}.
+\end{equation}
+
+La condizione
+
+\begin{equation}
+    LU=A
+\end{equation}
+
+genera allora un sistema di equazioni per gli elementi incogniti
+di $L$ e $U$.
+
+Ad esempio, confrontando l'elemento nella prima riga e prima
+colonna otteniamo
+
+\begin{equation}
+    u_{11}=a_{11},
+\end{equation}
+
+mentre, procedendo con gli altri elementi, otteniamo
+progressivamente le restanti componenti delle due matrici.
+
+Grazie alla struttura triangolare e alla normalizzazione della
+diagonale di $L$, le prime equazioni sono particolarmente semplici
+da risolvere e i valori già calcolati possono essere utilizzati
+nelle equazioni successive.
+
+Nelle applicazioni non sarà tuttavia necessario costruire
+manualmente $L$ e $U$: utilizzeremo le procedure di
+fattorizzazione disponibili nei software di calcolo scientifico.
+
+
+\subsection{Il ruolo del pivoting}
+
+La fattorizzazione LU nella forma appena descritta può incontrare
+difficoltà quando durante il procedimento gli elementi utilizzati
+come \emph{pivot} non sono adatti all'eliminazione.
+
+In questi casi è possibile modificare l'ordine delle righe della
+matrice. Il \emph{pivoting} consiste nello scambiare opportunamente
+le righe scegliendo elementi più adatti come pivot.
+
+Questa estensione consente di applicare la fattorizzazione anche
+in situazioni nelle quali le condizioni precedentemente illustrate
+non sono direttamente soddisfatte.
+
+Per il momento ci limitiamo a richiamare l'esistenza di questa
+tecnica, rinviando a trattazioni più approfondite per la
+costruzione dettagliata dell'algoritmo.
+
+
+\subsection{Un ulteriore vantaggio della fattorizzazione LU}
+
+La fattorizzazione LU può essere utile anche per calcolare il
+determinante di una matrice.
+
+Ricordiamo che
+
+\begin{equation}
+    A=LU.
+\end{equation}
+
+Poiché il determinante del prodotto di due matrici soddisfa
+
+\begin{equation}
+    \det(LU)=\det(L)\det(U),
+\end{equation}
+
+abbiamo
+
+\begin{equation}
+    \det(A)=\det(L)\det(U).
+\end{equation}
+
+Nel caso in cui la diagonale di $L$ sia costituita interamente da
+elementi uguali a uno,
+
+\begin{equation}
+    \det(L)=1.
+\end{equation}
+
+Inoltre, poiché $U$ è triangolare, il suo determinante è il prodotto
+degli elementi della diagonale:
+
+\begin{equation}
+    \det(U)=\prod_{i=1}^{n}u_{ii}.
+\end{equation}
+
+Di conseguenza,
+
+\begin{equation}
+    \boxed{
+    \det(A)=\prod_{i=1}^{n}u_{ii}
+    }.
+    \label{eq:det-lu}
+\end{equation}
+
+Una volta ottenuta la fattorizzazione LU, il determinante può quindi
+essere calcolato molto agevolmente, senza ricorrere allo sviluppo
+di Laplace discusso in precedenza.
+
+
+\subsection{Implementazione della procedura}
+
+I principali ambienti di calcolo scientifico mettono a disposizione
+funzioni specifiche per ottenere la fattorizzazione LU.
+
+In \textsf{R}, utilizzando il pacchetto \textsf{Matrix}, possiamo
+utilizzare
+
+\begin{verbatim}
+lu(A)
+\end{verbatim}
+
+In \textsf{Octave}:
+
+\begin{verbatim}
+lu(A)
+\end{verbatim}
+
+In \textsf{Python}, attraverso \textsf{SciPy}:
+
+\begin{verbatim}
+scipy.linalg.lu(A)
+\end{verbatim}
+
+mentre in \textsf{Julia} è disponibile la funzione
+
+\begin{verbatim}
+LinearAlgebra.lu(A)
+\end{verbatim}
+
+Indipendentemente dal linguaggio utilizzato, la logica
+computazionale può essere sintetizzata nei seguenti passaggi:
+
+\begin{enumerate}
+    \item assegnare la matrice $A$ e il vettore $b$;
+    \item ottenere la fattorizzazione di $A$ nelle matrici
+          triangolari $L$ e $U$;
+    \item risolvere il sistema
+          \begin{equation}
+              Ly=b
+          \end{equation}
+          per determinare $y$;
+    \item risolvere il sistema
+          \begin{equation}
+              Ux=y
+          \end{equation}
+          per determinare $x$.
+\end{enumerate}
+
+Applicata al modello IS--LM, la soluzione finale
+
+\begin{equation}
+x=
+\begin{pmatrix}
+    Y\\
+    C\\
+    I\\
+    R
+\end{pmatrix}
+\end{equation}
+
+fornisce simultaneamente i valori di equilibrio delle quattro
+variabili endogene.
+
+L'esempio mostra quindi ancora una volta il percorso che
+caratterizza l'approccio computazionale adottato in questo corso:
+
+\begin{equation}
+\boxed{
+\begin{array}{c}
+\text{problema economico}\\
+\downarrow\\
+\text{modello IS--LM}\\
+\downarrow\\
+\text{sistema }Ax=b\\
+\downarrow\\
+\text{fattorizzazione }A=LU\\
+\downarrow\\
+Ly=b,\quad Ux=y\\
+\downarrow\\
+\text{equilibrio economico}
+\end{array}}
+\end{equation}
+
+\chapter{Metodi iterativi}
+
+\section{Il modello IS--LM in economia aperta e i metodi iterativi}
+\label{sec:islm-aperta-iterativi}
+
+Nella Sezione~\ref{sec:islm-lu} abbiamo utilizzato il modello
+IS--LM in economia chiusa per introdurre la fattorizzazione LU.
+La fattorizzazione LU appartiene alla famiglia dei
+\emph{metodi diretti}: una volta assegnati la matrice $A$ e il
+vettore $b$, la soluzione del sistema
+
+\begin{equation}
+    Ax=b
+\end{equation}
+
+viene ottenuta attraverso una sequenza finita e predeterminata di
+operazioni.
+
+Consideriamo ora un'estensione del modello IS--LM nella quale due
+economie sono collegate attraverso gli scambi internazionali.
+L'aumento del numero delle equazioni e delle variabili ci offre
+l'occasione per introdurre una diversa famiglia di tecniche
+numeriche: i \emph{metodi iterativi}.
+
+A differenza dei metodi diretti, i metodi iterativi partono da una
+soluzione iniziale di prova e costruiscono una successione di
+approssimazioni della soluzione. Questi metodi risultano
+particolarmente interessanti quando si devono affrontare sistemi
+caratterizzati da matrici grandi e sparse, cioè matrici nelle quali
+molti elementi sono nulli.
+
+
+\subsection{Il modello IS--LM in economia aperta}
+
+Consideriamo due paesi. Le variabili relative al secondo paese
+sono indicate con il pedice $f$.
+
+Per il primo paese abbiamo
+
+\begin{align}
+    Y &= C+I+G+NX,\\
+    C &= \bar C+c(Y-T),\\
+    I &= \bar I-bR,\\
+    NX &= \overline{NX}-j(Y-Y_f)
+          +lE\frac{\bar P_f}{P},\\
+    \frac{M}{P} &= kY-hR.
+\end{align}
+
+Per il secondo paese abbiamo invece
+
+\begin{align}
+    Y_f &= C_f+I_f+G_f+NX_f,\\
+    C_f &= \bar C_f+c_f(Y_f-T_f),\\
+    I_f &= \bar I_f-b_fR_f,\\
+    NX_f &= -NX,\\
+    \frac{M_f}{P_f} &= k_fY_f-h_fR_f.
+\end{align}
+
+Rispetto al modello in economia chiusa compare ora un nuovo
+elemento: le esportazioni nette $NX$ collegano le due economie.
+
+La relazione
+
+\begin{equation}
+    NX_f=-NX
+\end{equation}
+
+esprime il fatto che le esportazioni nette di un paese
+corrispondono alle importazioni nette dell'altro.
+
+Date le variabili esogene e i parametri, il problema consiste
+ancora una volta nel determinare simultaneamente le variabili
+endogene del modello. Una volta ottenuto l'equilibrio, possiamo
+inoltre modificare gli strumenti di politica fiscale o monetaria
+e studiarne gli effetti sulle due economie.
+
+Anche questo modello può essere ricondotto alla forma
+
+\begin{equation}
+    Ax=b.
+\end{equation}
+
+Il problema matematico rimane quindi quello già incontrato nelle
+sezioni precedenti. Cambia, tuttavia, la tecnica numerica che
+vogliamo utilizzare per determinarne la soluzione.
+
+
+\subsection{L'idea dei metodi iterativi}
+
+Un metodo iterativo non cerca necessariamente di ottenere la
+soluzione attraverso una sequenza prefissata di operazioni.
+Partendo da un vettore iniziale $x_0$, genera invece una successione
+
+\begin{equation}
+    x_0,\;x_1,\;x_2,\;\ldots
+\end{equation}
+
+che, se il metodo converge, si avvicina progressivamente alla
+soluzione del sistema.
+
+Per costruire un meccanismo iterativo partiamo ancora da
+
+\begin{equation}
+    Ax=b.
+    \label{eq:iter-system}
+\end{equation}
+
+Introduciamo una matrice $M$ e scriviamo
+
+\begin{equation}
+    A=M-(M-A).
+\end{equation}
+
+Sostituendo questa espressione nel sistema otteniamo
+
+\begin{equation}
+    \left[M-(M-A)\right]x=b,
+\end{equation}
+
+da cui
+
+\begin{equation}
+    Mx=(M-A)x+b.
+\end{equation}
+
+Introducendo gli indici di iterazione, possiamo utilizzare i valori
+calcolati all'iterazione $k$ per costruire una nuova approssimazione:
+
+\begin{equation}
+    Mx_{k+1}=(M-A)x_k+b.
+\end{equation}
+
+Sottraendo $Mx_k$ da entrambi i membri otteniamo
+
+\begin{equation}
+    M(x_{k+1}-x_k)=b-Ax_k.
+    \label{eq:iter-general}
+\end{equation}
+
+Questa relazione costituisce la base del meccanismo iterativo.
+
+
+\subsection{Correzione e residuo}
+
+Per interpretare l'Equazione~\eqref{eq:iter-general}, definiamo
+
+\begin{equation}
+    z_k=x_{k+1}-x_k
+    \label{eq:correction}
+\end{equation}
+
+e
+
+\begin{equation}
+    r_k=b-Ax_k.
+    \label{eq:residual}
+\end{equation}
+
+Il vettore $z_k$ rappresenta la \emph{correzione} che deve essere
+aggiunta all'approssimazione corrente per ottenere quella
+successiva.
+
+Il vettore $r_k$ prende invece il nome di \emph{residuo}. Esso
+misura quanto l'approssimazione corrente $x_k$ non soddisfa ancora
+il sistema originale.
+
+Se $x_k$ fosse già la soluzione esatta, avremmo infatti
+
+\begin{equation}
+    Ax_k=b
+\end{equation}
+
+e quindi
+
+\begin{equation}
+    r_k=0.
+\end{equation}
+
+Utilizzando queste definizioni, l'Equazione~\eqref{eq:iter-general}
+diventa
+
+\begin{equation}
+    Mz_k=r_k.
+    \label{eq:Mzr}
+\end{equation}
+
+Il problema iterativo può quindi essere interpretato in modo molto
+semplice: calcoliamo l'errore commesso dall'approssimazione corrente,
+espresso dal residuo, e utilizziamo questa informazione per
+determinare una correzione $z_k$.
+
+
+\subsection{Il meccanismo iterativo generale}
+
+Possiamo ora descrivere la procedura completa.
+
+Si parte scegliendo arbitrariamente un vettore iniziale
+
+\begin{equation}
+    x_0.
+\end{equation}
+
+Si calcola il residuo
+
+\begin{equation}
+    r_0=b-Ax_0.
+\end{equation}
+
+Successivamente si risolve il sistema
+
+\begin{equation}
+    Mz_0=r_0
+\end{equation}
+
+per determinare la correzione $z_0$.
+
+La nuova approssimazione è quindi
+
+\begin{equation}
+    x_1=x_0+z_0.
+\end{equation}
+
+La stessa procedura viene ripetuta:
+
+\begin{equation}
+    r_1=b-Ax_1,
+\end{equation}
+
+\begin{equation}
+    Mz_1=r_1,
+\end{equation}
+
+\begin{equation}
+    x_2=x_1+z_1,
+\end{equation}
+
+e così via.
+
+In termini generali, a ogni iterazione $k$ eseguiamo quindi i tre
+passaggi
+
+\begin{align}
+    r_k &= b-Ax_k,\\
+    Mz_k &= r_k,\\
+    x_{k+1} &= x_k+z_k.
+\end{align}
+
+Questo schema costituisce il meccanismo iterativo generale
+presentato nelle slide come \emph{metodo di Richardson}.
+
+
+\subsection{La scelta della matrice $M$}
+
+A ogni iterazione dobbiamo risolvere il sistema
+
+\begin{equation}
+    Mz_k=r_k.
+\end{equation}
+
+Questa operazione rappresenta la parte computazionalmente più
+impegnativa del procedimento.
+
+Se la soluzione di questo sistema fosse difficile quanto quella
+del sistema originale $Ax=b$, il metodo iterativo non offrirebbe
+un particolare vantaggio. La matrice $M$ deve quindi essere scelta
+in modo tale che il sistema $Mz_k=r_k$ sia molto semplice da
+risolvere.
+
+Due scelte particolarmente convenienti sono una matrice diagonale
+oppure una matrice triangolare.
+
+Scelte differenti di $M$ danno origine a differenti metodi
+iterativi.
+
+Nel \emph{metodo di Jacobi} si utilizza
+
+\begin{equation}
+    M=\operatorname{diag}(A),
+\end{equation}
+
+cioè la matrice contenente gli elementi della diagonale di $A$ e
+zeri in tutte le altre posizioni.
+
+Nel \emph{metodo di Gauss--Seidel}, invece, $M$ è costituita dalla
+parte triangolare inferiore di $A$.
+
+Poiché una matrice diagonale o triangolare rende particolarmente
+semplice la soluzione di $Mz_k=r_k$, ciascuna iterazione può essere
+eseguita con un costo relativamente contenuto.
+
+Le slide introducono inoltre il \emph{metodo del rilassamento},
+nel quale la diagonale di $M$ viene modificata attraverso un
+parametro $\omega\neq0$.
+
+
+\subsection{Convergenza dei metodi stazionari}
+
+La semplicità di una singola iterazione non garantisce che la
+successione
+
+\begin{equation}
+    x_0,x_1,x_2,\ldots
+\end{equation}
+
+converga effettivamente alla soluzione.
+
+Le condizioni di convergenza dipendono dal metodo e dalle
+caratteristiche della matrice $A$.
+
+Per il metodo di Jacobi, una condizione indicata nelle slide è
+che $A$ sia a dominanza diagonale stretta per righe.
+
+Per Gauss--Seidel, le condizioni considerate sono:
+
+\begin{itemize}
+    \item $A$ a dominanza diagonale stretta per righe;
+    \item $A$ simmetrica e definita positiva.
+\end{itemize}
+
+Queste restrizioni rappresentano un limite importante dei metodi
+iterativi considerati fino a questo punto.
+
+
+\subsection{Introduzione di un parametro di passo}
+
+Il meccanismo precedente aggiorna la soluzione secondo la regola
+
+\begin{equation}
+    x_{k+1}=x_k+z_k.
+\end{equation}
+
+Una possibile estensione consiste nell'introdurre un parametro
+$\alpha_k$:
+
+\begin{equation}
+    \boxed{
+    x_{k+1}=x_k+\alpha_k z_k
+    }.
+    \label{eq:iter-alpha}
+\end{equation}
+
+Il termine $\alpha_kz_k$ determina quindi il movimento effettuato
+a ogni iterazione.
+
+Possiamo interpretare separatamente le due componenti:
+
+\begin{itemize}
+    \item $z_k$ determina la \emph{direzione} del movimento;
+    \item $\alpha_k$ determina l'\emph{intensità} del movimento.
+\end{itemize}
+
+Per ottenere una convergenza rapida è quindi importante scegliere
+in modo appropriato sia la direzione sia l'ampiezza del passo.
+
+
+\subsection{Metodi stazionari e non stazionari}
+
+La presenza del parametro $\alpha_k$ permette di introdurre una
+distinzione tra due famiglie di metodi iterativi.
+
+Nei \emph{metodi stazionari}, il parametro non cambia nel corso
+delle iterazioni:
+
+\begin{equation}
+    \alpha_k=\alpha.
+\end{equation}
+
+I metodi di Jacobi e Gauss--Seidel appartengono alla famiglia dei
+metodi stazionari.
+
+Nei \emph{metodi non stazionari}, invece, il parametro può cambiare
+a ogni iterazione:
+
+\begin{equation}
+    \alpha_k
+\end{equation}
+
+viene quindi scelto in funzione dell'informazione disponibile al
+passo $k$.
+
+I metodi stazionari hanno il vantaggio di essere semplici, ma
+convergono soltanto sotto determinate condizioni. Questo motiva
+l'introduzione di metodi nei quali direzione e intensità del
+movimento possono essere adattate nel corso delle iterazioni.
+
+
+\subsection{Il caso di una matrice simmetrica e definita positiva}
+
+Consideriamo ora il caso in cui $A$ sia simmetrica e definita
+positiva.
+
+Associamo al sistema $Ax=b$ la funzione
+
+\begin{equation}
+    \Phi(x)
+    =
+    \frac{1}{2}x^TAx-x^Tb.
+    \label{eq:phi-gradient}
+\end{equation}
+
+Il gradiente di questa funzione è
+
+\begin{equation}
+    \nabla\Phi(x)=Ax-b.
+    \label{eq:gradient-phi}
+\end{equation}
+
+Se $A$ è simmetrica e definita positiva, $\Phi(x)$ è strettamente
+convessa e possiede quindi un unico punto di minimo.
+
+Nel punto di minimo il gradiente è nullo:
+
+\begin{equation}
+    \nabla\Phi(x)=0.
+\end{equation}
+
+Utilizzando l'Equazione~\eqref{eq:gradient-phi}, questa condizione
+diventa
+
+\begin{equation}
+    Ax-b=0,
+\end{equation}
+
+ovvero
+
+\begin{equation}
+    Ax=b.
+\end{equation}
+
+La soluzione di un sistema lineare con matrice simmetrica e
+definita positiva può quindi essere interpretata anche come il
+punto che minimizza la funzione quadratica $\Phi(x)$.
+
+Abbiamo così trasformato il problema di soluzione del sistema in
+un problema di minimizzazione.
+
+
+\subsection{Il gradiente come direzione}
+
+Per costruire un metodo iterativo dobbiamo ora scegliere una
+direzione $z_k$ che ci permetta di avvicinarci al minimo della
+funzione $\Phi$.
+
+Il gradiente
+
+\begin{equation}
+    \nabla\Phi(x)
+\end{equation}
+
+indica la direzione di massima crescita della funzione. Per
+comprendere questa proprietà consideriamo la derivata direzionale
+di una generica funzione $f$ nel punto $x_0$, lungo una direzione
+rappresentata dal versore $u$:
+
+\begin{equation}
+    D_uf(x_0)=\nabla f(x_0)\cdot u,
+    \qquad
+    \|u\|=1.
+\end{equation}
+
+Utilizzando la definizione di prodotto scalare possiamo scrivere
+
+\begin{equation}
+    \nabla f(x_0)\cdot u
+    =
+    \|\nabla f(x_0)\|\,\|u\|\cos\theta,
+\end{equation}
+
+dove $\theta$ è l'angolo tra $\nabla f(x_0)$ e $u$.
+
+Poiché $u$ è un versore,
+
+\begin{equation}
+    \|u\|=1,
+\end{equation}
+
+e quindi
+
+\begin{equation}
+    D_uf(x_0)
+    =
+    \|\nabla f(x_0)\|\cos\theta.
+\end{equation}
+
+Il valore massimo si ottiene quando
+
+\begin{equation}
+    \cos\theta=1,
+\end{equation}
+
+cioè quando $\theta=0$. In questo caso $u$ ha la stessa direzione
+del gradiente:
+
+\begin{equation}
+    u=
+    \frac{\nabla f(x_0)}
+         {\|\nabla f(x_0)\|}.
+\end{equation}
+
+La massima derivata direzionale è pertanto
+
+\begin{equation}
+    \max_{\|u\|=1}D_uf(x_0)
+    =
+    \|\nabla f(x_0)\|.
+\end{equation}
+
+Il gradiente indica dunque la direzione di massima crescita.
+Se vogliamo invece ridurre $\Phi$, dobbiamo muoverci nel verso
+opposto.
+
+Una possibile scelta della direzione è quindi
+
+\begin{equation}
+    z_k=-\nabla\Phi(x_k).
+    \label{eq:steepest-direction}
+\end{equation}
+
+
+\subsection{La scelta dell'intensità del movimento}
+
+Una volta individuata la direzione $z_k$, rimane da stabilire
+quanto muoversi lungo quella direzione.
+
+Partendo dalla regola
+
+\begin{equation}
+    x_{k+1}=x_k+\alpha_kz_k,
+\end{equation}
+
+possiamo scegliere $\alpha_k$ in modo da minimizzare la funzione
+lungo la direzione $z_k$:
+
+\begin{equation}
+    \alpha_k
+    =
+    \arg\min_{\alpha}
+    \Phi(x_k+\alpha z_k).
+    \label{eq:line-search}
+\end{equation}
+
+La combinazione
+
+\begin{equation}
+    z_k=-\nabla\Phi(x_k)
+\end{equation}
+
+con la scelta dell'ampiezza del passo conduce al
+\emph{metodo del gradiente}.
+
+Quando $A$ è simmetrica e definita positiva, il metodo converge
+alla soluzione a partire da qualsiasi punto iniziale $x_0$.
+
+Un'evoluzione di questa idea è il \emph{metodo del gradiente
+coniugato}, nel quale vengono costruite direzioni che permettono
+di accelerare la convergenza.
+
+
+\subsection{Il caso di una matrice generica}
+
+La situazione è più complessa quando $A$ non è simmetrica e
+definita positiva.
+
+La soluzione iterativa di sistemi con matrici generiche costituisce
+un argomento molto ampio. In questo corso non ne svilupperemo in
+dettaglio la teoria, ma utilizzeremo uno dei metodi maggiormente
+diffusi: il \emph{Generalized Minimal Residual Method}, indicato
+con l'acronimo GMRES.
+
+Il metodo GMRES appartiene alla famiglia dei metodi che costruiscono
+le nuove approssimazioni cercando di ridurre il residuo.
+
+Nelle applicazioni utilizzeremo direttamente le implementazioni
+disponibili nei principali software scientifici. Ad esempio:
+
+\begin{verbatim}
+# R
+pracma::gmres(A, b, ...)
+
+# Octave
+gmres(A, b, ...)
+
+# Python
+scipy.sparse.linalg.gmres(A, b, ...)
+
+# Julia
+IterativeSolvers.gmres(A, b, ...)
+\end{verbatim}
+
+L'obiettivo, in questa fase, non è ricostruire l'algoritmo GMRES,
+ma comprendere perché possa essere necessario ricorrere a un metodo
+iterativo più generale quando le proprietà della matrice non
+permettono di utilizzare convenientemente i metodi precedenti.
+
+
+\subsection{Una classificazione dei metodi per sistemi lineari}
+
+Possiamo a questo punto riordinare le tecniche introdotte finora
+in due grandi famiglie.
+
+I \emph{metodi diretti} determinano la soluzione attraverso un
+numero predefinito di operazioni. In questa categoria abbiamo
+incontrato:
+
+\begin{itemize}
+    \item l'eliminazione di Gauss;
+    \item la fattorizzazione LU.
+\end{itemize}
+
+I \emph{metodi iterativi}, invece, costruiscono una successione
+di approssimazioni della soluzione. Possiamo distinguerli
+ulteriormente in metodi stazionari e non stazionari.
+
+Tra i metodi stazionari abbiamo considerato:
+
+\begin{itemize}
+    \item lo schema generale di Richardson;
+    \item il metodo di Jacobi;
+    \item il metodo di Gauss--Seidel;
+    \item il metodo del rilassamento.
+\end{itemize}
+
+Tra i metodi non stazionari, la scelta dipende anche dalle
+caratteristiche della matrice. Per matrici simmetriche e definite
+positive abbiamo introdotto:
+
+\begin{itemize}
+    \item il metodo del gradiente;
+    \item il metodo del gradiente coniugato.
+\end{itemize}
+
+Per matrici generiche abbiamo invece introdotto il metodo
+
+\begin{equation}
+    \text{GMRES}.
+\end{equation}
+
+La scelta del metodo numerico non è quindi indipendente dalla
+struttura del problema. Le dimensioni della matrice, la presenza
+di molti elementi nulli e proprietà quali simmetria, definita
+positività e dominanza diagonale possono rendere un metodo più
+appropriato di un altro.
+
+
+\subsection{Il ruolo del residuo nei metodi iterativi}
+
+Un elemento comune ai metodi iterativi è il residuo
+
+\begin{equation}
+    r_k=b-Ax_k.
+\end{equation}
+
+Esso fornisce informazioni sulla qualità dell'approssimazione
+corrente e può essere utilizzato sia per determinare come
+procedere verso una nuova approssimazione, sia per stabilire
+quando interrompere il procedimento.
+
+I metodi iterativi più avanzati costruiscono le nuove
+approssimazioni all'interno di particolari sottospazi, detti
+\emph{sottospazi di Krylov}, che si ampliano progressivamente
+con il procedere delle iterazioni.
+
+All'interno di questa famiglia possono essere distinti due
+approcci richiamati nelle slide.
+
+Nel primo, detto \emph{Ritz--Galerkin} o del residuo ortogonale,
+la nuova approssimazione viene scelta imponendo una condizione
+di ortogonalità sul residuo. A questa famiglia appartengono il
+gradiente coniugato, utilizzato per matrici simmetriche e definite
+positive, e il bi-CG per matrici generiche.
+
+Nel secondo, detto \emph{approccio del minimo residuo}, si sceglie
+invece l'approssimazione che rende minima l'ampiezza del residuo
+all'interno del sottospazio considerato. Il metodo GMRES appartiene
+a questa seconda famiglia.
+
+Questi concetti forniscono un'indicazione della logica sulla quale
+si basano i metodi iterativi moderni. In questo corso non
+svilupperemo ulteriormente la teoria dei sottospazi di Krylov, ma
+utilizzeremo gli algoritmi disponibili nei software di calcolo
+scientifico quando le applicazioni lo richiederanno.
+
+
+\subsection{Dal problema economico alla soluzione iterativa}
+
+Possiamo infine sintetizzare il percorso seguito in questa sezione:
+
+\begin{equation}
+\boxed{
+\begin{array}{c}
+\text{modello IS--LM in economia aperta}\\
+\downarrow\\
+\text{sistema lineare }Ax=b\\
+\downarrow\\
+\text{scelta di un'approssimazione iniziale }x_0\\
+\downarrow\\
+r_k=b-Ax_k\\
+\downarrow\\
+\text{determinazione della correzione}\\
+\downarrow\\
+x_{k+1}=x_k+\alpha_kz_k\\
+\downarrow\\
+\text{nuova approssimazione della soluzione}
+\end{array}}
+\end{equation}
+
+Il passaggio dai metodi diretti ai metodi iterativi introduce
+quindi un modo diverso di affrontare il problema $Ax=b$.
+Invece di costruire direttamente la soluzione, si genera una
+sequenza di approssimazioni che viene progressivamente corretta
+utilizzando l'informazione contenuta nel residuo.
+
+\section{Implementazione dei metodi iterativi}
+\label{sec:implementazione-metodi-iterativi}
+
+Nella sezione precedente abbiamo introdotto i metodi iterativi per
+la soluzione di un sistema lineare
+
+\begin{equation}
+    Ax=b.
+\end{equation}
+
+L'idea fondamentale consiste nel partire da un'approssimazione
+iniziale $x_0$ e costruire una successione
+
+\begin{equation}
+    x_0,\;x_1,\;x_2,\;\ldots
+\end{equation}
+
+che, sotto opportune condizioni, converge alla soluzione del sistema.
+
+In termini generali, a ogni iterazione viene calcolato il residuo
+
+\begin{equation}
+    r_k=b-Ax_k,
+\end{equation}
+
+dal quale si ricava una correzione della soluzione corrente.
+Il procedimento viene quindi ripetuto fino a quando
+l'approssimazione ottenuta può essere considerata sufficientemente
+accurata.
+
+Dal punto di vista teorico, il meccanismo è relativamente semplice.
+La sua implementazione pone però due nuovi problemi computazionali:
+
+\begin{enumerate}
+    \item come possiamo chiedere al computer di ripetere più volte
+          la stessa sequenza di operazioni?
+    \item come possiamo stabilire quando il procedimento iterativo
+          deve essere interrotto?
+\end{enumerate}
+
+Per rispondere alla prima domanda introduciamo i cicli
+\texttt{for} e \texttt{while}. Per rispondere alla seconda
+introduciamo il concetto di norma e lo utilizziamo per misurare
+la dimensione del residuo.
+
+
+\subsection{Ripetere un'operazione: il ciclo \texttt{for}}
+
+Un algoritmo iterativo richiede di eseguire ripetutamente la stessa
+sequenza di operazioni.
+
+Supponiamo, ad esempio, di voler eseguire un'operazione per un numero
+prefissato di volte. In questo caso possiamo utilizzare un ciclo
+\texttt{for}.
+
+La struttura generale in \textsf{R} è
+
+\begin{verbatim}
+for (i in sequenza) {
+
+    operazioni
+
+}
+\end{verbatim}
+
+La variabile $i$ prende, uno dopo l'altro, i valori contenuti nella
+sequenza. Per ciascun valore vengono eseguite le istruzioni
+contenute nel ciclo.
+
+Ad esempio,
+
+\begin{verbatim}
+for (i in 1:10) {
+
+    print(i)
+
+}
+\end{verbatim}
+
+esegue il comando \texttt{print(i)} dieci volte, assegnando
+progressivamente a \texttt{i} i valori da 1 a 10.
+
+Nel contesto di un metodo iterativo, l'indice $i$ può essere
+interpretato come l'indice dell'iterazione:
+
+\begin{equation}
+    i=1,2,\ldots,K,
+\end{equation}
+
+dove $K$ rappresenta il numero massimo di iterazioni che vogliamo
+eseguire.
+
+Una struttura di questo tipo permette quindi di tradurre in codice
+una successione del tipo
+
+\begin{equation}
+    x_0
+    \longrightarrow
+    x_1
+    \longrightarrow
+    x_2
+    \longrightarrow
+    \cdots
+    \longrightarrow
+    x_K.
+\end{equation}
+
+
+\subsection{Ripetere un'operazione finché una condizione è soddisfatta}
+
+Nei metodi iterativi, tuttavia, non sempre sappiamo in anticipo
+quante iterazioni saranno necessarie.
+
+Potremmo voler continuare il procedimento fino a quando la soluzione
+raggiunge un determinato livello di accuratezza.
+
+In questo caso è più naturale utilizzare un ciclo \texttt{while}.
+
+La struttura generale è
+
+\begin{verbatim}
+while (condizione) {
+
+    operazioni
+
+}
+\end{verbatim}
+
+Le istruzioni contenute nel ciclo vengono eseguite finché la
+condizione specificata rimane vera.
+
+Consideriamo, ad esempio,
+
+\begin{verbatim}
+i <- 1
+
+while (i < 10) {
+
+    print(i)
+    i <- i + 1
+
+}
+\end{verbatim}
+
+All'inizio abbiamo $i=1$. Dopo ogni iterazione il valore di $i$
+viene aumentato di una unità. Il ciclo continua finché
+
+\begin{equation}
+    i<10.
+\end{equation}
+
+Quando questa condizione non è più verificata, il ciclo termina.
+
+Il ciclo \texttt{while} è particolarmente adatto ai metodi
+iterativi perché permette di formulare una regola del tipo:
+
+\begin{quote}
+continua a costruire nuove approssimazioni finché l'errore è
+troppo grande.
+\end{quote}
+
+Per rendere operativa questa idea dobbiamo però definire come
+misurare l'errore.
+
+
+\subsection{Distanza e norma}
+
+Per misurare quanto due numeri reali $a$ e $b$ siano diversi
+possiamo utilizzare la distanza
+
+\begin{equation}
+    d(a,b)=|a-b|.
+\end{equation}
+
+Quando lavoriamo con vettori, la stessa idea richiede una
+generalizzazione. Questa generalizzazione è fornita dal concetto
+di \emph{norma}.
+
+Una norma associa a un vettore un numero reale non negativo che
+può essere interpretato come una misura della sua grandezza.
+
+Per un vettore
+
+\begin{equation}
+    x=
+    \begin{pmatrix}
+        x_1\\
+        x_2\\
+        \vdots\\
+        x_n
+    \end{pmatrix},
+\end{equation}
+
+possiamo definire diverse norme.
+
+
+\subsubsection{Norma 1}
+
+La norma 1 è definita come
+
+\begin{equation}
+    \|x\|_1
+    =
+    \sum_{i=1}^{n}|x_i|.
+    \label{eq:norma1}
+\end{equation}
+
+Essa corrisponde quindi alla somma dei valori assoluti degli
+elementi del vettore.
+
+
+\subsubsection{Norma 2}
+
+La norma 2, detta anche norma euclidea, è
+
+\begin{equation}
+    \|x\|_2
+    =
+    \sqrt{
+        \sum_{i=1}^{n}x_i^2
+    }.
+    \label{eq:norma2}
+\end{equation}
+
+Nel caso di un vettore con due componenti,
+
+\begin{equation}
+    x=
+    \begin{pmatrix}
+        x_1\\
+        x_2
+    \end{pmatrix},
+\end{equation}
+
+otteniamo
+
+\begin{equation}
+    \|x\|_2
+    =
+    \sqrt{x_1^2+x_2^2}.
+\end{equation}
+
+Questa espressione coincide con la distanza euclidea del punto
+$(x_1,x_2)$ dall'origine.
+
+
+\subsubsection{Norma infinito}
+
+La norma infinito è invece definita come
+
+\begin{equation}
+    \|x\|_\infty
+    =
+    \max_i |x_i|.
+    \label{eq:normainf}
+\end{equation}
+
+Essa misura quindi la componente del vettore che presenta il
+valore assoluto maggiore.
+
+Le tre norme forniscono misure differenti della grandezza di un
+vettore. Nel seguito utilizzeremo principalmente la norma 2.
+
+
+\subsection{La norma in \textsf{R}}
+
+In \textsf{R}, la funzione \texttt{norm()} opera su oggetti di
+tipo matrice. Se $x$ è inizialmente un vettore, possiamo quindi
+trasformarlo in una matrice mediante
+
+\begin{verbatim}
+x <- as.matrix(x)
+\end{verbatim}
+
+e successivamente calcolarne la norma.
+
+La norma 1 può essere ottenuta con
+
+\begin{verbatim}
+norm(x, type = "1")
+\end{verbatim}
+
+la norma 2 con
+
+\begin{verbatim}
+norm(x, type = "2")
+\end{verbatim}
+
+e la norma infinito con
+
+\begin{verbatim}
+norm(x, type = "I")
+\end{verbatim}
+
+La possibilità di calcolare numericamente la norma di un vettore
+ci permette ora di costruire un criterio per decidere quando
+interrompere un algoritmo iterativo.
+
+
+\subsection{Il residuo come misura della qualità dell'approssimazione}
+
+Riprendiamo il sistema
+
+\begin{equation}
+    Ax=b.
+\end{equation}
+
+Se $x_k$ è l'approssimazione disponibile all'iterazione $k$,
+definiamo il residuo come
+
+\begin{equation}
+    r_k=b-Ax_k.
+    \label{eq:residuo-implementazione}
+\end{equation}
+
+Se $x_k$ fosse la soluzione esatta, avremmo
+
+\begin{equation}
+    Ax_k=b
+\end{equation}
+
+e pertanto
+
+\begin{equation}
+    r_k=0.
+\end{equation}
+
+Se invece $x_k$ è soltanto un'approssimazione, il residuo sarà in
+generale diverso dal vettore nullo.
+
+Possiamo quindi utilizzare la norma del residuo,
+
+\begin{equation}
+    \|r_k\|,
+\end{equation}
+
+come misura di quanto l'approssimazione corrente non soddisfa
+ancora il sistema.
+
+Più precisamente, possiamo considerare
+
+\begin{equation}
+    \|r_k\|_2
+    =
+    \|b-Ax_k\|_2.
+    \label{eq:norma-residuo}
+\end{equation}
+
+Se il metodo converge, ci aspettiamo che questa quantità diventi
+progressivamente più piccola.
+
+
+\subsection{Tolleranza e criterio di arresto}
+
+In un calcolo numerico non è generalmente necessario richiedere
+che il residuo sia esattamente uguale a zero.
+
+Definiamo invece una quantità positiva molto piccola,
+che indichiamo con $\varepsilon$ e chiamiamo \emph{tolleranza}.
+
+Possiamo considerare l'approssimazione sufficientemente accurata
+quando
+
+\begin{equation}
+    \|r_k\|_2
+    \leq
+    \varepsilon.
+    \label{eq:stopping-rule}
+\end{equation}
+
+Il procedimento deve quindi continuare mentre
+
+\begin{equation}
+    \|r_k\|_2
+    >
+    \varepsilon.
+\end{equation}
+
+Questa condizione si traduce naturalmente in un ciclo
+\texttt{while}:
+
+\begin{verbatim}
+while (norm(r, type = "2") > tolleranza) {
+
+    # nuova iterazione
+
+}
+\end{verbatim}
+
+La tolleranza stabilisce quindi il livello di precisione richiesto.
+Una tolleranza più piccola impone un criterio di arresto più
+stringente e può richiedere un numero maggiore di iterazioni.
+
+
+\subsection{Costruzione dell'algoritmo iterativo}
+
+Possiamo ora combinare gli strumenti introdotti in questa sezione
+con il meccanismo iterativo studiato nella sezione precedente.
+
+Partiamo dal sistema
+
+\begin{equation}
+    Ax=b.
+\end{equation}
+
+Assegniamo un'approssimazione iniziale
+
+\begin{equation}
+    x_0
+\end{equation}
+
+e calcoliamo il residuo iniziale
+
+\begin{equation}
+    r_0=b-Ax_0.
+\end{equation}
+
+Finché la norma del residuo è superiore alla tolleranza,
+continuiamo a calcolare nuove approssimazioni.
+
+Lo schema generale dell'algoritmo può essere rappresentato come
+
+\begin{verbatim}
+scegli x0
+calcola r = b - A x0
+
+while (norma(r) > tolleranza) {
+
+    calcola la correzione z
+    aggiorna x
+    calcola il nuovo residuo r
+
+}
+\end{verbatim}
+
+In termini matematici, utilizzando il meccanismo introdotto
+precedentemente, a ogni iterazione calcoliamo
+
+\begin{equation}
+    r_k=b-Ax_k,
+\end{equation}
+
+risolviamo
+
+\begin{equation}
+    Mz_k=r_k
+\end{equation}
+
+e aggiorniamo la soluzione secondo
+
+\begin{equation}
+    x_{k+1}=x_k+z_k.
+\end{equation}
+
+Il procedimento continua fino a quando
+
+\begin{equation}
+    \|b-Ax_k\|_2
+    \leq
+    \varepsilon.
+\end{equation}
+
+
+\subsection{Il rischio di un ciclo infinito}
+
+L'utilizzo di un ciclo \texttt{while} richiede una particolare
+attenzione.
+
+Se il metodo iterativo non converge, oppure se la condizione di
+arresto non può essere soddisfatta, il ciclo potrebbe continuare
+indefinitamente.
+
+Per evitare questo problema è opportuno introdurre anche un numero
+massimo di iterazioni, che indichiamo con $K_{\max}$.
+
+Il procedimento viene quindi interrotto quando si verifica almeno
+una delle seguenti condizioni:
+
+\begin{equation}
+    \|r_k\|_2\leq\varepsilon
+\end{equation}
+
+oppure
+
+\begin{equation}
+    k\geq K_{\max}.
+\end{equation}
+
+La struttura generale diventa quindi
+
+\begin{verbatim}
+while (norm(r, type = "2") > tolleranza &&
+       iterazione < max_iterazioni) {
+
+    # calcolo della nuova approssimazione
+
+}
+\end{verbatim}
+
+Il numero massimo di iterazioni costituisce una misura di
+sicurezza: impedisce al programma di continuare indefinitamente
+nel caso in cui il metodo non converga.
+
+
+\subsection{Interpretazione dell'algoritmo}
+
+Possiamo infine rappresentare l'intera procedura come
+
+\begin{equation}
+\boxed{
+\begin{array}{c}
+\text{scegliere }x_0\\
+\downarrow\\
+r_0=b-Ax_0\\
+\downarrow\\
+\text{calcolare }\|r_0\|\\
+\downarrow\\
+\|r_k\|\leq\varepsilon\;?
+\end{array}}
+\end{equation}
+
+Se la risposta è positiva, il procedimento termina e $x_k$ viene
+accettato come soluzione numerica.
+
+Se la risposta è negativa, viene calcolata una nuova
+approssimazione:
+
+\begin{equation}
+\boxed{
+x_k
+\longrightarrow
+r_k
+\longrightarrow
+z_k
+\longrightarrow
+x_{k+1}
+\longrightarrow
+r_{k+1}
+}
+\end{equation}
+
+e il criterio di arresto viene verificato nuovamente.
+
+Questa struttura evidenzia il ruolo dei diversi strumenti
+computazionali introdotti nella sezione:
+
+\begin{itemize}
+    \item il ciclo \texttt{for} permette di ripetere una procedura
+          per un numero prefissato di volte;
+    \item il ciclo \texttt{while} permette di ripeterla finché
+          una determinata condizione rimane verificata;
+    \item la norma permette di associare a un vettore una misura
+          scalare della sua grandezza;
+    \item il residuo misura quanto l'approssimazione corrente non
+          soddisfa ancora il sistema;
+    \item la tolleranza stabilisce quando l'approssimazione può
+          essere considerata sufficientemente accurata.
+\end{itemize}
+
+Gli strumenti introdotti in questa sezione permettono quindi di
+passare dalla formulazione matematica di un metodo iterativo alla
+sua effettiva implementazione in un linguaggio di programmazione.
+
+\chapter{applicazione alle valutazioni di impatto ambientale}
+
+\section{Valutazione di impatto ambientale: Life Cycle Assessment}
+\label{sec:lca}
+
+Gli strumenti dell'algebra lineare e del calcolo numerico introdotti
+nelle sezioni precedenti trovano applicazione anche in ambiti che,
+a prima vista, possono apparire molto distanti dai modelli economici
+considerati finora.
+
+Un esempio particolarmente importante è rappresentato dalla
+\emph{Life Cycle Assessment} (LCA), una metodologia utilizzata per
+valutare gli impatti ambientali associati a un prodotto, a un servizio
+o, più in generale, a un sistema produttivo.
+
+L'idea fondamentale consiste nel considerare non soltanto ciò che
+avviene nell'ultima fase del processo produttivo, ma l'insieme dei
+processi necessari per ottenere il prodotto desiderato. La produzione
+di un bene può infatti richiedere altri beni intermedi, la cui
+produzione richiede a sua volta ulteriori input. Ciascuno di questi
+processi può inoltre utilizzare risorse naturali e generare emissioni
+nell'ambiente.
+
+La LCA cerca quindi di ricostruire queste relazioni e di rispondere,
+in forma semplificata, a due domande:
+
+\begin{enumerate}
+    \item quali flussi ambientali sono necessari o generati per
+          ottenere una determinata quantità di prodotto?
+    \item quali impatti ambientali possono essere associati a tali
+          flussi?
+\end{enumerate}
+
+Queste due domande corrispondono alle due fasi della LCA sulle quali
+ci concentreremo: la \emph{Life Cycle Inventory} (LCI) e la
+\emph{Life Cycle Impact Assessment} (LCIA).
+
+
+\subsection{Le fasi della Life Cycle Assessment}
+
+Secondo lo standard ISO 14040, una Life Cycle Assessment comprende
+quattro fasi:
+
+\begin{enumerate}
+    \item definizione dell'obiettivo e del campo di applicazione
+          (\emph{goal and scope definition});
+    \item analisi dell'inventario
+          (\emph{Life Cycle Inventory}, LCI);
+    \item valutazione degli impatti
+          (\emph{Life Cycle Impact Assessment}, LCIA);
+    \item interpretazione dei risultati.
+\end{enumerate}
+
+La prima fase stabilisce, tra gli altri aspetti, quale sistema viene
+studiato e quale risultato deve essere ottenuto dall'analisi.
+L'ultima fase riguarda invece l'interpretazione dei risultati
+ottenuti.
+
+In questa sezione ci concentreremo sulle due fasi centrali, LCI e
+LCIA, perché permettono di mettere particolarmente bene in evidenza
+la struttura matematica e computazionale della LCA.
+
+Il percorso che seguiremo può essere anticipato schematicamente come
+
+\begin{equation}
+\boxed{
+\text{domanda finale}
+\longrightarrow
+\text{flussi ambientali}
+\longrightarrow
+\text{impatti ambientali}
+}.
+\end{equation}
+
+
+\subsection{La fase di inventario: Life Cycle Inventory}
+
+La fase LCI descrive il sistema produttivo attraverso i suoi input
+e output.
+
+Un \emph{sistema di prodotto} è composto da diversi
+\emph{processi unitari}. Ogni processo può:
+
+\begin{itemize}
+    \item utilizzare beni prodotti da altri processi;
+    \item produrre beni o servizi;
+    \item utilizzare risorse prelevate dall'ambiente;
+    \item generare emissioni nell'ambiente.
+\end{itemize}
+
+Per comprendere la struttura computazionale della LCI utilizziamo
+un esempio estremamente semplice, costituito inizialmente da un
+solo processo: la produzione di elettricità.
+
+
+\subsection{Rappresentazione di un processo produttivo}
+
+Supponiamo che un processo produca $10$ kWh di elettricità
+utilizzando combustibile e generando emissioni di anidride carbonica
+e biossido di zolfo.
+
+Per rappresentare il processo dobbiamo innanzitutto identificare
+tutti gli elementi, o \emph{item}, coinvolti.
+
+Introduciamo quindi il vettore
+
+\begin{equation}
+p_i=
+\begin{pmatrix}
+\text{litri di combustibile}\\
+\text{kWh di elettricità}\\
+\text{kg di anidride carbonica}\\
+\text{kg di biossido di zolfo}
+\end{pmatrix}.
+\end{equation}
+
+Il vettore $p_i$ non contiene quantità, ma identifica gli elementi
+del sistema e le rispettive unità di misura. Esso costituisce quindi
+una struttura di riferimento che permette di attribuire un
+significato economico o ambientale alle diverse posizioni dei
+vettori numerici che utilizzeremo.
+
+Il processo di produzione dell'elettricità può essere rappresentato
+dal vettore
+
+\begin{equation}
+p_1=
+\begin{pmatrix}
+-2\\
+10\\
+1\\
+0.1
+\end{pmatrix}.
+\end{equation}
+
+La posizione degli elementi di $p_1$ corrisponde esattamente alla
+posizione degli elementi del vettore $p_i$. Possiamo quindi leggere
+il vettore nel modo seguente:
+
+\begin{itemize}
+    \item $-2$: il processo utilizza $2$ litri di combustibile;
+    \item $10$: il processo produce $10$ kWh di elettricità;
+    \item $1$: il processo emette $1$ kg di $\mathrm{CO_2}$;
+    \item $0.1$: il processo emette $0.1$ kg di $\mathrm{SO_2}$.
+\end{itemize}
+
+Adottiamo quindi una convenzione sui segni: un valore positivo
+indica un output del processo, mentre un valore negativo indica un
+input utilizzato dal processo.
+
+
+\subsection{Aggiunta di un secondo processo}
+
+Il processo di produzione dell'elettricità utilizza combustibile.
+Se vogliamo considerare anche gli effetti associati alla produzione
+di questo combustibile, dobbiamo aggiungere un secondo processo al
+sistema.
+
+Supponiamo che il processo di produzione del combustibile utilizzi
+petrolio greggio. Compare quindi un nuovo elemento e il vettore
+degli item deve essere aggiornato:
+
+\begin{equation}
+p_i=
+\begin{pmatrix}
+\text{litri di combustibile}\\
+\text{kWh di elettricità}\\
+\text{kg di anidride carbonica}\\
+\text{kg di biossido di zolfo}\\
+\text{litri di petrolio greggio}
+\end{pmatrix}.
+\end{equation}
+
+Anche il vettore del primo processo deve essere aggiornato
+aggiungendo uno zero nella posizione corrispondente al petrolio
+greggio:
+
+\begin{equation}
+p_1=
+\begin{pmatrix}
+-2\\
+10\\
+1\\
+0.1\\
+0
+\end{pmatrix}.
+\end{equation}
+
+Supponiamo che il secondo processo sia rappresentato da
+
+\begin{equation}
+p_2=
+\begin{pmatrix}
+100\\
+0\\
+10\\
+2\\
+-50
+\end{pmatrix}.
+\end{equation}
+
+Ciò significa che una attivazione del processo:
+
+\begin{itemize}
+    \item produce $100$ litri di combustibile;
+    \item non produce elettricità;
+    \item emette $10$ kg di $\mathrm{CO_2}$;
+    \item emette $2$ kg di $\mathrm{SO_2}$;
+    \item utilizza $50$ litri di petrolio greggio.
+\end{itemize}
+
+I due processi non sono indipendenti. Il combustibile prodotto dal
+secondo processo viene utilizzato come input dal primo. La LCA deve
+tenere conto proprio di queste interdipendenze.
+
+
+\subsection{La matrice dei processi}
+
+Possiamo raccogliere i vettori dei processi nelle colonne di
+un'unica matrice:
+
+\begin{equation}
+P=
+\left(
+p_1\mid p_2
+\right)
+=
+\begin{pmatrix}
+-2  & 100\\
+10  & 0\\
+1   & 10\\
+0.1 & 2\\
+0   & -50
+\end{pmatrix}.
+\label{eq:lca-process-matrix}
+\end{equation}
+
+Ogni \emph{colonna} della matrice rappresenta quindi un processo,
+mentre ogni \emph{riga} rappresenta uno degli item del sistema.
+
+Questa organizzazione è importante dal punto di vista
+computazionale: aumentando il numero dei processi, il sistema
+produttivo può essere rappresentato aggiungendo nuove colonne;
+se compaiono nuovi beni, risorse o emissioni, vengono aggiunte
+nuove righe.
+
+
+\subsection{Tecnosfera e biosfera}
+
+Non tutti i flussi contenuti nella matrice $P$ hanno la stessa
+natura.
+
+È utile distinguere tra \emph{tecnosfera} e \emph{biosfera}.
+
+La tecnosfera comprende i beni e i servizi prodotti e utilizzati
+all'interno del sistema economico. Nel nostro esempio appartengono
+alla tecnosfera:
+
+\begin{equation}
+\text{combustibile},
+\qquad
+\text{elettricità}.
+\end{equation}
+
+La biosfera comprende invece gli elementi che rappresentano lo
+scambio tra il sistema economico e l'ambiente. Possono essere
+risorse prelevate dalla natura oppure sostanze rilasciate
+nell'ambiente. Nel nostro esempio appartengono alla biosfera:
+
+\begin{equation}
+\mathrm{CO_2},
+\qquad
+\mathrm{SO_2},
+\qquad
+\text{petrolio greggio}.
+\end{equation}
+
+Possiamo quindi dividere la matrice dei processi in due
+sottomatrici:
+
+\begin{equation}
+P=
+\begin{pmatrix}
+A\\
+B
+\end{pmatrix},
+\label{eq:lca-PAB}
+\end{equation}
+
+dove $A$ è la \emph{matrice tecnologica} e $B$ è la
+\emph{matrice degli interventi ambientali}.
+
+Nel nostro esempio,
+
+\begin{equation}
+A=
+\begin{pmatrix}
+-2 & 100\\
+10 & 0
+\end{pmatrix},
+\end{equation}
+
+mentre
+
+\begin{equation}
+B=
+\begin{pmatrix}
+1   & 10\\
+0.1 & 2\\
+0   & -50
+\end{pmatrix}.
+\end{equation}
+
+La matrice $A$ descrive quindi le relazioni tra i processi
+all'interno della tecnosfera, mentre $B$ descrive gli scambi tra
+i processi produttivi e la biosfera.
+
+
+\subsection{La domanda finale e l'unità funzionale}
+
+A questo punto possiamo formulare il problema che vogliamo
+risolvere.
+
+Supponiamo di essere interessati all'impatto ambientale associato
+alla disponibilità di
+
+\begin{equation}
+1000\ \text{kWh di elettricità}.
+\end{equation}
+
+Questa quantità costituisce, nel nostro esempio, l'\emph{unità
+funzionale}: rappresenta il riferimento rispetto al quale vengono
+calcolati i flussi e gli impatti ambientali.
+
+Introduciamo il vettore della domanda finale $f$. La sua lunghezza
+corrisponde al numero dei flussi economici presenti nella matrice
+tecnologica.
+
+Nel nostro caso,
+
+\begin{equation}
+f=
+\begin{pmatrix}
+0\\
+1000
+\end{pmatrix}.
+\label{eq:lca-final-demand}
+\end{equation}
+
+Il primo elemento è zero perché non chiediamo al sistema di
+fornirci combustibile come prodotto finale. Il combustibile viene
+prodotto, ma viene interamente utilizzato come input per la
+produzione di elettricità.
+
+Il secondo elemento indica invece che desideriamo ottenere
+$1000$ kWh di elettricità.
+
+
+\subsection{Quante volte devono essere attivati i processi?}
+
+Conosciamo ciò che vogliamo ottenere, ma ogni singolo processo
+produce soltanto le quantità indicate nella corrispondente colonna
+della matrice $P$.
+
+Dobbiamo quindi determinare quante volte ciascun processo deve
+essere attivato affinché il sistema, nel suo complesso, produca
+la domanda finale $f$.
+
+Introduciamo a questo scopo il \emph{vettore di scala}
+
+\begin{equation}
+s=
+\begin{pmatrix}
+s_1\\
+s_2
+\end{pmatrix},
+\end{equation}
+
+dove $s_j$ indica il livello di attivazione del processo $j$.
+
+Il vettore di scala deve soddisfare
+
+\begin{equation}
+\boxed{
+As=f
+}.
+\label{eq:lca-Asf}
+\end{equation}
+
+Ritroviamo quindi esattamente il problema matematico studiato nelle
+sezioni precedenti:
+
+\begin{equation}
+Ax=b.
+\end{equation}
+
+In questo caso, tuttavia, il significato delle variabili è diverso:
+la matrice $A$ descrive la tecnologia produttiva, il vettore $f$
+rappresenta la domanda finale e il vettore incognito $s$ contiene
+i livelli di attività necessari per soddisfarla.
+
+Dal punto di vista puramente algebrico, se $A$ è invertibile,
+possiamo scrivere
+
+\begin{equation}
+s^*=A^{-1}f.
+\label{eq:lca-s-inverse}
+\end{equation}
+
+Dal punto di vista computazionale, tuttavia, non è necessario
+calcolare esplicitamente $A^{-1}$. Come abbiamo visto nelle
+sezioni precedenti, è preferibile considerare direttamente il
+problema
+
+\begin{equation}
+As=f
+\end{equation}
+
+e utilizzare un opportuno metodo numerico per risolverlo.
+
+
+\subsection{Interpretazione del vettore di scala}
+
+Nel nostro esempio la soluzione è
+
+\begin{equation}
+s^*=
+\begin{pmatrix}
+100\\
+2
+\end{pmatrix}.
+\end{equation}
+
+Questo risultato ha un'interpretazione immediata.
+
+Il primo elemento indica che il processo di produzione
+dell'elettricità deve essere attivato $100$ volte. Poiché ogni
+attivazione produce $10$ kWh,
+
+\begin{equation}
+100\times10=1000\ \text{kWh},
+\end{equation}
+
+che corrispondono esattamente alla nostra unità funzionale.
+
+Ma $100$ attivazioni del processo richiedono anche
+
+\begin{equation}
+100\times2=200
+\end{equation}
+
+litri di combustibile.
+
+Il secondo processo produce $100$ litri di combustibile a ogni
+attivazione. Per ottenere i $200$ litri necessari dobbiamo quindi
+attivarlo due volte:
+
+\begin{equation}
+2\times100=200.
+\end{equation}
+
+Il vettore $s^*$ ricostruisce quindi l'intera catena produttiva
+necessaria per soddisfare la domanda finale.
+
+
+\subsection{Dal vettore di scala all'inventario ambientale}
+
+Una volta determinato quante volte devono essere attivati i
+processi, possiamo calcolare i corrispondenti scambi con
+l'ambiente.
+
+Indichiamo con
+
+\begin{equation}
+g=
+\begin{pmatrix}
+g_1\\
+g_2\\
+g_3
+\end{pmatrix}
+\end{equation}
+
+il vettore dei flussi ambientali.
+
+Poiché la matrice $B$ contiene gli interventi ambientali associati
+a una singola attivazione dei processi, i flussi complessivi sono
+
+\begin{equation}
+\boxed{
+g^*=Bs^*
+}.
+\label{eq:lca-gBs}
+\end{equation}
+
+Nel nostro esempio,
+
+\begin{equation}
+g^*
+=
+\begin{pmatrix}
+1   & 10\\
+0.1 & 2\\
+0   & -50
+\end{pmatrix}
+\begin{pmatrix}
+100\\
+2
+\end{pmatrix}
+=
+\begin{pmatrix}
+120\\
+14\\
+-100
+\end{pmatrix}.
+\end{equation}
+
+Il risultato significa che la produzione dei $1000$ kWh di
+elettricità richiesti determina complessivamente:
+
+\begin{itemize}
+    \item l'emissione di $120$ kg di $\mathrm{CO_2}$;
+    \item l'emissione di $14$ kg di $\mathrm{SO_2}$;
+    \item il consumo di $100$ litri di petrolio greggio.
+\end{itemize}
+
+Il segno negativo dell'ultimo elemento indica che il petrolio
+greggio viene prelevato dalla biosfera, mentre i valori positivi
+di $\mathrm{CO_2}$ e $\mathrm{SO_2}$ indicano flussi diretti dal
+sistema produttivo verso l'ambiente.
+
+
+\subsection{Dalla domanda finale direttamente ai flussi ambientali}
+
+Poiché
+
+\begin{equation}
+s^*=A^{-1}f
+\end{equation}
+
+e
+
+\begin{equation}
+g^*=Bs^*,
+\end{equation}
+
+possiamo combinare le due relazioni:
+
+\begin{equation}
+g^*=BA^{-1}f.
+\label{eq:lca-direct}
+\end{equation}
+
+Definiamo
+
+\begin{equation}
+\Lambda=BA^{-1}
+\label{eq:lca-intensity}
+\end{equation}
+
+come \emph{matrice di intensità}. Otteniamo quindi
+
+\begin{equation}
+\boxed{
+g^*=\Lambda f
+}.
+\end{equation}
+
+Questa espressione mette in evidenza la struttura della fase LCI:
+la domanda finale determina, attraverso la struttura tecnologica
+del sistema, i flussi complessivi che interessano la biosfera.
+
+Anche in questo caso l'espressione con $A^{-1}$ è particolarmente
+utile per comprendere la relazione matematica tra domanda finale
+e flussi ambientali. In una implementazione numerica, tuttavia,
+possiamo ottenere $s^*$ risolvendo direttamente $As=f$ e calcolare
+successivamente $g^*=Bs^*$.
+
+
+\subsection{Il vettore complessivo dei flussi}
+
+Possiamo infine raccogliere la domanda finale e i flussi ambientali
+in un unico vettore:
+
+\begin{equation}
+q^*=
+\begin{pmatrix}
+f\\
+g^*
+\end{pmatrix}.
+\end{equation}
+
+Nel nostro esempio,
+
+\begin{equation}
+q^*=
+\begin{pmatrix}
+0\\
+1000\\
+120\\
+14\\
+-100
+\end{pmatrix}.
+\end{equation}
+
+Confrontandolo con il vettore degli item,
+
+\begin{equation}
+p_i=
+\begin{pmatrix}
+\text{litri di combustibile}\\
+\text{kWh di elettricità}\\
+\text{kg di anidride carbonica}\\
+\text{kg di biossido di zolfo}\\
+\text{litri di petrolio greggio}
+\end{pmatrix},
+\end{equation}
+
+possiamo leggere direttamente il risultato dell'inventario.
+
+Alla fine del sistema produttivo disponiamo di $1000$ kWh netti di
+elettricità e di nessuna quantità netta di combustibile. Il
+combustibile è stato effettivamente prodotto, ma è stato interamente
+utilizzato all'interno del sistema per produrre l'elettricità.
+
+Nella biosfera troviamo invece $120$ kg aggiuntivi di
+$\mathrm{CO_2}$, $14$ kg aggiuntivi di $\mathrm{SO_2}$ e una
+riduzione di $100$ litri di petrolio greggio dovuta al prelievo
+della risorsa naturale.
+
+
+\subsection{Il contributo dei singoli processi}
+
+Il vettore $g^*$ fornisce l'effetto ambientale complessivo del
+sistema. Può tuttavia essere utile conoscere anche il contributo
+dei singoli processi.
+
+Se indichiamo con $b_j$ la colonna $j$ della matrice $B$, il
+contributo ambientale del processo $j$ è
+
+\begin{equation}
+b_js_j^*.
+\end{equation}
+
+Nel nostro esempio possiamo quindi costruire la matrice
+
+\begin{equation}
+\left(
+b_1s_1^*
+\mid
+b_2s_2^*
+\right)
+=
+\begin{pmatrix}
+100 & 20\\
+10  & 4\\
+0   & -100
+\end{pmatrix}.
+\end{equation}
+
+La stessa informazione può essere rappresentata come
+
+\begin{center}
+\begin{tabular}{lrr}
+\hline
+Flusso ambientale &
+Produzione elettricità &
+Produzione combustibile\\
+\hline
+$\mathrm{CO_2}$ & 100 & 20\\
+$\mathrm{SO_2}$ & 10 & 4\\
+Petrolio greggio & 0 & -100\\
+\hline
+\end{tabular}
+\end{center}
+
+La somma degli elementi di ciascuna riga restituisce il
+corrispondente elemento di $g^*$.
+
+Questa rappresentazione permette quindi di distinguere il
+contributo dei diversi processi all'inventario ambientale ed è una
+forma tipica di output della fase LCI nei software dedicati alla
+Life Cycle Assessment.
+
+
+\subsection{Dall'inventario alla valutazione degli impatti}
+
+La fase LCI ci ha permesso di determinare le quantità fisiche dei
+flussi che collegano il sistema produttivo alla biosfera.
+
+Conoscere che la produzione considerata genera $120$ kg di
+$\mathrm{CO_2}$ e $14$ kg di $\mathrm{SO_2}$ è già
+un'informazione importante, ma non costituisce ancora una misura
+degli impatti ambientali.
+
+Sostanze differenti possono infatti contribuire, in misura
+differente, a uno stesso problema ambientale. Inoltre, uno stesso
+flusso può essere rilevante per differenti categorie di impatto.
+
+La fase di \emph{Life Cycle Impact Assessment} (LCIA) ha quindi
+l'obiettivo di trasformare i risultati dell'inventario in indicatori
+che rappresentino specifiche categorie di impatto.
+
+Il passaggio può essere sintetizzato come
+
+\begin{equation}
+\boxed{
+\text{flussi ambientali}
+\longrightarrow
+\text{categorie di impatto}
+\longrightarrow
+\text{indicatori di impatto}
+}.
+\end{equation}
+
+
+\subsection{Categorie midpoint ed endpoint}
+
+Le categorie di impatto possono essere considerate a differenti
+livelli della catena che collega un intervento ambientale al danno
+finale.
+
+Le categorie \emph{midpoint} rappresentano effetti intermedi,
+relativamente vicini ai flussi dell'inventario. Tra gli esempi
+rientrano il cambiamento climatico, l'acidificazione,
+l'eutrofizzazione e l'uso delle risorse.
+
+Le categorie \emph{endpoint} cercano invece di rappresentare danni
+più vicini alle aree finali che si desidera proteggere.
+
+Tra le principali aree di protezione possiamo considerare:
+
+\begin{itemize}
+    \item la salute umana;
+    \item l'ambiente naturale;
+    \item le risorse naturali.
+\end{itemize}
+
+Il passaggio dagli inventari ai midpoint e successivamente agli
+endpoint rappresenta quindi una progressiva trasformazione dei
+flussi fisici in informazioni sintetiche sugli effetti ambientali.
+
+
+\subsection{Categorie, indicatori e unità di misura}
+
+Per procedere con la LCIA dobbiamo specificare quale categoria di
+impatto vogliamo studiare.
+
+Consideriamo, come primo esempio, il \emph{riscaldamento globale}.
+
+Alla categoria di impatto deve essere associato un indicatore.
+Seguendo il semplice esempio considerato qui, assumiamo di
+utilizzare come indicatore l'assorbimento della radiazione
+infrarossa.
+
+Occorre infine definire un'unità di misura comune attraverso la
+quale esprimere il contributo dei differenti flussi ambientali.
+Per il riscaldamento globale utilizziamo
+
+\begin{equation}
+\text{kg di } \mathrm{CO_2}\text{-equivalente}.
+\end{equation}
+
+Abbiamo quindi tre elementi distinti:
+
+\begin{equation}
+\boxed{
+\text{categoria}
+\longrightarrow
+\text{indicatore}
+\longrightarrow
+\text{unità di misura}
+}.
+\end{equation}
+
+
+\subsection{Il modello di caratterizzazione}
+
+Per trasformare i flussi dell'inventario nell'indicatore scelto
+abbiamo bisogno di un \emph{modello di caratterizzazione}.
+
+Il modello associa a ciascun flusso ambientale un
+\emph{fattore di caratterizzazione} (\emph{characterization
+factor}, CF).
+
+Un fattore di caratterizzazione misura il contributo di una unità
+aggiuntiva di un determinato flusso all'indicatore considerato.
+
+Nell'esempio semplificato adottiamo i seguenti fattori:
+
+\begin{center}
+\begin{tabular}{lc}
+\hline
+Flusso ambientale & Fattore di caratterizzazione\\
+\hline
+$\mathrm{CO_2}$ & 1\\
+$\mathrm{SO_2}$ & 0.1\\
+Petrolio greggio & 0\\
+\hline
+\end{tabular}
+\end{center}
+
+Questi valori sono utilizzati esclusivamente per costruire un
+esempio numerico semplice. Nelle applicazioni reali, i fattori di
+caratterizzazione sono forniti da modelli e metodi di
+caratterizzazione sviluppati nella letteratura scientifica.
+
+
+\subsection{Calcolo di una singola categoria di impatto}
+
+Raccogliamo i fattori di caratterizzazione in un vettore riga:
+
+\begin{equation}
+q=
+\begin{pmatrix}
+1 & 0.1 & 0
+\end{pmatrix}.
+\end{equation}
+
+Ricordiamo che il vettore dell'inventario è
+
+\begin{equation}
+g^*=
+\begin{pmatrix}
+120\\
+14\\
+-100
+\end{pmatrix}.
+\end{equation}
+
+L'indicatore di impatto è ottenuto mediante il prodotto
+
+\begin{equation}
+\boxed{
+h=qg^*
+}.
+\label{eq:lca-single-impact}
+\end{equation}
+
+Nel nostro esempio,
+
+\begin{align}
+h
+&=
+\begin{pmatrix}
+1 & 0.1 & 0
+\end{pmatrix}
+\begin{pmatrix}
+120\\
+14\\
+-100
+\end{pmatrix}\\
+&=
+120+0.1(14)+0(-100)\\
+&=121.4.
+\end{align}
+
+L'impatto associato alla categoria considerata è quindi
+
+\begin{equation}
+h=121.4
+\quad
+\text{kg } \mathrm{CO_2}\text{-equivalente}.
+\end{equation}
+
+L'operazione di caratterizzazione ha permesso di trasformare flussi
+ambientali espressi in unità fisiche differenti in un unico
+indicatore espresso in una unità comune.
+
+
+\subsection{Valutazione simultanea di più categorie di impatto}
+
+Una LCA non si limita normalmente a una sola categoria di impatto.
+Supponiamo, ad esempio, di voler considerare simultaneamente:
+
+\begin{equation}
+\begin{pmatrix}
+\text{acidificazione}\\
+\text{riscaldamento globale}\\
+\text{deplezione delle risorse}
+\end{pmatrix}.
+\end{equation}
+
+Per ciascuna categoria dobbiamo individuare:
+
+\begin{itemize}
+    \item un indicatore;
+    \item una unità di misura;
+    \item un modello di caratterizzazione.
+\end{itemize}
+
+Supponiamo di utilizzare rispettivamente gli indicatori
+
+\begin{equation}
+\begin{pmatrix}
+\text{rilascio di }H^+\\
+\text{assorbimento della radiazione infrarossa}\\
+\text{riduzione della disponibilità della risorsa}
+\end{pmatrix}
+\end{equation}
+
+e le unità di misura
+
+\begin{equation}
+\begin{pmatrix}
+\text{kg } \mathrm{SO_2}\text{-equivalente}\\
+\text{kg } \mathrm{CO_2}\text{-equivalente}\\
+\text{resource depletion units (RDU)}
+\end{pmatrix}.
+\end{equation}
+
+Per ogni indicatore disponiamo di un insieme di fattori di
+caratterizzazione. Possiamo raccoglierli nelle righe di una
+matrice $Q$.
+
+Nel nostro esempio,
+
+\begin{equation}
+Q=
+\begin{pmatrix}
+0 & 1   & 0\\
+1 & 0.1 & 0\\
+0 & 0   & -15
+\end{pmatrix}.
+\label{eq:lca-Q}
+\end{equation}
+
+Le righe rappresentano le categorie di impatto, mentre le colonne
+corrispondono ai flussi ambientali:
+
+\begin{equation}
+\mathrm{CO_2},
+\qquad
+\mathrm{SO_2},
+\qquad
+\text{petrolio greggio}.
+\end{equation}
+
+Il vettore degli impatti è quindi
+
+\begin{equation}
+\boxed{
+h=Qg^*
+}.
+\label{eq:lca-multiple-impact}
+\end{equation}
+
+Nel nostro esempio,
+
+\begin{equation}
+h=
+\begin{pmatrix}
+0 & 1   & 0\\
+1 & 0.1 & 0\\
+0 & 0   & -15
+\end{pmatrix}
+\begin{pmatrix}
+120\\
+14\\
+-100
+\end{pmatrix}
+=
+\begin{pmatrix}
+14\\
+121.4\\
+1500
+\end{pmatrix}.
+\end{equation}
+
+Otteniamo quindi simultaneamente:
+
+\begin{itemize}
+    \item $14$ kg $\mathrm{SO_2}$-equivalente per
+          l'acidificazione;
+    \item $121.4$ kg $\mathrm{CO_2}$-equivalente per il
+          riscaldamento globale;
+    \item $1500$ RDU per la deplezione delle risorse.
+\end{itemize}
+
+
+\subsection{La struttura computazionale completa della LCA}
+
+Possiamo ora riunire i diversi passaggi.
+
+Partiamo dalla domanda finale
+
+\begin{equation}
+f.
+\end{equation}
+
+La struttura tecnologica del sistema determina i livelli di
+attività necessari:
+
+\begin{equation}
+As=f.
+\end{equation}
+
+Risolvendo il sistema otteniamo
+
+\begin{equation}
+s^*=A^{-1}f.
+\end{equation}
+
+Il vettore di scala permette di determinare l'inventario
+ambientale:
+
+\begin{equation}
+g^*=Bs^*.
+\end{equation}
+
+Sostituendo la relazione precedente possiamo scrivere
+
+\begin{equation}
+g^*=BA^{-1}f.
+\end{equation}
+
+Infine, la matrice dei fattori di caratterizzazione trasforma i
+flussi ambientali negli indicatori di impatto:
+
+\begin{equation}
+h=Qg^*.
+\end{equation}
+
+L'intera struttura può quindi essere sintetizzata come
+
+\begin{equation}
+\boxed{
+\begin{array}{ccccc}
+f
+&\longrightarrow&
+s^*
+&\longrightarrow&
+g^*
+\longrightarrow h\\[2mm]
+\text{domanda finale}
+&&
+\text{livelli di attività}
+&&
+\text{inventario}
+\quad
+\text{impatti}
+\end{array}}
+\end{equation}
+
+oppure, evidenziando le operazioni matematiche,
+
+\begin{equation}
+\boxed{
+As=f,
+\qquad
+g^*=Bs^*,
+\qquad
+h=Qg^*
+}.
+\label{eq:lca-computational-structure}
+\end{equation}
+
+Questa rappresentazione permette di comprendere perché la LCA
+costituisca un'interessante applicazione degli strumenti di algebra
+lineare studiati in precedenza. Il problema centrale della fase
+di inventario consiste ancora una volta nella soluzione di un
+sistema di equazioni lineari.
+
+Cambia il contesto applicativo, ma non la struttura matematica:
+
+\begin{equation}
+\boxed{
+\begin{array}{ccc}
+\text{modello economico} &:& Ax=b,\\[1mm]
+\text{Life Cycle Inventory} &:& As=f.
+\end{array}}
+\end{equation}
+
+Una volta determinata la soluzione del sistema lineare, ulteriori
+prodotti matrice-vettore permettono di passare dai livelli di
+attività ai flussi ambientali e, successivamente, dai flussi
+ambientali agli indicatori di impatto.
+
+La sequenza
+
+\begin{equation}
+\boxed{
+\text{domanda finale}
+\longrightarrow
+\text{inventario}
+\longrightarrow
+\text{impatti}
+}
+\end{equation}
+
+riassume quindi la struttura computazionale essenziale della
+Life Cycle Assessment considerata in questa sezione.
+
+\chapter{La struttura a termine dei tassi di interesse}
+
+\section{Richiami teorici}
+\label{sec:term-structure}
+
+La terza applicazione dei metodi numerici per la soluzione dei
+sistemi lineari riguarda la finanza e, in particolare, la
+costruzione della \emph{struttura a termine dei tassi di interesse}.
+
+Il problema che vogliamo affrontare può essere formulato nel modo
+seguente: osservando sul mercato i prezzi di un insieme di
+obbligazioni e conoscendo i flussi di cassa che esse genereranno
+in futuro, possiamo ricavare i tassi di interesse che il mercato
+associa alle diverse scadenze?
+
+Come vedremo, anche questo problema può essere ricondotto alla
+soluzione di un sistema di equazioni lineari. In questo modo,
+lo stesso problema numerico
+
+\begin{equation}
+    Ax=b
+\end{equation}
+
+che abbiamo incontrato nelle applicazioni economiche e nella
+Life Cycle Assessment ricompare in un contesto finanziario.
+
+
+\subsection{Valore del denaro nel tempo e fattori di sconto}
+
+Un principio fondamentale della finanza è che il valore di una
+somma di denaro dipende dal momento nel quale essa diventa
+disponibile. In generale, un euro disponibile oggi vale più di un
+euro che verrà ricevuto in futuro.
+
+Supponiamo di ricevere con certezza un ammontare $FV$ al tempo
+$T$. Se il tasso di interesse relativo a quella scadenza è $r_T$,
+il valore attuale del pagamento futuro è
+
+\begin{equation}
+    PV=
+    \frac{FV}{(1+r_T)^T}.
+    \label{eq:present-value-term}
+\end{equation}
+
+Possiamo separare il pagamento futuro dal termine che permette
+di riportarlo al suo valore attuale definendo il
+\emph{fattore di sconto}
+
+\begin{equation}
+    d_T=
+    \frac{1}{(1+r_T)^T}.
+    \label{eq:discount-factor}
+\end{equation}
+
+L'Equazione~\eqref{eq:present-value-term} può quindi essere
+riscritta semplicemente come
+
+\begin{equation}
+    PV=d_TFV.
+\end{equation}
+
+Il fattore di sconto $d_T$ ha un'interpretazione finanziaria
+immediata: rappresenta il valore oggi di una unità monetaria che
+verrà ricevuta con certezza al tempo $T$.
+
+Ad esempio, se
+
+\begin{equation}
+    d_T=0.90,
+\end{equation}
+
+una unità monetaria disponibile al tempo $T$ ha oggi un valore
+pari a $0.90$.
+
+Tasso di interesse e fattore di sconto rappresentano quindi due
+modi differenti di esprimere la stessa relazione tra valori
+monetari disponibili in momenti diversi.
+
+
+\subsection{La struttura a termine dei tassi di interesse}
+
+Finora abbiamo indicato il tasso di interesse con $r_T$,
+specificando esplicitamente la scadenza $T$. Questa indicazione
+è importante perché sui mercati finanziari non si utilizza
+necessariamente lo stesso tasso per valutare pagamenti che si
+verificano in date differenti.
+
+In generale,
+
+\begin{equation}
+    r_1\neq r_2\neq\cdots\neq r_T.
+\end{equation}
+
+Un pagamento che avverrà tra un anno può quindi essere scontato
+utilizzando un tasso differente da quello utilizzato per un
+pagamento che avverrà tra due, cinque o dieci anni.
+
+La relazione che associa a ogni scadenza il corrispondente tasso
+di interesse,
+
+\begin{equation}
+    T\longmapsto r_T,
+\end{equation}
+
+prende il nome di \emph{struttura a termine dei tassi di
+interesse}.
+
+La sua rappresentazione grafica è comunemente chiamata
+\emph{curva dei rendimenti} o \emph{yield curve}.
+
+I tassi $r_T$ utilizzati per scontare singoli pagamenti alle
+diverse scadenze sono chiamati \emph{tassi spot} o
+\emph{tassi zero-coupon}.
+
+
+\subsection{Tassi spot e rendimento a scadenza}
+
+È importante distinguere il tasso spot dal
+\emph{rendimento a scadenza} di un'obbligazione
+(\emph{yield to maturity}, YTM).
+
+Il tasso spot $r_T$ è il tasso appropriato per scontare un
+singolo pagamento che si verifica al tempo $T$:
+
+\begin{equation}
+    PV=
+    \frac{FV}{(1+r_T)^T}.
+\end{equation}
+
+Consideriamo invece un'obbligazione che genera diversi flussi di
+cassa
+
+\begin{equation}
+    CF_1,CF_2,\ldots,CF_T.
+\end{equation}
+
+Il rendimento a scadenza $y$ è definito come l'unico tasso che,
+applicato a tutti i flussi di cassa dell'obbligazione, rende il
+loro valore attuale uguale al prezzo di mercato $P$:
+
+\begin{equation}
+    P=
+    \sum_{t=1}^{T}
+    \frac{CF_t}{(1+y)^t}.
+    \label{eq:ytm}
+\end{equation}
+
+La differenza è quindi sostanziale.
+
+Nel calcolo dello YTM utilizziamo lo stesso tasso $y$ per tutti
+i flussi di cassa dell'obbligazione. Nella struttura a termine,
+invece, ogni scadenza può essere associata a un proprio tasso
+spot:
+
+\begin{equation}
+    r_1,r_2,\ldots,r_T.
+\end{equation}
+
+Il rendimento a scadenza sintetizza quindi in un unico numero il
+rendimento associato all'intera obbligazione, mentre i tassi spot
+descrivono separatamente il valore temporale del denaro alle
+diverse scadenze.
+
+Poiché il nostro obiettivo è costruire la struttura a termine,
+siamo interessati ai tassi spot $r_t$ e ai corrispondenti fattori
+di sconto $d_t$, e non direttamente allo YTM dei singoli titoli.
+
+
+\subsection{Valutazione di un'obbligazione mediante fattori di sconto}
+
+Consideriamo ora un'obbligazione che genera i flussi di cassa
+
+\begin{equation}
+    CF_1,CF_2,\ldots,CF_T.
+\end{equation}
+
+Poiché i pagamenti avvengono in date differenti, ciascun flusso
+deve essere valutato utilizzando il fattore di sconto
+corrispondente alla propria scadenza.
+
+Il prezzo dell'obbligazione è quindi
+
+\begin{equation}
+    P=
+    CF_1d_1+
+    CF_2d_2+
+    \cdots+
+    CF_Td_T,
+\end{equation}
+
+oppure, in forma compatta,
+
+\begin{equation}
+    \boxed{
+    P=
+    \sum_{t=1}^{T}CF_td_t
+    }.
+    \label{eq:bond-discount-factors}
+\end{equation}
+
+Questa relazione è fondamentale per il problema che vogliamo
+studiare.
+
+Se conosciamo i fattori di sconto, possiamo infatti utilizzarli
+per calcolare il valore attuale dei flussi di cassa e quindi il
+prezzo dell'obbligazione.
+
+
+\subsection{Un semplice esempio}
+
+Consideriamo un'obbligazione con scadenza a tre anni, valore
+nominale pari a $100$ e cedola annuale pari a $5$.
+
+I flussi di cassa sono
+
+\begin{equation}
+    CF_1=5,
+    \qquad
+    CF_2=5,
+    \qquad
+    CF_3=105.
+\end{equation}
+
+Nei primi due anni l'investitore riceve soltanto la cedola. Alla
+scadenza riceve invece l'ultima cedola, pari a $5$, insieme al
+rimborso del valore nominale, pari a $100$.
+
+Il prezzo dell'obbligazione è pertanto
+
+\begin{equation}
+    P=5d_1+5d_2+105d_3.
+    \label{eq:bond-three-years}
+\end{equation}
+
+L'esempio mette in evidenza un aspetto importante: il prezzo di
+un'obbligazione con cedole dipende generalmente da più fattori di
+sconto, perché i suoi flussi di cassa si verificano in date
+differenti.
+
+
+\subsection{Il problema inverso: dai prezzi ai fattori di sconto}
+
+L'Equazione~\eqref{eq:bond-discount-factors} può essere utilizzata
+in due direzioni.
+
+Se conosciamo i fattori di sconto
+
+\begin{equation}
+    d_1,d_2,\ldots,d_T,
+\end{equation}
+
+e conosciamo i flussi di cassa dell'obbligazione, possiamo
+calcolarne il prezzo.
+
+Il problema che incontriamo nella realtà è però spesso quello
+opposto.
+
+I prezzi delle obbligazioni sono osservabili sui mercati
+finanziari. Anche i flussi di cassa contrattualmente previsti
+dalle obbligazioni sono noti. I fattori di sconto, invece, non
+sono direttamente osservabili.
+
+Possiamo allora chiederci se sia possibile utilizzare le
+informazioni osservabili per ricavare quelle non osservabili.
+
+Supponiamo di osservare $N$ obbligazioni e di considerare $N$
+diverse scadenze. Per ciascuna obbligazione $i$ possiamo scrivere
+
+\begin{equation}
+    P_i=
+    \sum_{t=1}^{N}CF_{it}d_t,
+    \qquad
+    i=1,\ldots,N,
+    \label{eq:bond-general-system}
+\end{equation}
+
+dove $CF_{it}$ rappresenta il flusso di cassa generato
+dall'obbligazione $i$ alla scadenza $t$.
+
+Ogni obbligazione fornisce quindi un'equazione. Osservando più
+obbligazioni otteniamo un sistema di equazioni nelle incognite
+
+\begin{equation}
+    d_1,d_2,\ldots,d_N.
+\end{equation}
+
+Il problema finanziario può quindi essere formulato nel modo
+seguente:
+
+\begin{quote}
+è possibile ricavare la struttura a termine dei tassi di interesse
+utilizzando i prezzi delle obbligazioni osservati sul mercato?
+\end{quote}
+
+
+\subsection{Un esempio con tre obbligazioni}
+
+Consideriamo tre obbligazioni, indicate con $A$, $B$ e $C$, con
+i seguenti flussi di cassa e prezzi:
+
+\begin{center}
+\begin{tabular}{lrrrr}
+\hline
+Obbligazione & $t=1$ & $t=2$ & $t=3$ & Prezzo\\
+\hline
+A & 105 & 0   & 0   & 100\\
+B & 4   & 104 & 0   & 99\\
+C & 5   & 5   & 105 & 98\\
+\hline
+\end{tabular}
+\end{center}
+
+Per l'obbligazione $A$ abbiamo
+
+\begin{equation}
+    105d_1=100.
+    \label{eq:bond-A}
+\end{equation}
+
+Per l'obbligazione $B$:
+
+\begin{equation}
+    4d_1+104d_2=99.
+    \label{eq:bond-B}
+\end{equation}
+
+Infine, per l'obbligazione $C$:
+
+\begin{equation}
+    5d_1+5d_2+105d_3=98.
+    \label{eq:bond-C}
+\end{equation}
+
+Le tre incognite sono quindi i fattori di sconto
+
+\begin{equation}
+    d=
+    \begin{pmatrix}
+        d_1\\
+        d_2\\
+        d_3
+    \end{pmatrix}.
+\end{equation}
+
+
+\subsection{Dal problema finanziario al sistema lineare}
+
+Le tre equazioni precedenti possono essere raccolte in forma
+matriciale:
+
+\begin{equation}
+\begin{pmatrix}
+105 & 0   & 0\\
+4   & 104 & 0\\
+5   & 5   & 105
+\end{pmatrix}
+\begin{pmatrix}
+d_1\\
+d_2\\
+d_3
+\end{pmatrix}
+=
+\begin{pmatrix}
+100\\
+99\\
+98
+\end{pmatrix}.
+\label{eq:bond-matrix-example}
+\end{equation}
+
+Definiamo
+
+\begin{equation}
+C=
+\begin{pmatrix}
+105 & 0   & 0\\
+4   & 104 & 0\\
+5   & 5   & 105
+\end{pmatrix}
+\end{equation}
+
+come matrice dei flussi di cassa,
+
+\begin{equation}
+d=
+\begin{pmatrix}
+d_1\\
+d_2\\
+d_3
+\end{pmatrix}
+\end{equation}
+
+come vettore dei fattori di sconto e
+
+\begin{equation}
+P=
+\begin{pmatrix}
+100\\
+99\\
+98
+\end{pmatrix}
+\end{equation}
+
+come vettore dei prezzi osservati.
+
+Il problema può quindi essere scritto nella forma compatta
+
+\begin{equation}
+    \boxed{
+    Cd=P
+    }.
+    \label{eq:CdP}
+\end{equation}
+
+Abbiamo così trasformato il problema finanziario in un sistema di
+equazioni lineari.
+
+La corrispondenza con la notazione generale utilizzata nelle
+sezioni precedenti è immediata:
+
+\begin{equation}
+\boxed{
+\begin{array}{ccc}
+Ax=b
+&\longleftrightarrow&
+Cd=P.
+\end{array}}
+\end{equation}
+
+La matrice dei coefficienti $A$ è ora la matrice dei flussi di
+cassa $C$; il vettore delle incognite $x$ è il vettore dei fattori
+di sconto $d$; il vettore dei termini noti $b$ è costituito dai
+prezzi osservati $P$.
+
+Questo passaggio è particolarmente importante perché mostra che
+una tecnica numerica generale può essere utilizzata per risolvere
+problemi appartenenti ad ambiti applicativi molto differenti.
+
+
+\subsection{Bootstrapping della struttura a termine}
+
+Nell'esempio appena considerato la matrice dei flussi di cassa è
+triangolare inferiore:
+
+\begin{equation}
+C=
+\begin{pmatrix}
+105 & 0   & 0\\
+4   & 104 & 0\\
+5   & 5   & 105
+\end{pmatrix}.
+\end{equation}
+
+Questa particolare struttura permette di determinare i fattori di
+sconto uno dopo l'altro.
+
+Dalla prima equazione,
+
+\begin{equation}
+    105d_1=100,
+\end{equation}
+
+otteniamo immediatamente
+
+\begin{equation}
+    d_1=\frac{100}{105}.
+    \label{eq:d1-bootstrap}
+\end{equation}
+
+Una volta noto $d_1$, possiamo utilizzare la seconda equazione:
+
+\begin{equation}
+    4d_1+104d_2=99.
+\end{equation}
+
+Isolando $d_2$ otteniamo
+
+\begin{equation}
+    d_2=
+    \frac{99-4d_1}{104}.
+    \label{eq:d2-bootstrap}
+\end{equation}
+
+A questo punto conosciamo $d_1$ e $d_2$ e possiamo utilizzare la
+terza equazione:
+
+\begin{equation}
+    5d_1+5d_2+105d_3=98,
+\end{equation}
+
+da cui
+
+\begin{equation}
+    d_3=
+    \frac{98-5d_1-5d_2}{105}.
+    \label{eq:d3-bootstrap}
+\end{equation}
+
+Abbiamo quindi ricavato progressivamente
+
+\begin{equation}
+    d_1
+    \longrightarrow
+    d_2
+    \longrightarrow
+    d_3.
+\end{equation}
+
+Questa procedura sequenziale prende il nome di
+\emph{bootstrapping}.
+
+Nel nostro esempio il bootstrapping è particolarmente semplice
+perché la matrice $C$ è triangolare. Dal punto di vista numerico,
+stiamo quindi utilizzando la stessa logica della sostituzione in
+avanti incontrata nello studio dei sistemi triangolari.
+
+Più in generale, la struttura dei flussi di cassa potrebbe non
+permettere una soluzione sequenziale così immediata. Il problema
+rimane tuttavia rappresentabile come
+
+\begin{equation}
+    Cd=P
+\end{equation}
+
+e può essere affrontato utilizzando le tecniche numeriche per la
+soluzione dei sistemi lineari introdotte nelle sezioni precedenti.
+
+
+\subsection{Dai fattori di sconto ai tassi spot}
+
+La soluzione del sistema ci fornisce i fattori di sconto
+
+\begin{equation}
+    d_1,d_2,\ldots,d_T.
+\end{equation}
+
+Il nostro obiettivo finale è però costruire la struttura a termine
+dei tassi di interesse. Dobbiamo quindi trasformare ciascun fattore
+di sconto nel corrispondente tasso spot.
+
+Ricordiamo la relazione
+
+\begin{equation}
+    d_t=
+    \frac{1}{(1+r_t)^t}.
+\end{equation}
+
+Elevando entrambi i membri alla potenza $-1/t$ otteniamo
+
+\begin{equation}
+    1+r_t=d_t^{-1/t},
+\end{equation}
+
+e quindi
+
+\begin{equation}
+    \boxed{
+    r_t=d_t^{-1/t}-1
+    }.
+    \label{eq:discount-to-spot}
+\end{equation}
+
+Una volta calcolato un fattore di sconto per ciascuna scadenza,
+possiamo pertanto ottenere i corrispondenti tassi spot:
+
+\begin{equation}
+\begin{array}{ccccccc}
+d_1 & d_2 & d_3 & \cdots & d_T\\
+\downarrow & \downarrow & \downarrow && \downarrow\\
+r_1 & r_2 & r_3 & \cdots & r_T.
+\end{array}
+\end{equation}
+
+Associando ciascun tasso $r_t$ alla propria scadenza $t$ otteniamo
+la struttura a termine
+
+\begin{equation}
+    t\longmapsto r_t,
+\end{equation}
+
+che può essere rappresentata graficamente attraverso la curva dei
+rendimenti.
+
+
+\subsection{La struttura computazionale del problema}
+
+Possiamo infine riassumere il procedimento seguito.
+
+I dati inizialmente disponibili sono i prezzi delle obbligazioni
+e i rispettivi flussi di cassa:
+
+\begin{equation}
+    C,\qquad P.
+\end{equation}
+
+Da queste informazioni costruiamo il sistema
+
+\begin{equation}
+    Cd=P.
+\end{equation}
+
+La soluzione del sistema fornisce i fattori di sconto:
+
+\begin{equation}
+    C,P
+    \longrightarrow
+    d.
+\end{equation}
+
+Successivamente trasformiamo i fattori di sconto nei
+corrispondenti tassi spot:
+
+\begin{equation}
+    d_t
+    \longrightarrow
+    r_t=d_t^{-1/t}-1.
+\end{equation}
+
+L'intero procedimento può quindi essere rappresentato come
+
+\begin{equation}
+\boxed{
+\begin{array}{c}
+\text{prezzi e flussi di cassa}\\
+\downarrow\\
+Cd=P\\
+\downarrow\\
+\text{fattori di sconto}\\
+\downarrow\\
+r_t=d_t^{-1/t}-1\\
+\downarrow\\
+\text{tassi spot}\\
+\downarrow\\
+\text{curva dei rendimenti}
+\end{array}}
+\end{equation}
+
+Il problema finanziario della costruzione della struttura a termine
+si riconduce quindi, nella sua parte centrale, allo stesso problema
+numerico
+
+\begin{equation}
+    Ax=b
+\end{equation}
+
+incontrato nelle precedenti applicazioni del corso.
+
+\section{Richiami: titoli di Stato italiani}
+\label{subsec:titoli-stato-italiani}
+
+Finora abbiamo studiato il problema della costruzione della struttura
+a termine utilizzando obbligazioni teoriche, caratterizzate da flussi
+di cassa particolarmente semplici.
+
+L'obiettivo è ora applicare la stessa procedura a dati osservati sui
+mercati finanziari. Prima di procedere con l'applicazione numerica è
+quindi utile richiamare brevemente le principali caratteristiche dei
+titoli di Stato italiani.
+
+I titoli di Stato sono strumenti finanziari emessi dal Ministero
+dell'Economia e delle Finanze per finanziare il debito pubblico.
+Dal punto di vista dell'investitore, l'acquisto di un titolo comporta
+il pagamento di un prezzo al momento dell'acquisto e il diritto a
+ricevere uno o più flussi di cassa futuri.
+
+La struttura di questi flussi non è però uguale per tutti i titoli.
+Alcuni strumenti non prevedono il pagamento di cedole, mentre altri
+generano pagamenti periodici. Esistono inoltre titoli nei quali le
+cedole o il capitale rimborsato dipendono dall'andamento di un
+determinato indice.
+
+Queste differenze sono importanti per la nostra applicazione.
+Per costruire la matrice dei flussi di cassa $C$ dobbiamo infatti
+conoscere, per ciascun titolo, non soltanto il prezzo osservato, ma
+anche l'ammontare e la data di ciascun pagamento futuro.
+
+
+\subsection{Buoni Ordinari del Tesoro}
+
+I \emph{Buoni Ordinari del Tesoro} (BOT) sono titoli a breve termine
+che non prevedono il pagamento di cedole.
+
+Il rendimento dell'investitore deriva dalla differenza tra il prezzo
+pagato per acquistare il titolo e il valore rimborsato alla scadenza.
+
+In forma semplificata, la struttura dei flussi può essere
+rappresentata come
+
+\begin{equation}
+\boxed{
+-P_0
+\qquad\longrightarrow\qquad
+F_T
+}
+\end{equation}
+
+dove $P_0$ rappresenta il prezzo pagato oggi e $F_T$ il valore
+rimborsato alla scadenza.
+
+Dal punto di vista della costruzione della struttura a termine,
+questa caratteristica rende i BOT particolarmente semplici.
+
+Se un titolo genera un unico pagamento $F_T$ alla scadenza $T$,
+il suo prezzo soddisfa infatti
+
+\begin{equation}
+    P_0=F_Td_T.
+\end{equation}
+
+Il fattore di sconto relativo a quella scadenza può quindi essere
+ricavato direttamente:
+
+\begin{equation}
+    \boxed{
+    d_T=\frac{P_0}{F_T}
+    }.
+\end{equation}
+
+I titoli privi di cedole costituiscono pertanto il caso più semplice
+per osservare la relazione tra prezzo, fattore di sconto e tasso
+spot.
+
+
+\subsection{Buoni del Tesoro Poliennali}
+
+I \emph{Buoni del Tesoro Poliennali} (BTP) sono titoli caratterizzati
+da una scadenza più lunga e dal pagamento periodico di cedole.
+
+Indicando con $c_t$ la cedola pagata alla data $t$ e con $F$ il
+valore nominale rimborsato alla scadenza, la sequenza dei flussi di
+cassa può essere rappresentata schematicamente come
+
+\begin{equation}
+\boxed{
+-P_0
+\longrightarrow
+c_1
+\longrightarrow
+c_2
+\longrightarrow
+\cdots
+\longrightarrow
+c_T+F
+}.
+\end{equation}
+
+Il prezzo del titolo dipende quindi dal valore attuale di tutti i
+pagamenti futuri:
+
+\begin{equation}
+    P_0
+    =
+    c_1d_1+c_2d_2+\cdots+(c_T+F)d_T.
+    \label{eq:btp-price}
+\end{equation}
+
+Questa struttura è precisamente quella che abbiamo incontrato
+nell'esempio teorico precedente.
+
+A differenza di un BOT, quindi, un singolo BTP non permette
+generalmente di determinare direttamente un unico fattore di sconto:
+il suo prezzo dipende contemporaneamente dai fattori di sconto
+associati a tutte le date nelle quali il titolo genera un pagamento.
+
+È proprio questa caratteristica a rendere naturale la costruzione
+del sistema
+
+\begin{equation}
+    Cd=P.
+\end{equation}
+
+
+\subsection{Certificati di Credito del Tesoro}
+
+I \emph{Certificati di Credito del Tesoro} (CCT) appartengono alla
+categoria dei titoli a tasso variabile.
+
+A differenza di un titolo a cedola fissa, l'ammontare delle cedole
+future non è necessariamente noto al momento dell'emissione, ma
+dipende dal parametro al quale il titolo è indicizzato.
+
+La struttura generale dei flussi rimane
+
+\begin{equation}
+-P_0
+\longrightarrow
+c_1
+\longrightarrow
+c_2
+\longrightarrow
+\cdots
+\longrightarrow
+c_T+F,
+\end{equation}
+
+ma le cedole
+
+\begin{equation}
+    c_1,c_2,\ldots,c_T
+\end{equation}
+
+non sono tutte fissate anticipatamente nello stesso modo di un
+titolo a tasso fisso.
+
+Questa differenza è rilevante per la costruzione della matrice dei
+flussi di cassa: per utilizzare un titolo nella procedura descritta
+precedentemente dobbiamo essere in grado di determinare i pagamenti
+associati alle diverse date.
+
+
+\subsection{Titoli indicizzati all'inflazione}
+
+Un'ulteriore categoria è costituita dai titoli il cui rendimento è
+collegato all'andamento dell'inflazione.
+
+In questi strumenti l'indicizzazione ha l'obiettivo di collegare
+almeno una parte dei pagamenti ricevuti dall'investitore
+all'evoluzione del livello dei prezzi.
+
+Dal punto di vista della nostra applicazione, la caratteristica
+importante è che i flussi di cassa futuri non possono essere
+trattati nello stesso modo dei flussi di un'obbligazione nominale
+a cedola fissa.
+
+Per costruire una struttura a termine nominale mediante il sistema
+
+\begin{equation}
+    Cd=P,
+\end{equation}
+
+è infatti particolarmente conveniente lavorare con strumenti per
+i quali i flussi di cassa nominali futuri siano determinabili.
+
+
+\subsection{Perché la tipologia del titolo è importante}
+
+Il breve richiamo alle diverse tipologie di titoli di Stato permette
+di comprendere un punto importante per la successiva applicazione.
+
+Il prezzo di mercato, da solo, non è sufficiente per costruire la
+struttura a termine. Per ogni titolo dobbiamo conoscere l'intera
+sequenza dei flussi di cassa:
+
+\begin{equation}
+    CF_{i1},CF_{i2},\ldots,CF_{iT}.
+\end{equation}
+
+Questi valori costituiscono le righe della matrice
+
+\begin{equation}
+C=
+\begin{pmatrix}
+CF_{11} & CF_{12} & \cdots & CF_{1T}\\
+CF_{21} & CF_{22} & \cdots & CF_{2T}\\
+\vdots  & \vdots  &        & \vdots\\
+CF_{N1} & CF_{N2} & \cdots & CF_{NT}
+\end{pmatrix}.
+\end{equation}
+
+Il vettore
+
+\begin{equation}
+P=
+\begin{pmatrix}
+P_1\\
+P_2\\
+\vdots\\
+P_N
+\end{pmatrix}
+\end{equation}
+
+contiene invece i prezzi osservati sul mercato.
+
+Il problema finanziario diventa ancora una volta
+
+\begin{equation}
+    Cd=P.
+\end{equation}
+
+Nell'esempio teorico precedente avevamo costruito artificialmente
+titoli con date dei pagamenti perfettamente ordinate e una matrice
+dei flussi di cassa triangolare.
+
+Quando utilizziamo titoli realmente negoziati sul mercato, la
+situazione è inevitabilmente più articolata. I titoli possono avere
+date di scadenza differenti, cedole differenti e calendari dei
+pagamenti che non coincidono perfettamente.
+
+Prima di poter applicare gli strumenti numerici studiati nel corso
+sarà quindi necessario organizzare opportunamente queste
+informazioni.
+
+Questo passaggio ci porterà dall'esempio teorico alla costruzione
+della struttura a termine utilizzando dati finanziari reali.
+
+\section{Interpolazione numerica}
+\label{sec:interpolazione}
+
+Nella sezione precedente abbiamo visto che i prezzi dei titoli di Stato
+possono essere utilizzati per ricavare informazioni sulla struttura a
+termine dei fattori di sconto. In particolare, i BOT sono strumenti
+particolarmente semplici perché generano un unico pagamento alla
+scadenza. Se il valore nominale è pari a 100, dal prezzo di un BOT
+possiamo ricavare direttamente il fattore di sconto:
+
+\begin{equation}
+    d_T = \frac{P_T}{100}.
+\end{equation}
+
+Questo risultato sembra fornire una soluzione immediata al nostro
+problema. Esiste tuttavia una difficoltà importante quando passiamo
+dall'esempio teorico ai dati realmente osservati sul mercato.
+
+I BOT disponibili non hanno una scadenza per ogni possibile data
+futura. Essi permettono quindi di conoscere direttamente la funzione
+di sconto soltanto in corrispondenza di un insieme discreto di
+scadenze.
+
+Supponiamo, ad esempio, di conoscere i fattori di sconto
+
+\begin{equation}
+    d(T_1), d(T_2), \ldots, d(T_n)
+\end{equation}
+
+corrispondenti alle scadenze
+
+\begin{equation}
+    T_1,T_2,\ldots,T_n.
+\end{equation}
+
+Potremmo però avere la necessità di valutare un pagamento che avviene
+a una data $T^*$ che non coincide con nessuna di queste scadenze.
+
+Il problema diventa allora
+
+\begin{equation}
+\boxed{
+\begin{array}{c}
+\text{conosciamo } d(T_1),d(T_2),\ldots,d(T_n)\\[2mm]
+\downarrow\\[2mm]
+\text{vogliamo determinare } d(T^*)
+\end{array}}
+\end{equation}
+
+per una scadenza $T^*$ non direttamente osservata.
+
+Questo è un problema di \emph{interpolazione}.
+
+L'interpolazione consiste nel costruire una funzione che passa
+attraverso un insieme di punti noti e nell'utilizzare tale funzione
+per stimare il valore corrispondente a punti intermedi.
+
+Nel nostro caso i punti osservati sono costituiti dalle coppie
+
+\begin{equation}
+    (T_i,d_i),
+\end{equation}
+
+dove $T_i$ rappresenta la maturity e $d_i$ il corrispondente fattore
+di sconto.
+
+
+\subsection{Interpolazione lineare}
+
+Consideriamo inizialmente il caso più semplice. Supponiamo di conoscere
+due punti della funzione di sconto:
+
+\begin{equation}
+    (T_1,d_1)
+    \qquad\text{e}\qquad
+    (T_2,d_2),
+\end{equation}
+
+e di voler stimare il fattore di sconto relativo a una maturity
+intermedia $T^*$, con
+
+\begin{equation}
+    T_1<T^*<T_2.
+\end{equation}
+
+L'ipotesi più semplice consiste nell'assumere che, nell'intervallo
+compreso tra $T_1$ e $T_2$, la funzione di sconto possa essere
+approssimata mediante una retta:
+
+\begin{equation}
+    d(T)=a+bT.
+    \label{eq:linear-interpolation}
+\end{equation}
+
+I coefficienti $a$ e $b$ non sono noti. Tuttavia conosciamo due punti
+attraverso i quali la retta deve necessariamente passare.
+
+Imponendo
+
+\begin{equation}
+    d(T_1)=d_1
+\end{equation}
+
+otteniamo
+
+\begin{equation}
+    a+bT_1=d_1.
+\end{equation}
+
+Analogamente, imponendo
+
+\begin{equation}
+    d(T_2)=d_2
+\end{equation}
+
+otteniamo
+
+\begin{equation}
+    a+bT_2=d_2.
+\end{equation}
+
+Abbiamo quindi due equazioni nelle due incognite $a$ e $b$:
+
+\begin{equation}
+\begin{cases}
+a+bT_1=d_1,\\
+a+bT_2=d_2.
+\end{cases}
+\end{equation}
+
+Anche il problema dell'interpolazione può quindi essere ricondotto
+alla soluzione di un sistema lineare.
+
+
+\subsection{Interpolazione lineare come sistema di equazioni}
+
+Le due equazioni precedenti possono essere scritte in forma
+matriciale:
+
+\begin{equation}
+\begin{pmatrix}
+1 & T_1\\
+1 & T_2
+\end{pmatrix}
+\begin{pmatrix}
+a\\
+b
+\end{pmatrix}
+=
+\begin{pmatrix}
+d_1\\
+d_2
+\end{pmatrix}.
+\label{eq:linear-interpolation-system}
+\end{equation}
+
+Ritroviamo ancora una volta la struttura generale
+
+\begin{equation}
+    Ax=b.
+\end{equation}
+
+In questo caso
+
+\begin{equation}
+A=
+\begin{pmatrix}
+1&T_1\\
+1&T_2
+\end{pmatrix},
+\qquad
+x=
+\begin{pmatrix}
+a\\
+b
+\end{pmatrix},
+\qquad
+b=
+\begin{pmatrix}
+d_1\\
+d_2
+\end{pmatrix}.
+\end{equation}
+
+Risolvendo il sistema determiniamo i coefficienti $a$ e $b$ della
+retta. A quel punto possiamo calcolare il fattore di sconto
+corrispondente a qualsiasi maturity $T^*$ compresa nell'intervallo:
+
+\begin{equation}
+    d(T^*)=a+bT^*.
+\end{equation}
+
+È importante osservare il ruolo svolto dal sistema lineare.
+Le incognite non sono direttamente i fattori di sconto che vogliamo
+interpolare, ma i coefficienti della funzione utilizzata per
+rappresentare la relazione tra maturity e fattore di sconto.
+
+Una volta determinata questa funzione, essa può essere valutata in
+qualunque punto dell'intervallo considerato.
+
+
+\subsection{Un esempio con dati finanziari reali}
+
+Il problema appena descritto emerge direttamente nei dati relativi
+ai titoli di Stato.
+
+Consideriamo il titolo
+
+\begin{center}
+\texttt{BTP 01/11/2026 7,25\%}.
+\end{center}
+
+Per valutare il pagamento che avviene alla scadenza del titolo abbiamo
+bisogno del fattore di sconto relativo al 1 novembre 2026.
+
+Supponiamo però che nel dataset non sia presente un BOT con questa
+esatta scadenza. I due BOT con scadenze più vicine sono:
+
+\begin{center}
+\begin{tabular}{lll}
+\hline
+Titolo & Scadenza & Fattore di sconto\\
+\hline
+BOT 14/10/2026 ZC & 14/10/2026 & $d_1$\\
+BOT 13/11/2026 ZC & 13/11/2026 & $d_2$\\
+\hline
+\end{tabular}
+\end{center}
+
+La data del pagamento del BTP si trova tra le due date:
+
+\begin{equation}
+14/10/2026
+<
+01/11/2026
+<
+13/11/2026.
+\end{equation}
+
+Possiamo quindi utilizzare i fattori di sconto dei due BOT per
+costruire una retta di interpolazione e valutare tale retta in
+corrispondenza del 1 novembre 2026.
+
+In termini generali, il procedimento è
+
+\begin{equation}
+\boxed{
+(T_1,d_1),(T_2,d_2)
+\longrightarrow
+\begin{pmatrix}
+1&T_1\\
+1&T_2
+\end{pmatrix}
+\begin{pmatrix}
+a\\
+b
+\end{pmatrix}
+=
+\begin{pmatrix}
+d_1\\
+d_2
+\end{pmatrix}
+\longrightarrow
+d(T^*)
+}.
+\end{equation}
+
+L'esempio mostra perché l'interpolazione è necessaria nella pratica:
+le date dei pagamenti dei BTP non coincidono necessariamente con le
+scadenze dei BOT dai quali possiamo osservare direttamente i fattori
+di sconto.
+
+
+\subsection{Dall'interpolazione lineare all'interpolazione polinomiale}
+
+L'interpolazione lineare utilizza due punti osservati e costruisce una
+retta che li collega:
+
+\begin{equation}
+    d(T)=a_0+a_1T.
+\end{equation}
+
+Possiamo però generalizzare questa idea.
+
+Supponiamo, ad esempio, di conoscere tre punti:
+
+\begin{equation}
+    (T_1,d_1),\qquad
+    (T_2,d_2),\qquad
+    (T_3,d_3).
+\end{equation}
+
+Invece di utilizzare una retta possiamo cercare un polinomio di
+secondo grado:
+
+\begin{equation}
+    d(T)=a_0+a_1T+a_2T^2.
+\end{equation}
+
+Imponendo che il polinomio passi attraverso i tre punti otteniamo
+
+\begin{equation}
+\begin{cases}
+a_0+a_1T_1+a_2T_1^2=d_1,\\
+a_0+a_1T_2+a_2T_2^2=d_2,\\
+a_0+a_1T_3+a_2T_3^2=d_3.
+\end{cases}
+\end{equation}
+
+Abbiamo quindi tre equazioni nelle tre incognite
+
+\begin{equation}
+    a_0,\qquad a_1,\qquad a_2.
+\end{equation}
+
+La stessa idea può essere estesa a un numero arbitrario di punti.
+
+
+\subsection{Interpolazione polinomiale}
+
+Consideriamo $n$ BOT dai quali abbiamo ricavato $n$ punti della
+funzione di sconto:
+
+\begin{equation}
+    (T_1,d_1),(T_2,d_2),\ldots,(T_n,d_n).
+\end{equation}
+
+Cerchiamo ora un polinomio di grado $n-1$:
+
+\begin{equation}
+    d(T)
+    =
+    a_0+a_1T+a_2T^2+\cdots+a_{n-1}T^{n-1}.
+    \label{eq:polynomial-interpolation}
+\end{equation}
+
+Il polinomio contiene esattamente $n$ coefficienti incogniti:
+
+\begin{equation}
+    a_0,a_1,\ldots,a_{n-1}.
+\end{equation}
+
+Per determinarli imponiamo che il polinomio passi attraverso tutti i
+punti osservati:
+
+\begin{equation}
+    d(T_i)=d_i,
+    \qquad i=1,\ldots,n.
+\end{equation}
+
+Otteniamo quindi il sistema
+
+\begin{equation}
+\begin{cases}
+a_0+a_1T_1+a_2T_1^2+\cdots+a_{n-1}T_1^{n-1}=d_1,\\
+a_0+a_1T_2+a_2T_2^2+\cdots+a_{n-1}T_2^{n-1}=d_2,\\
+\hspace{2cm}\vdots\\
+a_0+a_1T_n+a_2T_n^2+\cdots+a_{n-1}T_n^{n-1}=d_n.
+\end{cases}
+\end{equation}
+
+Ancora una volta, un problema apparentemente differente può essere
+ricondotto alla soluzione di un sistema di equazioni lineari.
+
+
+\subsection{La matrice di Vandermonde}
+
+Il sistema dell'interpolazione polinomiale può essere scritto in
+forma matriciale:
+
+\begin{equation}
+\underbrace{
+\begin{pmatrix}
+1&T_1&T_1^2&\cdots&T_1^{n-1}\\
+1&T_2&T_2^2&\cdots&T_2^{n-1}\\
+\vdots&\vdots&\vdots&&\vdots\\
+1&T_n&T_n^2&\cdots&T_n^{n-1}
+\end{pmatrix}
+}_{A}
+\underbrace{
+\begin{pmatrix}
+a_0\\
+a_1\\
+\vdots\\
+a_{n-1}
+\end{pmatrix}
+}_{x}
+=
+\underbrace{
+\begin{pmatrix}
+d_1\\
+d_2\\
+\vdots\\
+d_n
+\end{pmatrix}
+}_{b}.
+\label{eq:vandermonde-system}
+\end{equation}
+
+La matrice
+
+\begin{equation}
+A=
+\begin{pmatrix}
+1&T_1&T_1^2&\cdots&T_1^{n-1}\\
+1&T_2&T_2^2&\cdots&T_2^{n-1}\\
+\vdots&\vdots&\vdots&&\vdots\\
+1&T_n&T_n^2&\cdots&T_n^{n-1}
+\end{pmatrix}
+\end{equation}
+
+prende il nome di \emph{matrice di Vandermonde}.
+
+Il problema dell'interpolazione assume quindi nuovamente la forma
+
+\begin{equation}
+    Ax=b.
+\end{equation}
+
+Questa formulazione mostra ancora una volta la generalità degli
+strumenti numerici studiati nel corso: la stessa struttura matematica
+compare nella soluzione di problemi economici, ambientali e
+finanziari e, ora, anche nella costruzione di una funzione interpolante.
+
+
+\subsection{Perché non utilizzare semplicemente molti punti?}
+
+A prima vista sembrerebbe naturale utilizzare il maggior numero
+possibile di osservazioni.
+
+Se disponiamo di $n$ BOT possiamo costruire un polinomio di grado
+$n-1$ che passa esattamente attraverso tutti gli $n$ punti osservati.
+
+Tuttavia, aumentando il numero di punti aumenta anche il grado del
+polinomio e la matrice di Vandermonde contiene potenze sempre più
+elevate delle maturities:
+
+\begin{equation}
+    1,\quad T,\quad T^2,\quad T^3,\quad\ldots,\quad T^{n-1}.
+\end{equation}
+
+Questo può generare un problema numerico importante: la matrice può
+diventare \emph{mal condizionata}.
+
+Ciò significa che piccole variazioni nei dati possono produrre
+variazioni molto più grandi nella soluzione del sistema.
+
+Questo aspetto è particolarmente rilevante quando lavoriamo con dati
+reali. Prezzi, rendimenti e fattori di sconto sono infatti quantità
+misurate numericamente e possono essere soggetti ad arrotondamenti,
+errori di misura o piccole variazioni di mercato.
+
+
+\subsection{Il numero di condizionamento}
+
+Consideriamo nuovamente un sistema lineare
+
+\begin{equation}
+    Ax=b.
+\end{equation}
+
+Una misura della sensibilità numerica del problema è fornita dal
+\emph{numero di condizionamento} della matrice $A$, definito come
+
+\begin{equation}
+    \boxed{
+    \kappa(A)=\|A\|\,\|A^{-1}\|
+    }.
+    \label{eq:condition-number}
+\end{equation}
+
+Il numero di condizionamento ci dice quanto la soluzione del sistema
+può essere sensibile a piccole perturbazioni nei dati.
+
+Se il vettore dei termini noti subisce una perturbazione
+
+\begin{equation}
+    b\longrightarrow b+\Delta b,
+\end{equation}
+
+anche la soluzione cambia:
+
+\begin{equation}
+    x\longrightarrow x+\Delta x.
+\end{equation}
+
+Una relazione importante è
+
+\begin{equation}
+    \frac{\|\Delta x\|}{\|x\|}
+    \leq
+    \kappa(A)
+    \frac{\|\Delta b\|}{\|b\|}.
+    \label{eq:condition-bound}
+\end{equation}
+
+Questa espressione permette di comprendere il significato economico
+e numerico del numero di condizionamento.
+
+Se $\kappa(A)$ è piccolo, una piccola variazione nei dati produce
+generalmente una piccola variazione nella soluzione. Se invece
+$\kappa(A)$ è molto grande, una perturbazione apparentemente
+trascurabile nei dati può essere fortemente amplificata.
+
+
+\subsection{Interpretazione del condizionamento}
+
+In termini qualitativi possiamo distinguere tre situazioni:
+
+\begin{equation}
+\begin{array}{lll}
+\kappa(A)\approx 1
+&\Rightarrow&
+\text{sistema ben condizionato},\\[2mm]
+\kappa(A)\gg 1
+&\Rightarrow&
+\text{sistema mal condizionato},\\[2mm]
+\kappa(A)=\infty
+&\Rightarrow&
+\text{matrice singolare}.
+\end{array}
+\end{equation}
+
+È importante distinguere il problema dell'esistenza della soluzione
+dal problema della sua stabilità numerica.
+
+Una matrice può infatti essere invertibile e il sistema può avere una
+soluzione unica, ma la soluzione può essere estremamente sensibile a
+piccole variazioni nei dati.
+
+Pertanto,
+
+\begin{quote}
+avere una soluzione matematica unica non significa necessariamente
+avere un problema numericamente ben posto.
+\end{quote}
+
+Questa osservazione è particolarmente importante per l'interpolazione
+polinomiale. Utilizzare un numero crescente di punti permette di
+costruire un polinomio che passa esattamente attraverso tutte le
+osservazioni, ma può contemporaneamente peggiorare le proprietà
+numeriche del problema.
+
+Nasce quindi una nuova domanda: è possibile utilizzare molti punti
+della funzione di sconto senza ricorrere a un unico polinomio di
+grado elevato?
+
+La risposta conduce a una diversa tecnica di interpolazione, basata
+sull'utilizzo di polinomi di basso grado definiti localmente su
+intervalli successivi: le \emph{spline}.
+
+\section{Interpolazione mediante spline cubiche}
+\label{sec:spline}
+
+Nella sezione precedente abbiamo visto che l'interpolazione polinomiale
+permette di costruire una funzione che passa esattamente attraverso un
+insieme di punti osservati. Se disponiamo di $n$ punti, possiamo infatti
+costruire un polinomio di grado $n-1$ determinandone i coefficienti
+attraverso la soluzione di un sistema lineare basato sulla matrice di
+Vandermonde.
+
+Questa procedura presenta tuttavia un limite importante. All'aumentare
+del numero di punti aumenta anche il grado del polinomio e la matrice
+di Vandermonde può diventare mal condizionata. Di conseguenza, piccole
+perturbazioni nei dati possono produrre variazioni rilevanti nei
+coefficienti del polinomio e quindi nella funzione interpolata.
+
+Sorge allora una domanda naturale: possiamo utilizzare molti punti
+osservati senza costruire un unico polinomio di grado elevato?
+
+Una possibile risposta consiste nell'abbandonare l'idea di utilizzare
+un unico polinomio sull'intero intervallo e costruire invece diversi
+polinomi di basso grado, ciascuno valido soltanto localmente.
+
+Questa è l'idea fondamentale alla base delle \emph{spline}.
+
+
+\subsection{L'idea delle spline}
+
+Supponiamo di disporre di $n$ punti osservati
+
+\begin{equation}
+    (T_1,d_1),(T_2,d_2),\ldots,(T_n,d_n),
+\end{equation}
+
+ordinati in modo che
+
+\begin{equation}
+    T_1<T_2<\cdots<T_n.
+\end{equation}
+
+Le maturities $T_1,\ldots,T_n$ vengono chiamate \emph{nodi}.
+
+Nell'interpolazione polinomiale globale cercheremmo un unico
+polinomio
+
+\begin{equation}
+    p_{n-1}(T)
+\end{equation}
+
+di grado $n-1$ che passi attraverso tutti gli $n$ punti.
+
+Con una spline adottiamo invece una strategia differente. Dividiamo
+l'intervallo complessivo nei sottointervalli
+
+\begin{equation}
+[T_1,T_2],\quad
+[T_2,T_3],\quad
+\ldots,\quad
+[T_{n-1},T_n]
+\end{equation}
+
+e associamo a ciascun intervallo una funzione polinomiale distinta.
+
+In altre parole, non utilizziamo più un'unica funzione globale, ma una
+funzione definita a tratti:
+
+\begin{equation}
+S(T)=
+\begin{cases}
+S_1(T), & T_1\leq T\leq T_2,\\
+S_2(T), & T_2\leq T\leq T_3,\\
+\vdots & \\
+S_{n-1}(T), & T_{n-1}\leq T\leq T_n.
+\end{cases}
+\end{equation}
+
+Il problema consiste quindi nel determinare i diversi polinomi
+$S_i(T)$ e nel collegarli in modo tale che, nel loro insieme,
+costituiscano una curva sufficientemente regolare.
+
+
+\subsection{La spline cubica}
+
+Una scelta molto comune consiste nell'utilizzare polinomi di terzo
+grado. In questo caso si parla di \emph{spline cubica}.
+
+Per ciascun intervallo $[T_i,T_{i+1}]$ definiamo
+
+\begin{equation}
+    S_i(T)
+    =
+    a_i+b_iT+c_iT^2+e_iT^3,
+    \qquad i=1,\ldots,n-1.
+    \label{eq:cubic-spline}
+\end{equation}
+
+Ogni intervallo possiede quindi quattro coefficienti:
+
+\begin{equation}
+    a_i,\quad b_i,\quad c_i,\quad e_i.
+\end{equation}
+
+Poiché $n$ nodi individuano $n-1$ intervalli, il numero complessivo
+dei coefficienti da determinare è
+
+\begin{equation}
+    4(n-1).
+    \label{eq:spline-number-coefficients}
+\end{equation}
+
+Nel nostro esempio finanziario disponiamo di 15 BOT. Abbiamo quindi
+
+\begin{equation}
+    n=15
+\end{equation}
+
+nodi e
+
+\begin{equation}
+    n-1=14
+\end{equation}
+
+intervalli.
+
+Il numero totale dei coefficienti incogniti è pertanto
+
+\begin{equation}
+    4(15-1)=56.
+\end{equation}
+
+La costruzione diretta della spline richiede dunque la determinazione
+di 56 coefficienti.
+
+Il problema può sembrare notevolmente più complesso
+dell'interpolazione lineare. Vedremo però che le proprietà che
+desideriamo imporre alla spline generano precisamente le equazioni
+necessarie per determinare questi coefficienti.
+
+
+\subsection{Prima condizione: interpolazione dei nodi}
+
+La prima proprietà è la stessa che caratterizza qualsiasi funzione
+interpolante: la spline deve passare attraverso i punti osservati.
+
+Consideriamo il polinomio $S_i(T)$ definito nell'intervallo
+
+\begin{equation}
+    [T_i,T_{i+1}].
+\end{equation}
+
+Esso deve assumere il valore $d_i$ nel primo estremo e il valore
+$d_{i+1}$ nel secondo estremo. Dobbiamo quindi imporre
+
+\begin{equation}
+    S_i(T_i)=d_i
+\end{equation}
+
+e
+
+\begin{equation}
+    S_i(T_{i+1})=d_{i+1},
+\end{equation}
+
+per
+
+\begin{equation}
+    i=1,\ldots,n-1.
+\end{equation}
+
+Ogni intervallo fornisce quindi due equazioni. Poiché gli intervalli
+sono $n-1$, otteniamo complessivamente
+
+\begin{equation}
+    2(n-1)
+\end{equation}
+
+equazioni.
+
+Nel caso dei 15 BOT:
+
+\begin{equation}
+    2(15-1)=28.
+\end{equation}
+
+Le condizioni di interpolazione forniscono dunque 28 delle 56
+equazioni necessarie.
+
+
+\subsection{Seconda condizione: continuità della derivata prima}
+
+Il semplice passaggio attraverso i nodi non è sufficiente.
+
+Potremmo infatti costruire polinomi che si incontrano nei nodi ma che
+presentano bruschi cambiamenti di pendenza. La funzione risultante
+sarebbe continua, ma mostrerebbe degli ``spigoli'' nei punti di
+raccordo.
+
+Per ottenere una curva regolare richiediamo quindi che, in ciascun
+nodo interno, i due polinomi adiacenti abbiano la stessa derivata
+prima.
+
+Nel nodo $T_i$ imponiamo pertanto
+
+\begin{equation}
+    S'_{i-1}(T_i)=S'_i(T_i),
+    \qquad i=2,\ldots,n-1.
+    \label{eq:spline-first-derivative}
+\end{equation}
+
+Partendo da
+
+\begin{equation}
+    S_i(T)=a_i+b_iT+c_iT^2+e_iT^3,
+\end{equation}
+
+la derivata prima è
+
+\begin{equation}
+    S'_i(T)
+    =
+    b_i+2c_iT+3e_iT^2.
+\end{equation}
+
+Le condizioni di continuità della derivata prima sono quindi
+equazioni lineari nei coefficienti della spline.
+
+I nodi interni sono $n-2$ e otteniamo pertanto altre
+
+\begin{equation}
+    n-2
+\end{equation}
+
+equazioni.
+
+Con 15 nodi:
+
+\begin{equation}
+    15-2=13.
+\end{equation}
+
+Abbiamo quindi altre 13 equazioni.
+
+
+\subsection{Terza condizione: continuità della derivata seconda}
+
+Richiediamo una condizione ulteriore di regolarità.
+
+Non vogliamo soltanto che i polinomi abbiano la stessa pendenza nei
+punti nei quali si incontrano, ma anche che la curvatura della
+funzione cambi in maniera regolare.
+
+Imponiamo quindi la continuità della derivata seconda:
+
+\begin{equation}
+    S''_{i-1}(T_i)=S''_i(T_i),
+    \qquad i=2,\ldots,n-1.
+    \label{eq:spline-second-derivative}
+\end{equation}
+
+Poiché
+
+\begin{equation}
+    S'_i(T)=b_i+2c_iT+3e_iT^2,
+\end{equation}
+
+abbiamo
+
+\begin{equation}
+    S''_i(T)=2c_i+6e_iT.
+\end{equation}
+
+Anche queste condizioni sono lineari rispetto ai coefficienti
+incogniti.
+
+Poiché abbiamo $n-2$ nodi interni, otteniamo altre
+
+\begin{equation}
+    n-2
+\end{equation}
+
+equazioni.
+
+Nel nostro esempio:
+
+\begin{equation}
+    15-2=13.
+\end{equation}
+
+Abbiamo quindi ottenuto altre 13 equazioni.
+
+
+\subsection{Il conteggio delle equazioni}
+
+A questo punto è utile verificare quante equazioni abbiamo costruito.
+
+Le condizioni di interpolazione dei nodi forniscono
+
+\begin{equation}
+    2(n-1)
+\end{equation}
+
+equazioni.
+
+La continuità della derivata prima fornisce
+
+\begin{equation}
+    n-2
+\end{equation}
+
+equazioni, mentre la continuità della derivata seconda ne fornisce
+altre
+
+\begin{equation}
+    n-2.
+\end{equation}
+
+Complessivamente abbiamo quindi
+
+\begin{equation}
+\begin{split}
+2(n-1)+(n-2)+(n-2)
+&=2n-2+n-2+n-2\\
+&=4n-6.
+\end{split}
+\end{equation}
+
+Le incognite sono però
+
+\begin{equation}
+    4(n-1)=4n-4.
+\end{equation}
+
+Abbiamo dunque due incognite in più rispetto al numero di equazioni:
+
+\begin{equation}
+    (4n-4)-(4n-6)=2.
+\end{equation}
+
+Per determinare univocamente tutti i coefficienti della spline sono
+quindi necessarie altre due condizioni.
+
+
+\subsection{Condizioni al contorno e spline cubica naturale}
+
+Le ultime due equazioni vengono ottenute imponendo delle condizioni
+agli estremi dell'intervallo.
+
+Una possibile scelta è quella della \emph{natural cubic spline}, o
+spline cubica naturale.
+
+In questo caso imponiamo che la derivata seconda sia nulla nei due
+estremi:
+
+\begin{equation}
+    S''_1(T_1)=0
+\end{equation}
+
+e
+
+\begin{equation}
+    S''_{n-1}(T_n)=0.
+\end{equation}
+
+Queste due condizioni completano il sistema.
+
+Abbiamo infatti
+
+\begin{equation}
+    4n-6+2=4n-4
+\end{equation}
+
+equazioni, esattamente pari al numero
+
+\begin{equation}
+    4(n-1)=4n-4
+\end{equation}
+
+di coefficienti incogniti.
+
+
+\subsection{La spline come sistema lineare}
+
+Possiamo ora tornare al nostro esempio con 15 BOT.
+
+Il numero totale delle incognite è
+
+\begin{equation}
+    4(15-1)=56.
+\end{equation}
+
+Le diverse condizioni producono:
+
+\begin{center}
+\begin{tabular}{lr}
+\hline
+Condizione & Numero di equazioni\\
+\hline
+Interpolazione dei nodi & 28\\
+Continuità di $S'$ & 13\\
+Continuità di $S''$ & 13\\
+Condizioni al contorno & 2\\
+\hline
+Totale & 56\\
+\hline
+\end{tabular}
+\end{center}
+
+Abbiamo quindi
+
+\begin{equation}
+    \boxed{
+    56\text{ equazioni}
+    \qquad
+    56\text{ incognite}
+    }.
+\end{equation}
+
+Se raccogliamo tutti i coefficienti dei polinomi in un unico vettore
+$x$, tutte le condizioni precedenti possono essere organizzate in
+forma matriciale.
+
+Il problema assume quindi la forma
+
+\begin{equation}
+    \boxed{
+    A_{56\times56}x_{56\times1}
+    =
+    b_{56\times1}
+    }.
+\end{equation}
+
+Anche una procedura apparentemente complessa come la costruzione di
+una spline cubica viene quindi ricondotta allo stesso problema
+computazionale incontrato più volte nel corso:
+
+\begin{equation}
+    Ax=b.
+\end{equation}
+
+Questo risultato è particolarmente importante dal punto di vista
+didattico. Il problema finanziario ci ha condotto alla necessità di
+interpolare una funzione di sconto; la necessità di utilizzare molti
+punti ci ha spinto a considerare le spline; la costruzione della
+spline, a sua volta, si traduce nuovamente nella soluzione di un
+sistema di equazioni lineari.
+
+Le tecniche numeriche studiate in precedenza non costituiscono quindi
+strumenti isolati, ma possono essere utilizzate come componenti di
+procedure computazionali più articolate.
+
+\section{Costruzione della struttura a termine con i BTP}
+\label{sec:term-structure-btp}
+
+Nelle sezioni precedenti abbiamo introdotto gli strumenti necessari
+per affrontare il problema della costruzione della struttura a termine
+dei tassi di interesse.
+
+I BOT ci hanno permesso di osservare direttamente alcuni punti della
+funzione di sconto. Abbiamo poi introdotto l'interpolazione per
+ottenere valori della funzione in corrispondenza di scadenze non
+direttamente osservate. In particolare, le spline cubiche permettono
+di rappresentare la funzione di sconto mediante polinomi di basso
+grado definiti localmente.
+
+Possiamo ora tornare ai BTP e utilizzare questi strumenti per
+costruire un'applicazione più vicina ai dati finanziari reali.
+
+L'obiettivo è utilizzare congiuntamente:
+
+\begin{itemize}
+    \item i prezzi osservati dei BTP;
+    \item i flussi di cassa generati dai titoli;
+    \item la rappresentazione mediante spline della funzione di sconto;
+\end{itemize}
+
+per ricavare informazioni sulla struttura a termine.
+
+
+\subsection{L'equazione di pricing di un BTP}
+
+Consideriamo un BTP che genera $m$ pagamenti futuri alle date
+
+\begin{equation}
+    T_1,T_2,\ldots,T_m.
+\end{equation}
+
+Indicando con $CF_j$ il flusso di cassa alla data $T_j$, il prezzo
+del titolo può essere scritto come
+
+\begin{equation}
+    P
+    =
+    \sum_{j=1}^{m}
+    CF_jd(T_j),
+    \label{eq:btp-pricing-general}
+\end{equation}
+
+dove $d(T_j)$ rappresenta il fattore di sconto corrispondente alla
+data del pagamento.
+
+Per un BTP nominale a tasso fisso, i pagamenti intermedi sono
+costituiti dalle cedole, mentre l'ultimo pagamento comprende anche
+il rimborso del valore nominale.
+
+Se indichiamo con $C$ la cedola e assumiamo un valore nominale pari
+a 100, possiamo quindi scrivere
+
+\begin{equation}
+    P
+    =
+    Cd(T_1)
+    +Cd(T_2)
+    +\cdots+
+    (100+C)d(T_m).
+    \label{eq:btp-pricing-fixed}
+\end{equation}
+
+Il problema è che i valori
+
+\begin{equation}
+    d(T_1),d(T_2),\ldots,d(T_m)
+\end{equation}
+
+non sono direttamente osservabili per tutte le date di pagamento.
+
+
+\subsection{Rappresentare la funzione di sconto mediante una spline}
+
+Nella sezione precedente abbiamo costruito una spline cubica per
+rappresentare la funzione di sconto.
+
+Supponiamo che la data $T_j$ appartenga all'intervallo compreso tra
+due nodi consecutivi:
+
+\begin{equation}
+    T_i\leq T_j\leq T_{i+1}.
+\end{equation}
+
+All'interno di questo intervallo il fattore di sconto viene
+rappresentato dal polinomio
+
+\begin{equation}
+    d(T)
+    =
+    a_i+b_iT+c_iT^2+e_iT^3.
+    \label{eq:discount-spline-segment}
+\end{equation}
+
+Possiamo quindi calcolare il fattore di sconto relativo alla data
+$T_j$ come
+
+\begin{equation}
+    d(T_j)
+    =
+    a_i+b_iT_j+c_iT_j^2+e_iT_j^3.
+    \label{eq:discount-at-cashflow}
+\end{equation}
+
+Una volta conosciuti i coefficienti della spline, possiamo pertanto
+ottenere il fattore di sconto corrispondente a qualsiasi data
+compresa nell'intervallo coperto dai dati.
+
+
+\subsection{Dalla spline all'equazione di pricing}
+
+Consideriamo nuovamente l'equazione
+
+\begin{equation}
+    P
+    =
+    \sum_{j=1}^{m}
+    CF_jd(T_j).
+\end{equation}
+
+Per ciascuna data $T_j$, il valore $d(T_j)$ è determinato dal tratto
+della spline che contiene quella data.
+
+Se, ad esempio, $T_j$ appartiene all'intervallo
+$[T_i,T_{i+1}]$, possiamo sostituire
+
+\begin{equation}
+    d(T_j)
+    =
+    a_i+b_iT_j+c_iT_j^2+e_iT_j^3.
+\end{equation}
+
+Il contributo del flusso di cassa $CF_j$ al prezzo diventa quindi
+
+\begin{equation}
+    CF_jd(T_j)
+    =
+    CF_j
+    \left(
+    a_i+b_iT_j+c_iT_j^2+e_iT_j^3
+    \right).
+\end{equation}
+
+Sviluppando il prodotto otteniamo
+
+\begin{equation}
+    CF_jd(T_j)
+    =
+    CF_ja_i
+    +
+    CF_jT_jb_i
+    +
+    CF_jT_j^2c_i
+    +
+    CF_jT_j^3e_i.
+    \label{eq:cf-spline-linear}
+\end{equation}
+
+Questa espressione mette in evidenza una proprietà fondamentale:
+l'equazione è \emph{lineare nei coefficienti della spline}.
+
+Le quantità
+
+\begin{equation}
+    CF_j,\qquad
+    CF_jT_j,\qquad
+    CF_jT_j^2,\qquad
+    CF_jT_j^3
+\end{equation}
+
+sono infatti note. Le incognite sono invece
+
+\begin{equation}
+    a_i,\qquad b_i,\qquad c_i,\qquad e_i.
+\end{equation}
+
+Questo permette di trasformare l'equazione di pricing di ciascun
+BTP in un'equazione lineare.
+
+
+\subsection{Il contributo dei diversi intervalli}
+
+Un BTP genera normalmente più pagamenti e le relative date possono
+appartenere a intervalli differenti della spline.
+
+Consideriamo schematicamente tre intervalli:
+
+\begin{equation}
+[T_1,T_2],
+\qquad
+[T_2,T_3],
+\qquad
+[T_3,T_4].
+\end{equation}
+
+A essi corrispondono tre polinomi:
+
+\begin{align}
+S_1(T)&=a_1+b_1T+c_1T^2+e_1T^3,\\
+S_2(T)&=a_2+b_2T+c_2T^2+e_2T^3,\\
+S_3(T)&=a_3+b_3T+c_3T^2+e_3T^3.
+\end{align}
+
+Se un pagamento avviene nel primo intervallo, utilizzeremo i
+coefficienti di $S_1$. Se avviene nel secondo intervallo,
+utilizzeremo quelli di $S_2$, e così via.
+
+L'equazione di pricing del titolo può quindi coinvolgere
+coefficienti appartenenti a diversi segmenti della spline.
+
+Possiamo raccogliere tutti questi coefficienti in un unico vettore:
+
+\begin{equation}
+a=
+\begin{pmatrix}
+a_1\\
+b_1\\
+c_1\\
+e_1\\
+a_2\\
+b_2\\
+c_2\\
+e_2\\
+\vdots
+\end{pmatrix}.
+\label{eq:spline-coefficient-vector-finance}
+\end{equation}
+
+Per ogni BTP possiamo allora costruire un vettore riga che contiene
+i coefficienti noti che moltiplicano gli elementi di $a$.
+
+
+\subsection{Un'equazione lineare per ciascun BTP}
+
+Indichiamo con $B_i$ il vettore riga costruito utilizzando i flussi
+di cassa e le date di pagamento del BTP $i$.
+
+L'equazione di pricing può essere scritta come
+
+\begin{equation}
+    B_i a=P_i,
+    \label{eq:single-btp-linear}
+\end{equation}
+
+dove:
+
+\begin{itemize}
+    \item $P_i$ è il prezzo osservato del titolo;
+    \item $B_i$ contiene informazioni sui cash flow e sulle
+          rispettive date;
+    \item $a$ contiene i coefficienti incogniti della
+          rappresentazione della funzione di sconto.
+\end{itemize}
+
+Ogni titolo osservato fornisce quindi una nuova equazione lineare.
+
+Considerando simultaneamente più BTP possiamo raccogliere le
+equazioni in un sistema:
+
+\begin{equation}
+\begin{pmatrix}
+B_1\\
+B_2\\
+\vdots\\
+B_N
+\end{pmatrix}
+a
+=
+\begin{pmatrix}
+P_1\\
+P_2\\
+\vdots\\
+P_N
+\end{pmatrix}.
+\end{equation}
+
+Definendo
+
+\begin{equation}
+B=
+\begin{pmatrix}
+B_1\\
+B_2\\
+\vdots\\
+B_N
+\end{pmatrix}
+\end{equation}
+
+e
+
+\begin{equation}
+P=
+\begin{pmatrix}
+P_1\\
+P_2\\
+\vdots\\
+P_N
+\end{pmatrix},
+\end{equation}
+
+otteniamo
+
+\begin{equation}
+    \boxed{
+    Ba=P
+    }.
+    \label{eq:BaP}
+\end{equation}
+
+Ancora una volta, il problema finanziario è stato trasformato nella
+forma generale
+
+\begin{equation}
+    Ax=b.
+\end{equation}
+
+
+\subsection{Interpretazione della matrice $B$}
+
+È utile soffermarsi sul significato della matrice $B$.
+
+Le righe della matrice corrispondono ai titoli utilizzati
+nell'applicazione. Le colonne corrispondono invece ai coefficienti
+della funzione utilizzata per rappresentare i fattori di sconto.
+
+Gli elementi di $B$ vengono costruiti combinando:
+
+\begin{equation}
+\boxed{
+\text{cash flow}
+\quad+\quad
+\text{date dei cash flow}
+\quad+\quad
+\text{forma della spline}.
+}
+\end{equation}
+
+La matrice $B$ rappresenta quindi il collegamento tra le
+caratteristiche osservabili dei titoli e i parametri della funzione
+di sconto che vogliamo determinare.
+
+Questo passaggio è importante perché mostra come la costruzione di
+un sistema lineare non sia un'operazione puramente formale.
+La matrice dei coefficienti deve essere costruita a partire dalla
+struttura economica o finanziaria del problema.
+
+
+\subsection{Dalla soluzione del sistema alla funzione di sconto}
+
+Una volta costruiti $B$ e $P$, possiamo risolvere
+
+\begin{equation}
+    Ba=P
+\end{equation}
+
+utilizzando le tecniche numeriche studiate nelle sezioni precedenti.
+
+La soluzione fornisce il vettore dei coefficienti
+
+\begin{equation}
+    a^*.
+\end{equation}
+
+Conoscendo questi coefficienti possiamo ricostruire i diversi
+polinomi della spline e quindi la funzione
+
+\begin{equation}
+    d(T).
+\end{equation}
+
+Il procedimento può essere sintetizzato come
+
+\begin{equation}
+\boxed{
+\text{prezzi e cash flow}
+\longrightarrow
+Ba=P
+\longrightarrow
+a^*
+\longrightarrow
+d(T).
+}
+\end{equation}
+
+A differenza del semplice esempio iniziale, non stiamo quindi
+stimando separatamente un fattore di sconto per ciascuna data.
+Determiniamo invece i parametri di una funzione che permette di
+calcolare il fattore di sconto per le diverse scadenze.
+
+
+\subsection{Dalla funzione di sconto alla curva spot}
+
+Una volta ricostruita la funzione $d(T)$ possiamo trasformare i
+fattori di sconto nei corrispondenti tassi spot.
+
+Ricordiamo che
+
+\begin{equation}
+    d(T)
+    =
+    \frac{1}{(1+r(T))^T}.
+\end{equation}
+
+Risolvendo rispetto al tasso otteniamo
+
+\begin{equation}
+    \boxed{
+    r(T)
+    =
+    d(T)^{-1/T}-1
+    }.
+    \label{eq:spline-discount-to-spot}
+\end{equation}
+
+Possiamo quindi scegliere una griglia di maturities
+
+\begin{equation}
+    T_1^*,T_2^*,\ldots,T_K^*
+\end{equation}
+
+e, per ciascuna di esse:
+
+\begin{enumerate}
+    \item calcolare il fattore di sconto $d(T_k^*)$;
+    \item trasformarlo nel corrispondente tasso spot
+          $r(T_k^*)$.
+\end{enumerate}
+
+Le coppie
+
+\begin{equation}
+    \left(T_k^*,r(T_k^*)\right)
+\end{equation}
+
+permettono infine di rappresentare graficamente la struttura a
+termine dei tassi di interesse.
+
+
+\subsection{Il ruolo dei BOT e dei BTP}
+
+Possiamo ora comprendere meglio il ruolo svolto dai due tipi di
+titoli utilizzati nell'applicazione.
+
+I BOT, essendo titoli zero-coupon, permettono di ricavare
+direttamente alcuni punti della funzione di sconto:
+
+\begin{equation}
+    d(T)=\frac{P_T}{100}.
+\end{equation}
+
+I BTP forniscono invece informazioni aggiuntive attraverso
+l'intera sequenza dei loro flussi di cassa:
+
+\begin{equation}
+    P_i
+    =
+    \sum_j CF_{ij}d(T_{ij}).
+\end{equation}
+
+La funzione di interpolazione permette di collegare queste
+informazioni e di rappresentare $d(T)$ anche in corrispondenza
+delle date per le quali non osserviamo direttamente un titolo
+zero-coupon.
+
+La costruzione della curva può quindi essere vista come
+l'integrazione di tre elementi:
+
+\begin{equation}
+\boxed{
+\begin{array}{ccc}
+\text{BOT}
+&
++
+&
+\text{BTP}\\[1mm]
+\downarrow&&\downarrow\\
+\text{punti della funzione di sconto}
+&&
+\text{equazioni di pricing}\\[2mm]
+&\searrow\quad\swarrow&\\[-1mm]
+&d(T)&
+\end{array}}
+\end{equation}
+
+
+\subsection{Dal problema finanziario al problema computazionale}
+
+L'intero percorso seguito nell'applicazione può essere ora
+ricostruito.
+
+Siamo partiti da una domanda finanziaria:
+
+\begin{quote}
+come possiamo ricavare la struttura a termine dei tassi di interesse
+utilizzando i prezzi dei titoli osservati sul mercato?
+\end{quote}
+
+Abbiamo inizialmente considerato il caso semplice dei BOT, per i
+quali il prezzo permette di ottenere direttamente un fattore di
+sconto.
+
+Successivamente abbiamo incontrato un problema: le scadenze
+disponibili sul mercato non coincidono necessariamente con tutte le
+date nelle quali abbiamo bisogno di conoscere il fattore di sconto.
+
+Questo ci ha condotto all'interpolazione:
+
+\begin{equation}
+\text{punti osservati}
+\longrightarrow
+\text{funzione }d(T).
+\end{equation}
+
+L'interpolazione polinomiale globale ha evidenziato possibili
+problemi di condizionamento. Abbiamo quindi introdotto le spline,
+che rappresentano la funzione mediante polinomi di basso grado
+definiti localmente.
+
+Infine, siamo tornati alle equazioni di pricing dei BTP. Sostituendo
+in tali equazioni la rappresentazione scelta per $d(T)$ abbiamo
+ottenuto un sistema lineare:
+
+\begin{equation}
+    Ba=P.
+\end{equation}
+
+La soluzione del sistema fornisce i coefficienti necessari per
+ricostruire la funzione di sconto e, successivamente, la curva dei
+tassi spot.
+
+
+\subsection{Il messaggio computazionale}
+
+L'applicazione finanziaria può essere sintetizzata attraverso la
+sequenza
+
+\begin{equation}
+\boxed{
+\text{prezzi + cash flow}
+\longrightarrow
+Ba=P
+\longrightarrow
+a
+\longrightarrow
+d(T)
+\longrightarrow
+r(T).
+}
+\end{equation}
+
+Il passaggio centrale è ancora una volta la soluzione di un sistema
+lineare.
+
+Tuttavia, questa applicazione mette in evidenza anche un secondo
+aspetto importante del calcolo numerico: la qualità della soluzione
+non dipende soltanto dall'algoritmo utilizzato per risolvere il
+sistema.
+
+Dipende anche da \emph{come il problema viene rappresentato}.
+
+Nel nostro caso, la scelta della funzione utilizzata per descrivere
+$d(T)$ determina la struttura del sistema lineare che dobbiamo
+risolvere e influenza le proprietà della curva ottenuta.
+
+L'interpolazione polinomiale e le spline non sono quindi semplici
+passaggi accessori, ma fanno parte della formulazione numerica del
+problema.
+
+L'applicazione finanziaria riunisce così i principali concetti
+introdotti in questa parte del corso:
+
+\begin{equation}
+\boxed{
+\begin{array}{c}
+\text{problema finanziario}\\
+\downarrow\\
+\text{rappresentazione matematica}\\
+\downarrow\\
+\text{interpolazione}\\
+\downarrow\\
+\text{sistema lineare}\\
+\downarrow\\
+\text{soluzione numerica}\\
+\downarrow\\
+\text{interpretazione finanziaria}
+\end{array}}
+\end{equation}
+
+Il risultato finale non è quindi soltanto una curva dei tassi.
+L'esempio mostra, più in generale, come un problema finanziario reale
+possa essere trasformato progressivamente in una sequenza di problemi
+matematici che il computer è in grado di risolvere.
+
+\end{document}
