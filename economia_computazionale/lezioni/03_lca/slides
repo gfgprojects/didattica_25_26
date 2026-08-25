@@ -1,0 +1,597 @@
+# Obiettivo della lezione
+
+In questa lezione introduciamo la struttura computazionale di una **Life Cycle Assessment**.
+
+Ci concentriamo su due fasi:
+
+- **LCI**: Life Cycle Inventory
+- **LCIA**: Life Cycle Impact Assessment
+
+L'idea centrale è semplice:
+
+$$
+\text{domanda finale} \rightarrow \text{flussi ambientali} \rightarrow \text{impatti ambientali}
+$$
+
+---
+
+# Le quattro fasi della LCA
+
+Secondo lo standard ISO 14040, una LCA comprende quattro fasi:
+
+1. definizione di obiettivo e campo di applicazione;
+2. analisi di inventario;
+3. valutazione degli impatti;
+4. interpretazione dei risultati.
+
+In questa presentazione ci concentriamo sulle fasi più tecniche:
+
+$$
+\text{LCI} \quad \text{e} \quad \text{LCIA}
+$$
+
+---
+
+# LCI: idea generale
+
+La fase **LCI** descrive il sistema produttivo in termini di input e output.
+
+Un sistema di prodotto è composto da diversi **processi unitari**.
+
+Ogni processo unitario può:
+
+- usare input prodotti da altri processi;
+- produrre output economici;
+- emettere sostanze nell'ambiente;
+- usare risorse naturali.
+
+---
+
+# Il vettore degli item
+
+Per rappresentare il sistema costruiamo un vettore che contiene tutti gli item rilevanti:
+
+$$
+\mathbf{p}_i =
+\begin{pmatrix}
+\text{litri di combustibile}\\
+\text{kWh di elettricità}\\
+\text{kg di anidride carbonica}\\
+\text{kg di biossido di zolfo}
+\end{pmatrix}
+$$
+
+Questo vettore contiene le **etichette** e le **unità di misura** degli elementi del sistema.
+
+---
+
+# Primo processo: produzione di elettricità
+
+:::::::::::::: {.columns}
+
+::: {.column width="50%"}
+
+Supponiamo di avere un processo che produce 10 kWh di elettricità.
+
+Il vettore del processo è:
+
+$$
+\mathbf{p}_1 =
+\begin{pmatrix}
+-2\\
+10\\
+1\\
+0.1
+\end{pmatrix}
+$$
+
+Interpretazione:
+
+- usa 2 litri di combustibile;
+- produce 10 kWh di elettricità;
+- emette 1 kg di CO$_2$;
+- emette 0.1 kg di SO$_2$.
+
+:::
+
+::: {.column width="50%"}
+
+![](process1.png){width=100%}
+
+:::
+
+::::::::::::::
+
+---
+
+# Secondo processo: produzione di combustibile
+
+Aggiungiamo un secondo processo: la produzione di combustibile.
+
+Compare un nuovo input: il **petrolio greggio**.
+
+Aggiorniamo quindi il vettore degli item:
+
+$$
+\mathbf{p}_i =
+\begin{pmatrix}
+\text{litri di combustibile}\\
+\text{kWh di elettricità}\\
+\text{kg di anidride carbonica}\\
+\text{kg di biossido di zolfo}\\
+\text{litri di petrolio greggio}
+\end{pmatrix}
+$$
+
+---
+
+# I due processi del sistema
+
+:::::::::::::: {.columns}
+
+::: {.column width="50%"}
+
+I due processi sono:
+$$
+\mathbf{p}_1 =
+\begin{pmatrix}
+-2\\
+10\\
+1\\
+0.1\\
+0
+\end{pmatrix}
+\qquad
+\mathbf{p}_2 =
+\begin{pmatrix}
+100\\
+0\\
+10\\
+2\\
+-50
+\end{pmatrix}
+$$
+
+Il secondo processo:
+
+- produce 100 litri di combustibile;
+- emette 10 kg di CO$_2$;
+- emette 2 kg di SO$_2$;
+- usa 50 litri di petrolio greggio.
+
+:::
+
+::: {.column width="50%"}
+
+![](process1_2.png){width=100%}
+
+:::
+
+::::::::::::::
+
+---
+
+# La matrice dei processi
+
+Raccogliamo i vettori dei processi in una matrice:
+
+$$
+P = (\mathbf{p}_1 \mid \mathbf{p}_2) =
+\begin{pmatrix}
+-2 & 100\\
+10 & 0\\
+1 & 10\\
+0.1 & 2\\
+0 & -50
+\end{pmatrix}
+$$
+
+Ogni colonna rappresenta un processo.
+
+Ogni riga rappresenta un item del sistema.
+
+---
+
+# Tecnologia e interventi ambientali
+
+La matrice dei processi viene divisa in due parti:
+
+$$
+P =
+\begin{pmatrix}
+A\\
+B
+\end{pmatrix}
+$$
+
+Dove:
+
+- $A$ è la **matrice tecnologica**;
+- $B$ è la **matrice degli interventi ambientali**.
+
+$A$ contiene i flussi dentro il sistema economico.
+
+$B$ contiene i flussi tra economia e ambiente.
+
+---
+
+# Domanda finale e unità funzionale
+
+La domanda finale è indicata con $\mathbf{f}$.
+
+Nel nostro esempio, l'unità funzionale è:
+
+$$
+1000 \text{ kWh di elettricità}
+$$
+
+Quindi:
+
+$$
+\mathbf{f} =
+\begin{pmatrix}
+0\\
+1000
+\end{pmatrix}
+$$
+
+Il primo elemento è il combustibile.
+
+Il secondo elemento è l'elettricità richiesta.
+
+---
+
+# Il vettore di scala
+
+Il vettore di scala $\mathbf{s}$ indica quante volte ogni processo deve essere attivato.
+
+Si ottiene risolvendo:
+
+$$
+A\mathbf{s} = \mathbf{f}
+$$
+
+La soluzione è:
+
+$$
+\mathbf{s}^* = A^{-1}\mathbf{f}
+$$
+
+Nel nostro esempio:
+
+$$
+\mathbf{s}^* =
+\begin{pmatrix}
+100\\
+2
+\end{pmatrix}
+$$
+
+---
+
+# Interpretazione del vettore di scala
+
+Il risultato
+
+$$
+\mathbf{s}^* =
+\begin{pmatrix}
+100\\
+2
+\end{pmatrix}
+$$
+
+significa che dobbiamo attivare:
+
+- 100 volte il processo di produzione di elettricità;
+- 2 volte il processo di produzione di combustibile.
+
+Così otteniamo i 1000 kWh richiesti e produciamo il combustibile necessario.
+
+---
+
+# Dalla domanda finale ai flussi ambientali
+
+I flussi ambientali sono indicati con $\mathbf{g}$.
+
+Si calcolano come:
+
+$$
+\mathbf{g}^* = B\mathbf{s}^*
+$$
+
+Sostituendo $\mathbf{s}^* = A^{-1}\mathbf{f}$ otteniamo:
+
+$$
+\mathbf{g}^* = BA^{-1}\mathbf{f}
+$$
+
+Definiamo la matrice di intensità:
+
+$$
+\Lambda = BA^{-1}
+$$
+
+Quindi:
+
+$$
+\mathbf{g}^* = \Lambda \mathbf{f}
+$$
+
+---
+
+# Risultato dell'inventario
+
+Nel nostro esempio:
+
+$$
+\mathbf{g}^* =
+\begin{pmatrix}
+120\\
+14\\
+-100
+\end{pmatrix}
+$$
+
+Interpretazione:
+
+- 120 kg di CO$_2$ emessi;
+- 14 kg di SO$_2$ emessi;
+- 100 litri di petrolio greggio consumati.
+
+Il valore negativo indica un prelievo dall'ambiente.
+
+---
+
+# Matrice di inventario per processo
+
+Possiamo anche vedere il contributo ambientale di ogni processo.
+
+| Flusso ambientale | Produzione elettricità | Produzione combustibile |
+|---|---:|---:|
+| CO$_2$ | 100 | 20 |
+| SO$_2$ | 10 | 4 |
+| Petrolio greggio | 0 | -100 |
+
+Questa tabella è il tipico output della fase di inventario nei software LCA.
+
+---
+
+# Tecnosfera e biosfera
+
+:::::::::::::: {.columns}
+
+::: {.column width="50%"}
+
+È importante distinguere tra:
+
+**Tecnosfera**
+
+: beni e servizi prodotti e usati dagli esseri umani.
+
+**Biosfera**
+
+: risorse naturali ed emissioni nell'ambiente.
+
+Nel nostro esempio:
+
+- tecnosfera: elettricità e combustibile;
+- biosfera: CO$_2$, SO$_2$ e petrolio greggio.
+
+:::
+
+::: {.column width="50%"}
+
+![](tecno_bio.png){width=100%}
+
+:::
+
+::::::::::::::
+
+---
+
+# LCIA: idea generale
+
+La fase **LCIA** trasforma i flussi ambientali in indicatori di impatto.
+
+La logica è:
+
+$$
+\text{flussi ambientali} \rightarrow \text{categorie di impatto} \rightarrow \text{indicatori}
+$$
+
+Esempio:
+
+$$
+\text{CO}_2 \rightarrow \text{riscaldamento globale} \rightarrow \text{kg CO}_2\text{-equivalente}
+$$
+
+---
+
+# Categorie midpoint ed endpoint
+
+:::::::::::::: {.columns}
+
+::: {.column width="50%"}
+
+Le categorie di impatto possono essere classificate in:
+
+- **midpoint**: effetti intermedi, più vicini ai flussi ambientali;
+- **endpoint**: danni finali, più vicini alle aree di protezione.
+
+Esempi di aree di protezione:
+
+- salute umana;
+- ambiente naturale;
+- risorse naturali.
+
+:::
+
+::: {.column width="50%"}
+
+![](methods.png){width=100%}
+
+:::
+
+::::::::::::::
+
+---
+
+# Fattori di caratterizzazione
+
+Per ogni flusso ambientale serve un **fattore di caratterizzazione**.
+
+Un fattore di caratterizzazione misura l'effetto di una unità aggiuntiva del flusso sull'indicatore scelto.
+
+Nel caso del riscaldamento globale:
+
+| Flusso | Fattore di caratterizzazione |
+|---|---:|
+| CO$_2$ | 1 |
+| SO$_2$ | 0.1 |
+| Petrolio greggio | 0 |
+
+---
+
+# Calcolo di un solo impatto
+
+Raccogliamo i fattori di caratterizzazione in un vettore:
+
+$$
+\mathbf{q} =
+\begin{pmatrix}
+1 & 0.1 & 0
+\end{pmatrix}
+$$
+
+L'impatto si calcola come:
+
+$$
+h = \mathbf{q}\mathbf{g}
+$$
+
+Nel nostro esempio:
+
+$$
+h = 121.4
+$$
+
+Quindi l'impatto sul riscaldamento globale è pari a 121.4 kg CO$_2$-equivalente.
+
+---
+
+# Più categorie di impatto
+
+Possiamo valutare più categorie contemporaneamente.
+
+Nel nostro esempio consideriamo:
+
+$$
+\begin{pmatrix}
+\text{acidificazione}\\
+\text{riscaldamento globale}\\
+\text{deplezione delle risorse}
+\end{pmatrix}
+$$
+
+Per ogni categoria scegliamo:
+
+- un indicatore;
+- una unità di misura;
+- un modello di caratterizzazione.
+
+---
+
+# Matrice dei fattori di caratterizzazione
+
+I fattori di caratterizzazione possono essere raccolti in una matrice:
+
+$$
+Q =
+\begin{pmatrix}
+0 & 1 & 0\\
+1 & 0.1 & 0\\
+0 & 0 & -15
+\end{pmatrix}
+$$
+
+Le righe sono le categorie di impatto.
+
+Le colonne sono i flussi ambientali.
+
+---
+
+# Calcolo di impatti multipli
+
+Gli impatti ambientali sono:
+
+$$
+\mathbf{h} = Q\mathbf{g}
+$$
+
+Nel nostro esempio:
+
+$$
+\mathbf{h} =
+\begin{pmatrix}
+14\\
+121.4\\
+1500
+\end{pmatrix}
+$$
+
+Interpretazione:
+
+- acidificazione: 14 kg SO$_2$-equivalente;
+- riscaldamento globale: 121.4 kg CO$_2$-equivalente;
+- deplezione delle risorse: 1500 RDU.
+
+---
+
+# Schema riassuntivo
+
+La struttura computazionale completa è:
+
+$$
+A\mathbf{s}=\mathbf{f}
+$$
+
+$$
+\mathbf{s}^* = A^{-1}\mathbf{f}
+$$
+
+$$
+\mathbf{g}^* = B\mathbf{s}^* = BA^{-1}\mathbf{f}
+$$
+
+$$
+\mathbf{h} = Q\mathbf{g}^*
+$$
+
+In breve:
+
+$$
+\text{domanda finale} \rightarrow \text{inventario} \rightarrow \text{impatti}
+$$
+
+---
+
+# Messaggio finale
+
+La LCA può essere vista come una sequenza di trasformazioni matriciali.
+
+La fase **LCI** risponde alla domanda:
+
+> quali flussi ambientali sono generati dalla domanda finale?
+
+La fase **LCIA** risponde alla domanda:
+
+> quali impatti ambientali producono questi flussi?
+
+---
+
+# Riferimenti
+
+Hauschild, M. Z., Rosenbaum, R. K., & Olsen, S. I. (Eds.). (2018). *Life Cycle Assessment: Theory and Practice*. Springer.
+
+Heijungs, R., & Suh, S. (2002). *The Computational Structure of Life Cycle Assessment*. Springer Science.
