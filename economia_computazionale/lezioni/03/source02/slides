@@ -1,0 +1,196 @@
+# Distanze e controllo di flusso
+
+Per poter implementare un metodo iterativo ci servono due elementi:
+
+- \textbf{Strutture di controllo di flusso}: consentono di poter far rifare al computer le stesse operazioni diverse volte (strutture che rientrano nel controllo del flusso di esecuzione dei software che utilizziamo).
+- \textbf{Calcolo delle distanze}: consentono di determinare quando il contributo delle nuove iterazioni è trascurabile. Dobbiamo quindi essere in grado di calcolare la distanza del residuo da 0, o la distanza percorsa dalla soluzione tra una iterazione e l'altra. Se tale distanza è trascurabile possiamo dunque fermare il nostro programma.
+
+# Controllo di flusso
+- Come già evidenziato, i metodi iterativi si basano sul far rifare al computer le stesse operazioni diverse volte.
+
+- Per questo scopo, gli sviluppatori di software per la programmazione hanno previsto metodi che consentano di fare questo.
+
+- Essi rientrano tra quelle operazioni che vanno sotto il nome di strutture di controllo di flusso.
+
+- Le strutture di controllo di flusso che consentono di ripetere un blocco di codice sono sostanzialmente due:
+	- il \textbf{for} che consente di ripetere le operazioni un numero predefinito di volte
+	- il \textbf{while} che esegue le operazioni finché una condizione specificata dall'utente risulta essere vera. 
+
+# Il ciclo for
+
+- Struttura:
+
+	for \<defvar\> in \<list\>
+
+	blocco di operazioni che usando \<defvar\>
+
+\vskip1cm
+- Come opera: gli elementi di \<list\> vengono progressivamente assegnati a \<defvar\> e, ad ogni nuova assegnazione, vengono eseguite le operazioni specificate nel blocco di codice.
+
+# Il ciclo while
+
+- Struttura:
+
+	while \<condizione\>
+
+	blocco di operazioni che influiscono sulla \<condizione\>
+
+\vskip1cm
+- Come opera: il programma controlla la \<condizione\>. Se è vera, esegue il blocco di operazioni e ritorna a fare il controllo della \<condizione\>. Se la condizione è falsa, continua l'esecuzione delle istruzione successive al blocco.
+
+# Distanze
+
+In uno spazio euclideo $\mathbb{R}^n$ si possono calcolare diverse misure di distanza tra due punti caratterizzati dalle coordinate $\mathbf{x}=(x_1,x_2,\cdots,x_n)$ e $\mathbf{y}=(y_1,y_2,\cdots,y_n)$.
+
+In particolare, la distanza euclidea è data dalla seguente espressione:
+$$\textnormal{distanza euclidea}=\sqrt{\sum_{i=1}^n |x_i-y_i|^2}$$
+
+Qualora il punto $\mathbf{y}$ fosse l'origine degli assi, si parla di \textbf{norma} euclidea del punto $\mathbf{x}$, indicata con $||\mathbf{x}||$, e data da:
+$$||x||=\sqrt{\sum_{i=1}^n x_i^2}$$
+
+# la norma di $\mathbf{x} \ (||\mathbf{x}||)$
+
+Essa indica: 
+
+- la distanza del punto $\mathbf{x}$ dall'origine, o equivalentmente
+- la lunghezza del vettore che unisce l'origine al punto $\mathbf{x}$.
+
+\vskip5mm
+\textbf{Utilizzo della norma nella soluzione dei sistemi lineari}
+
+Dato un sistema di equazioni lineari, possiamo calcolare il residuo:
+$$\mathbf{r=d-Ax}$$ 
+Se inseriamo in questo sistema la soluzione $\mathbf{x^*}$ allora $\mathbf{r(x^*)=0}$.
+
+Per un vettore diverso dalla soluzione ($\mathbf{x^k}$) avremo  $\mathbf{r(x^k)\ne0}$.
+
+$||\mathbf{r(x^k)}||$ ci dice quanto $\mathbf{x^k}$ è lontano dal soddisfare esattamente il sistema Ax=d.
+
+# $||\mathbf{x}||$ e metodi iterativi
+
+I metodi iterativi, partendo da una soluzione di prova $\mathbf{x^0}$, generano una sequenza $\mathbf{x^1}$,  $\mathbf{x^2}$, $\mathbf{x^3}$, $\cdots$
+
+Ad ognuno di questi, associamo un residuo $\mathbf{r^0}$ $\mathbf{r^1}$,  $\mathbf{r^2}$, $\mathbf{r^3}$, $\cdots$
+
+Se ci stiamo avvicinando alla soluzione, la norma dei vari $\mathbf{r}$ si riduce progressivamente.   
+
+\vskip5mm
+ 
+\textnormal{\`E} possibile che un processo convergente non arrivi mai alla soluzione esatta nonostante i successivi avvicinamenti. 
+
+Per evitare questo problema, fissiamo in genere un valore soglia della distanza ($t$), e fermiamo le nostre iterazioni quando   
+$$||\mathbf{r^k}||<t$$
+
+#
+
+Tuttavia, qualora le variabili abbiano scale diverse, ad esempio il consumo è solitamente molto più grande di un tasso di interesse, il valore soglia dovrebbe essere diverso e riflettere la scala della variabile.
+
+Possiamo usare le grandezze del vettore $\mathbf{d}$ come indicatori di scala delle variabili.
+
+Possiamo esprimere le soglie sulle differenti variabili come segue: 
+$$t\mathbf{d}$$
+
+In questo modo, fermeremo le iterazioni non appena
+$$||\mathbf{r}||<||t\mathbf{d}||$$
+che, data la proprietà della norma $||t\mathbf{d}||=|t|\times||\mathbf{d}||$ può essere espressa come $$||\mathbf{r}||<|t|\times||\mathbf{d}|| \qquad \textnormal{oppure} \qquad \frac{||\mathbf{r}||}{||\mathbf{d}||} < |t|$$
+
+# Implementazione metodi iterativo stazionario
+
+- definire $\mathbf{A}$, $\mathbf{d}$, soluzione di prova ($\mathbf{x}$), tolleranza $t$ e massimo numero di iterazioni (max.iter)
+- definire matrice $\mathbf{M}$
+- calcolare $\mathbf{r=b-Ax}$ 
+- preparare spazio per memorizzare le $||\mathbf{r}||$ che saranno calcolate
+- calcolare $||\mathbf{r}||$ e memorizzarla in una variabile (ad. es. norma.di.r) e nello spazio preparato al punto precedente
+- calcolare $||\mathbf{d}||$  e memorizzarla in una variabile (ad. es. norma.di.d) (sarà utilizzata nella condizione di while)
+- definite il contatore di iterazioni (iter.corrente) e porlo uguale a 0
+
+# ... segue dalla diapositiva precedente
+
+- while (norma.di.r \> tolleranza*norma.di.d & iter.corrente<max.iter)
+	- calcolare $\mathbf{z}$ risolvendo $\mathbf{Mz=r}$
+	- calcolare $\mathbf{x=x+z}$
+	- calcolare $\mathbf{r=d-Ax}$
+	- calcolare norma.di.r e aggiungerla a quelle memorizzate fino ad ora
+	- iter.corrente=iter.corrente+1
+- if (norma.di.r \< tolleranza*norma.di.d)
+	- stampare la soluzione
+- else
+	- avvisare che il numero massimo di iterazioni è stato raggiunto
+
+# Esercizi
+
+- Creare una matrice di zeri 5x5. Utilizzando il ciclo for, mettere degli 1 nelle due diagonali della matrice.
+- Creare una matrice di zeri 8x8. Utilizzando il ciclo for, mettere degli 1 nelle ultime due colonne della matrice.
+- Ripetere i due esercizi qui sopra utilizzando il while.
+- Calcolare la norma euclidea del vettore 
+
+	(0.5, 1,-2,0.5,-0.8).
+
+# Esercizio 
+
+Dato il sistem $\mathbf{Ax=d}$, in cui:
+$$
+\mathbf{A}=\left[
+\begin{array}{cccc}
+54&14&-11&2\\
+14&50&-4&29\\
+-11&-4&55&22\\
+2&29&22&95
+\end{array}
+\right]
+\qquad 
+\mathbf{d}=\left[
+\begin{array}{c}
+1\\
+1\\
+1\\
+1
+\end{array}
+\right]
+$$
+
+Risolverso utilizzando a) la scomposizione LU, b) il metodo iterativo di Jacobi c) il metodo iterativo di Gauss-Seidel.
+
+Quante iterazioni sono necessarie al metodo di Jacobi e a quello di Gauss-Seidel per ottenere una soluzione che sia uguale a quella fornita dal metodo LU fino al quarto decimale?
+
+(questo esercizio è stato ripreso dal libro Miranda and Fackler (2000) Applied computational economics and finance. Esercizio 5 pag. 21)
+
+# Esercizio
+
+In un'economia ci sono tre settori che producono 3 beni. Ogni settore produce utilizzando come input tutti e 3 i beni. In aggiunta alla domanda delle imprese, occorre considerare la domanda delle famiglie relativa ai tre beni.
+
+Le equazioni di domanda dei tre beni siano date da:
+$$\mathbf{d=Ax+b}$$
+L'offerta è data dal vettore $\mathbf{x}$. L'uguaglianza tra domanda e offerta ci porta al sistema di equazioni
+$$\mathbf{x=Ax+b}$$
+
+#
+
+Risolvere il sistema con i seguenti dati:
+$$
+\mathbf{A}=\left[
+\begin{array}{ccc}
+0.2&0.3&0.2\\
+0.4&0.1&0.2\\
+0.1&0.3&0.2
+\end{array}
+\right]
+\qquad 
+\mathbf{b}=\left[
+\begin{array}{c}
+10\\
+5\\
+6
+\end{array}
+\right]
+$$
+
+Soluzione: $x^*_1=24.84, x^*_2=20.68, x^*_3=18.36$
+
+\vskip1cm
+(questo esercizio è stato ripreso dal libro Chiang and Wainwright (2005) Foundamental methods of mathematical economics. Pag. 115-116.
+
+
+
+
+

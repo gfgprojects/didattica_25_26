@@ -1,0 +1,288 @@
+# Il modello
+
+$$
+\begin{array}{ll}
+Y=C+I+G+{\color{blue}NX} & Y_f=C_f+I_f+G_f+{\color{blue}NX}_f\\
+C=\bar{C}+c(Y-T) & C_f=\bar{C}_f+c_f(Y_f-T_f)\\
+I=\bar{I}-bR & I_f=\bar{I}_f-b_fR_f\\
+{\color{blue}NX}=\bar{NX}-j(Y-Y_f)+lE\frac{\bar{P_f}}{P}\qquad&{\color{blue}NX}_f=-NX\\
+\frac{M}{P}=kY-hR & \frac{M_f}{P_f}=k_fY_f-h_fR_f\\
+\end{array}
+$$
+
+Dati i parametri e le variabili esogene, determinare le variabili endogene.
+
+Valutare gli effetti delle politiche monetarie e fiscali.
+
+# Tecniche numeriche
+
+Metodi iterativi per la soluzione di sistemi di equazioni lineari.
+
+Si usano per matrici grandi e sparse (ovvero con molti elementi nulli).
+
+# Costruzione di un modello iterativo
+
+
+dato il sistema
+$$\mathbf{Ax=b}$$
+Utilizziamo la scomposizione: 
+$$\mathbf{A=M-(M-A)}$$
+Effettuando i seguenti passaggi:
+
+$\mathbf{(M-(M-A))x=b}$
+
+$\mathbf{Mx=(M-A)x+b}$
+
+e aggiungendo gli indici di iterazione si ottiene
+
+$\mathbf{Mx_{k+1}=(M-A)x_k+b}$
+
+Esprimiamo ora l'equazione in questo modo 
+
+$\mathbf{M(x_{k+1}-x_k)=b-Ax_k}$
+
+# Costruzione di un modello iterativo (2)
+
+Patendo dall'equazione appena ottenuta:
+$$\mathbf{M(x_{k+1}-x_k)=b-Ax_k}$$
+
+e definendo 
+
+$\mathbf{z_k=(x_{k+1}-x_k)}$ e 
+
+$\mathbf{r_k=b-Ax_k}$
+
+Il sistema viene espresso come
+$$\mathbf{Mz_k=r_k}$$
+da cui possiamo ottenere la soluzione per $\mathbf{z_{k}}$ 
+
+# Il meccanismo iterativo generale (metodo di Richardson)
+
+Dunque, possiamo utilizzare la seguente strategia:
+
+- Ipotizziamo dei valori iniziali per $\mathbf{x}$, diciamo $\mathbf{x_{0}}$,
+
+- calcoliamo $\mathbf{r_0=b-Ax_0}$
+
+- otteniamo $\mathbf{z_{0}}$ risolvendo $\mathbf{Mz_{0}=r_0}$
+
+- otteniamo $\mathbf{x_{1}=x_0+z_0}$
+
+	- (si ripetono poi gli utimi 3 passaggi)
+
+- calcoliamo $\mathbf{r_1=b-Ax_1}$
+
+- otteniamo $\mathbf{z_{1}}$ risolvendo $\mathbf{Mz_{1}=r_1}$
+
+- otteniamo $\mathbf{x_{2}=x_1+z_1}$
+
+- e così via ...
+
+# Vantaggi del metodo iterativo
+
+- La parte più impegnativa del metodo iterativo è la soluzione del sistema $\mathbf{Mz_k=r_k}$
+- affinché il metodo sia computazionalmente conveniente, la matrice $\mathbf{M}$ deve essere tale che la soluzione sia molto efficiente
+- in altre parole, $\mathbf{M}$ deve essere diagonale o triangolare
+- i metodi maggiormente usati sono:
+	- Jacobi: se M=diag(A) 
+	- Gauss-Seidel: se M=lowertri(A) 
+	- di rilassamente: se moltiplichiamo la diagonale di M per $1\over \omega$ con $\omega \neq 0$.
+
+# Limiti del metodo iterativo
+
+I metodi visti fino ad ora hanno lo svantaggio di convergere in un numero limitato di casi:
+
+- il metodo di Jacobi converge se $\mathbf{A}$ è a dominanza diagonale stretta per righe
+- il metodo di Gauss-Seidel converge se $\mathbf{A}$ è 
+	- a domainanza diagonale stretta per righe (come in Jacobi)
+	- simmetrica e definita positiva
+ 
+# Miglioramenti
+
+Una possibilità è quella di aggiungere dei parametri per agevolare la convergenza.
+
+Tali parametri vengono aggiunti nell'equazione
+
+$$\mathbf{x_{k+1}=x_k+z_k}$$
+
+della diapositiva 6.
+
+In particolare, al posto di questa, si considera
+$$\mathbf{x_{k+1}=x_k+\alpha_k z_k}$$
+
+# Metodi iterativi stazionari e non stazionari
+
+Vengono così distinti
+
+- Metodi iterativi stazionari
+	- gli $\mathbf{\alpha}$ non cambiano al progredire delle iterazioni $\mathbf{\alpha_k=\alpha}$
+	- (i metodi visti fino ad ora sono stazionari)
+
+- metodi iterativi non stazionari
+	- gli $\mathbf{\alpha}$ cambiano al progredire delle iterazioni  $\mathbf{\alpha_k}$
+
+# Dai metodi stazionari, ai metodi non stazionari
+
+- Come già espresso in precedenza, i metodi stazionari convergono in un numero limitato di casi 
+- sono dunque scarsamente utilizzati
+- ad esempio, octave e matlab non implementano le funzioni per ottenere soluzioni usando questi metodi
+- si utilizzano pertanto principalmente i metodi non stazionari
+
+# Metodi iterativi non stazionari
+
+Nei metodi iterativi è particolarmente importante che $\mathbf{x_{k+1}}$ sia più vicino alla soluzione di quanto lo sia $\mathbf{x_k}$.
+
+Riprendendo l'equazione
+$$\mathbf{x_{k+1}=x_k+\alpha_k z_k}$$
+è pertanto importante effettuare delle buone scelte per quanto riguarda $\alpha_k$ e $\mathbf{z_k}$.
+
+# Interpretazione del termine $\mathbf{\alpha_k z_k}$
+
+Il termine $\mathbf{\alpha_k z_k}$ ci dice di quanto muovere ogni componente del vettore $\mathbf{x}$ ad ogni passo.
+
+Possiamo pensare al significato delle due componenti come:
+
+- $\mathbf{z_k}$ le direzioni del movimento delle componenti di $\mathbf{x}$
+- $\alpha_k$ l'intensità del movimento 
+
+# Il caso A simmetrica e definita positiva
+
+- Si parte dall'osservazione che $\mathbf{Ax-b}$ raccoglie il vettore delle derivate della funzione
+$$\Phi(x)=\mathbf{\frac{1}{2}x^TAx-x^Tb}$$ noto come gradiente di $\Phi$.
+
+- Il gradiente si indica con il simbolo $\nabla$ (si legge nabla)
+
+- Se $\mathbf{A}$ è simmetrica e definita positiva, 
+- $\phi$ è strettamente convessa
+- ha pertanto un unico minimo nel punto $\mathbf{x}$ che soddisfa $\mathbf{Ax-b=0}$
+- ovvero, il punto di minimo risolve il sistema lineare $\mathbf{Ax=b}$.
+
+
+# La direzione: il gradiente
+
+- Ogni elemento del $\nabla$ ci informa di quanto la funzione varia aumentando di una unità la corrispondente direzione. 
+
+- Utilizzando la nozione di derivata direzionale, è possibile vedere che il gradiente fornisce la direzione e il verso di massima crescita della funzione $\Phi$. (si veda diapositiva seguente)
+
+- Per ridurre il residuo, occorre quindi muovere le componenti di $\mathbf{x}$ nella stessa direzione, ma nel verso opposto di $\nabla$
+
+- una possibile scelta di $\mathbf{z}$ è quindi quella di prendere il gradiente cambiato di segno. $\nabla$
+
+# $\nabla$ è la direzione di massima crescita
+
+La derivata direzionale di \( f \) nel punto $\bf{x}_0$ nella direzione del versore $\bf{u}$ è definita come:
+$$
+D_{\mathbf{u}}f(\mathbf{x}_0) = \nabla f(\mathbf{x}_0) \cdot \mathbf{u}
+$$
+
+dove $\nabla f(\mathbf{x}_0)$ è il gradiente e $\mathbf{u}$ è un vettore unitario $\|\bf{u}\| = 1$.
+
+Scriviamo il prodotto scalare come:
+$$
+\nabla f(\mathbf{x}_0) \cdot \mathbf{u} = \|\nabla f(\mathbf{x}_0)\| \, \|\mathbf{u}\| \cos \theta
+$$
+
+Poiché $\|\bf{u}\| = 1$:
+$$
+D_{\mathbf{u}}f(\mathbf{x}_0) = \|\nabla f(\mathbf{x}_0)\| \cos \theta
+$$
+dove $\theta$ è l'angolo tra $\nabla f(\bf{x}_0)$  e  $\bf{u}$.
+
+#
+
+Il massimo si ottiene quando $\cos \theta = 1$, cioè quando $\theta=0$.
+
+$\bf{u}$ è pertanto parallelo a $\nabla f(\mathbf{x}_0)$:
+$$
+\mathbf{u}=k \nabla f(\mathbf{x}_0)
+$$
+poiché $\mathbf{u}$ deve essere un versore,
+$$\|k \nabla f(\mathbf{x}_0)\|=1 \Rightarrow |k|\|\nabla f(\mathbf{x}_0)\|=1 \Rightarrow |k|={1\over{\|\nabla f(\mathbf{x}_0)\|}} $$
+dunque
+$$
+\mathbf{u} = \frac{\nabla f(\mathbf{x}_0)}{\|\nabla f(\mathbf{x}_0)\|}
+$$
+nella direzione del gradiente la funzione cresce di:
+$$
+\max_{\|\mathbf{u}\|=1} D_{\mathbf{u}}f(\mathbf{x}_0) = \|\nabla f(\mathbf{x}_0)\|
+$$
+
+# L'intensità del movimento
+
+Una volta determinata la direzione, dobbiamo determinare $\mathbf{\alpha_k}$ come segue:
+
+- poniamo $\mathbf{z}_k=-\nabla \Phi(\mathbf{x}_k)$
+
+e risolviamo il seguente problema
+$$\alpha_k=argmin_\alpha \Phi(\mathbf{x}_k+\alpha \mathbf{z}_k )$$
+
+\vskip2mm
+
+L'implementazione di quanto visto dà vita al \textbf{metodo del gradiente} che assicura la convergenza alla soluzione da qualsiasi punto di partenza ($\mathbf{x}_0$) a condizione che la matrice $\mathbf{A}$ sia simmetrica e definita positiva.
+
+Una sua evoluzione va sotto il nome di \textbf{metodo del gradiente coniugato} dove si identificano direzioni che consentono di velocizzare la convergenza.
+
+# Il caso A generica
+
+- La ricerca della soluzione nel caso di matrici non simmetriche e indefinite è un argomento molto vasto.
+
+- In questo corso useremo un metodo tra i più utilizzati: il GMRES (generalized minimal residual) che fa parte dei metodi che prevedono l'identificazione delle direzioni che minimizzano il residuo. 
+
+- non entreremo nelle questioni teoriche, ma applicheremo le funzioni dei software che implementano tale metodo:
+	- R: pracma::gmres(A,d,...)
+	- octave: gmres(A,d,...)
+	- python: scipy.sparse.linalg.gmres(A,d,...)
+	- julia: IterativeSolvers.gmres(A,d,...)
+
+# Conclusioni: tipologie di metodi di soluzione di sistemi lineari
+
+\textbf{Metodi diretti} (la soluzione si ottiene con un numero predefinito di operazioni)
+
+- eliminazione di Gauss
+- fattorizzazione LU
+
+\textbf{metodi iterativi}
+
+- stazionari
+	- metodo generale di Riochardson
+	- Jacobi, Gauss-Seidel, metodo del rilassamento
+- non stazionari 
+	- matrici simmetriche e definite positive
+		- metodo del gradiente
+		- gradiente coniugato (soluzione entro n iterazioni) 
+	- matrici generiche (soluzione entro n iterazioni)
+		- generalized minimal residual (gmres)
+
+# Informazioni per ulteriori approfondimenti
+
+- Gli studi recenti mostrano che il residuo è importante sia per il calcolo di $\alpha_k$, sia per il calcolo della direzione sui quali basare il nuovo passo verso la soluzione ($\mathbf{x}_{k+1}$).
+
+- La nuova scelta di $\mathbf{x}$ è guidata da condizioni imposte sul residuo e viene effettuata all'interno di sottoinsiemi noti come sottospazi di Krylov.
+
+- i sottospazi di Krylov,considerati si ampliano ad ogni iterazione
+
+#
+
+- gli approcci principali sono due:
+	- approccio Ritz-Galerkin (o del residuo ortogonale), che, dato il residuo $\mathbf{r}_k$, sceglie il nuovo $\mathbf{x}$ all'interno del sottospazio di Krylov della relativa iterazione in modo che esso sia ortogonale al residuo
+	- approccio del minimo residuo: che sceglie quell'$\mathbf{x}$ all'interno del sottospazio di Krylov della relativa iterazione che rende minima l'ampiezza del residuo.
+
+Appartengono al primo approccio i metodi
+
+- CG (gradiente coniugato, già visto precedentemente) si usa se $A$ è simmetrice e definita positiva
+- bi-CG (doppio gradiente coniugato) si usa se $A$ è generica.
+
+Appartiene al secondo approccio il metodo gmres già visto.
+
+#
+
+Altri metodi 
+
+- Il metodo bi-CGstab (bi-CG stabilizzato) combina sia l'approccio del residuo minimo e del residuo ortogonale per ovviare ai casi in cui non sia possibile trovare un residuo ortogonale ad una data iterazione.
+- gmres con restart che consente di ridurre il costo computazionale del gmres per sistemi molto grandi.
+
+I metodi iterativi che si basano sui sottospazi di Krylov raggiungono la soluzione in un numero finito di iterazioni. Potrebbero dunque essere annovarati tra i \textbf{metodi diretti}.
+
+$\textnormal{\`E}$ probabile che si arrivi sufficientemente vicino alla soluzione in un numero di iterazioni inferiore a quello massimo.  
+
+$\textnormal{\`E}$ pertanto importante stabilire quando ci si può ritenere soddisfatti, ovvero stabilire una regola che consenta di fermare la ricerca. 
