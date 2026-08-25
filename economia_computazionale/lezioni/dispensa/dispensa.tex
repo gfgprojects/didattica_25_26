@@ -7302,4 +7302,3127 @@ L'esempio mostra, più in generale, come un problema finanziario reale
 possa essere trasformato progressivamente in una sequenza di problemi
 matematici che il computer è in grado di risolvere.
 
+\chapter{Sistemi non lineari}
+
+\section{Un primo problema non lineare: il modello AD-AS}
+\label{sec:modello-adas}
+
+Dopo aver studiato la soluzione numerica dei sistemi di equazioni
+lineari, consideriamo ora una classe più generale di problemi:
+i sistemi di equazioni non lineari.
+
+Anche in questo caso partiremo da un problema economico concreto.
+Considereremo un semplice modello macroeconomico di domanda aggregata
+e offerta aggregata, o modello AD-AS (\emph{Aggregate Demand--Aggregate
+Supply}).
+
+L'obiettivo è determinare simultaneamente il livello di produzione e
+il livello dei prezzi che garantiscono l'equilibrio dell'economia.
+Come vedremo, il problema conduce naturalmente a un sistema di
+equazioni non lineari.
+
+
+\subsection{Le equazioni del modello}
+
+Consideriamo il seguente sistema di equazioni:
+
+\begin{align}
+Y &= C+I+\bar{G}, \label{eq:adas_goods}\\
+C &= \bar{C}+c(Y-T), \label{eq:adas_consumption}\\
+T &= tY, \label{eq:adas_taxes}\\
+I &= \bar{I}-bR, \label{eq:adas_investment}\\
+\frac{\bar{M}}{P} &= \bar{L}+kY-hR, \label{eq:adas_money}\\
+Y &= \bar{A}\bar{K}^{\alpha}H^{1-\alpha}, \label{eq:adas_production}\\
+\frac{\partial Y}{\partial H} &= \frac{\bar{W}}{P}.
+\label{eq:adas_labour}
+\end{align}
+
+Le principali variabili del modello sono:
+
+\begin{itemize}
+    \item $Y$: produzione;
+    \item $C$: consumo;
+    \item $I$: investimenti;
+    \item $R$: tasso di interesse;
+    \item $P$: livello dei prezzi;
+    \item $T$: imposte;
+    \item $H$: lavoro.
+\end{itemize}
+
+Nel modello compaiono inoltre alcune grandezze considerate esogene,
+indicate con una barra:
+
+\begin{itemize}
+    \item $\bar{G}$: spesa pubblica;
+    \item $\bar{C}$: componente autonoma del consumo;
+    \item $\bar{I}$: componente autonoma degli investimenti;
+    \item $\bar{M}$: quantità nominale di moneta;
+    \item $\bar{A}$: produttività totale dei fattori;
+    \item $\bar{K}$: stock di capitale;
+    \item $\bar{W}$: salario nominale;
+    \item $\bar{L}$: componente autonoma della domanda di moneta.
+\end{itemize}
+
+I parametri $c$, $t$, $b$, $k$, $h$ e $\alpha$ descrivono invece
+le relazioni comportamentali e tecnologiche presenti nel modello.
+
+L'esercizio consiste nel fissare i valori dei parametri e delle
+variabili esogene e determinare i valori delle variabili endogene
+compatibili con tutte le equazioni del modello.
+
+Nell'esempio considerato utilizziamo
+
+\begin{equation}
+c=0.6,\qquad
+b=1500,\qquad
+k=0.2,\qquad
+h=1000,\qquad
+t=0.2,\qquad
+\alpha=0.5,
+\end{equation}
+
+e
+
+\begin{equation}
+\bar{A}=1,\qquad
+\bar{K}=30000,\qquad
+\bar{C}=160,\qquad
+\bar{I}=100,
+\end{equation}
+
+\begin{equation}
+\bar{G}=200,\qquad
+\bar{M}=1000,\qquad
+\bar{W}=50,\qquad
+\bar{L}=225.
+\end{equation}
+
+Il nostro problema è quindi determinare i valori delle variabili
+endogene che rendono simultaneamente soddisfatte tutte le equazioni.
+
+
+\subsection{La domanda aggregata}
+
+Cominciamo dal lato della domanda dell'economia.
+
+La condizione di equilibrio nel mercato dei beni è
+
+\begin{equation}
+    Y=C+I+\bar{G}.
+\end{equation}
+
+La produzione deve quindi essere uguale alla domanda complessiva,
+costituita da consumi, investimenti e spesa pubblica.
+
+Il consumo è descritto da
+
+\begin{equation}
+    C=\bar{C}+c(Y-T),
+\end{equation}
+
+mentre le imposte sono proporzionali al reddito:
+
+\begin{equation}
+    T=tY.
+\end{equation}
+
+Sostituendo quest'ultima relazione nella funzione del consumo
+otteniamo
+
+\begin{equation}
+    C=\bar{C}+c(1-t)Y.
+    \label{eq:adas_consumption_reduced}
+\end{equation}
+
+Gli investimenti dipendono invece negativamente dal tasso di
+interesse:
+
+\begin{equation}
+    I=\bar{I}-bR.
+\end{equation}
+
+Per eliminare $R$ utilizziamo l'equazione relativa al mercato
+monetario:
+
+\begin{equation}
+    \frac{\bar{M}}{P}
+    =
+    \bar{L}+kY-hR.
+\end{equation}
+
+Il membro sinistro rappresenta la quantità reale di moneta. Nel
+membro destro la domanda di moneta dipende positivamente dalla
+produzione e negativamente dal tasso di interesse.
+
+Risolvendo questa equazione rispetto a $R$ otteniamo
+
+\begin{equation}
+    R=
+    \frac{1}{h}
+    \left(
+        \bar{L}+kY-\frac{\bar{M}}{P}
+    \right).
+    \label{eq:adas_R}
+\end{equation}
+
+Possiamo ora sostituire questa espressione nella funzione degli
+investimenti:
+
+\begin{equation}
+    I
+    =
+    \bar{I}
+    -
+    \frac{b}{h}
+    \left(
+        \bar{L}+kY-\frac{\bar{M}}{P}
+    \right).
+\end{equation}
+
+A questo punto consumo, imposte e investimenti possono essere
+sostituiti nell'equazione di equilibrio del mercato dei beni:
+
+\begin{equation}
+Y
+=
+\bar{C}
++c(Y-tY)
++\bar{I}
+-\frac{b}{h}
+\left(
+    \bar{L}+kY-\frac{\bar{M}}{P}
+\right)
++\bar{G}.
+\end{equation}
+
+Raccogliendo i termini contenenti $Y$ abbiamo
+
+\begin{equation}
+Y-c(1-t)Y+\frac{bk}{h}Y
+=
+\bar{C}+\bar{I}+\bar{G}
+-\frac{b}{h}
+\left(
+    \bar{L}-\frac{\bar{M}}{P}
+\right).
+\end{equation}
+
+Pertanto,
+
+\begin{equation}
+\left[
+1-c(1-t)+\frac{bk}{h}
+\right]Y
+=
+\bar{C}+\bar{I}+\bar{G}
+-\frac{b}{h}
+\left(
+    \bar{L}-\frac{\bar{M}}{P}
+\right).
+\end{equation}
+
+Risolvendo rispetto a $Y$ otteniamo la relazione di domanda
+aggregata:
+
+\begin{equation}
+\boxed{
+Y=
+\frac{
+(\bar{C}+\bar{I}+\bar{G})
+-\dfrac{b}{h}
+\left(
+\bar{L}-\dfrac{\bar{M}}{P}
+\right)
+}{
+1-c(1-t)+\dfrac{bk}{h}
+}
+}.
+\label{eq:AD}
+\end{equation}
+
+Questa equazione stabilisce una relazione tra il livello dei prezzi
+$P$ e il livello della produzione $Y$ compatibile con l'equilibrio
+del lato della domanda dell'economia.
+
+Si noti un primo elemento importante dal punto di vista
+computazionale: nella relazione compare il termine
+
+\begin{equation}
+    \frac{\bar{M}}{P}.
+\end{equation}
+
+La relazione tra $Y$ e $P$ non è quindi lineare.
+
+
+\subsection{L'offerta aggregata}
+
+Passiamo ora al lato dell'offerta.
+
+La produzione è descritta dalla funzione
+
+\begin{equation}
+    Y=\bar{A}\bar{K}^{\alpha}H^{1-\alpha},
+    \label{eq:adas_prod}
+\end{equation}
+
+dove lo stock di capitale $\bar{K}$ è considerato dato, mentre
+$H$ rappresenta il lavoro impiegato nella produzione.
+
+La produttività marginale del lavoro è
+
+\begin{equation}
+    \frac{\partial Y}{\partial H}
+    =
+    \bar{A}\bar{K}^{\alpha}(1-\alpha)H^{-\alpha}.
+\end{equation}
+
+La condizione utilizzata nel modello impone che la produttività
+marginale del lavoro sia uguale al salario reale:
+
+\begin{equation}
+    \frac{\partial Y}{\partial H}
+    =
+    \frac{\bar{W}}{P}.
+\end{equation}
+
+Pertanto,
+
+\begin{equation}
+    \bar{A}\bar{K}^{\alpha}(1-\alpha)H^{-\alpha}
+    =
+    \frac{\bar{W}}{P}.
+\end{equation}
+
+Isolando $H^{-\alpha}$ otteniamo
+
+\begin{equation}
+    H^{-\alpha}
+    =
+    \frac{\bar{W}}{P}
+    \frac{1}{
+        \bar{A}\bar{K}^{\alpha}(1-\alpha)
+    }.
+\end{equation}
+
+Possiamo quindi ricavare il livello di lavoro:
+
+\begin{equation}
+    H
+    =
+    \left[
+    \frac{\bar{W}}{P}
+    \frac{1}{
+        \bar{A}\bar{K}^{\alpha}(1-\alpha)
+    }
+    \right]^{-1/\alpha}.
+    \label{eq:adas_H}
+\end{equation}
+
+Sostituendo questa espressione nella funzione di produzione
+otteniamo la relazione di offerta aggregata:
+
+\begin{equation}
+\boxed{
+Y
+=
+\bar{A}\bar{K}^{\alpha}
+\left[
+\frac{\bar{W}}{P}
+\frac{1}{
+\bar{A}\bar{K}^{\alpha}(1-\alpha)
+}
+\right]^{-\frac{1-\alpha}{\alpha}}
+}.
+\label{eq:AS}
+\end{equation}
+
+Anche questa relazione lega il livello della produzione $Y$ al
+livello dei prezzi $P$.
+
+
+\subsection{L'equilibrio AD-AS}
+
+Abbiamo quindi ottenuto due relazioni.
+
+Dal lato della domanda:
+
+\begin{equation}
+Y=
+\frac{
+(\bar{C}+\bar{I}+\bar{G})
+-\dfrac{b}{h}
+\left(
+\bar{L}-\dfrac{\bar{M}}{P}
+\right)
+}{
+1-c(1-t)+\dfrac{bk}{h}
+}.
+\end{equation}
+
+Dal lato dell'offerta:
+
+\begin{equation}
+Y
+=
+\bar{A}\bar{K}^{\alpha}
+\left[
+\frac{\bar{W}}{P}
+\frac{1}{
+\bar{A}\bar{K}^{\alpha}(1-\alpha)
+}
+\right]^{-\frac{1-\alpha}{\alpha}}.
+\end{equation}
+
+L'equilibrio macroeconomico richiede che entrambe siano soddisfatte
+simultaneamente.
+
+Abbiamo quindi un sistema di due equazioni nelle due incognite
+$Y$ e $P$:
+
+\begin{equation}
+\boxed{
+\begin{cases}
+\displaystyle
+Y=
+\frac{
+(\bar{C}+\bar{I}+\bar{G})
+-\dfrac{b}{h}
+\left(
+\bar{L}-\dfrac{\bar{M}}{P}
+\right)
+}{
+1-c(1-t)+\dfrac{bk}{h}
+},
+\\[5mm]
+\displaystyle
+Y
+=
+\bar{A}\bar{K}^{\alpha}
+\left[
+\frac{\bar{W}}{P}
+\frac{1}{
+\bar{A}\bar{K}^{\alpha}(1-\alpha)
+}
+\right]^{-\frac{1-\alpha}{\alpha}}.
+\end{cases}
+}
+\label{eq:adas_system}
+\end{equation}
+
+La soluzione del sistema determina quindi la coppia
+
+\begin{equation}
+    (Y^*,P^*),
+\end{equation}
+
+ossia il livello di produzione e il livello dei prezzi compatibili
+simultaneamente con la domanda aggregata e con l'offerta aggregata.
+
+
+\subsection{Dall'equilibrio alle altre variabili endogene}
+
+La determinazione di $Y^*$ e $P^*$ rappresenta il passaggio
+fondamentale, ma non conclude la soluzione del modello.
+
+Una volta conosciuti questi due valori possiamo utilizzare
+sequenzialmente le altre equazioni per ricostruire le restanti
+variabili endogene.
+
+Ad esempio, dalle imposte otteniamo
+
+\begin{equation}
+    T^*=tY^*,
+\end{equation}
+
+mentre dalla funzione del consumo ricaviamo
+
+\begin{equation}
+    C^*=\bar{C}+c(Y^*-T^*).
+\end{equation}
+
+Dall'equilibrio monetario possiamo determinare il tasso di interesse:
+
+\begin{equation}
+    R^*
+    =
+    \frac{1}{h}
+    \left(
+        \bar{L}+kY^*-\frac{\bar{M}}{P^*}
+    \right),
+\end{equation}
+
+e quindi gli investimenti:
+
+\begin{equation}
+    I^*=\bar{I}-bR^*.
+\end{equation}
+
+Infine, dalla condizione relativa al mercato del lavoro possiamo
+ricavare $H^*$.
+
+Il procedimento può quindi essere rappresentato schematicamente come
+
+\begin{equation}
+\boxed{
+\begin{array}{c}
+\text{parametri e variabili esogene}\\
+\downarrow\\
+\text{sistema AD-AS}\\
+\downarrow\\
+(Y^*,P^*)\\
+\downarrow\\
+C^*,I^*,R^*,T^*,H^*
+\end{array}}
+\end{equation}
+
+
+\subsection{Perché abbiamo bisogno di nuovi strumenti numerici?}
+
+Nei problemi affrontati in precedenza, il passaggio fondamentale
+consisteva nel ricondurre il modello a un sistema lineare della forma
+
+\begin{equation}
+    Ax=b.
+\end{equation}
+
+Nel modello AD-AS appena costruito questo non è possibile
+direttamente. Le incognite compaiono infatti all'interno di
+espressioni non lineari. In particolare, nella domanda aggregata
+compare $1/P$, mentre l'offerta aggregata contiene potenze delle
+variabili.
+
+Non possiamo quindi rappresentare il sistema AD-AS semplicemente
+mediante una matrice costante $A$ e due vettori $x$ e $b$.
+
+È utile allora riscrivere le due equazioni portando tutti i termini
+al lato sinistro:
+
+\begin{equation}
+f_1(Y,P)
+=
+Y-
+\frac{
+(\bar{C}+\bar{I}+\bar{G})
+-\dfrac{b}{h}
+\left(
+\bar{L}-\dfrac{\bar{M}}{P}
+\right)
+}{
+1-c(1-t)+\dfrac{bk}{h}
+}
+=0,
+\end{equation}
+
+e
+
+\begin{equation}
+f_2(Y,P)
+=
+Y-
+\bar{A}\bar{K}^{\alpha}
+\left[
+\frac{\bar{W}}{P}
+\frac{1}{
+\bar{A}\bar{K}^{\alpha}(1-\alpha)
+}
+\right]^{-\frac{1-\alpha}{\alpha}}
+=0.
+\end{equation}
+
+Il problema può quindi essere espresso sinteticamente come
+
+\begin{equation}
+\boxed{
+\begin{cases}
+f_1(Y,P)=0,\\
+f_2(Y,P)=0.
+\end{cases}}
+\label{eq:adas_nonlinear}
+\end{equation}
+
+Siamo passati, dunque, dal problema lineare
+
+\begin{equation}
+    Ax=b
+\end{equation}
+
+a un nuovo tipo di problema:
+
+\begin{equation}
+    \mathbf{f}(\mathbf{x})=\mathbf{0}.
+\end{equation}
+
+La domanda computazionale diventa ora: come possiamo trovare
+numericamente i valori delle variabili che rendono simultaneamente
+nulle tutte le funzioni del sistema?
+
+Per rispondere a questa domanda dobbiamo introdurre i metodi numerici
+per la ricerca degli zeri di funzioni non lineari. Inizieremo dal
+caso più semplice di una singola equazione e passeremo successivamente
+alla soluzione di sistemi di equazioni non lineari.
+
+\section{Soluzione numerica di equazioni non lineari}
+\label{sec:equazioni-nonlineari}
+
+Il modello AD-AS discusso nella sezione precedente ci ha condotto a
+un sistema di equazioni non lineari. Prima di affrontare direttamente
+la soluzione di un sistema, è utile considerare il problema più
+semplice costituito da una sola equazione non lineare.
+
+In termini generali, vogliamo risolvere
+
+\begin{equation}
+    f(x)=0.
+    \label{eq:nonlinear_scalar}
+\end{equation}
+
+Risolvere l'equazione significa quindi determinare un valore $x^*$
+tale che
+
+\begin{equation}
+    f(x^*)=0.
+\end{equation}
+
+Il valore $x^*$ viene chiamato \emph{zero} o \emph{radice} della
+funzione.
+
+Graficamente, il problema consiste nel determinare i punti nei quali
+il grafico della funzione $f(x)$ interseca l'asse delle ascisse.
+
+Per alcune funzioni è possibile ricavare analiticamente questi punti.
+In molti problemi economici e finanziari, tuttavia, le equazioni
+possono essere sufficientemente complesse da rendere difficile o
+impossibile ottenere una soluzione analitica in forma chiusa.
+
+In questi casi utilizziamo metodi numerici. Essi non forniscono
+generalmente la soluzione attraverso una singola formula, ma
+costruiscono una successione di approssimazioni
+
+\begin{equation}
+    x^{(0)},x^{(1)},x^{(2)},\ldots
+\end{equation}
+
+che, sotto opportune condizioni, converge verso una soluzione $x^*$.
+
+In questa sezione consideriamo tre metodi:
+
+\begin{itemize}
+    \item il metodo di bisezione;
+    \item il metodo di Newton;
+    \item il metodo delle secanti.
+\end{itemize}
+
+
+\subsection{Il metodo di bisezione}
+
+Il metodo di bisezione utilizza il segno assunto dalla funzione agli
+estremi di un intervallo.
+
+Supponiamo di conoscere due valori $a^{(0)}$ e $b^{(0)}$ tali che
+
+\begin{equation}
+    f(a^{(0)})f(b^{(0)})<0.
+    \label{eq:bisection_sign}
+\end{equation}
+
+La funzione assume quindi segni opposti nei due estremi.
+
+Se $f$ è continua nell'intervallo
+$[a^{(0)},b^{(0)}]$, questa informazione permette di concludere che
+esiste almeno uno zero della funzione all'interno dell'intervallo.
+
+L'idea del metodo è estremamente semplice: dividiamo l'intervallo
+in due parti e consideriamo il punto medio
+
+\begin{equation}
+    x^{(0)}
+    =
+    \frac{a^{(0)}+b^{(0)}}{2}.
+\end{equation}
+
+Calcoliamo quindi
+
+\begin{equation}
+    f(x^{(0)}).
+\end{equation}
+
+Il segno della funzione nel punto medio permette di stabilire in
+quale delle due metà dell'intervallo è ancora presente un cambio
+di segno.
+
+Se, ad esempio,
+
+\begin{equation}
+    f(a^{(0)})f(x^{(0)})<0,
+\end{equation}
+
+il nuovo intervallo sarà
+
+\begin{equation}
+    [a^{(1)},b^{(1)}]
+    =
+    [a^{(0)},x^{(0)}].
+\end{equation}
+
+Se invece
+
+\begin{equation}
+    f(x^{(0)})f(b^{(0)})<0,
+\end{equation}
+
+sceglieremo
+
+\begin{equation}
+    [a^{(1)},b^{(1)}]
+    =
+    [x^{(0)},b^{(0)}].
+\end{equation}
+
+La stessa operazione viene ripetuta. A ogni iterazione l'intervallo
+che contiene la radice viene dimezzato:
+
+\begin{equation}
+    I^{(0)}
+    \supset
+    I^{(1)}
+    \supset
+    I^{(2)}
+    \supset
+    \cdots.
+\end{equation}
+
+L'intervallo diventa quindi progressivamente più piccolo e permette
+di localizzare la soluzione con precisione crescente.
+
+La figura riportata nelle slide mostra proprio questa successione
+di intervalli: a ogni iterazione viene conservata soltanto la metà
+nella quale la funzione continua a presentare il cambiamento di
+segno. :contentReference[oaicite:1]{index=1}
+
+È importante osservare che il metodo controlla principalmente
+l'ampiezza dell'intervallo che contiene la soluzione. Il valore del
+residuo
+
+\begin{equation}
+    |f(x^{(k)})|
+\end{equation}
+
+non deve necessariamente diminuire monotonamente a ogni iterazione.
+
+
+\subsection{Il metodo di Newton}
+
+Il metodo di Newton segue una strategia differente.
+
+Invece di utilizzare soltanto il segno della funzione, sfrutta
+informazioni sulla sua derivata. Il metodo si applica quindi a
+funzioni derivabili.
+
+Supponiamo di avere una prima approssimazione della soluzione,
+indicata con
+
+\begin{equation}
+    x^{(0)}.
+\end{equation}
+
+La funzione $f(x)$ è non lineare, ma localmente può essere
+approssimata mediante la retta tangente nel punto $x^{(0)}$.
+
+L'equazione della retta tangente è
+
+\begin{equation}
+    f(x^{(0)})
+    +
+    f'(x^{(0)})(x-x^{(0)}).
+    \label{eq:newton_tangent}
+\end{equation}
+
+Invece di risolvere direttamente il problema non lineare
+
+\begin{equation}
+    f(x)=0,
+\end{equation}
+
+Newton risolve quindi il problema lineare
+
+\begin{equation}
+    f(x^{(0)})
+    +
+    f'(x^{(0)})(x-x^{(0)})
+    =0.
+\end{equation}
+
+Risolvendo rispetto a $x$ otteniamo
+
+\begin{equation}
+    x
+    =
+    x^{(0)}
+    -
+    \frac{f(x^{(0)})}{f'(x^{(0)})}.
+\end{equation}
+
+Questo valore diventa la nuova approssimazione:
+
+\begin{equation}
+    x^{(1)}
+    =
+    x^{(0)}
+    -
+    \frac{f(x^{(0)})}{f'(x^{(0)})}.
+\end{equation}
+
+Ripetendo il procedimento otteniamo la formula iterativa
+
+\begin{equation}
+\boxed{
+    x^{(k+1)}
+    =
+    x^{(k)}
+    -
+    \frac{f(x^{(k)})}{f'(x^{(k)})}
+}.
+\label{eq:newton_iteration}
+\end{equation}
+
+Il metodo genera quindi la successione
+
+\begin{equation}
+    x^{(0)}
+    \longrightarrow
+    x^{(1)}
+    \longrightarrow
+    x^{(2)}
+    \longrightarrow
+    \cdots
+    \longrightarrow
+    x^*.
+\end{equation}
+
+Dal punto di vista geometrico, a ogni iterazione costruiamo la
+tangente alla funzione nel punto corrente e utilizziamo
+l'intersezione della tangente con l'asse delle ascisse come nuova
+approssimazione della radice.
+
+La rappresentazione grafica nelle slide mostra precisamente questo
+procedimento: partendo da $x^{(0)}$, le successive tangenti
+producono le approssimazioni $x^{(1)},x^{(2)},x^{(3)},\ldots$.
+:contentReference[oaicite:2]{index=2}
+
+
+\subsection{Newton come metodo di linearizzazione}
+
+Il metodo di Newton contiene un'idea che sarà fondamentale quando
+passeremo dai problemi con una sola variabile ai sistemi di equazioni
+non lineari.
+
+Il problema originario è
+
+\begin{equation}
+    f(x)=0,
+\end{equation}
+
+ed è non lineare.
+
+In corrispondenza dell'approssimazione corrente $x^{(k)}$
+sostituiamo però $f(x)$ con la sua approssimazione lineare:
+
+\begin{equation}
+    f(x^{(k)})
+    +
+    f'(x^{(k)})(x-x^{(k)}).
+\end{equation}
+
+Risolvere il problema non lineare viene quindi sostituito,
+localmente, dalla soluzione di un problema lineare.
+
+Possiamo rappresentare l'idea come
+
+\begin{equation}
+\boxed{
+\begin{array}{c}
+f(x)=0\\
+\downarrow\\
+\text{linearizzazione intorno a }x^{(k)}\\
+\downarrow\\
+f(x^{(k)})+
+f'(x^{(k)})(x-x^{(k)})=0\\
+\downarrow\\
+x^{(k+1)}
+\end{array}
+}
+\end{equation}
+
+La linearizzazione è soltanto un'approssimazione locale. Dopo aver
+ottenuto $x^{(k+1)}$, dobbiamo quindi costruire una nuova
+linearizzazione intorno al nuovo punto e ripetere il procedimento.
+
+È proprio questa ripetizione che rende Newton un metodo iterativo.
+
+
+\subsection{Il ruolo del punto iniziale}
+
+Il metodo di Newton richiede di specificare un valore iniziale
+
+\begin{equation}
+    x^{(0)}.
+\end{equation}
+
+La scelta di questo valore è importante.
+
+Il metodo non garantisce infatti la convergenza verso una soluzione
+a partire da qualsiasi punto iniziale. Le proprietà di convergenza
+dipendono dalla forma della funzione e dalla posizione di
+$x^{(0)}$ rispetto allo zero che vogliamo determinare.
+
+In particolare, la convergenza è garantita localmente sotto
+opportune condizioni quando il punto iniziale è sufficientemente
+vicino alla soluzione.
+
+Questa caratteristica diventerà ancora più importante quando
+applicheremo Newton a sistemi con molte variabili: anche in quel
+caso sarà necessario fornire al metodo una ipotesi iniziale della
+soluzione.
+
+
+\subsection{Zeri semplici e zeri multipli}
+
+La velocità di convergenza di Newton dipende anche dalle
+caratteristiche dello zero.
+
+Sia $x^*$ una soluzione:
+
+\begin{equation}
+    f(x^*)=0.
+\end{equation}
+
+Se
+
+\begin{equation}
+    f'(x^*)\neq0,
+\end{equation}
+
+$x^*$ viene detto \emph{zero semplice}.
+
+Se invece le prime derivate si annullano fino a un determinato
+ordine, lo zero è multiplo. Per uno zero di molteplicità $m$ si ha
+
+\begin{equation}
+    f(x^*)=0,
+\end{equation}
+
+\begin{equation}
+    f'(x^*)=
+    f''(x^*)=
+    \cdots=
+    f^{(m-1)}(x^*)=0,
+\end{equation}
+
+mentre
+
+\begin{equation}
+    f^{(m)}(x^*)\neq0.
+\end{equation}
+
+La distinzione è importante per la velocità del metodo.
+
+Per uno zero semplice, in condizioni appropriate, Newton presenta
+\emph{convergenza quadratica}. Indicando con
+
+\begin{equation}
+    e_k=x^{(k)}-x^*
+\end{equation}
+
+l'errore all'iterazione $k$, qualitativamente possiamo scrivere
+
+\begin{equation}
+    |e_{k+1}|
+    \approx
+    C|e_k|^2
+\end{equation}
+
+quando siamo sufficientemente vicini alla soluzione.
+
+L'errore della nuova iterazione dipende quindi dal quadrato
+dell'errore precedente. Per questa ragione, una volta entrato nella
+regione di convergenza, Newton può diventare molto veloce.
+
+In presenza di uno zero multiplo, invece, il metodo di Newton nella
+sua formulazione standard perde questa proprietà e la convergenza
+diventa di ordine uno. Esistono modifiche del metodo che permettono
+di recuperare una convergenza di ordine due. :contentReference[oaicite:3]{index=3}
+
+
+\subsection{Quando arrestare un metodo iterativo?}
+
+Un algoritmo iterativo produce teoricamente una successione
+
+\begin{equation}
+    x^{(0)},x^{(1)},x^{(2)},\ldots.
+\end{equation}
+
+In un calcolo reale non possiamo naturalmente continuare le
+iterazioni indefinitamente. Dobbiamo stabilire un
+\emph{criterio di arresto}.
+
+Un primo criterio, indicato nelle slide per il caso di uno zero
+semplice, consiste nel confrontare due iterate successive:
+
+\begin{equation}
+\boxed{
+    |x^{(k+1)}-x^{(k)}|<\varepsilon
+}.
+\label{eq:stopping-iterates}
+\end{equation}
+
+dove $\varepsilon>0$ è una tolleranza scelta prima di eseguire
+l'algoritmo.
+
+Se due approssimazioni consecutive sono sufficientemente vicine,
+possiamo considerare il procedimento numericamente convergente.
+
+
+\subsection{Il residuo}
+
+Un secondo criterio, più generale, consiste nel verificare
+direttamente quanto l'approssimazione corrente soddisfi l'equazione
+originaria.
+
+Se la soluzione esatta deve soddisfare
+
+\begin{equation}
+    f(x^*)=0,
+\end{equation}
+
+per una soluzione numerica $x^{(k)}$ possiamo calcolare
+
+\begin{equation}
+    r^{(k)}=f(x^{(k)}).
+\end{equation}
+
+Questa quantità prende il nome di \emph{residuo}.
+
+Possiamo arrestare l'algoritmo quando
+
+\begin{equation}
+\boxed{
+    |f(x^{(k)})|<\varepsilon
+}.
+\label{eq:stopping-residual}
+\end{equation}
+
+Un residuo piccolo significa che il valore ottenuto soddisfa
+l'equazione con buona approssimazione.
+
+Occorre tuttavia distinguere attentamente \emph{residuo} ed
+\emph{errore}.
+
+L'errore sarebbe
+
+\begin{equation}
+    |x^{(k)}-x^*|,
+\end{equation}
+
+ma $x^*$ è proprio la soluzione che non conosciamo. Non possiamo
+quindi normalmente calcolare direttamente l'errore.
+
+Il residuo
+
+\begin{equation}
+    |f(x^{(k)})|
+\end{equation}
+
+è invece calcolabile, perché conosciamo sia la funzione sia
+l'approssimazione corrente.
+
+
+\subsection{Un residuo piccolo implica sempre un errore piccolo?}
+
+Un aspetto importante sottolineato nelle slide è che un residuo
+piccolo non garantisce necessariamente la stessa accuratezza sulla
+variabile $x$.
+
+Consideriamo una funzione molto poco inclinata vicino allo zero.
+Una variazione relativamente grande di $x$ può produrre soltanto
+una piccola variazione di $f(x)$.
+
+In questa situazione possiamo avere
+
+\begin{equation}
+    |f(x^{(k)})|\approx0
+\end{equation}
+
+anche quando $x^{(k)}$ non è estremamente vicino a $x^*$.
+
+Viceversa, quando la funzione è maggiormente inclinata in
+prossimità della radice, una piccola variazione di $x$ produce una
+variazione più evidente del valore della funzione.
+
+Il criterio basato sul residuo deve quindi essere interpretato
+tenendo conto anche delle caratteristiche locali della funzione.
+:contentReference[oaicite:4]{index=4}
+
+
+\subsection{Il metodo delle secanti}
+
+Il metodo di Newton richiede la conoscenza della derivata
+
+\begin{equation}
+    f'(x).
+\end{equation}
+
+Questa informazione non è però sempre disponibile. Ad esempio,
+possiamo conoscere la funzione soltanto attraverso un insieme di
+valori discreti oppure il calcolo analitico della derivata può non
+essere immediatamente disponibile.
+
+Il metodo delle secanti permette di utilizzare un'idea simile a
+quella di Newton senza richiedere direttamente la derivata.
+
+La derivata viene sostituita da un rapporto incrementale costruito
+utilizzando due valori conosciuti della funzione:
+
+\begin{equation}
+    f'(x^{(k)})
+    \approx
+    \frac{
+        f(x^{(k)})-f(x^{(k-1)})
+    }{
+        x^{(k)}-x^{(k-1)}
+    }.
+\end{equation}
+
+Geometricamente, mentre Newton utilizza la \emph{tangente} alla
+funzione, il metodo delle secanti utilizza la retta che passa
+attraverso due punti del grafico della funzione.
+
+Sostituendo questa approssimazione nella formula di Newton si
+ottiene un nuovo valore della soluzione senza dover calcolare
+$f'(x)$.
+
+Il vantaggio principale è quindi
+
+\begin{equation}
+\boxed{
+\text{non è necessario conoscere esplicitamente }f'(x).
+}
+\end{equation}
+
+Il prezzo da pagare è che la convergenza può essere più lenta di
+quella del metodo di Newton, come evidenziato nelle slide.
+:contentReference[oaicite:5]{index=5}
+
+
+\subsection{Confronto tra i metodi}
+
+I tre metodi affrontano lo stesso problema,
+
+\begin{equation}
+    f(x)=0,
+\end{equation}
+
+ma utilizzano informazioni differenti.
+
+Il metodo di bisezione utilizza principalmente il segno della
+funzione agli estremi di un intervallo.
+
+Il metodo di Newton utilizza invece
+
+\begin{equation}
+    f(x^{(k)})
+    \qquad\text{e}\qquad
+    f'(x^{(k)}),
+\end{equation}
+
+costruendo una approssimazione lineare locale della funzione.
+
+Il metodo delle secanti mantiene l'idea della linearizzazione ma
+sostituisce la derivata con un rapporto incrementale ottenuto da
+valori già conosciuti della funzione.
+
+Possiamo quindi sintetizzare:
+
+\begin{center}
+\begin{tabular}{lll}
+\hline
+Metodo & Informazione utilizzata & Idea fondamentale\\
+\hline
+Bisezione &
+segno di $f$ &
+restringere l'intervallo\\
+Newton &
+$f$ e $f'$ &
+utilizzare la tangente\\
+Secanti &
+valori di $f$ &
+utilizzare una secante\\
+\hline
+\end{tabular}
+\end{center}
+
+Questi metodi sono stati presentati per una singola equazione e
+una singola incognita.
+
+Il problema dal quale siamo partiti, tuttavia, è più generale.
+Nel modello AD-AS dobbiamo determinare simultaneamente due
+incognite, $Y$ e $P$, e più in generale possiamo trovarci di fronte
+a sistemi della forma
+
+\begin{equation}
+\begin{cases}
+f_1(x_1,\ldots,x_n)=0,\\
+f_2(x_1,\ldots,x_n)=0,\\
+\vdots\\
+f_n(x_1,\ldots,x_n)=0.
+\end{cases}
+\end{equation}
+
+Il passo successivo consiste quindi nell'estendere l'idea di
+linearizzazione utilizzata dal metodo di Newton dal caso di una
+singola equazione al caso di un intero sistema di equazioni non
+lineari.
+
+\section{Sistemi di equazioni non lineari}
+\label{sec:sistemi-nonlineari}
+
+Nella sezione precedente abbiamo considerato il problema della ricerca
+degli zeri di una singola funzione,
+
+\begin{equation}
+    f(x)=0,
+\end{equation}
+
+e abbiamo visto come il metodo di Newton permetta di affrontarlo
+sostituendo localmente la funzione non lineare con una sua
+approssimazione lineare.
+
+Possiamo ora estendere la stessa idea al problema che ci interessa
+maggiormente: la soluzione simultanea di più equazioni non lineari.
+
+Consideriamo un sistema di $n$ equazioni in $n$ incognite:
+
+\begin{equation}
+\begin{cases}
+f_1(x_1,x_2,\ldots,x_n)=0,\\
+f_2(x_1,x_2,\ldots,x_n)=0,\\
+\hspace{2cm}\vdots\\
+f_n(x_1,x_2,\ldots,x_n)=0.
+\end{cases}
+\label{eq:nonlinear-system}
+\end{equation}
+
+Introducendo il vettore delle incognite
+
+\begin{equation}
+    \mathbf{x}
+    =
+    \begin{pmatrix}
+        x_1\\
+        x_2\\
+        \vdots\\
+        x_n
+    \end{pmatrix}
+\end{equation}
+
+e il vettore delle funzioni
+
+\begin{equation}
+    \mathbf{f}(\mathbf{x})
+    =
+    \begin{pmatrix}
+        f_1(\mathbf{x})\\
+        f_2(\mathbf{x})\\
+        \vdots\\
+        f_n(\mathbf{x})
+    \end{pmatrix},
+\end{equation}
+
+possiamo scrivere l'intero sistema nella forma compatta
+
+\begin{equation}
+\boxed{
+    \mathbf{f}(\mathbf{x})=\mathbf{0}
+}.
+\label{eq:nonlinear-vector-form}
+\end{equation}
+
+La soluzione è quindi un vettore $\mathbf{x}^*$ tale che
+
+\begin{equation}
+    \mathbf{f}(\mathbf{x}^*)=\mathbf{0}.
+\end{equation}
+
+Ciò significa che tutte le equazioni del sistema devono essere
+soddisfatte simultaneamente.
+
+
+\subsection{Dal caso scalare al caso multidimensionale}
+
+Per comprendere come estendere il metodo di Newton, ricordiamo
+brevemente il caso di una sola variabile.
+
+In prossimità di un punto $x^{(0)}$, una funzione può essere
+approssimata mediante
+
+\begin{equation}
+    f(x)
+    \simeq
+    f(x^{(0)})
+    +
+    f'(x^{(0)})(x-x^{(0)}).
+\end{equation}
+
+Il metodo di Newton sostituisce quindi il problema non lineare
+
+\begin{equation}
+    f(x)=0
+\end{equation}
+
+con il problema lineare
+
+\begin{equation}
+    f(x^{(0)})
+    +
+    f'(x^{(0)})(x-x^{(0)})
+    =0.
+\end{equation}
+
+Nel caso multidimensionale vogliamo applicare esattamente la stessa
+idea.
+
+Partiamo da una prima ipotesi sulla soluzione,
+
+\begin{equation}
+    \mathbf{x}^{(0)}
+    =
+    \begin{pmatrix}
+        x_1^{(0)}\\
+        x_2^{(0)}\\
+        \vdots\\
+        x_n^{(0)}
+    \end{pmatrix},
+\end{equation}
+
+e costruiamo la migliore approssimazione lineare di
+$\mathbf{f}(\mathbf{x})$ in corrispondenza di questo punto.
+
+Questa approssimazione è
+
+\begin{equation}
+\boxed{
+\mathbf{f}(\mathbf{x})
+\simeq
+\mathbf{f}(\mathbf{x}^{(0)})
++
+J_{\mathbf{f}}(\mathbf{x}^{(0)})
+\left(
+\mathbf{x}-\mathbf{x}^{(0)}
+\right)
+}.
+\label{eq:linearization-vector}
+\end{equation}
+
+Nel caso di una sola variabile compariva la derivata $f'(x)$.
+Nel caso di più variabili essa viene sostituita da una matrice:
+la \emph{matrice Jacobiana}.
+
+
+\subsection{La matrice Jacobiana}
+
+Consideriamo nuovamente
+
+\begin{equation}
+\mathbf{f}(\mathbf{x})
+=
+\begin{pmatrix}
+f_1(x_1,\ldots,x_n)\\
+f_2(x_1,\ldots,x_n)\\
+\vdots\\
+f_n(x_1,\ldots,x_n)
+\end{pmatrix}.
+\end{equation}
+
+Ogni funzione $f_i$ può dipendere da tutte le variabili
+
+\begin{equation}
+    x_1,x_2,\ldots,x_n.
+\end{equation}
+
+Dobbiamo quindi considerare come ciascuna funzione varia rispetto a
+ciascuna variabile.
+
+Queste informazioni vengono raccolte nella matrice Jacobiana:
+
+\begin{equation}
+\boxed{
+J_{\mathbf{f}}(\mathbf{x})
+=
+\begin{pmatrix}
+\dfrac{\partial f_1}{\partial x_1}
+&
+\dfrac{\partial f_1}{\partial x_2}
+&
+\cdots
+&
+\dfrac{\partial f_1}{\partial x_n}
+\\[3mm]
+\dfrac{\partial f_2}{\partial x_1}
+&
+\dfrac{\partial f_2}{\partial x_2}
+&
+\cdots
+&
+\dfrac{\partial f_2}{\partial x_n}
+\\
+\vdots & \vdots & \ddots & \vdots
+\\[2mm]
+\dfrac{\partial f_n}{\partial x_1}
+&
+\dfrac{\partial f_n}{\partial x_2}
+&
+\cdots
+&
+\dfrac{\partial f_n}{\partial x_n}
+\end{pmatrix}
+}.
+\label{eq:jacobian}
+\end{equation}
+
+La Jacobiana è quindi una matrice $n\times n$.
+
+L'elemento che si trova nella riga $i$ e nella colonna $j$ è
+
+\begin{equation}
+    \frac{\partial f_i}{\partial x_j}.
+\end{equation}
+
+Esso misura come varia la funzione $f_i$ quando varia la variabile
+$x_j$, mantenendo costanti le altre variabili.
+
+Possiamo quindi interpretare la Jacobiana come l'estensione
+multidimensionale della derivata:
+
+\begin{equation}
+\boxed{
+\begin{array}{ccc}
+\text{una variabile}
+&&
+\text{più variabili}\\[1mm]
+f'(x)
+&\longrightarrow&
+J_{\mathbf{f}}(\mathbf{x}).
+\end{array}}
+\end{equation}
+
+
+\subsection{Un semplice esempio di matrice Jacobiana}
+
+Per rendere più chiara la struttura della Jacobiana, consideriamo
+un sistema con due equazioni e due incognite:
+
+\begin{equation}
+\begin{cases}
+f_1(x_1,x_2)=0,\\
+f_2(x_1,x_2)=0.
+\end{cases}
+\end{equation}
+
+La Jacobiana è
+
+\begin{equation}
+J_{\mathbf{f}}(x_1,x_2)
+=
+\begin{pmatrix}
+\dfrac{\partial f_1}{\partial x_1}
+&
+\dfrac{\partial f_1}{\partial x_2}
+\\[3mm]
+\dfrac{\partial f_2}{\partial x_1}
+&
+\dfrac{\partial f_2}{\partial x_2}
+\end{pmatrix}.
+\end{equation}
+
+Se, ad esempio,
+
+\begin{equation}
+    f_1(x_1,x_2)=x_1^2+x_2^2-1
+\end{equation}
+
+e
+
+\begin{equation}
+    f_2(x_1,x_2)
+    =
+    \sin\left(\frac{\pi}{2}x_1\right)+x_2^3,
+\end{equation}
+
+la Jacobiana è
+
+\begin{equation}
+J_{\mathbf{f}}(x_1,x_2)
+=
+\begin{pmatrix}
+2x_1 & 2x_2\\[2mm]
+\dfrac{\pi}{2}
+\cos\left(\dfrac{\pi}{2}x_1\right)
+&
+3x_2^2
+\end{pmatrix}.
+\label{eq:jacobian-example}
+\end{equation}
+
+La matrice cambia quindi al cambiare dei valori di $x_1$ e $x_2$.
+Questo è un elemento importante: a differenza della matrice $A$ di
+un sistema lineare, la Jacobiana dipende generalmente dal punto nel
+quale viene calcolata.
+
+
+\subsection{Il metodo di Newton per un sistema non lineare}
+
+Possiamo ora estendere il metodo di Newton.
+
+Il problema originario è
+
+\begin{equation}
+    \mathbf{f}(\mathbf{x})=\mathbf{0}.
+\end{equation}
+
+Partiamo da una ipotesi iniziale $\mathbf{x}^{(0)}$.
+
+Invece di risolvere direttamente il sistema non lineare, sostituiamo
+$\mathbf{f}$ con la sua approssimazione lineare nel punto
+$\mathbf{x}^{(0)}$:
+
+\begin{equation}
+    \mathbf{f}(\mathbf{x}^{(0)})
+    +
+    J_{\mathbf{f}}(\mathbf{x}^{(0)})
+    \left(
+        \mathbf{x}-\mathbf{x}^{(0)}
+    \right)
+    =
+    \mathbf{0}.
+    \label{eq:newton-system-linearization}
+\end{equation}
+
+Portando il primo termine al lato destro otteniamo
+
+\begin{equation}
+    J_{\mathbf{f}}(\mathbf{x}^{(0)})
+    \left(
+        \mathbf{x}-\mathbf{x}^{(0)}
+    \right)
+    =
+    -\mathbf{f}(\mathbf{x}^{(0)}).
+    \label{eq:newton-system-step}
+\end{equation}
+
+Definiamo ora
+
+\begin{equation}
+    \mathbf{z}
+    =
+    \mathbf{x}-\mathbf{x}^{(0)}.
+    \label{eq:newton-correction}
+\end{equation}
+
+Il vettore $\mathbf{z}$ rappresenta la correzione che dobbiamo
+aggiungere alla soluzione corrente.
+
+L'equazione precedente diventa
+
+\begin{equation}
+\boxed{
+J_{\mathbf{f}}(\mathbf{x}^{(0)})
+\mathbf{z}
+=
+-\mathbf{f}(\mathbf{x}^{(0)})
+}.
+\label{eq:newton-linear-system}
+\end{equation}
+
+
+\subsection{Ritorna il sistema lineare}
+
+A questo punto emerge uno dei collegamenti più importanti tra le
+diverse tecniche numeriche studiate nel corso.
+
+Confrontiamo
+
+\begin{equation}
+    J_{\mathbf{f}}(\mathbf{x}^{(0)})
+    \mathbf{z}
+    =
+    -\mathbf{f}(\mathbf{x}^{(0)})
+\end{equation}
+
+con il problema generale
+
+\begin{equation}
+    A\mathbf{z}=\mathbf{d}.
+\end{equation}
+
+Possiamo identificare
+
+\begin{equation}
+    A
+    =
+    J_{\mathbf{f}}(\mathbf{x}^{(0)}),
+\end{equation}
+
+e
+
+\begin{equation}
+    \mathbf{d}
+    =
+    -\mathbf{f}(\mathbf{x}^{(0)}).
+\end{equation}
+
+Pertanto,
+
+\begin{equation}
+\boxed{
+\underbrace{
+J_{\mathbf{f}}(\mathbf{x}^{(0)})
+}_{A}
+\underbrace{
+\left(
+\mathbf{x}-\mathbf{x}^{(0)}
+\right)
+}_{\mathbf{z}}
+=
+\underbrace{
+-\mathbf{f}(\mathbf{x}^{(0)})
+}_{\mathbf{d}}
+}.
+\end{equation}
+
+Il problema da risolvere a ogni iterazione di Newton è quindi
+semplicemente
+
+\begin{equation}
+\boxed{
+    A\mathbf{z}=\mathbf{d}.
+}
+\end{equation}
+
+Si tratta esattamente di un \emph{sistema di equazioni lineari}.
+
+Questo risultato è fondamentale: per risolvere numericamente un
+sistema non lineare utilizziamo, a ogni iterazione, le tecniche
+studiate nella parte precedente del corso per la soluzione dei
+sistemi lineari.
+
+
+\subsection{Aggiornamento della soluzione}
+
+Una volta risolto il sistema lineare
+
+\begin{equation}
+    J_{\mathbf{f}}(\mathbf{x}^{(0)})
+    \mathbf{z}^{(0)}
+    =
+    -\mathbf{f}(\mathbf{x}^{(0)}),
+\end{equation}
+
+otteniamo il vettore di correzione $\mathbf{z}^{(0)}$.
+
+La nuova approssimazione della soluzione è
+
+\begin{equation}
+    \mathbf{x}^{(1)}
+    =
+    \mathbf{x}^{(0)}
+    +
+    \mathbf{z}^{(0)}.
+\end{equation}
+
+Poiché il sistema originario è non lineare, questa nuova
+approssimazione non costituisce generalmente la soluzione esatta.
+
+Dobbiamo quindi ripetere il procedimento.
+
+Alla generica iterazione $k$ risolviamo
+
+\begin{equation}
+\boxed{
+J_{\mathbf{f}}(\mathbf{x}^{(k)})
+\mathbf{z}^{(k)}
+=
+-\mathbf{f}(\mathbf{x}^{(k)})
+}
+\label{eq:newton-system-iteration}
+\end{equation}
+
+e aggiorniamo la soluzione mediante
+
+\begin{equation}
+\boxed{
+\mathbf{x}^{(k+1)}
+=
+\mathbf{x}^{(k)}
++
+\mathbf{z}^{(k)}.
+}
+\label{eq:newton-system-update}
+\end{equation}
+
+Il procedimento genera quindi una successione
+
+\begin{equation}
+    \mathbf{x}^{(0)}
+    \longrightarrow
+    \mathbf{x}^{(1)}
+    \longrightarrow
+    \mathbf{x}^{(2)}
+    \longrightarrow
+    \cdots
+\end{equation}
+
+che, se il metodo converge, si avvicina progressivamente alla
+soluzione $\mathbf{x}^*$.
+
+
+\subsection{La struttura dell'algoritmo}
+
+Il metodo di Newton per sistemi può essere riassunto attraverso i
+seguenti passaggi.
+
+Partiamo da una ipotesi iniziale
+
+\begin{equation}
+    \mathbf{x}^{(0)}.
+\end{equation}
+
+Alla generica iterazione $k$:
+
+\begin{enumerate}
+    \item calcoliamo il vettore
+    \begin{equation}
+        \mathbf{f}(\mathbf{x}^{(k)});
+    \end{equation}
+
+    \item calcoliamo la matrice Jacobiana
+    \begin{equation}
+        J_{\mathbf{f}}(\mathbf{x}^{(k)});
+    \end{equation}
+
+    \item costruiamo e risolviamo il sistema lineare
+    \begin{equation}
+        J_{\mathbf{f}}(\mathbf{x}^{(k)})
+        \mathbf{z}^{(k)}
+        =
+        -\mathbf{f}(\mathbf{x}^{(k)});
+    \end{equation}
+
+    \item aggiorniamo la soluzione
+    \begin{equation}
+        \mathbf{x}^{(k+1)}
+        =
+        \mathbf{x}^{(k)}
+        +
+        \mathbf{z}^{(k)};
+    \end{equation}
+
+    \item verifichiamo se la soluzione ha raggiunto la precisione
+    desiderata. In caso contrario, ripetiamo il procedimento.
+\end{enumerate}
+
+Possiamo rappresentare schematicamente l'algoritmo come
+
+\begin{equation}
+\boxed{
+\begin{array}{c}
+\mathbf{x}^{(k)}\\
+\downarrow\\
+\mathbf{f}(\mathbf{x}^{(k)}),
+\quad
+J_{\mathbf{f}}(\mathbf{x}^{(k)})\\
+\downarrow\\
+J_{\mathbf{f}}(\mathbf{x}^{(k)})
+\mathbf{z}^{(k)}
+=
+-\mathbf{f}(\mathbf{x}^{(k)})\\
+\downarrow\\
+\text{soluzione del sistema lineare}\\
+\downarrow\\
+\mathbf{z}^{(k)}\\
+\downarrow\\
+\mathbf{x}^{(k+1)}
+=
+\mathbf{x}^{(k)}+\mathbf{z}^{(k)}
+\end{array}}
+\end{equation}
+
+
+\subsection{Il significato della correzione}
+
+È utile soffermarsi sul significato del vettore
+
+\begin{equation}
+    \mathbf{z}^{(k)}.
+\end{equation}
+
+Esso non rappresenta direttamente la soluzione del sistema
+non lineare. Rappresenta invece la \emph{correzione} che il metodo
+di Newton suggerisce di apportare alla soluzione corrente.
+
+Se
+
+\begin{equation}
+    \mathbf{x}^{(k)}
+    =
+    \begin{pmatrix}
+        x_1^{(k)}\\
+        x_2^{(k)}\\
+        \vdots\\
+        x_n^{(k)}
+    \end{pmatrix}
+\end{equation}
+
+e
+
+\begin{equation}
+    \mathbf{z}^{(k)}
+    =
+    \begin{pmatrix}
+        z_1^{(k)}\\
+        z_2^{(k)}\\
+        \vdots\\
+        z_n^{(k)}
+    \end{pmatrix},
+\end{equation}
+
+allora
+
+\begin{equation}
+    \mathbf{x}^{(k+1)}
+    =
+    \begin{pmatrix}
+        x_1^{(k)}+z_1^{(k)}\\
+        x_2^{(k)}+z_2^{(k)}\\
+        \vdots\\
+        x_n^{(k)}+z_n^{(k)}
+    \end{pmatrix}.
+\end{equation}
+
+Ogni componente della soluzione viene quindi modificata
+simultaneamente.
+
+Questo aspetto è importante nei modelli economici: quando le
+equazioni sono interdipendenti, non possiamo generalmente correggere
+una variabile alla volta ignorando le altre. La Jacobiana tiene conto
+delle relazioni locali tra tutte le equazioni e tutte le variabili.
+
+
+\subsection{Un sistema lineare diverso a ogni iterazione}
+
+Esiste una differenza importante rispetto ai sistemi lineari studiati
+in precedenza.
+
+Nel problema
+
+\begin{equation}
+    A\mathbf{x}=\mathbf{b},
+\end{equation}
+
+la matrice $A$ e il vettore $\mathbf{b}$ sono dati e risolviamo il
+sistema una volta per ottenere la soluzione.
+
+Nel metodo di Newton, invece, abbiamo
+
+\begin{equation}
+    J_{\mathbf{f}}(\mathbf{x}^{(k)})
+    \mathbf{z}^{(k)}
+    =
+    -\mathbf{f}(\mathbf{x}^{(k)}).
+\end{equation}
+
+Poiché sia
+
+\begin{equation}
+    J_{\mathbf{f}}(\mathbf{x}^{(k)})
+\end{equation}
+
+sia
+
+\begin{equation}
+    \mathbf{f}(\mathbf{x}^{(k)})
+\end{equation}
+
+dipendono dall'approssimazione corrente, il sistema lineare cambia
+generalmente a ogni iterazione.
+
+Possiamo quindi pensare al metodo di Newton come alla soluzione di
+una \emph{sequenza di sistemi lineari}:
+
+\begin{equation}
+\boxed{
+\begin{array}{c}
+A^{(0)}\mathbf{z}^{(0)}=\mathbf{d}^{(0)}\\
+\downarrow\\
+A^{(1)}\mathbf{z}^{(1)}=\mathbf{d}^{(1)}\\
+\downarrow\\
+A^{(2)}\mathbf{z}^{(2)}=\mathbf{d}^{(2)}\\
+\downarrow\\
+\vdots
+\end{array}}
+\end{equation}
+
+dove
+
+\begin{equation}
+    A^{(k)}
+    =
+    J_{\mathbf{f}}(\mathbf{x}^{(k)})
+\end{equation}
+
+e
+
+\begin{equation}
+    \mathbf{d}^{(k)}
+    =
+    -\mathbf{f}(\mathbf{x}^{(k)}).
+\end{equation}
+
+
+\subsection{Il collegamento tra problemi lineari e non lineari}
+
+Possiamo ora comprendere perché lo studio dei sistemi lineari ha
+preceduto quello dei sistemi non lineari.
+
+Un sistema non lineare
+
+\begin{equation}
+    \mathbf{f}(\mathbf{x})=\mathbf{0}
+\end{equation}
+
+viene approssimato localmente mediante
+
+\begin{equation}
+    \mathbf{f}(\mathbf{x}^{(k)})
+    +
+    J_{\mathbf{f}}(\mathbf{x}^{(k)})
+    \left(
+        \mathbf{x}-\mathbf{x}^{(k)}
+    \right)
+    =
+    \mathbf{0}.
+\end{equation}
+
+Questa linearizzazione produce il sistema
+
+\begin{equation}
+    J_{\mathbf{f}}(\mathbf{x}^{(k)})
+    \mathbf{z}^{(k)}
+    =
+    -\mathbf{f}(\mathbf{x}^{(k)}),
+\end{equation}
+
+che sappiamo risolvere utilizzando le tecniche numeriche introdotte
+nelle sezioni precedenti.
+
+Il metodo di Newton può quindi essere sintetizzato come
+
+\begin{equation}
+\boxed{
+\text{problema non lineare}
+\longrightarrow
+\text{linearizzazione}
+\longrightarrow
+\text{sistema lineare}
+\longrightarrow
+\text{correzione}
+\longrightarrow
+\text{nuova linearizzazione}.
+}
+\end{equation}
+
+Questo ciclo viene ripetuto fino a quando la soluzione raggiunge
+la precisione desiderata.
+
+Le considerazioni sulla convergenza già discusse per il metodo di
+Newton nel caso di una singola equazione rimangono rilevanti anche
+nel caso dei sistemi. In particolare, la scelta dell'ipotesi iniziale
+può essere determinante per la convergenza del procedimento.
+
+\section{Soluzione computazionale dei sistemi non lineari}
+\label{sec:soluzione-computazionale-nonlineari}
+
+Nella sezione precedente abbiamo descritto il metodo di Newton per
+la soluzione di un sistema di equazioni non lineari
+
+\begin{equation}
+    \mathbf{f}(\mathbf{x})=\mathbf{0}.
+\end{equation}
+
+Abbiamo visto che il metodo parte da un vettore iniziale
+$\mathbf{x}^{(0)}$ e genera una successione di approssimazioni
+
+\begin{equation}
+    \mathbf{x}^{(0)},
+    \mathbf{x}^{(1)},
+    \mathbf{x}^{(2)},
+    \ldots
+\end{equation}
+
+risolvendo, a ogni iterazione, un sistema lineare della forma
+
+\begin{equation}
+    J_{\mathbf{f}}(\mathbf{x}^{(k)})
+    \mathbf{z}^{(k)}
+    =
+    -\mathbf{f}(\mathbf{x}^{(k)}).
+\end{equation}
+
+Dal punto di vista teorico, conoscere questa procedura è importante
+per comprendere che cosa avviene durante il calcolo. Nelle
+applicazioni, tuttavia, non è generalmente necessario implementare
+manualmente tutti i passaggi dell'algoritmo.
+
+I principali software per il calcolo scientifico mettono infatti a
+disposizione funzioni specificamente progettate per la soluzione di
+sistemi di equazioni non lineari.
+
+
+\subsection{Le funzioni disponibili nei software}
+
+La struttura generale di queste funzioni è simile nei diversi
+ambienti di calcolo. L'utente deve specificare almeno:
+
+\begin{enumerate}
+    \item la funzione che definisce il sistema di equazioni;
+    \item un vettore contenente una stima iniziale della soluzione.
+\end{enumerate}
+
+Nelle slide vengono considerate, in particolare, le seguenti
+funzioni:
+
+\begin{center}
+\begin{tabular}{ll}
+\hline
+Software & Funzione\\
+\hline
+R      & \texttt{nleqslv::nleqslv(x0, funzione)}\\
+Octave & \texttt{fsolve(funzione, x0)}\\
+Python & \texttt{scipy.optimize.fsolve(funzione, x0)}\\
+Julia  & \texttt{NLsolve.nlsolve(funzione, x0)}\\
+\hline
+\end{tabular}
+\end{center}
+
+La sintassi specifica varia da un software all'altro, ma il problema
+matematico sottostante rimane lo stesso.
+
+Il vettore
+
+\begin{equation}
+    \mathbf{x}^{(0)}
+\end{equation}
+
+rappresenta l'ipotesi iniziale fornita all'algoritmo, mentre la
+funzione deve essere costruita in modo da restituire il vettore dei
+residui
+
+\begin{equation}
+    \mathbf{f}(\mathbf{x})
+    =
+    \begin{pmatrix}
+        f_1(\mathbf{x})\\
+        f_2(\mathbf{x})\\
+        \vdots\\
+        f_n(\mathbf{x})
+    \end{pmatrix}.
+\end{equation}
+
+Il software cerca quindi un vettore $\mathbf{x}^*$ per il quale
+
+\begin{equation}
+    \mathbf{f}(\mathbf{x}^*)
+    \simeq
+    \mathbf{0}.
+\end{equation}
+
+È importante sottolineare il simbolo di approssimazione. Nel calcolo
+numerico non ci aspettiamo generalmente che i residui siano
+esattamente uguali a zero. Richiediamo invece che siano
+sufficientemente piccoli rispetto alla tolleranza adottata.
+
+
+\subsection{Un esempio con due equazioni non lineari}
+
+Consideriamo l'esempio proposto nelle slide, tratto da Quarteroni
+et al. Il problema consiste nel risolvere il sistema
+
+\begin{equation}
+\boxed{
+\begin{cases}
+x_1^2+x_2^2-1=0,\\[2mm]
+\displaystyle
+\sin\left(\frac{\pi}{2}x_1\right)+x_2^3=0.
+\end{cases}
+}
+\label{eq:quarteroni-system}
+\end{equation}
+
+Possiamo definire
+
+\begin{equation}
+    f_1(x_1,x_2)
+    =
+    x_1^2+x_2^2-1
+\end{equation}
+
+e
+
+\begin{equation}
+    f_2(x_1,x_2)
+    =
+    \sin\left(\frac{\pi}{2}x_1\right)+x_2^3.
+\end{equation}
+
+Il sistema può quindi essere scritto nella forma vettoriale
+
+\begin{equation}
+\mathbf{f}(\mathbf{x})
+=
+\begin{pmatrix}
+x_1^2+x_2^2-1\\[2mm]
+\displaystyle
+\sin\left(\frac{\pi}{2}x_1\right)+x_2^3
+\end{pmatrix}
+=
+\begin{pmatrix}
+0\\
+0
+\end{pmatrix}.
+\label{eq:quarteroni-vector}
+\end{equation}
+
+Le incognite sono raccolte nel vettore
+
+\begin{equation}
+    \mathbf{x}
+    =
+    \begin{pmatrix}
+        x_1\\
+        x_2
+    \end{pmatrix}.
+\end{equation}
+
+
+\subsection{Interpretazione geometrica}
+
+Nel caso di due variabili è possibile fornire anche una semplice
+interpretazione geometrica del problema.
+
+La prima equazione,
+
+\begin{equation}
+    x_1^2+x_2^2=1,
+\end{equation}
+
+definisce una curva nel piano $(x_1,x_2)$.
+
+Anche la seconda equazione,
+
+\begin{equation}
+    \sin\left(\frac{\pi}{2}x_1\right)+x_2^3=0,
+\end{equation}
+
+definisce una seconda curva.
+
+Risolvere simultaneamente le due equazioni significa quindi cercare
+i punti nei quali le due curve si intersecano.
+
+In altre parole, una soluzione
+
+\begin{equation}
+    \mathbf{x}^*
+    =
+    \begin{pmatrix}
+        x_1^*\\
+        x_2^*
+    \end{pmatrix}
+\end{equation}
+
+deve soddisfare contemporaneamente
+
+\begin{equation}
+    f_1(x_1^*,x_2^*)=0
+\end{equation}
+
+e
+
+\begin{equation}
+    f_2(x_1^*,x_2^*)=0.
+\end{equation}
+
+Questa interpretazione è utile per sistemi con due incognite, perché
+la soluzione può essere visualizzata graficamente. Quando il numero
+di variabili aumenta, la rappresentazione grafica diventa difficile
+o impossibile, mentre la formulazione numerica
+
+\begin{equation}
+    \mathbf{f}(\mathbf{x})=\mathbf{0}
+\end{equation}
+
+rimane perfettamente valida.
+
+
+\subsection{La Jacobiana dell'esempio}
+
+Se volessimo applicare direttamente il metodo di Newton, dovremmo
+calcolare la matrice Jacobiana del sistema.
+
+Per la prima funzione abbiamo
+
+\begin{equation}
+    \frac{\partial f_1}{\partial x_1}=2x_1,
+    \qquad
+    \frac{\partial f_1}{\partial x_2}=2x_2.
+\end{equation}
+
+Per la seconda funzione:
+
+\begin{equation}
+    \frac{\partial f_2}{\partial x_1}
+    =
+    \frac{\pi}{2}
+    \cos\left(\frac{\pi}{2}x_1\right),
+\end{equation}
+
+e
+
+\begin{equation}
+    \frac{\partial f_2}{\partial x_2}
+    =
+    3x_2^2.
+\end{equation}
+
+La Jacobiana è pertanto
+
+\begin{equation}
+\boxed{
+J_{\mathbf{f}}(x_1,x_2)
+=
+\begin{pmatrix}
+2x_1 & 2x_2\\[2mm]
+\displaystyle
+\frac{\pi}{2}
+\cos\left(\frac{\pi}{2}x_1\right)
+&
+3x_2^2
+\end{pmatrix}
+}.
+\label{eq:quarteroni-jacobian}
+\end{equation}
+
+A ogni iterazione questa matrice viene valutata in corrispondenza
+dell'approssimazione corrente
+
+\begin{equation}
+    \mathbf{x}^{(k)}.
+\end{equation}
+
+Il metodo di Newton richiederebbe quindi di risolvere
+
+\begin{equation}
+    J_{\mathbf{f}}(\mathbf{x}^{(k)})
+    \mathbf{z}^{(k)}
+    =
+    -\mathbf{f}(\mathbf{x}^{(k)})
+\end{equation}
+
+e successivamente aggiornare
+
+\begin{equation}
+    \mathbf{x}^{(k+1)}
+    =
+    \mathbf{x}^{(k)}
+    +
+    \mathbf{z}^{(k)}.
+\end{equation}
+
+Le funzioni disponibili nei software permettono di delegare al
+calcolatore gran parte di queste operazioni.
+
+
+\subsection{Il ruolo del valore iniziale}
+
+Per utilizzare le funzioni numeriche indicate precedentemente è
+necessario specificare una stima iniziale
+
+\begin{equation}
+    \mathbf{x}^{(0)}.
+\end{equation}
+
+Nel caso di due incognite questa assume la forma
+
+\begin{equation}
+    \mathbf{x}^{(0)}
+    =
+    \begin{pmatrix}
+        x_1^{(0)}\\
+        x_2^{(0)}
+    \end{pmatrix}.
+\end{equation}
+
+Questo non è semplicemente un requisito della sintassi del software,
+ma riflette una caratteristica matematica dei metodi iterativi per
+sistemi non lineari.
+
+A differenza di quanto avveniva con un sistema lineare
+
+\begin{equation}
+    A\mathbf{x}=\mathbf{b},
+\end{equation}
+
+la soluzione di
+
+\begin{equation}
+    \mathbf{f}(\mathbf{x})=\mathbf{0}
+\end{equation}
+
+può dipendere dal punto dal quale viene avviata la procedura
+iterativa.
+
+Il sistema può inoltre possedere più soluzioni. In questo caso,
+valori iniziali differenti possono condurre l'algoritmo verso
+soluzioni differenti.
+
+La scelta di $\mathbf{x}^{(0)}$ costituisce quindi parte integrante
+del problema computazionale.
+
+
+\subsection{Verifica della soluzione}
+
+Una volta che il software restituisce una soluzione numerica
+$\widehat{\mathbf{x}}$, è buona pratica non limitarsi a leggere il
+valore ottenuto.
+
+Possiamo sostituire la soluzione nelle equazioni originarie e
+calcolare il vettore dei residui:
+
+\begin{equation}
+    \mathbf{r}
+    =
+    \mathbf{f}(\widehat{\mathbf{x}}).
+\end{equation}
+
+Nel nostro esempio:
+
+\begin{equation}
+\mathbf{r}
+=
+\begin{pmatrix}
+(\widehat{x}_1)^2+(\widehat{x}_2)^2-1\\[2mm]
+\displaystyle
+\sin\left(
+\frac{\pi}{2}\widehat{x}_1
+\right)
++
+(\widehat{x}_2)^3
+\end{pmatrix}.
+\end{equation}
+
+Se il procedimento ha trovato una buona soluzione, entrambe le
+componenti del vettore devono essere sufficientemente vicine a zero:
+
+\begin{equation}
+    \mathbf{r}\simeq\mathbf{0}.
+\end{equation}
+
+Possiamo, ad esempio, misurare complessivamente la dimensione del
+residuo mediante una norma:
+
+\begin{equation}
+    \|\mathbf{f}(\widehat{\mathbf{x}})\|.
+\end{equation}
+
+Quanto più questa quantità è vicina a zero, tanto meglio la soluzione
+numerica soddisfa il sistema originario.
+
+
+\subsection{Dalla formulazione matematica all'implementazione}
+
+L'utilizzo di una funzione numerica per la soluzione di un sistema
+non lineare può quindi essere organizzato concettualmente in pochi
+passaggi:
+
+\begin{equation}
+\boxed{
+\begin{array}{c}
+\text{equazioni del problema}\\
+\downarrow\\
+\mathbf{f}(\mathbf{x})=\mathbf{0}\\
+\downarrow\\
+\text{scelta di }\mathbf{x}^{(0)}\\
+\downarrow\\
+\text{solver numerico}\\
+\downarrow\\
+\widehat{\mathbf{x}}\\
+\downarrow\\
+\text{verifica dei residui}
+\end{array}}
+\end{equation}
+
+Dal punto di vista dell'utilizzatore, quindi, l'elemento essenziale
+non è necessariamente programmare direttamente tutte le iterazioni
+del metodo di Newton.
+
+È invece fondamentale essere in grado di:
+
+\begin{itemize}
+    \item formulare correttamente il problema come
+          $\mathbf{f}(\mathbf{x})=\mathbf{0}$;
+    \item individuare le variabili rispetto alle quali il sistema
+          deve essere risolto;
+    \item fornire una stima iniziale appropriata;
+    \item interpretare la soluzione restituita dal software;
+    \item verificare che i residui siano sufficientemente piccoli.
+\end{itemize}
+
+La conoscenza del metodo di Newton rimane comunque essenziale per
+comprendere che cosa avviene dietro la funzione del software:
+il problema non lineare viene affrontato iterativamente mediante
+linearizzazioni locali e la soluzione di sistemi lineari.
+
+\section{Soluzione numerica del modello AD-AS}
+\label{sec:soluzione-adas}
+
+Possiamo ora tornare al problema economico dal quale siamo partiti.
+Il modello AD-AS ci aveva condotto a un sistema di due equazioni
+non lineari nelle due incognite $Y$ e $P$.
+
+La prima equazione rappresenta la domanda aggregata:
+
+\begin{equation}
+Y=
+\frac{
+(\bar{C}+\bar{I}+\bar{G})
+-\dfrac{b}{h}
+\left(
+\bar{L}-\dfrac{\bar{M}}{P}
+\right)
+}{
+1-c(1-t)+\dfrac{bk}{h}
+}.
+\label{eq:adas_ad_final}
+\end{equation}
+
+La seconda rappresenta l'offerta aggregata:
+
+\begin{equation}
+Y=
+\bar{A}\bar{K}^{\alpha}
+\left[
+\frac{\bar{W}}{P}
+\frac{1}{
+\bar{A}\bar{K}^{\alpha}(1-\alpha)
+}
+\right]^{
+-\frac{1-\alpha}{\alpha}
+}.
+\label{eq:adas_as_final}
+\end{equation}
+
+Il nostro obiettivo è determinare una coppia
+
+\begin{equation}
+    (Y^*,P^*)
+\end{equation}
+
+che soddisfi simultaneamente entrambe le equazioni.
+
+
+\subsection{Formulazione del problema per il solver numerico}
+
+Le funzioni per la soluzione numerica dei sistemi non lineari
+considerate nella sezione precedente richiedono che il problema sia
+espresso nella forma
+
+\begin{equation}
+    \mathbf{f}(\mathbf{x})=\mathbf{0}.
+\end{equation}
+
+Le equazioni del modello AD-AS devono quindi essere opportunamente
+riscritte.
+
+Portiamo tutti i termini della prima equazione al lato sinistro e
+definiamo
+
+\begin{equation}
+f_1(Y,P)
+=
+Y-
+\frac{
+(\bar{C}+\bar{I}+\bar{G})
+-\dfrac{b}{h}
+\left(
+\bar{L}-\dfrac{\bar{M}}{P}
+\right)
+}{
+1-c(1-t)+\dfrac{bk}{h}
+}.
+\label{eq:adas_f1}
+\end{equation}
+
+La condizione di equilibrio della domanda aggregata diventa quindi
+
+\begin{equation}
+    f_1(Y,P)=0.
+\end{equation}
+
+Procediamo nello stesso modo per l'offerta aggregata, definendo
+
+\begin{equation}
+f_2(Y,P)
+=
+Y-
+\bar{A}\bar{K}^{\alpha}
+\left[
+\frac{\bar{W}}{P}
+\frac{1}{
+\bar{A}\bar{K}^{\alpha}(1-\alpha)
+}
+\right]^{
+-\frac{1-\alpha}{\alpha}
+}.
+\label{eq:adas_f2}
+\end{equation}
+
+La condizione di equilibrio dell'offerta aggregata diventa
+
+\begin{equation}
+    f_2(Y,P)=0.
+\end{equation}
+
+Il problema originario può pertanto essere riscritto come
+
+\begin{equation}
+\boxed{
+\begin{cases}
+f_1(Y,P)=0,\\
+f_2(Y,P)=0.
+\end{cases}
+}
+\label{eq:adas_solver_system}
+\end{equation}
+
+
+\subsection{La formulazione vettoriale}
+
+Per utilizzare la notazione introdotta nello studio dei sistemi
+non lineari, definiamo il vettore delle incognite
+
+\begin{equation}
+    \mathbf{x}
+    =
+    \begin{pmatrix}
+        Y\\
+        P
+    \end{pmatrix}
+\end{equation}
+
+e il vettore delle funzioni
+
+\begin{equation}
+\mathbf{f}(\mathbf{x})
+=
+\begin{pmatrix}
+f_1(Y,P)\\
+f_2(Y,P)
+\end{pmatrix}.
+\end{equation}
+
+Il modello AD-AS assume quindi esattamente la forma generale
+
+\begin{equation}
+\boxed{
+    \mathbf{f}(\mathbf{x})=\mathbf{0}.
+}
+\end{equation}
+
+Il problema economico è stato così trasformato in un problema
+numerico standard.
+
+
+\subsection{Che cosa deve contenere la funzione definita dall'utente}
+
+Questo passaggio algebrico ha una conseguenza pratica importante.
+
+Quando utilizziamo un solver per sistemi non lineari, la funzione
+definita dall'utente non deve restituire direttamente $Y$ e $P$.
+Deve invece, per ogni possibile coppia $(Y,P)$, calcolare i valori
+
+\begin{equation}
+    f_1(Y,P)
+    \qquad\text{e}\qquad
+    f_2(Y,P).
+\end{equation}
+
+In altri termini, deve restituire il vettore dei residui
+
+\begin{equation}
+\boxed{
+\mathbf{f}(Y,P)
+=
+\begin{pmatrix}
+f_1(Y,P)\\
+f_2(Y,P)
+\end{pmatrix}.
+}
+\end{equation}
+
+Il solver modifica iterativamente i valori di $Y$ e $P$ cercando
+una coppia per la quale entrambe le componenti del vettore siano
+sufficientemente vicine a zero:
+
+\begin{equation}
+    \mathbf{f}(Y^*,P^*)
+    \simeq
+    \begin{pmatrix}
+        0\\
+        0
+    \end{pmatrix}.
+\end{equation}
+
+Questo chiarisce anche il significato economico del residuo.
+
+Se
+
+\begin{equation}
+    f_1(Y,P)\neq0,
+\end{equation}
+
+la coppia considerata non soddisfa la condizione di domanda
+aggregata.
+
+Analogamente, se
+
+\begin{equation}
+    f_2(Y,P)\neq0,
+\end{equation}
+
+non soddisfa la condizione di offerta aggregata.
+
+L'equilibrio richiede che entrambi i residui siano nulli, o
+numericamente sufficientemente prossimi a zero.
+
+
+\subsection{Dal modello economico al problema computazionale}
+
+Possiamo ora ricostruire l'intero percorso seguito.
+
+Siamo partiti dalle equazioni che descrivono consumi, investimenti,
+mercato monetario, produzione e mercato del lavoro.
+
+Attraverso opportune sostituzioni abbiamo ridotto il modello a due
+relazioni nelle due variabili fondamentali
+
+\begin{equation}
+    Y
+    \qquad\text{e}\qquad
+    P.
+\end{equation}
+
+Poiché queste relazioni sono non lineari, non possiamo costruire
+direttamente un sistema della forma
+
+\begin{equation}
+    A\mathbf{x}=\mathbf{b}.
+\end{equation}
+
+Le riscriviamo invece come
+
+\begin{equation}
+    \mathbf{f}(\mathbf{x})=\mathbf{0}
+\end{equation}
+
+e utilizziamo un metodo numerico per sistemi non lineari.
+
+Il procedimento può essere sintetizzato come
+
+\begin{equation}
+\boxed{
+\begin{array}{c}
+\text{modello economico}\\
+\downarrow\\
+\text{equazioni AD e AS}\\
+\downarrow\\
+\begin{cases}
+f_1(Y,P)=0\\
+f_2(Y,P)=0
+\end{cases}\\
+\downarrow\\
+\mathbf{f}(\mathbf{x})=\mathbf{0}\\
+\downarrow\\
+\text{solver numerico}\\
+\downarrow\\
+(Y^*,P^*)
+\end{array}
+}
+\end{equation}
+
+
+\subsection{Dalla soluzione alle variabili del modello}
+
+La soluzione numerica del sistema fornisce i valori di equilibrio
+
+\begin{equation}
+    Y^*
+    \qquad\text{e}\qquad
+    P^*.
+\end{equation}
+
+Una volta determinati questi valori, possiamo tornare alle equazioni
+originarie del modello e ricavare le altre variabili endogene.
+
+Ad esempio,
+
+\begin{equation}
+    T^*=tY^*,
+\end{equation}
+
+e quindi
+
+\begin{equation}
+    C^*
+    =
+    \bar{C}
+    +
+    c(Y^*-T^*).
+\end{equation}
+
+Dal mercato monetario possiamo ricavare il tasso di interesse:
+
+\begin{equation}
+    R^*
+    =
+    \frac{1}{h}
+    \left(
+        \bar{L}
+        +kY^*
+        -\frac{\bar{M}}{P^*}
+    \right),
+\end{equation}
+
+e successivamente gli investimenti:
+
+\begin{equation}
+    I^*
+    =
+    \bar{I}-bR^*.
+\end{equation}
+
+La soluzione di un sistema relativamente piccolo nelle due
+incognite $(Y,P)$ permette quindi di ricostruire l'equilibrio
+complessivo del modello.
+
+
+\subsection{Il messaggio computazionale}
+
+L'esempio AD-AS permette di evidenziare la logica generale con cui
+affronteremo i modelli non lineari.
+
+Il punto di partenza non è il metodo numerico, ma il modello.
+Dobbiamo prima identificare le variabili endogene e ridurre, quando
+possibile, il numero delle equazioni da risolvere simultaneamente.
+
+Successivamente formuliamo il problema nella forma
+
+\begin{equation}
+    \mathbf{f}(\mathbf{x})=\mathbf{0}.
+\end{equation}
+
+A questo punto possiamo applicare gli strumenti numerici studiati
+nelle sezioni precedenti.
+
+Nel caso del metodo di Newton, il solver costruisce localmente una
+linearizzazione del sistema e risolve ripetutamente problemi della
+forma
+
+\begin{equation}
+    J_{\mathbf{f}}(\mathbf{x}^{(k)})
+    \mathbf{z}^{(k)}
+    =
+    -\mathbf{f}(\mathbf{x}^{(k)}).
+\end{equation}
+
+Ritroviamo quindi, all'interno della soluzione del problema non
+lineare, i sistemi lineari studiati nella prima parte del corso.
+
+L'intero percorso può essere riassunto come
+
+\begin{equation}
+\boxed{
+\text{modello}
+\longrightarrow
+\mathbf{f}(\mathbf{x})=\mathbf{0}
+\longrightarrow
+\text{linearizzazioni successive}
+\longrightarrow
+\text{sistemi lineari}
+\longrightarrow
+\mathbf{x}^*.
+}
+\end{equation}
+
+Il passaggio dai sistemi lineari ai sistemi non lineari non comporta
+quindi l'abbandono delle tecniche studiate in precedenza. Al
+contrario, la soluzione dei sistemi lineari diventa uno degli
+strumenti fondamentali utilizzati all'interno dei metodi per la
+soluzione dei problemi non lineari.
+
+```latex
+\section{Applicazione finanziaria: rendimento a scadenza e curva dei rendimenti}
+
+I metodi per la soluzione numerica di equazioni e sistemi di equazioni non lineari trovano numerose applicazioni in ambito finanziario. Un esempio particolarmente importante riguarda la valutazione delle obbligazioni e la costruzione della curva dei rendimenti. Questo esempio consente inoltre di collegare le tecniche numeriche presentate in questa parte del corso con i metodi di interpolazione della struttura per scadenza dei tassi analizzati in precedenza.
+
+\subsection{Dal prezzo dell'obbligazione al rendimento a scadenza}
+
+Consideriamo inizialmente un'obbligazione con valore nominale $F$, cedola annuale $C$ e scadenza $T$. Se tutti i flussi di cassa vengono scontati utilizzando lo stesso rendimento $y$, il prezzo dell'obbligazione può essere espresso come
+
+\[
+P =
+\sum_{t=1}^{T}
+\frac{C}{(1+y)^t}
++
+\frac{F}{(1+y)^T}.
+\]
+
+Se il rendimento $y$ è noto, questa relazione permette di calcolare direttamente il prezzo dell'obbligazione. In molte applicazioni finanziarie si presenta tuttavia il problema inverso: il prezzo dell'obbligazione è osservato sul mercato, mentre si vuole determinare il rendimento che risulta coerente con tale prezzo.
+
+Il rendimento così ottenuto è denominato \emph{Yield to Maturity} (YTM), o rendimento a scadenza. Indicando con $P^{market}$ il prezzo osservato, lo YTM deve soddisfare la relazione
+
+\[
+P^{market} =
+\sum_{t=1}^{T}
+\frac{C}{(1+y)^t}
++
+\frac{F}{(1+y)^T}.
+\]
+
+Il problema può essere ricondotto alla ricerca dello zero di una funzione. Definiamo infatti
+
+\[
+f(y)=
+\sum_{t=1}^{T}
+\frac{C}{(1+y)^t}
++
+\frac{F}{(1+y)^T}
+-
+P^{market}.
+\]
+
+Lo Yield to Maturity $y^*$ è quindi la soluzione dell'equazione
+
+\[
+f(y^*)=0.
+\]
+
+Questa formulazione permette di attribuire un'immediata interpretazione finanziaria al residuo $f(y)$. Per un generico rendimento candidato $y$, esso rappresenta infatti la differenza tra il prezzo teorico prodotto dal modello e il prezzo osservato sul mercato:
+
+\[
+f(y)=P^{model}(y)-P^{market}.
+\]
+
+Se $f(y)>0$, il rendimento utilizzato produce un prezzo teorico superiore al prezzo di mercato. Se invece $f(y)<0$, il prezzo teorico è inferiore al prezzo osservato. La soluzione viene raggiunta quando la differenza tra i due prezzi è nulla, o sufficientemente piccola rispetto alla tolleranza numerica prescelta.
+
+Come esempio, consideriamo un'obbligazione con valore nominale pari a 100, cedola annuale pari a 4, scadenza a cinque anni e prezzo di mercato pari a 95. Lo Yield to Maturity deve soddisfare
+
+\[
+\frac{4}{1+y}
++
+\frac{4}{(1+y)^2}
++
+\frac{4}{(1+y)^3}
++
+\frac{4}{(1+y)^4}
++
+\frac{104}{(1+y)^5}
+-
+95
+=0.
+\]
+
+L'equazione è non lineare rispetto a $y$ e può essere risolta utilizzando i metodi numerici precedentemente introdotti, quali il metodo di bisezione, il metodo di Newton o il metodo delle secanti.
+
+Utilizzando, ad esempio, il metodo di Newton, a partire da un valore iniziale $y_0$ si genera la successione
+
+\[
+y_{k+1}
+=
+y_k-
+\frac{f(y_k)}{f'(y_k)}.
+\]
+
+Ad ogni iterazione viene quindi proposto un nuovo rendimento, viene calcolato il corrispondente prezzo teorico dell'obbligazione e viene valutata la distanza rispetto al prezzo osservato. Il procedimento può essere arrestato quando
+
+\[
+|f(y_k)|<\varepsilon,
+\]
+
+dove $\varepsilon$ rappresenta una tolleranza opportunamente scelta.
+
+\subsection{Dal rendimento di una singola obbligazione alla curva dei rendimenti}
+
+Il calcolo dello Yield to Maturity assume che tutti i flussi di cassa dell'obbligazione siano scontati utilizzando un unico rendimento $y$. Questa rappresentazione è utile per sintetizzare il rendimento di un titolo, ma non descrive esplicitamente la struttura per scadenza dei tassi di interesse.
+
+In generale, infatti, il tasso di interesse può dipendere dalla scadenza. Possiamo indicare questa relazione mediante una funzione
+
+\[
+r=r(t).
+\]
+
+La funzione $r(t)$ descrive la \emph{term structure} dei tassi di interesse, cioè la relazione tra rendimento e scadenza.
+
+Supponiamo, per semplicità, di descrivere tale relazione mediante una funzione lineare nei parametri
+
+\[
+r(t)=a+bt.
+\]
+
+Il parametro $a$ influenza il livello della curva, mentre il parametro $b$ ne determina l'inclinazione. Sebbene questa specificazione sia volutamente semplice, essa consente di mostrare in modo immediato come la determinazione di una curva dei rendimenti possa condurre a un sistema di equazioni non lineari.
+
+Consideriamo un'obbligazione $i$ caratterizzata da una successione di flussi di cassa $CF_{i,t}$. Utilizzando il tasso corrispondente alla scadenza di ciascun flusso, il prezzo teorico può essere scritto come
+
+\[
+P_i(a,b)
+=
+\sum_{t=1}^{T_i}
+\frac{CF_{i,t}}
+{(1+a+bt)^t}.
+\]
+
+A differenza del caso dello Yield to Maturity, il prezzo non dipende ora da un'unica incognita, ma dai due parametri $a$ e $b$ che descrivono la curva dei rendimenti.
+
+\subsection{Determinazione della curva mediante due obbligazioni}
+
+Supponiamo di osservare sul mercato due obbligazioni, indicate con $A$ e $B$, con differenti strutture dei flussi di cassa e prezzi rispettivamente pari a
+
+\[
+P_A^{market}
+\qquad \text{e} \qquad
+P_B^{market}.
+\]
+
+Cerchiamo i valori dei parametri $a$ e $b$ che rendono i prezzi prodotti dal modello uguali ai prezzi osservati.
+
+Per la prima obbligazione deve quindi valere
+
+\[
+P_A(a,b)=P_A^{market},
+\]
+
+mentre per la seconda deve valere
+
+\[
+P_B(a,b)=P_B^{market}.
+\]
+
+Definendo gli errori di prezzo
+
+\[
+f_1(a,b)
+=
+P_A(a,b)-P_A^{market}
+\]
+
+e
+
+\[
+f_2(a,b)
+=
+P_B(a,b)-P_B^{market},
+\]
+
+il problema può essere scritto come il sistema
+
+\[
+\begin{cases}
+f_1(a,b)=0,\\
+f_2(a,b)=0.
+\end{cases}
+\]
+
+In forma vettoriale possiamo scrivere
+
+\[
+\mathbf{f}(\mathbf{x})=\mathbf{0},
+\]
+
+dove
+
+\[
+\mathbf{x}
+=
+\begin{bmatrix}
+a\\
+b
+\end{bmatrix}.
+\]
+
+Abbiamo quindi ottenuto un sistema di due equazioni non lineari in due incognite. La non linearità deriva dal fatto che i parametri $a$ e $b$ compaiono all'interno dei fattori di sconto utilizzati per calcolare i prezzi delle obbligazioni.
+
+La soluzione
+
+\[
+\mathbf{x}^*
+=
+\begin{bmatrix}
+a^*\\
+b^*
+\end{bmatrix}
+\]
+
+identifica una curva
+
+\[
+r(t)=a^*+b^*t
+\]
+
+che riproduce simultaneamente i prezzi osservati delle due obbligazioni.
+
+\subsection{Applicazione del metodo di Newton}
+
+Il sistema precedente può essere risolto mediante l'estensione multidimensionale del metodo di Newton. A tale scopo si considera la matrice Jacobiana
+
+\[
+J_{\mathbf f}(a,b)
+=
+\begin{bmatrix}
+\dfrac{\partial f_1}{\partial a}
+&
+\dfrac{\partial f_1}{\partial b}
+\\[8pt]
+\dfrac{\partial f_2}{\partial a}
+&
+\dfrac{\partial f_2}{\partial b}
+\end{bmatrix}.
+\]
+
+Dal punto di vista finanziario, gli elementi della Jacobiana misurano la sensibilità degli errori di prezzo delle due obbligazioni rispetto a variazioni dei parametri della curva.
+
+Partendo da un'ipotesi iniziale
+
+\[
+\mathbf{x}_0
+=
+\begin{bmatrix}
+a_0\\
+b_0
+\end{bmatrix},
+\]
+
+ad ogni iterazione del metodo di Newton viene risolto il sistema lineare
+
+\[
+J_{\mathbf f}(\mathbf{x}_k)\mathbf{z}_k
+=
+-\mathbf{f}(\mathbf{x}_k).
+\]
+
+Una volta determinata la correzione $\mathbf{z}_k$, i parametri vengono aggiornati secondo
+
+\[
+\mathbf{x}_{k+1}
+=
+\mathbf{x}_k+\mathbf{z}_k.
+\]
+
+È importante osservare la struttura computazionale del procedimento. Il problema finanziario originario è non lineare, perché i parametri della curva entrano in modo non lineare nelle formule di valutazione delle obbligazioni. Il metodo di Newton sostituisce localmente questo problema con una successione di sistemi lineari. Le tecniche di algebra lineare studiate in precedenza diventano quindi uno strumento necessario per risolvere il problema non lineare.
+
+Dal punto di vista finanziario, ad ogni iterazione disponiamo di una curva candidata
+
+\[
+r_k(t)=a_k+b_kt.
+\]
+
+Questa curva produce dei prezzi teorici per le due obbligazioni. Confrontando tali prezzi con quelli osservati otteniamo i residui
+
+\[
+f_1(a_k,b_k)
+\qquad \text{e} \qquad
+f_2(a_k,b_k).
+\]
+
+Il metodo modifica simultaneamente il livello e l'inclinazione della curva allo scopo di portare entrambi i residui verso zero.
+
+\subsection{Relazione con l'interpolazione della curva dei rendimenti}
+
+È utile distinguere il problema appena analizzato dall'interpolazione della curva dei rendimenti studiata in precedenza.
+
+Nel problema di interpolazione si dispone già di rendimenti associati a determinate scadenze,
+
+\[
+(T_1,r_1),\,
+(T_2,r_2),\,
+\ldots,\,
+(T_n,r_n),
+\]
+
+e si vuole costruire una funzione che permetta di determinare il rendimento anche per scadenze intermedie. Il punto di partenza è quindi costituito da rendimenti già noti:
+
+\[
+\text{rendimenti osservati}
+\longrightarrow
+\text{interpolazione}
+\longrightarrow
+\text{curva dei rendimenti}.
+\]
+
+Nel problema qui considerato, invece, il punto di partenza è costituito dai prezzi e dai flussi di cassa delle obbligazioni. I rendimenti non sono direttamente utilizzati come dati, ma sono incorporati nei parametri della curva che devono essere determinati:
+
+\[
+\text{prezzi e cash flow}
+\longrightarrow
+\text{sistema non lineare}
+\longrightarrow
+\text{parametri della curva}.
+\]
+
+Le due tecniche non sono quindi alternative. Esse affrontano problemi differenti nell'ambito della stessa analisi della struttura per scadenza dei tassi di interesse.
+
+\subsection{Dai sistemi non lineari alla calibrazione}
+
+L'esempio con due obbligazioni è stato costruito in modo da avere due condizioni e due parametri sconosciuti. Possiamo quindi cercare valori $a^*$ e $b^*$ tali che entrambi gli errori di prezzo siano esattamente nulli.
+
+Nelle applicazioni finanziarie reali, tuttavia, è frequente disporre di un numero di titoli superiore al numero dei parametri utilizzati per descrivere la curva. Supponiamo, ad esempio, di avere $N$ obbligazioni e una curva descritta da un vettore di parametri $\boldsymbol{\theta}$. Per ciascuna obbligazione possiamo definire l'errore
+
+\[
+e_i(\boldsymbol{\theta})
+=
+P_i^{model}(\boldsymbol{\theta})
+-
+P_i^{market}.
+\]
+
+Se il numero di obbligazioni è superiore al numero dei parametri, in generale non esiste un vettore $\boldsymbol{\theta}$ capace di rendere simultaneamente nulli tutti gli errori:
+
+\[
+e_i(\boldsymbol{\theta})=0
+\qquad
+\forall i.
+\]
+
+In questo caso il problema cambia natura. Invece di cercare una curva che riproduca esattamente tutti i prezzi, si cerca una curva che li approssimi nel miglior modo possibile. Ad esempio, si potrebbe considerare una misura complessiva degli errori quale
+
+\[
+\sum_{i=1}^{N}
+\left[
+P_i^{model}(\boldsymbol{\theta})
+-
+P_i^{market}
+\right]^2.
+\]
+
+La determinazione dei parametri richiede allora di minimizzare questa quantità. Si passa così dalla soluzione di un sistema di equazioni non lineari a un problema di \emph{calibrazione}, che costituisce una delle principali applicazioni dei metodi di ottimizzazione numerica in finanza.
+
+L'esempio obbligazionario evidenzia pertanto una progressione naturale delle tecniche computazionali. Il calcolo dello Yield to Maturity richiede la soluzione di una singola equazione non lineare; la determinazione di una curva a partire da un numero di obbligazioni uguale al numero dei parametri conduce a un sistema di equazioni non lineari; infine, quando il numero di osservazioni supera il numero dei parametri, il problema conduce naturalmente alla calibrazione e all'ottimizzazione numerica.
+
+
+
 \end{document}
