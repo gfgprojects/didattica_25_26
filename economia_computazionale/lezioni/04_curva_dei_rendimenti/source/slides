@@ -1,0 +1,585 @@
+
+# Il problema finanziario
+
+Il prezzo di un'obbligazione è dato dal valore attuale dei suoi flussi di cassa futuri.
+
+Per un'obbligazione con:
+
+- valore nominale $F$;
+- cedola annuale $C$;
+- scadenza $T$;
+- rendimento a scadenza $y$;
+
+il prezzo è:
+$$
+P =
+\sum_{t=1}^{T}
+\frac{C}{(1+y)^t}
++
+\frac{F}{(1+y)^T}
+$$
+Se $y$ è noto, possiamo calcolare direttamente $P$.
+
+Ma cosa accade se osserviamo $P$ e vogliamo ricavare $y$?
+
+---
+
+# Dal prezzo al rendimento
+
+Supponiamo di conoscere:
+$$
+P,\quad C,\quad F,\quad T
+$$
+e di voler determinare lo Yield to Maturity $y$.
+
+Dobbiamo risolvere:
+$$
+P =
+\sum_{t=1}^{T}
+\frac{C}{(1+y)^t}
++
+\frac{F}{(1+y)^T}
+$$
+Portando tutto a sinistra:
+$$
+f(y)=
+\sum_{t=1}^{T}
+\frac{C}{(1+y)^t}
++
+\frac{F}{(1+y)^T}
+-P
+=0
+$$
+Il calcolo dello Yield to Maturity è quindi un problema di
+**soluzione di un'equazione non lineare**.
+
+---
+
+# Un esempio
+
+Consideriamo un'obbligazione con:
+$$
+F=100
+$$
+$$
+C=4
+$$
+$$
+T=5
+$$
+e prezzo di mercato:
+$$
+P=95
+$$
+Il rendimento $y$ deve soddisfare:
+$$
+\frac{4}{1+y}
++
+\frac{4}{(1+y)^2}
++
+\frac{4}{(1+y)^3}
++
+\frac{4}{(1+y)^4}
++
+\frac{104}{(1+y)^5}
+-95
+=0
+$$
+
+---
+
+# Il problema come ricerca dello zero
+
+Definiamo:
+$$
+f(y)=
+\frac{4}{1+y}
++
+\frac{4}{(1+y)^2}
++
+\frac{4}{(1+y)^3}
++
+\frac{4}{(1+y)^4}
++
+\frac{104}{(1+y)^5}
+-95
+$$
+Cerchiamo:
+$$
+y^*
+$$
+tale che:
+$$
+f(y^*)=0
+$$
+Dal punto di vista finanziario:
+$$
+P^{model}(y^*)=P^{market}
+$$
+Il rendimento cercato è quindi quello che rende il prezzo teorico
+dell'obbligazione uguale al prezzo osservato sul mercato.
+
+---
+
+# Soluzione numerica
+
+L'equazione:
+$$
+f(y)=0
+$$
+può essere risolta utilizzando, ad esempio:
+
+- metodo di bisezione;
+- metodo di Newton;
+- metodo delle secanti.
+
+Nel caso del metodo di Newton:
+$$
+y_{k+1}
+=
+y_k-
+\frac{f(y_k)}{f'(y_k)}
+$$
+A partire da un valore iniziale $y_0$, il procedimento viene ripetuto
+fino alla convergenza.
+
+---
+
+# Interpretazione dell'iterazione
+
+Ad ogni iterazione abbiamo un rendimento candidato:
+$$
+y_k
+$$
+che produce un prezzo teorico:
+$$
+P^{model}(y_k)
+$$
+Il residuo è:
+$$
+f(y_k)
+=
+P^{model}(y_k)-P^{market}
+$$
+
+---
+
+Se:
+$$
+f(y_k)>0
+$$
+il prezzo teorico è troppo alto.
+Se:
+$$
+f(y_k)<0
+$$
+il prezzo teorico è troppo basso.
+
+La soluzione viene raggiunta quando:
+$$
+|f(y_k)|<\varepsilon
+$$
+
+---
+
+# Dallo YTM alla curva dei rendimenti
+
+Lo Yield to Maturity considera un unico rendimento $y$ per tutti
+i flussi dell'obbligazione.
+
+In generale, però, il tasso di sconto può dipendere dalla scadenza:
+
+$$
+r=r(t)
+$$
+
+Possiamo quindi descrivere la struttura per scadenza dei tassi
+attraverso una funzione.
+
+Una semplice specificazione è:
+
+$$
+r(t)=a+bt
+$$
+
+dove:
+
+- $a$ determina il livello della curva;
+- $b$ determina la sua inclinazione.
+
+---
+
+# Pricing con una curva dei rendimenti
+
+Se:
+$$
+r(t)=a+bt
+$$
+il flusso ricevuto alla data $t$ viene scontato utilizzando:
+$$
+r_t=a+bt
+$$
+Il prezzo teorico dell'obbligazione $i$ diventa:
+$$
+P_i(a,b)
+=
+\sum_{t=1}^{T_i}
+\frac{CF_{i,t}}
+{(1+a+bt)^t}
+$$
+Il prezzo dipende ora da due parametri sconosciuti:
+$$
+a,\quad b
+$$
+Il problema non consiste più nel trovare un singolo rendimento.
+
+Dobbiamo determinare una **curva dei rendimenti**.
+
+---
+
+# Due obbligazioni
+
+Supponiamo di osservare sul mercato due obbligazioni:
+$$
+Bond\ A
+$$
+e
+$$
+Bond\ B
+$$
+con prezzi:
+$$
+P_A^{market},
+\qquad
+P_B^{market}
+$$
+Per entrambe deve valere:
+$$
+P_i^{model}=P_i^{market}
+$$
+Abbiamo quindi:
+$$
+P_A(a,b)=P_A^{market}
+$$
+$$
+P_B(a,b)=P_B^{market}
+$$
+Le incognite sono: $a,\quad b$
+
+---
+
+# Il sistema non lineare
+
+Portiamo i prezzi osservati a sinistra:
+$$
+f_1(a,b)
+=
+P_A(a,b)-P_A^{market}
+=0
+$$
+$$
+f_2(a,b)
+=
+P_B(a,b)-P_B^{market}
+=0
+$$
+Otteniamo quindi:
+$$
+\begin{cases}
+f_1(a,b)=0\\
+f_2(a,b)=0
+\end{cases}
+$$
+oppure, in forma vettoriale:
+$$
+\mathbf f(\mathbf x)=0
+$$
+con:
+$$
+\mathbf x=
+\begin{bmatrix}
+a\\
+b
+\end{bmatrix}
+$$
+
+---
+
+# Significato finanziario del sistema
+
+Ogni equazione impone una condizione di coerenza tra:
+prezzo prodotto dalla curva e prezzo osservato sul mercato.
+
+La soluzione:
+$$
+(a^*,b^*)
+$$
+soddisfa simultaneamente:
+$$
+P_A(a^*,b^*)=P_A^{market}
+$$
+e:
+$$
+P_B(a^*,b^*)=P_B^{market}
+$$
+I parametri ottenuti identificano la curva:
+$$
+r(t)=a^*+b^*t
+$$
+coerente con i prezzi delle due obbligazioni.
+
+---
+
+# La matrice Jacobiana
+
+Per applicare il metodo di Newton definiamo la matrice Jacobiana:
+$$
+J_f(a,b)
+=
+\begin{bmatrix}
+\dfrac{\partial f_1}{\partial a}
+&
+\dfrac{\partial f_1}{\partial b}
+\\[8pt]
+\dfrac{\partial f_2}{\partial a}
+&
+\dfrac{\partial f_2}{\partial b}
+\end{bmatrix}
+$$
+La Jacobiana misura come gli errori di prezzo delle due obbligazioni
+cambiano al variare dei parametri $a$ e $b$ della curva dei rendimenti.
+
+---
+
+# Newton per la curva dei rendimenti
+
+Partiamo da un'ipotesi iniziale:
+
+$$
+\mathbf x_0=
+\begin{bmatrix}
+a_0\\
+b_0
+\end{bmatrix}
+$$
+
+Ad ogni iterazione risolviamo il sistema lineare:
+
+$$
+J_f(\mathbf x_k)\mathbf z_k
+=
+-\mathbf f(\mathbf x_k)
+$$
+
+e aggiorniamo i parametri:
+
+$$
+\mathbf x_{k+1}
+=
+\mathbf x_k+\mathbf z_k
+$$
+
+Il problema non lineare viene quindi risolto attraverso
+una successione di sistemi lineari.
+
+---
+
+# Interpretazione finanziaria di Newton
+
+Ad ogni iterazione abbiamo una curva candidata:
+$$
+r_k(t)=a_k+b_kt
+$$
+La curva produce due prezzi teorici:
+$$
+P_A(a_k,b_k)
+$$
+$$
+P_B(a_k,b_k)
+$$
+e quindi due errori:
+$$
+f_1(a_k,b_k)
+$$
+$$
+f_2(a_k,b_k)
+$$
+Newton modifica contemporaneamente $a$ e $b$ per ridurre
+questi errori e avvicinare i prezzi teorici ai prezzi osservati.
+
+---
+
+# Interpolazione e sistemi non lineari
+
+L'interpolazione parte da rendimenti già conosciuti:
+$$
+(T_1,r_1),\ldots,(T_n,r_n)
+$$
+e costruisce una funzione:
+$$
+r(T)
+$$
+tra i punti osservati.
+
+Nel problema appena considerato, invece, partiamo da:
+$$
+\text{cash flow + prezzi dei bond}
+$$
+e cerchiamo i parametri della curva:
+$$
+(a,b)
+$$
+che rendono i prezzi teorici coerenti con quelli osservati.
+
+---
+
+# Due problemi differenti
+
+**Interpolazione**
+
+$$
+\text{tassi osservati}
+\longrightarrow
+\text{curva dei rendimenti}
+$$
+
+**Soluzione del sistema non lineare**
+
+$$
+\text{prezzi osservati dei bond}
+\longrightarrow
+\text{parametri della curva}
+\longrightarrow
+\text{curva dei rendimenti}
+$$
+
+Le due tecniche sono quindi diverse, ma possono essere utilizzate
+per affrontare aspetti differenti dello stesso problema finanziario.
+
+---
+
+# Una progressione naturale
+
+Il problema finanziario può essere visto come una progressione:
+$$
+\text{Prezzo di un bond}
+$$
+
+\vskip-8mm
+$$
+\downarrow
+$$
+
+\vskip-5mm
+$$
+\text{Yield to Maturity}
+$$
+$$
+f(y)=0
+$$
+
+\vskip-7mm
+$$
+\downarrow
+$$
+
+\vskip-5mm
+$$
+\text{due o più bond}
+$$
+
+\vskip-7mm
+$$
+\downarrow
+$$
+$$
+\text{Curva dei rendimenti}
+$$
+$$
+\mathbf f(\mathbf x)=0
+$$
+Si passa così dalla soluzione di una singola equazione non lineare
+alla soluzione di un sistema di equazioni non lineari.
+
+---
+
+# Un'importante precisazione
+
+Nel nostro esempio abbiamo:
+$$
+2\ \text{obbligazioni}
+$$
+e:
+$$
+2\ \text{parametri}
+$$
+per cui possiamo imporre:
+$$
+f_1(a,b)=f_2(a,b)=0.
+$$
+In applicazioni reali possiamo avere molti più titoli che parametri
+della curva.
+
+In questo caso, generalmente, non è possibile riprodurre esattamente
+tutti i prezzi osservati.
+
+Il problema diventa allora un problema di **calibrazione**.
+
+---
+
+# Dal sistema non lineare alla calibrazione
+
+Con $N$ obbligazioni e un vettore di parametri $\boldsymbol{\theta}$,
+possiamo definire gli errori:
+$$
+e_i(\boldsymbol{\theta})
+=
+P_i^{model}(\boldsymbol{\theta})
+-
+P_i^{market}.
+$$
+Quando:
+$$
+N>\dim(\boldsymbol{\theta})
+$$
+non cerchiamo necessariamente:
+$$
+e_i(\boldsymbol{\theta})=0
+\qquad
+\forall i.
+$$
+Possiamo invece cercare parametri che rendano complessivamente
+piccoli gli errori.
+
+Questo conduce naturalmente ai metodi di **ottimizzazione numerica**,
+che verranno affrontati successivamente.
+
+---
+
+# Sintesi
+
+Il pricing obbligazionario fornisce due applicazioni naturali
+dei metodi per equazioni non lineari.
+
+**Una obbligazione**
+$$
+P^{model}(y)=P^{market}
+\qquad \text{porta a:} \qquad 
+f(y)=0
+$$
+e permette di determinare lo Yield to Maturity.
+
+**Due o più obbligazioni**
+$$
+P_i^{model}(\boldsymbol{\theta})
+=
+P_i^{market}
+\qquad
+\text{porta a:}
+\qquad
+\mathbf f(\boldsymbol{\theta})=0
+$$
+e permette di determinare i parametri di una curva dei rendimenti.
+
+La stessa struttura finanziaria consente quindi di passare
+naturalmente dalle equazioni ai sistemi di equazioni non lineari.
