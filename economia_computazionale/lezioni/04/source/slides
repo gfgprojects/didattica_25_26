@@ -1,0 +1,287 @@
+# Il modello
+
+$Y=C+I+\bar{G}$
+
+$C=\bar{C}+c(Y-T)$
+
+$T=tY$
+
+$I=\bar{I}-bR$
+
+$\frac{\bar{M}}{P}=\bar{L}+kY-hR$
+
+${\color{blue}Y=\bar{A}\bar{K}^{\alpha}H^{1-\alpha}}$
+
+${\color{blue}\frac{\partial Y}{\partial H}=\frac{\bar{W}}{P}}$
+
+\vskip3mm
+Dove:
+
+Y = produzione, \hskip1cm C = consumo
+
+I = investimenti, \hskip1cm  R = tasso di interesse
+
+P = prezzo, \hskip1cm T = imposte
+
+A= produttività totale dei fattori
+
+K = capitale, \hskip1cm H = lavoro
+
+#
+
+Dati i parametri
+
+$c = 0.6, b = 1500, k = 0.2, b = 1500, h = 1000, t = 0.2, \alpha = 0.5$
+
+e le variabili esogene:
+
+$\bar{A} = 1, \bar{K} = 30000, \bar{C} = 160, \bar{I} = 100, \bar{G} = 200, \bar{M} = 1000, \bar{W} = 50$ e $\bar{L} = 225$
+
+\vskip5mm
+determinare le variabili endogene.
+
+
+# La AD
+
+La ricaviamo utilizzando le prime 4 equazioni.
+
+$Y=C+I+\bar{G}$
+
+$C=\bar{C}+c(Y-T)$
+
+$T=tY$
+
+$I=\bar{I}-bR$
+
+$\frac{\bar{M}}{P}=\bar{L}+kY-hR$
+
+\vskip5mm
+L'ultima può essere scritta come
+
+$$R=\frac{1}{h}\left(\bar{L}+kY-\frac{\bar{M}}{P}\right)$$
+
+\vskip5mm
+Sostituendo quest'ultima nella terza ottenaimo il sistema
+
+#
+
+$Y=C+I+\bar{G}$
+
+$C=\bar{C}+c(Y-T)$
+
+$T=tY$
+
+$I=\bar{I}-\frac{b}{h}\left(\bar{L}+kY-\frac{\bar{M}}{P}\right)$
+
+Sostituendo la seconda, la terza e la quarta nella prima abbiamo:
+
+$Y=\bar{C}+c(Y-tY)+\bar{I}-\frac{b}{h}\left(\bar{L}+kY-\frac{\bar{M}}{P}\right)+\bar{G}$
+$Y=\bar{C}+c(1-t)Y+\bar{I}-\frac{b}{h}kY-\frac{b}{h}\left(\bar{L}-\frac{\bar{M}}{P}\right)+\bar{G}$
+$Y-c(1-t)Y+\frac{bk}{h}Y=\bar{C}+\bar{I}-\frac{b}{h}\left(\bar{L}-\frac{\bar{M}}{P}\right)+\bar{G}$
+$\left[1-c(1-t)+\frac{bk}{h}\right]Y=\bar{C}+\bar{I}-\frac{b}{h}\left(\bar{L}-\frac{\bar{M}}{P}\right)+\bar{G}$
+
+Esplicitando rispetto a $Y$ otteniamo la AD:
+$$Y=\frac{(\bar{C}+\bar{I}+\bar{G})-\frac{b}{h}\left(\bar{L}-\frac{\bar{M}}{P}\right)}{1-c(1-t)+\frac{bk}{h}}$$
+
+# La AS
+
+$$Y=\bar{A}\bar{K}^{\alpha}H^{1-\alpha}$$
+
+imponendo la condizione produttività marginale del lavoro uguale al salario reale
+
+$$\frac{\partial Y}{\partial H}=\frac{\bar{W}}{P}\qquad \Rightarrow \qquad \bar{A}\bar{K}^{\alpha}(1-\alpha)H^{-\alpha}=\frac{\bar{W}}{P}$$
+$$H^{-\alpha}=\frac{\bar{W}}{P}\frac{1}{\bar{A}\bar{K}^{\alpha}(1-\alpha)} \Rightarrow H^{-\alpha(-\frac{1}{\alpha})}=\left(\frac{\bar{W}}{P}\frac{1}{\bar{A}\bar{K}^{\alpha}(1-\alpha)}\right)^{-\frac{1}{\alpha}}$$
+Sostituendo per $H$ nella funzione di produzione si ha la AS:
+$$Y=\bar{A}\bar{K}^{\alpha}\left(\frac{\bar{W}}{P}\frac{1}{\bar{A}{\bar{K}}^{\alpha}(1-\alpha)}\right)^{-\frac{1-\alpha}{\alpha}}$$
+
+# Il sistema AD-AS
+
+$\textnormal{\`E}$ un sistema di due equazioni in due incognite
+
+$${\color{blue}Y}=\frac{(\bar{C}+\bar{I}+\bar{G})-\frac{b}{h}\left(\bar{L}-\frac{\bar{M}}{\color{blue}P}\right)}{1-c(1-t)+\frac{bk}{h}}$$
+
+$${\color{blue}Y}=\bar{A}\bar{K}^{\alpha}\left(\frac{\bar{W}}{\color{blue}P}\frac{1}{\bar{A}{\bar{K}}^{\alpha}(1-\alpha)}\right)^{-\frac{1-\alpha}{\alpha}}$$
+
+Una volta risolto per $Y$ e $P$ si può risalire a tutte le altre variabili endogene utilizzando le equazioni del modello.
+
+
+# Tecniche numeriche
+
+Nelle dipositive vedremo:
+
+- i metodi per la soluzione di una equazione non lineare
+	- il metodo di bisezione
+	- il metodo di Newton
+	- il metodo delle secanti (cenni)
+
+- estenderemo poi il metodo si Newton alla soluzione di sistemi di equazioni non lineari
+
+
+# Bisezione, 
+
+- Usa i segni delle funzione agli estremi
+- non garantisce che il residuo diminuisca monotonamente
+
+\includegraphics[scale=0.2]{quater_bisez}
+
+Fonte: Quarteroni et al. pag. 51
+
+# Newton
+
+- Si applica a funzioni derivabili
+- usa le derivate nel punto e il valore della funzione nel punto. Ovvero, sostituisce la $f(x)$ che è non lineare con la retta ad essa tangente in un punto.
+
+L'equazione della retta tangente nel punto $\bar{x}$ è
+$$ f(\bar{x})+f'(\bar{x})(x-\bar{x})$$
+
+Invece di risolvere
+$$f(x)=0$$
+si risolve
+$$ f(\bar{x})+f'(\bar{x})(x-\bar{x})=0$$
+che ha soluzione
+$$ x=\bar{x}-f'(\bar{x})^{-1}f(\bar{x})$$
+
+#
+
+\includegraphics[scale=0.2]{quater_newton}
+
+Fonte: Quarteroni et al. pagina 54
+
+#
+- non garantisce che si converga alla soluzione da qualsiasi punto di partenza, ma soltanto se esso è sufficientemente vicino alla soluzione
+- se $x^*$ è uno zero
+	- se $f'(x^*)\neq 0$ lo zero si dice semplice
+	- se $f'(x^*)=f''(x^*)=...=f^{m-1}(x^*)$ lo zero ha molteplicità $m$
+- se lo zero è semplice, il metodo converge e la convergenza è di ordine 2: ovvero, l'errore al passo $k+1$ è il quadrato di quello in $k$. 
+- se lo zero ha molteplicità $m$, il metodo converge e la convergenza è di ordine 1. In questo caso esistono modifiche al metodo che consentono di ottenere di nuovo una convergenza di ordine 2.
+
+# Come arrestare il metodo: 
+
+- in caso di zero semplice, il valore assoluto della differenza di due iterate successive minore ad una certa tolleranza
+- un metodo generale: $|f(x^k)|<\epsilon$ (residuo sufficientemente piccolo). L'accuratezza dipende dall'inclinazione di f. Se f è poco inclinata, piccoli $f(x)$ portano gandi varianioni di $x$.
+
+# Secanti
+
+- Si usa se non si hanno le derivate della funzione, ad esempio perché la funzione è discreta.
+
+- La derivata è sostituita dal rapporto incrementale dei dati conosciuti.
+
+- La convergenza può essere più lenta del metodo di Newton.
+
+# Sistemi di equazioni non lineari
+
+$$
+\begin{array}{l c l}
+f_1(x_1,x_2,...,x_n)&=&0\\
+f_2(x_1,x_2,...,x_n)&=&0\\
+...&&\\
+f_n(x_1,x_2,...,x_n)&=&0
+\end{array}
+$$
+in forma vettoriale scriviamo
+$$\mathbf{f(x)=0}$$ 
+
+La migliore approssimazione lineare di $\mathbf{f(x)}$ in un punto $\mathbf{x_0}$ è
+$$\mathbf{f(x_0)+J_f(x_0)(x-x_0)}$$
+dove
+$\mathbf{J_f(x_0)}$ è la matrice delle derivate prime di $\mathbf{f}$ calcolate nel punto $\mathbf{x_0}$.
+
+# La matrice Jacobiana
+
+La matrice delle derivate prime viene denominata matrice jacobiana:
+
+$$
+\mathbf{J_f}=
+\left[
+\begin{array}{c c c}
+{\partial f_1}\over{\partial x_1}&\cdots&{\partial f_1}\over{\partial x_n}\\
+\vdots&\ddots&\vdots\\
+{\partial f_n}\over{\partial x_1}&\cdots&{\partial f_n}\over{\partial x_n}
+\end{array}
+\right]
+$$
+
+# Metodo di Newton
+
+Sostituendo dunque in 
+$$\mathbf{f(x)=0}$$ 
+la migliore approssimazione lineare di $\mathbf{f}$ si ottiene
+$$\mathbf{f(x_0)+J_f(x_0)(x-x_0)}=0$$
+che possiamo esprimere come
+$$\underbrace{\mathbf{J_f(x_0)}}_{\mathbf{A}}\underbrace{\mathbf{(x-x_0)}}_{\mathbf{z}}=\underbrace{\mathbf{-f(x_0)}}_{\mathbf{d}}$$
+
+#
+
+ovvero
+$$\mathbf{Az=d}$$
+si tratta dunque di un sistema lineare che sappiamo risolvere con varie tecniche.
+
+Risolvendo per $\mathbf{z}$, troviamo la proposta di soluzione successiva come
+$$\mathbf{x=x+z}$$
+
+\vskip1cm
+
+Le considerazioni sulla convergenza del metodo sono le stesse fatte per il caso di una singola equazione non lineare.
+
+# Soluzione attraverso i software
+
+- I software di calcolo mettono a disposizione delle funzioni per risolvere sistemi di equazioni non lineari.
+
+- Esse prendono come input:
+	- l'ipotesi iniziale di soluzione
+	- una funzione definita dall'utente che contiene le equazioni del sistema
+	- altri parametri (come la tolleranza, il numero massimo di iterazioni ecc.)
+
+# 
+
+- R
+	- nleqslv::nleqslv(x0,funzione)
+- Octave
+	- fsolve(funzione,x0)
+- python
+	- scipy.optimize.fsolve(funzione,x0)
+- julia
+	- NLsolve.nlsolve(funzione,x0)
+
+# Esempio (Quarteroni et al. pag. 59 sistema 2.17)
+
+Risolvere il sistema
+
+$$x_1^2+x_2^2-1=0$$
+$$\sin{\left(\frac{\pi}{2}x_1\right)}+x_2^3=0$$
+
+# Codice R
+
+library("nleqslv")
+
+\# definizione della funzione contenente il sistema di equazioni
+
+quaterenoni.eq.sys<-function(x){
+
+fx[1]<-x[1]\^2+x[2]\^2-1
+
+fx[2]<-sin(pi\*0.5\*x[1])+x[2]\^3
+
+fx
+
+}
+
+\# ipotesi iniziale di soluzione
+
+x0<-c(1,1)
+
+\# implementazione della soluzione
+
+fx<-numeric()
+
+alpha<-nleqslv(x0,quaterenoni.eq.sys)
+
+print(alpha$x)
+
+# Il modello AD-AS
+
+Occorre esprimere il sistema come:
+$${\color{blue}Y}-\frac{(\bar{C}+\bar{I}+\bar{G})-\frac{b}{h}\left(\bar{L}-\frac{\bar{M}}{\color{blue}P}\right)}{1-c(1-t)+\frac{bk}{h}}=0$$
+$${\color{blue}Y}-\bar{A}\bar{K}^{\alpha}\left(\frac{\bar{W}}{\color{blue}P}\frac{1}{\bar{A}{\bar{K}}^{\alpha}(1-\alpha)}\right)^{-\frac{1-\alpha}{\alpha}}=0$$
+Nella funzione definita dall'utente va inserito il lato a sinistra dell'uguale di ogni equazione.
+
