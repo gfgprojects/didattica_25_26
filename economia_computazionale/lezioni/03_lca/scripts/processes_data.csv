@@ -1,0 +1,58 @@
+type,name,tractor use process,N use process,wheat process
+technosphere,Tractor power (MJ),1.0,0.0,-900.0
+technosphere,Nitrogen (kg),0.0,144.0,-98.0
+technosphere,wheat (ha),0.0,0.0,1.0
+biosphere,"1 'Coal, brown",0.0,2.2850000858306885,0.0
+biosphere,"2 'Coal, hard,",0.0,47.119998931884766,0.0
+biosphere,3 'Deltamethri,0.0,0.0,2.0
+biosphere,4 'Glyphosate',0.0,0.0,0.0
+biosphere,5 'Granite' (k,0.0,889.7999877929688,0.0
+biosphere,6 'MCPA' (kilo,0.0,0.0,0.0
+biosphere,7 'Metaldehyde,0.0,0.0,0.0
+biosphere,"8 'Phosphorus,",0.0,202.89999389648438,0.0
+biosphere,9 'Pirimicarb',0.0,0.0,0.0
+biosphere,10 'Trinexapac-,0.0,0.0,0.0
+biosphere,11 'Acenaphthen,2.0722856319821403e-08,0.0,0.0
+biosphere,12 'Acetaldehyd,6.642270363954594e-06,0.0,0.0
+biosphere,13 'Acrolein' (,3.793946632413281e-07,0.0,0.0
+biosphere,14 'Ammonia' (k,0.0016249438049271703,0.0,0.0
+biosphere,15 'Ammonia' (k,0.0,3.5339999198913574,0.0
+biosphere,16 'Benzene' (k,2.550635144871194e-06,0.0,0.0
+biosphere,"17 'Benzene, et",3.8985703554317297e-07,0.0,0.0
+biosphere,18 'Benzo(a)pyr,4.001726033875386e-11,0.0,0.0
+biosphere,19 'Butadiene' ,2.339077838087178e-07,0.0,0.0
+biosphere,20 'Carbon diox,0.19874132942209144,607.9000244140625,0.0
+biosphere,21 'Carbon mono,0.0,0.07400000095367432,0.0
+biosphere,22 'Carbon mono,0.0005546854226849973,0.0,0.0
+biosphere,23 'Chromium II,7.91090393192917e-09,0.0,0.0
+biosphere,24 'Chromium VI,4.0753094232570675e-09,0.0,0.0
+biosphere,"25 'Dioxins, me",7.536710838751404e-12,0.0,0.0
+biosphere,26 'Formaldehyd,1.4785318853682838e-05,0.0,0.0
+biosphere,27 'Manganese I,5.104580509396328e-07,0.0,0.0
+biosphere,28 'Mercury II',2.3531343540383887e-09,0.0,0.0
+biosphere,"29 'Methane, no",0.0,0.012900000438094139,0.0
+biosphere,"30 'Methane, fo",1.9122339836030733e-06,0.0,0.0
+biosphere,31 'Nickel II' ,7.58424732794083e-07,0.0,0.0
+biosphere,"32 'NMVOC, non-",0.00012524817429948598,0.0,0.0
+biosphere,"33 'NMVOC, non-",0.0,0.04100000113248825,0.0
+biosphere,34 'Particulate,0.0,0.5529999732971191,0.0
+biosphere,35 'Propanal' (,1.4766202411919949e-06,0.0,0.0
+biosphere,36 'Propene' (k,3.3428554369052677e-10,0.0,0.0
+biosphere,37 'Styrene' (k,7.445316896337317e-08,0.0,0.0
+biosphere,38 'Sulfur diox,2.34398271459213e-06,0.0,0.0
+biosphere,39 'Sulfur diox,0.0,2.5799999237060547,0.0
+biosphere,40 'Toluene' (k,1.8798997416524799e-06,0.0,0.0
+biosphere,41 'Xylene' (ki,1.33068226659816e-06,0.0,0.0
+biosphere,42 'Cadmium II',0.0,0.005200000014156103,0.0
+biosphere,43 'Nitrogen' (,0.0,1.4990000408142805,0.0
+biosphere,44 'Phosphorus',0.0,0.10400000214576721,0.0
+biosphere,45 'Tebuconazol,0.0,0.0,0.0
+biosphere,46 'Arsenic ion,4.370765527283993e-09,0.0,0.0
+biosphere,"47 '2,4-D dimet",0.0,0.0,5.0
+biosphere,48 'Dinitrogen ,5.024877737014322e-06,0.0,0.0
+biosphere,49 'Dinitrogen ,0.0,5.331999778747559,0.0
+biosphere,50 'Nitrogen ox,0.0014822103548794985,0.0,0.0
+biosphere,51 'Nitrogen ox,0.0,4.630000114440918,0.0
+biosphere,"52 'Gas, natura",0.0,168.02999877929688,0.0
+biosphere,53 'Particulate,0.00010908290278166533,0.0,0.0
+biosphere,54 'Particulate,3.374038215042674e-06,0.0,0.0
