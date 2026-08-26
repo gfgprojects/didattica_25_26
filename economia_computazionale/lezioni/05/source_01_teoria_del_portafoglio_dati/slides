@@ -1,0 +1,729 @@
+# Dalla teoria ai dati reali
+
+Nelle diapositive precedenti abbiamo assunto di conoscere:
+
+- il vettore dei rendimenti attesi
+$$
+\mathbf{c}=
+\begin{bmatrix}
+c_1\\
+\vdots\\
+c_n
+\end{bmatrix}
+$$
+- la matrice delle varianze-covarianze
+$$
+\mathbf{H}=
+\begin{bmatrix}
+\sigma_{11} & \cdots & \sigma_{1n}\\
+\vdots & \ddots & \vdots\\
+\sigma_{n1} & \cdots & \sigma_{nn}
+\end{bmatrix}
+$$
+Con dati reali, questi valori non sono conosciuti.
+
+Devono essere **stimati a partire dai dati osservati sui mercati finanziari**.
+
+---
+
+# Il percorso che seguiremo
+
+Per applicare il modello di portafoglio a dati reali seguiremo questi passaggi:
+
+1. scegliere le attività finanziarie;
+2. identificare i relativi ticker;
+3. scaricare le serie storiche dei prezzi;
+4. calcolare i rendimenti;
+5. stimare i rendimenti attesi;
+6. stimare la matrice varianze-covarianze;
+7. annualizzare rendimento e rischio;
+8. utilizzare questi valori nel problema di ottimizzazione.
+
+Il risultato sarà il passaggio:
+$$
+\text{prezzi}
+\rightarrow
+\text{rendimenti}
+\rightarrow
+(\mathbf{c},\mathbf{H})
+\rightarrow
+\text{ottimizzazione}
+$$
+---
+
+# Il ticker
+
+Un **ticker symbol** è un codice breve che identifica un'attività
+finanziaria su una borsa o su una piattaforma finanziaria.
+
+Ad esempio:
+
+- Apple Inc. $\rightarrow$ AAPL
+- Tesla Inc. $\rightarrow$ TSLA
+- Microsoft Corporation $\rightarrow$ MSFT
+
+Il ticker può essere considerato come il ``nome breve'' utilizzato
+dai mercati e dai software per identificare un'attività finanziaria.
+
+---
+
+# Alcuni esempi di ticker
+
+I ticker non identificano solamente le azioni.
+
+| Tipo | Ticker | Attività |
+|---|---|---|
+| Azione | AAPL | Apple |
+| Azione | TSLA | Tesla |
+| Azione | MSFT | Microsoft |
+| Indice | \^GSPC | S\&P 500 |
+| Indice | \^DJI | Dow Jones |
+| Valuta | EURUSD=X | Euro / Dollaro |
+| Criptovaluta | BTC-USD | Bitcoin / Dollaro |
+| ETF | SPY | SPDR S\&P 500 ETF |
+
+---
+
+# Perché utilizzare i ticker?
+
+I ticker:
+
+- sono più brevi del nome completo dell'attività;
+- permettono di identificare con precisione il titolo;
+- sono utilizzati dai database finanziari;
+- sono utilizzati dai software per richiedere i dati.
+
+Occorre tuttavia fare attenzione:
+
+> La stessa società può essere quotata su mercati differenti e avere
+> ticker differenti.
+
+Il ticker deve quindi identificare non soltanto la società, ma anche
+il titolo e il mercato che ci interessano.
+
+---
+
+# Come trovare un ticker?
+
+Il ticker di un'attività finanziaria può essere individuato attraverso:
+
+- siti finanziari, come Yahoo Finance;
+- piattaforme di trading;
+- applicazioni dei broker;
+- strumenti disponibili direttamente nei software statistici.
+
+Ad esempio, il package **quantmod** di R mette a disposizione la
+funzione **yahooSearch()**, che consente di cercare su Yahoo Finance
+il ticker corrispondente al nome di un'attività.
+
+---
+
+# Scaricare dati finanziari con R
+
+Il package **quantmod** consente di scaricare dati finanziari da
+Yahoo Finance.
+
+La funzione principale è:
+
+**getSymbols()**
+
+Alla funzione vengono forniti:
+
+- il ticker dell'attività;
+- la fonte dei dati;
+- eventualmente la data iniziale;
+- eventualmente la data finale.
+
+Il risultato è una serie storica relativa all'attività richiesta.
+
+---
+
+# Specificare l'intervallo temporale
+
+È possibile specificare il periodo per il quale vogliamo
+scaricare i dati.
+
+Ad esempio, potremmo richiedere i prezzi compresi tra:
+
+- 1 gennaio 2020;
+- 1 gennaio 2025.
+
+La scelta dell'intervallo temporale è importante perché i dati
+utilizzati per confrontare i diversi titoli devono riferirsi
+allo **stesso periodo**.
+
+---
+
+# Scaricare dati finanziari con Python
+
+Anche Python dispone di package che consentono di acquisire
+direttamente dati finanziari.
+
+Un package molto utilizzato è:
+
+**yfinance**
+
+La funzione:
+
+**download()**
+
+permette di scaricare le serie storiche associate a uno o più ticker.
+
+Il principio è quindi analogo a quello utilizzato in R.
+
+---
+
+# La funzione download() di yfinance
+
+Alla funzione **download()** possiamo fornire:
+
+- uno o più ticker;
+- la data iniziale;
+- la data finale;
+- la frequenza desiderata;
+- altre opzioni relative ai dati da scaricare.
+
+Il processo può essere rappresentato come:
+$$
+\text{ticker}
+\longrightarrow
+\text{richiesta dei dati}
+\longrightarrow
+\text{serie storica}
+$$
+---
+
+# Scaricare più titoli
+
+Per costruire un portafoglio abbiamo bisogno dei prezzi di più
+attività.
+
+Ad esempio, possiamo considerare:
+
+- AAPL;
+- MSFT;
+- TSLA.
+
+Sia **quantmod** in R sia **yfinance** in Python consentono di
+acquisire le serie storiche di più ticker.
+
+Le osservazioni dovranno riferirsi allo **stesso intervallo temporale**.
+
+---
+
+# R o Python?
+
+Lo stesso passaggio può essere effettuato utilizzando
+ambienti di calcolo differenti.
+
+In R possiamo utilizzare:
+
+**quantmod::getSymbols()**
+
+In Python possiamo utilizzare:
+
+**yfinance.download()**
+
+In entrambi i casi l'obiettivo è ottenere:
+$$
+\text{ticker}
+\rightarrow
+\text{serie storiche dei prezzi}
+$$
+che costituiscono il punto di partenza dell'analisi empirica.
+
+---
+
+# Che cosa abbiamo scaricato?
+
+Per ogni giornata di contrattazione possiamo trovare diverse
+informazioni sul prezzo del titolo.
+
+Tipicamente:
+
+- **Open**: prezzo di apertura;
+- **High**: prezzo massimo;
+- **Low**: prezzo minimo;
+- **Close**: prezzo di chiusura;
+- **Volume**: quantità scambiata;
+- **Adjusted**: prezzo di chiusura aggiustato.
+
+Per l'analisi dei rendimenti è importante scegliere in maniera
+coerente la serie di prezzo da utilizzare.
+
+---
+
+# Il prezzo aggiustato
+
+Il prezzo osservato di un'azione può essere influenzato da eventi
+societari.
+
+Ad esempio:
+
+- pagamento di dividendi;
+- stock split;
+- altre operazioni sul capitale.
+
+Il prezzo **Adjusted** tiene conto degli aggiustamenti effettuati dal
+fornitore dei dati.
+
+Per analizzare l'evoluzione del valore dell'investimento nel tempo,
+utilizzeremo quindi la serie dei **prezzi aggiustati**.
+
+---
+
+# Organizzare i dati
+
+Per calcolare rendimenti, varianze e covarianze dobbiamo costruire
+una serie di prezzi per ciascun titolo:
+$$
+\begin{array}{c|ccc}
+t & P_{1,t} & P_{2,t} & P_{3,t}\\
+\hline
+1 & P_{1,1} & P_{2,1} & P_{3,1}\\
+2 & P_{1,2} & P_{2,2} & P_{3,2}\\
+\vdots & \vdots & \vdots & \vdots\\
+T & P_{1,T} & P_{2,T} & P_{3,T}
+\end{array}
+$$
+Ogni **colonna** rappresenta un titolo.
+
+Ogni **riga** rappresenta una data.
+
+È importante che i prezzi dei diversi titoli siano correttamente
+allineati rispetto alle date.
+
+---
+
+# Prezzi e rendimenti
+
+Il modello di Markowitz non utilizza direttamente i prezzi.
+
+Utilizza i **rendimenti**.
+
+Indicando con $P_t$ il prezzo al tempo $t$, il rendimento semplice è:
+$$
+r_t=
+\frac{P_t-P_{t-1}}{P_{t-1}}
+$$
+equivalentemente:
+$$
+r_t=
+\frac{P_t}{P_{t-1}}-1
+$$
+---
+
+# Un semplice esempio
+
+Supponiamo che il prezzo di un'azione passi da:
+$$
+P_{t-1}=100
+$$
+a
+$$
+P_t=102.
+$$
+Il rendimento è:
+$$
+r_t=
+\frac{102-100}{100}
+=0.02.
+$$
+Quindi:
+$$
+r_t=2\%.
+$$
+Il rendimento misura la variazione relativa del valore
+dell'investimento.
+
+---
+
+# Rendimenti logaritmici
+
+In alternativa possiamo utilizzare i rendimenti logaritmici:
+$$
+r_t=
+\ln(P_t)-\ln(P_{t-1})
+$$
+ovvero:
+$$
+r_t=
+\ln\left(\frac{P_t}{P_{t-1}}\right).
+$$
+Per piccole variazioni di prezzo, rendimento semplice e rendimento
+logaritmico assumono valori molto simili.
+
+È però necessario utilizzare **la stessa definizione di rendimento
+per tutti i titoli e per tutta l'analisi**.
+
+---
+
+# Calcolare i rendimenti con il software
+
+Una volta ottenuti i prezzi possiamo trasformarli in rendimenti.
+
+In R possiamo utilizzare, ad esempio, funzioni del package
+**quantmod** oppure operazioni sulle serie temporali.
+
+In Python possiamo utilizzare le funzioni di **pandas**, come
+**pct_change()**, per ottenere i rendimenti semplici.
+
+Il risultato è una matrice nella quale:
+
+- ogni colonna contiene i rendimenti di un titolo;
+- ogni riga si riferisce allo stesso intervallo temporale.
+
+---
+
+# Qual è la frequenza dei nostri rendimenti?
+
+Se scarichiamo prezzi giornalieri, calcolando
+$$
+r_t=
+\frac{P_t}{P_{t-1}}-1
+$$
+otteniamo **rendimenti giornalieri**.
+
+Di conseguenza:
+
+- la media è un rendimento medio giornaliero;
+- la varianza è una varianza giornaliera;
+- la deviazione standard è una misura di rischio giornaliera;
+- le covarianze sono covarianze giornaliere.
+
+Tutte le grandezze sono quindi espresse sulla stessa scala temporale.
+
+---
+
+# Rendimenti giornalieri o annuali?
+
+Potremmo utilizzare direttamente rendimenti annuali.
+
+Questo comporterebbe però una forte riduzione del numero di
+osservazioni disponibili.
+
+Ad esempio, cinque anni di dati possono fornire:
+
+- circa 5 rendimenti annuali;
+- circa $5\times252=1260$ rendimenti giornalieri.
+
+I dati giornalieri forniscono quindi molte più osservazioni per
+stimare media, varianze e covarianze.
+
+---
+
+# Stima giornaliera, interpretazione annuale
+
+Una possibile strategia consiste quindi nel:
+
+1. utilizzare prezzi giornalieri;
+2. calcolare rendimenti giornalieri;
+3. stimare media e matrice varianze-covarianze giornaliere;
+4. annualizzare le quantità ottenute.
+
+In questo modo distinguiamo:
+$$
+\underbrace{\text{frequenza dei dati}}_{\text{giornaliera}}
+$$
+da
+$$
+\underbrace{\text{orizzonte di presentazione}}_{\text{annuale}}.
+$$
+---
+
+# Annualizzazione del rendimento
+
+Indichiamo con
+$$
+\widehat{c}_k^{(d)}
+$$
+il rendimento medio giornaliero stimato per il titolo $k$.
+
+Assumendo circa 252 giorni di contrattazione in un anno,
+il rendimento medio annualizzato è:
+$$
+\widehat{c}_k^{(a)}
+=
+252\,\widehat{c}_k^{(d)}.
+$$
+Questa trasformazione permette di esprimere il rendimento atteso
+su base annuale.
+
+---
+
+# Annualizzazione del rischio
+
+Se la varianza giornaliera è
+$$
+\left(\sigma_k^{(d)}\right)^2,
+$$
+la varianza annualizzata è:
+$$
+\left(\sigma_k^{(a)}\right)^2
+=
+252
+\left(\sigma_k^{(d)}\right)^2.
+$$
+La deviazione standard annualizzata è quindi:
+$$
+\sigma_k^{(a)}
+=
+\sqrt{252}\,\sigma_k^{(d)}.
+$$
+Attenzione:
+
+> **varianza e deviazione standard non vengono annualizzate nello
+> stesso modo.**
+
+---
+
+# Annualizzazione delle covarianze
+
+Lo stesso principio vale per le covarianze.
+
+Se
+$$
+\widehat{\sigma}_{ij}^{(d)}
+=
+\widehat{\operatorname{Cov}}(r_i,r_j),
+$$
+allora:
+$$
+\widehat{\sigma}_{ij}^{(a)}
+=
+252\,\widehat{\sigma}_{ij}^{(d)}.
+$$
+Pertanto, per l'intera matrice varianze-covarianze:
+$$
+\mathbf{H}^{(a)}
+=
+252\,\mathbf{H}^{(d)}.
+$$
+---
+
+# Stima del rendimento atteso
+
+Supponiamo di disporre di $T$ rendimenti giornalieri del titolo $k$:
+$$
+r_{k,1},r_{k,2},\ldots,r_{k,T}.
+$$
+Possiamo stimarne il rendimento atteso attraverso la media campionaria:
+$$
+\widehat{c}_k^{(d)}
+=
+\frac{1}{T}
+\sum_{t=1}^{T}r_{k,t}.
+$$
+Ripetendo il calcolo per tutti gli $n$ titoli otteniamo:
+$$
+\widehat{\mathbf{c}}^{(d)}
+=
+\begin{bmatrix}
+\widehat{c}_1^{(d)}\\
+\vdots\\
+\widehat{c}_n^{(d)}
+\end{bmatrix}.
+$$
+---
+
+# Dal dataset al vettore dei rendimenti attesi
+
+Una volta costruita la matrice dei rendimenti, calcoliamo
+la media di ciascuna colonna.
+
+In R possiamo utilizzare, ad esempio:
+
+**colMeans()**
+
+In Python possiamo utilizzare il metodo:
+
+**mean()**
+
+Otteniamo così:
+$$
+\widehat{\mathbf{c}}^{(d)}
+=
+\begin{bmatrix}
+\widehat c_1^{(d)}\\
+\widehat c_2^{(d)}\\
+\vdots\\
+\widehat c_n^{(d)}
+\end{bmatrix}.
+$$
+---
+
+# Stima della matrice varianze-covarianze
+
+Dalle stesse serie di rendimenti possiamo stimare:
+$$
+\mathbf{H}^{(d)}
+=
+\begin{bmatrix}
+\widehat{\operatorname{Var}}(r_1) &
+\cdots &
+\widehat{\operatorname{Cov}}(r_1,r_n)
+\\
+\vdots & \ddots & \vdots\\
+\widehat{\operatorname{Cov}}(r_n,r_1) &
+\cdots &
+\widehat{\operatorname{Var}}(r_n)
+\end{bmatrix}.
+$$
+La diagonale contiene le **varianze** dei singoli titoli.
+
+Gli elementi fuori dalla diagonale contengono le **covarianze**
+tra coppie di titoli.
+
+---
+
+# Dal dataset alla matrice varianze-covarianze
+
+La matrice varianze-covarianze può essere stimata direttamente
+dalla matrice dei rendimenti.
+
+In R possiamo utilizzare:
+
+**cov()**
+
+In Python, su un oggetto pandas, possiamo utilizzare:
+
+**cov()**
+
+Otteniamo:
+$$
+\widehat{\mathbf H}^{(d)}
+=
+\widehat{\operatorname{Cov}}(\mathbf r_t).
+$$
+Questa è la matrice che entrerà nel problema di
+programmazione quadratica.
+
+---
+
+# Gli input annualizzati
+
+Possiamo infine costruire gli input da utilizzare nell'applicazione:
+$$
+\widehat{\mathbf{c}}^{(a)}
+=
+252\,\widehat{\mathbf{c}}^{(d)}
+$$
+e
+$$
+\widehat{\mathbf{H}}^{(a)}
+=
+252\,\widehat{\mathbf{H}}^{(d)}.
+$$
+Abbiamo così ottenuto dai dati reali gli stessi oggetti introdotti
+nella parte teorica:
+$$
+\boxed{
+\widehat{\mathbf{c}},\quad
+\widehat{\mathbf{H}}
+}
+$$
+---
+
+# Dai dati all'ottimizzazione
+
+Il percorso completo è quindi:
+$$
+\boxed{\text{Ticker}}
+\rightarrow
+\boxed{\text{Prezzi storici}}
+\rightarrow
+\boxed{\text{Rendimenti}}
+$$
+$$
+\downarrow
+$$
+$$
+\boxed{\widehat{\mathbf{c}},\widehat{\mathbf{H}}}
+\rightarrow
+\boxed{\text{Ottimizzazione del portafoglio}}
+$$
+---
+
+# Il problema è quello già conosciuto
+
+Una volta ottenuti
+$$
+\widehat{\mathbf{c}}
+\qquad\text{e}\qquad
+\widehat{\mathbf{H}},
+$$
+possiamo tornare al problema studiato nelle diapositive precedenti.
+
+Per il portafoglio di minima varianza:
+$$
+\min_{\mathbf{x}}
+\mathbf{x}^{T}
+\widehat{\mathbf{H}}
+\mathbf{x}
+$$
+sotto i vincoli:
+$$
+\sum_{k=1}^{n}x_k=1
+$$
+e
+$$
+x_k\geq0
+\qquad
+\forall k.
+$$
+---
+
+# La frontiera efficiente
+
+Per costruire la frontiera efficiente aggiungiamo il vincolo sul
+rendimento desiderato:
+$$
+\mathbf{x}^{T}\widehat{\mathbf{c}}
+=
+\bar c.
+$$
+Per diversi valori di $\bar c$ risolviamo quindi:
+$$
+\min_{\mathbf{x}}
+\mathbf{x}^{T}
+\widehat{\mathbf{H}}
+\mathbf{x}
+$$
+sotto i vincoli:
+$$
+\mathbf{x}^{T}\mathbf{1}=1,
+$$
+$$
+\mathbf{x}^{T}\widehat{\mathbf{c}}=\bar c,
+$$
+$$
+x_k\geq0.
+$$
+Otteniamo così la **frontiera efficiente stimata utilizzando dati
+finanziari reali**.
+
+---
+
+# Dalla teoria alla pratica
+
+Nell'esempio teorico:
+$$
+\mathbf{c}
+\quad\text{e}\quad
+\mathbf{H}
+$$
+erano assegnati.
+
+Nell'applicazione empirica:
+$$
+\text{dati di mercato}
+\longrightarrow
+\widehat{\mathbf{c}},
+\widehat{\mathbf{H}}.
+$$
+Il problema matematico di ottimizzazione **non cambia**.
+
+Cambia il modo in cui vengono costruiti i suoi input.
+
+Questo è il collegamento fondamentale tra **teoria del portafoglio,
+dati finanziari e calcolo numerico**.
