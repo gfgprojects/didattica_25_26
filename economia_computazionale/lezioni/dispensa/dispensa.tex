@@ -10423,6 +10423,6879 @@ La determinazione dei parametri richiede allora di minimizzare questa quantità.
 
 L'esempio obbligazionario evidenzia pertanto una progressione naturale delle tecniche computazionali. Il calcolo dello Yield to Maturity richiede la soluzione di una singola equazione non lineare; la determinazione di una curva a partire da un numero di obbligazioni uguale al numero dei parametri conduce a un sistema di equazioni non lineari; infine, quando il numero di osservazioni supera il numero dei parametri, il problema conduce naturalmente alla calibrazione e all'ottimizzazione numerica.
 
+\chapter{Ottimizzazione}
+
+\section{L'allocazione di portafoglio}
+
+Un importante problema di ottimizzazione in ambito finanziario riguarda
+l'allocazione di una somma di denaro tra diverse attività finanziarie.
+Supponiamo che un investitore disponga di una ricchezza $W$ che intende
+investire interamente in $n$ attività rischiose. Il problema consiste nel
+determinare quale frazione della ricchezza debba essere destinata a ciascuna
+attività.
+
+Indichiamo con
+
+\[
+x_k
+\]
+
+la quota della ricchezza investita nell'attività $k$. Le decisioni
+dell'investitore possono quindi essere raccolte nel vettore
+
+\[
+\mathbf{x} =
+\begin{bmatrix}
+x_1\\
+x_2\\
+\vdots\\
+x_n
+\end{bmatrix}.
+\]
+
+Poiché l'intera ricchezza deve essere investita, le quote devono soddisfare
+
+\[
+\sum_{k=1}^{n}x_k=1.
+\]
+
+Assumiamo inoltre che non siano ammesse vendite allo scoperto. Di conseguenza,
+
+\[
+x_k\geq 0,
+\qquad k=1,\ldots,n.
+\]
+
+Il vettore $\mathbf{x}$ identifica quindi un particolare portafoglio.
+
+\subsection{Rendimento e rischio}
+
+Il problema fondamentale dell'allocazione di portafoglio deriva dal fatto
+che il rendimento futuro delle attività finanziarie è incerto. Seguendo
+l'impostazione media-varianza di Markowitz, il rendimento di ciascuna
+attività viene descritto mediante una variabile casuale.
+
+Indichiamo con $c_k$ il rendimento atteso dell'attività $k$ e raccogliamo
+i rendimenti attesi nel vettore
+
+\[
+\mathbf{c}=
+\begin{bmatrix}
+c_1\\
+c_2\\
+\vdots\\
+c_n
+\end{bmatrix}.
+\]
+
+Il rendimento atteso del portafoglio è la media ponderata dei rendimenti
+attesi delle attività che lo compongono:
+
+\[
+c_p=\sum_{k=1}^{n}x_kc_k.
+\]
+
+Utilizzando la notazione matriciale, questa espressione può essere scritta
+in forma compatta come
+
+\[
+c_p=\mathbf{x}^{T}\mathbf{c}.
+\]
+
+Il rendimento atteso costituisce tuttavia soltanto una delle caratteristiche
+rilevanti del portafoglio. Occorre considerare anche il rischio associato
+alla variabilità dei rendimenti.
+
+Il rischio di un portafoglio non dipende solamente dalla variabilità delle
+singole attività, ma anche dal modo in cui i loro rendimenti si muovono
+congiuntamente. È quindi necessario considerare le covarianze tra tutte
+le coppie di attività.
+
+Indichiamo con $\mathbf{H}$ la matrice delle varianze e covarianze:
+
+\[
+\mathbf{H}=
+\begin{bmatrix}
+\sigma_1^2 & \sigma_{12} & \cdots & \sigma_{1n}\\
+\sigma_{21} & \sigma_2^2 & \cdots & \sigma_{2n}\\
+\vdots & \vdots & \ddots & \vdots\\
+\sigma_{n1} & \sigma_{n2} & \cdots & \sigma_n^2
+\end{bmatrix},
+\]
+
+dove gli elementi sulla diagonale rappresentano le varianze dei rendimenti
+delle singole attività,
+
+\[
+\sigma_k^2=\operatorname{Var}(r_k),
+\]
+
+mentre gli elementi fuori dalla diagonale rappresentano le covarianze,
+
+\[
+\sigma_{kj}=\operatorname{Cov}(r_k,r_j).
+\]
+
+La varianza del rendimento del portafoglio può allora essere espressa come
+
+\[
+\sigma_p^2=\mathbf{x}^{T}\mathbf{H}\mathbf{x}.
+\]
+
+Questa espressione mette in evidenza un elemento fondamentale della teoria
+del portafoglio: il rischio complessivo non è semplicemente la media dei
+rischi delle singole attività. Esso dipende anche dalle relazioni esistenti
+tra i loro rendimenti.
+
+Per esempio, due attività individualmente rischiose possono contribuire a
+ridurre il rischio complessivo del portafoglio se i loro rendimenti non si
+muovono perfettamente nella stessa direzione. È questo il principio alla
+base della diversificazione.
+
+Il portafoglio è quindi caratterizzato da due quantità fondamentali:
+
+\[
+\boxed{
+c_p=\mathbf{x}^{T}\mathbf{c}
+}
+\]
+
+per il rendimento atteso e
+
+\[
+\boxed{
+\sigma_p^2=\mathbf{x}^{T}\mathbf{H}\mathbf{x}
+}
+\]
+
+per il rischio, misurato attraverso la varianza.
+
+Il problema di allocazione consiste pertanto nello scegliere il vettore
+$\mathbf{x}$ tenendo conto contemporaneamente delle opportunità di
+rendimento offerte dalle attività finanziarie e del rischio generato dalla
+loro combinazione.
+
+\section{Rendimento, rischio e frontiera efficiente}
+\label{sec:frontiera-efficiente}
+
+Nella sezione precedente abbiamo visto che un portafoglio può essere
+descritto mediante il vettore delle quote
+
+\[
+\mathbf{x}
+=
+\begin{bmatrix}
+x_1\\
+x_2\\
+\vdots\\
+x_n
+\end{bmatrix},
+\]
+
+e che a ogni possibile scelta di $\mathbf{x}$ corrispondono un
+rendimento atteso
+
+\[
+c_p=\mathbf{x}^{T}\mathbf{c}
+\]
+
+e una varianza
+
+\[
+\sigma_p^2=\mathbf{x}^{T}\mathbf{H}\mathbf{x}.
+\]
+
+Se non sono ammesse vendite allo scoperto e l'intera ricchezza deve
+essere investita, le quote devono inoltre soddisfare
+
+\[
+x_k\geq 0,
+\qquad k=1,\ldots,n,
+\]
+
+e
+
+\[
+\sum_{k=1}^{n}x_k=1.
+\]
+
+Questi vincoli definiscono l'insieme delle allocazioni che
+l'investitore può effettivamente scegliere.
+
+
+\subsection{L'insieme dei portafogli ammissibili}
+
+Consideriamo tutte le possibili combinazioni delle quote che
+soddisfano i vincoli.
+
+A ogni vettore ammissibile $\mathbf{x}$ possiamo associare una coppia
+
+\[
+(\sigma_p,c_p),
+\]
+
+dove $\sigma_p$ misura il rischio del portafoglio e $c_p$ il suo
+rendimento atteso.
+
+Possiamo quindi rappresentare ciascun portafoglio come un punto nel
+piano rischio-rendimento.
+
+In questo modo il problema, originariamente formulato nello spazio
+delle quote
+
+\[
+(x_1,x_2,\ldots,x_n),
+\]
+
+può essere osservato anche nello spazio
+
+\[
+(\sigma_p,c_p).
+\]
+
+Questa rappresentazione è particolarmente utile perché consente di
+confrontare direttamente le caratteristiche finanziarie dei diversi
+portafogli.
+
+Portafogli differenti possono infatti presentare differenti
+combinazioni di rischio e rendimento.
+
+
+\subsection{Il trade-off tra rendimento e rischio}
+
+In generale, l'investitore preferisce un rendimento atteso maggiore:
+
+\[
+c_p\uparrow,
+\]
+
+ma, a parità di rendimento, preferisce un rischio minore:
+
+\[
+\sigma_p\downarrow.
+\]
+
+Le due caratteristiche devono quindi essere considerate
+congiuntamente.
+
+Supponiamo, ad esempio, di avere due portafogli $A$ e $B$ tali che
+
+\[
+c_A=c_B
+\]
+
+ma
+
+\[
+\sigma_A<\sigma_B.
+\]
+
+Il portafoglio $A$ è preferibile perché permette di ottenere lo
+stesso rendimento atteso assumendo un rischio inferiore.
+
+Consideriamo invece due portafogli $C$ e $D$ per i quali
+
+\[
+\sigma_C=\sigma_D
+\]
+
+ma
+
+\[
+c_C>c_D.
+\]
+
+In questo caso il portafoglio $C$ è preferibile perché, a parità di
+rischio, offre un rendimento atteso maggiore.
+
+Queste semplici considerazioni permettono di eliminare molti dei
+portafogli ammissibili: alcuni di essi sono infatti dominati da
+altri portafogli che offrono condizioni migliori.
+
+
+\subsection{Portafogli efficienti}
+
+Un portafoglio viene definito \emph{efficiente} quando non esiste
+un altro portafoglio ammissibile che permetta di ottenere un
+rendimento atteso maggiore senza aumentare il rischio, oppure un
+rischio minore senza ridurre il rendimento atteso.
+
+Possiamo esprimere lo stesso concetto in due modi equivalenti.
+
+Fissato un determinato livello di rendimento atteso, un portafoglio
+efficiente presenta il rischio minimo possibile.
+
+Oppure, fissato un determinato livello di rischio, esso presenta il
+rendimento atteso massimo possibile.
+
+L'insieme di questi portafogli costituisce la
+\emph{frontiera efficiente}.
+
+La frontiera efficiente rappresenta quindi il confine delle migliori
+combinazioni rischio-rendimento ottenibili utilizzando le attività
+finanziarie considerate.
+
+
+\subsection{Come costruire la frontiera efficiente}
+
+Un modo naturale per costruire la frontiera consiste nel fissare un
+livello di rendimento desiderato, che indichiamo con $c^*$, e
+cercare il portafoglio con la minima varianza compatibile con tale
+rendimento.
+
+Il problema diventa quindi
+
+\[
+\min_{\mathbf{x}}
+\quad
+\sigma_p^2,
+\]
+
+ricordando che
+
+\[
+\sigma_p^2
+=
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}.
+\]
+
+Dobbiamo inoltre imporre che il portafoglio raggiunga il rendimento
+desiderato:
+
+\[
+\mathbf{x}^{T}\mathbf{c}=c^*.
+\]
+
+A questo vincolo si aggiunge la condizione secondo cui tutta la
+ricchezza deve essere investita:
+
+\[
+\sum_{k=1}^{n}x_k=1,
+\]
+
+e, se non sono ammesse vendite allo scoperto,
+
+\[
+x_k\geq0,
+\qquad k=1,\ldots,n.
+\]
+
+Per un determinato valore di $c^*$ dobbiamo quindi risolvere il
+problema
+
+\[
+\boxed{
+\begin{aligned}
+\min_{\mathbf{x}}
+\quad&
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}
+\\
+\text{s.t.}\quad&
+\mathbf{x}^{T}\mathbf{c}=c^*,
+\\
+&
+\sum_{k=1}^{n}x_k=1,
+\\
+&
+x_k\geq0,
+\qquad k=1,\ldots,n.
+\end{aligned}
+}
+\]
+
+La soluzione fornisce il portafoglio di minima varianza tra tutti
+quelli che permettono di ottenere il rendimento atteso $c^*$.
+
+
+\subsection{Dalla singola soluzione alla frontiera}
+
+Risolvendo il problema precedente per un solo valore di $c^*$,
+otteniamo un singolo portafoglio.
+
+La frontiera efficiente richiede invece di considerare diversi
+livelli di rendimento.
+
+Possiamo quindi scegliere una successione di rendimenti obiettivo
+
+\[
+c_1^*,c_2^*,\ldots,c_m^*
+\]
+
+e, per ciascuno di essi, risolvere
+
+\[
+\min_{\mathbf{x}}
+\quad
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}
+\]
+
+sotto i vincoli appropriati.
+
+Per ogni rendimento $c_j^*$ otteniamo una soluzione
+
+\[
+\mathbf{x}_j^*
+\]
+
+e la corrispondente varianza minima
+
+\[
+(\sigma_j^*)^2
+=
+(\mathbf{x}_j^*)^T
+\mathbf{H}
+\mathbf{x}_j^*.
+\]
+
+Possiamo quindi rappresentare le coppie
+
+\[
+(\sigma_j^*,c_j^*)
+\]
+
+nel piano rischio-rendimento.
+
+Ripetendo il procedimento per un numero sufficientemente elevato di
+valori di $c^*$, otteniamo una rappresentazione della frontiera
+efficiente.
+
+
+\subsection{Dal problema finanziario al problema di ottimizzazione}
+
+È utile osservare la struttura del problema che abbiamo ottenuto.
+
+La funzione che vogliamo minimizzare è
+
+\[
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}.
+\]
+
+Essa è una funzione \emph{quadratica} delle variabili decisionali
+$x_1,\ldots,x_n$.
+
+Il vincolo sul rendimento,
+
+\[
+\mathbf{x}^{T}\mathbf{c}=c^*,
+\]
+
+è invece lineare nelle quote.
+
+Anche il vincolo di bilancio
+
+\[
+\sum_{k=1}^{n}x_k=1
+\]
+
+è lineare, così come i vincoli
+
+\[
+x_k\geq0.
+\]
+
+Il problema di Markowitz assume quindi una struttura matematica
+particolare:
+
+\[
+\boxed{
+\begin{array}{c}
+\text{funzione obiettivo quadratica}\\
++\\
+\text{vincoli lineari}
+\end{array}}
+\]
+
+Questa classe di problemi prende il nome di
+\emph{programmazione quadratica}.
+
+L'allocazione di portafoglio ci conduce pertanto naturalmente a un
+nuovo problema computazionale. Non dobbiamo più risolvere un sistema
+di equazioni, come nelle sezioni precedenti, ma dobbiamo individuare,
+tra tutte le soluzioni che rispettano determinati vincoli, quella
+che minimizza una funzione obiettivo.
+
+Possiamo sintetizzare il passaggio come
+
+\[
+\boxed{
+\text{attività finanziarie}
+\longrightarrow
+\text{portafogli ammissibili}
+\longrightarrow
+\text{rischio e rendimento}
+\longrightarrow
+\text{portafogli efficienti}
+\longrightarrow
+\text{problema di ottimizzazione}.
+}
+\]
+
+La programmazione quadratica fornisce gli strumenti numerici
+necessari per affrontare questo problema.
+
+\section{Programmazione quadratica}
+\label{sec:programmazione-quadratica}
+
+Nella sezione precedente il problema di costruzione della frontiera
+efficiente è stato formulato come
+
+\[
+\begin{aligned}
+\min_{\mathbf{x}}
+\quad&
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}
+\\
+\text{s.t.}\quad&
+\mathbf{x}^{T}\mathbf{c}=c^*,
+\\
+&
+\sum_{k=1}^{n}x_k=1,
+\\
+&
+x_k\geq0,
+\qquad k=1,\ldots,n.
+\end{aligned}
+\]
+
+La caratteristica fondamentale di questo problema è che la funzione
+obiettivo è quadratica nelle variabili decisionali, mentre i vincoli
+sono lineari.
+
+Problemi di questo tipo appartengono alla classe della
+\emph{programmazione quadratica}.
+
+
+\subsection{La forma generale di un problema di programmazione quadratica}
+
+Un problema di programmazione quadratica può essere scritto, in forma
+generale, come
+
+\[
+\boxed{
+\begin{aligned}
+\min_{\mathbf{x}}
+\quad&
+\frac{1}{2}\mathbf{x}^{T}\mathbf{H}\mathbf{x}
++\mathbf{c}^{T}\mathbf{x}
+\\
+\text{s.t.}\quad&
+\mathbf{A}\mathbf{x}\geq\mathbf{b},
+\\
+&
+\mathbf{A}_{eq}\mathbf{x}=\mathbf{b}_{eq}.
+\end{aligned}
+}
+\]
+
+dove $\mathbf{x}$ è il vettore delle variabili rispetto alle quali
+viene effettuata l'ottimizzazione.
+
+La funzione
+
+\[
+f(\mathbf{x})
+=
+\frac{1}{2}\mathbf{x}^{T}\mathbf{H}\mathbf{x}
++\mathbf{c}^{T}\mathbf{x}
+\]
+
+costituisce la funzione obiettivo.
+
+La matrice $\mathbf{H}$ contiene i coefficienti dei termini
+quadratici, mentre il vettore $\mathbf{c}$ contiene i coefficienti
+dei termini lineari.
+
+I vincoli sono invece rappresentati mediante equazioni o
+disequazioni lineari.
+
+
+\subsection{Il termine quadratico}
+
+Per comprendere meglio la forma matriciale, consideriamo il termine
+
+\[
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}.
+\]
+
+Nel caso di due variabili,
+
+\[
+\mathbf{x}
+=
+\begin{bmatrix}
+x_1\\
+x_2
+\end{bmatrix}
+\]
+
+e
+
+\[
+\mathbf{H}
+=
+\begin{bmatrix}
+h_{11} & h_{12}\\
+h_{21} & h_{22}
+\end{bmatrix}.
+\]
+
+Abbiamo allora
+
+\[
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}
+=
+\begin{bmatrix}
+x_1 & x_2
+\end{bmatrix}
+\begin{bmatrix}
+h_{11} & h_{12}\\
+h_{21} & h_{22}
+\end{bmatrix}
+\begin{bmatrix}
+x_1\\
+x_2
+\end{bmatrix}.
+\]
+
+Sviluppando il prodotto otteniamo
+
+\[
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}
+=
+h_{11}x_1^2
++
+(h_{12}+h_{21})x_1x_2
++
+h_{22}x_2^2.
+\]
+
+Se $\mathbf{H}$ è simmetrica, come avviene nel problema di
+portafoglio perché una matrice di covarianza è simmetrica,
+
+\[
+h_{12}=h_{21},
+\]
+
+e quindi
+
+\[
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}
+=
+h_{11}x_1^2
++
+2h_{12}x_1x_2
++
+h_{22}x_2^2.
+\]
+
+La notazione matriciale permette quindi di rappresentare in modo
+compatto una funzione quadratica anche quando il numero delle
+variabili è elevato.
+
+
+\subsection{Il fattore $\frac{1}{2}$}
+
+Nella formulazione standard della programmazione quadratica compare
+spesso il fattore
+
+\[
+\frac{1}{2}
+\]
+
+davanti al termine quadratico:
+
+\[
+\frac{1}{2}\mathbf{x}^{T}\mathbf{H}\mathbf{x}.
+\]
+
+Questo fattore è una convenzione matematica particolarmente utile
+quando si calcolano le derivate della funzione obiettivo.
+
+Se $\mathbf{H}$ è simmetrica,
+
+\[
+\nabla
+\left(
+\frac{1}{2}
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}
+\right)
+=
+\mathbf{H}\mathbf{x}.
+\]
+
+Il fattore $\frac{1}{2}$ semplifica quindi l'espressione del
+gradiente.
+
+Dal punto di vista della posizione del minimo, moltiplicare una
+funzione obiettivo per una costante positiva non modifica la
+soluzione. Pertanto,
+
+\[
+\min_{\mathbf{x}}
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}
+\]
+
+e
+
+\[
+\min_{\mathbf{x}}
+\frac{1}{2}\mathbf{x}^{T}\mathbf{H}\mathbf{x}
+\]
+
+hanno lo stesso punto di minimo.
+
+
+\subsection{I vincoli di uguaglianza}
+
+Un vincolo lineare di uguaglianza può essere scritto come
+
+\[
+\mathbf{a}^{T}\mathbf{x}=b.
+\]
+
+Nel caso di più vincoli possiamo raccoglierli in una matrice:
+
+\[
+\boxed{
+\mathbf{A}_{eq}\mathbf{x}
+=
+\mathbf{b}_{eq}.
+}
+\]
+
+Nel problema di portafoglio abbiamo, ad esempio, il vincolo secondo
+cui tutte le risorse devono essere investite:
+
+\[
+x_1+x_2+\cdots+x_n=1.
+\]
+
+Definendo
+
+\[
+\mathbf{1}^{T}
+=
+\begin{bmatrix}
+1&1&\cdots&1
+\end{bmatrix},
+\]
+
+possiamo scriverlo come
+
+\[
+\mathbf{1}^{T}\mathbf{x}=1.
+\]
+
+Abbiamo inoltre il vincolo sul rendimento desiderato:
+
+\[
+\mathbf{c}^{T}\mathbf{x}=c^*.
+\]
+
+I due vincoli possono essere raccolti in un unico sistema:
+
+\[
+\begin{bmatrix}
+1&1&\cdots&1\\
+c_1&c_2&\cdots&c_n
+\end{bmatrix}
+\mathbf{x}
+=
+\begin{bmatrix}
+1\\
+c^*
+\end{bmatrix}.
+\]
+
+Possiamo quindi identificare
+
+\[
+\mathbf{A}_{eq}
+=
+\begin{bmatrix}
+1&1&\cdots&1\\
+c_1&c_2&\cdots&c_n
+\end{bmatrix}
+\]
+
+e
+
+\[
+\mathbf{b}_{eq}
+=
+\begin{bmatrix}
+1\\
+c^*
+\end{bmatrix}.
+\]
+
+
+\subsection{I vincoli di disuguaglianza}
+
+Nel problema di Markowitz considerato nelle slide non sono ammesse
+vendite allo scoperto.
+
+Per ciascuna attività imponiamo quindi
+
+\[
+x_k\geq0.
+\]
+
+In forma vettoriale possiamo scrivere
+
+\[
+\boxed{
+\mathbf{x}\geq\mathbf{0}.
+}
+\]
+
+Questi vincoli hanno un significato finanziario immediato: ogni
+elemento di $\mathbf{x}$ rappresenta una quota della ricchezza
+investita e non può quindi assumere valori negativi quando lo
+short selling è escluso.
+
+In un problema generale di programmazione quadratica possono
+naturalmente comparire vincoli di disuguaglianza più articolati,
+rappresentabili in forma matriciale.
+
+
+\subsection{Il problema di Markowitz come programma quadratico}
+
+Possiamo ora ricondurre il problema finanziario alla struttura
+generale della programmazione quadratica.
+
+La funzione da minimizzare è la varianza del portafoglio:
+
+\[
+\sigma_p^2
+=
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}.
+\]
+
+Possiamo equivalentemente utilizzare
+
+\[
+\frac{1}{2}
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}.
+\]
+
+Non compare, in questo caso, un termine lineare nella funzione
+obiettivo. Nella formulazione generale
+
+\[
+\frac{1}{2}\mathbf{x}^{T}\mathbf{H}\mathbf{x}
++
+\mathbf{c}^{T}\mathbf{x},
+\]
+
+il vettore associato al termine lineare della funzione obiettivo
+può quindi essere posto uguale a zero.
+
+Occorre fare attenzione alla notazione: nel problema finanziario
+abbiamo già utilizzato $\mathbf{c}$ per indicare il vettore dei
+rendimenti attesi. Il vettore lineare della formulazione generale
+del problema di programmazione quadratica non deve essere confuso
+con tale vettore.
+
+Il problema finanziario può essere scritto come
+
+\[
+\boxed{
+\begin{aligned}
+\min_{\mathbf{x}}
+\quad&
+\frac{1}{2}\mathbf{x}^{T}\mathbf{H}\mathbf{x}
+\\
+\text{s.t.}\quad&
+\mathbf{c}^{T}\mathbf{x}=c^*,
+\\
+&
+\mathbf{1}^{T}\mathbf{x}=1,
+\\
+&
+\mathbf{x}\geq\mathbf{0}.
+\end{aligned}
+}
+\]
+
+Abbiamo quindi tutti gli elementi necessari per utilizzare un
+algoritmo di programmazione quadratica.
+
+
+\subsection{La matrice di covarianza e la forma della funzione obiettivo}
+
+Nel problema di portafoglio la matrice $\mathbf{H}$ non è una
+matrice arbitraria: è la matrice delle varianze e covarianze dei
+rendimenti.
+
+Questa caratteristica è importante anche dal punto di vista
+matematico.
+
+Per qualsiasi vettore $\mathbf{x}$,
+
+\[
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}
+\geq0,
+\]
+
+poiché questa quantità rappresenta la varianza del rendimento del
+portafoglio.
+
+La funzione obiettivo presenta quindi una struttura particolarmente
+favorevole per un problema di minimizzazione.
+
+Dal punto di vista finanziario ciò significa che stiamo cercando il
+punto di rischio minimo all'interno dell'insieme definito dai
+vincoli.
+
+
+\subsection{Il ruolo dei vincoli}
+
+È importante osservare che la soluzione non viene cercata su tutto
+lo spazio $\mathbb{R}^n$.
+
+L'investitore può scegliere soltanto vettori $\mathbf{x}$ che
+soddisfano contemporaneamente
+
+\[
+\mathbf{c}^{T}\mathbf{x}=c^*,
+\]
+
+\[
+\mathbf{1}^{T}\mathbf{x}=1
+\]
+
+e
+
+\[
+\mathbf{x}\geq\mathbf{0}.
+\]
+
+Questi vincoli definiscono l'\emph{insieme ammissibile}.
+
+Il problema di ottimizzazione consiste quindi nel trovare, tra tutti
+i punti appartenenti a questo insieme, quello per il quale
+
+\[
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}
+\]
+
+assume il valore minimo.
+
+Possiamo rappresentare schematicamente il problema come
+
+\[
+\boxed{
+\begin{array}{c}
+\text{insieme delle possibili allocazioni}\\
+\downarrow\\
+\text{applicazione dei vincoli}\\
+\downarrow\\
+\text{insieme ammissibile}\\
+\downarrow\\
+\text{minimizzazione della varianza}\\
+\downarrow\\
+\mathbf{x}^*
+\end{array}
+}
+\]
+
+dove $\mathbf{x}^*$ rappresenta il portafoglio ottimo per il
+rendimento obiettivo considerato.
+
+
+\subsection{Dalla formulazione matematica alla soluzione numerica}
+
+La formulazione matriciale non rappresenta soltanto un modo più
+compatto di scrivere il problema.
+
+Essa costituisce il collegamento tra il modello finanziario e
+l'algoritmo numerico.
+
+Partiamo infatti dalle informazioni finanziarie:
+
+\[
+\boxed{
+\text{rendimenti attesi}
+\qquad+\qquad
+\text{matrice varianze-covarianze}.
+}
+\]
+
+Da queste costruiamo
+
+\[
+\mathbf{c}
+\qquad\text{e}\qquad
+\mathbf{H}.
+\]
+
+Specifichiamo quindi le condizioni che il portafoglio deve
+rispettare e costruiamo i vincoli.
+
+Otteniamo così un problema standard di programmazione quadratica che
+può essere fornito a un apposito solver numerico.
+
+Il procedimento può essere sintetizzato come
+
+\[
+\boxed{
+\begin{array}{c}
+\text{dati finanziari}\\
+\downarrow\\
+\mathbf{c},\mathbf{H}\\
+\downarrow\\
+\text{funzione obiettivo e vincoli}\\
+\downarrow\\
+\text{problema di programmazione quadratica}\\
+\downarrow\\
+\text{solver}\\
+\downarrow\\
+\mathbf{x}^*
+\end{array}
+}
+\]
+
+La soluzione $\mathbf{x}^*$ restituita dal solver indica le quote da
+investire nelle diverse attività.
+
+Ripetendo la soluzione per differenti valori del rendimento
+obiettivo $c^*$ possiamo ottenere i diversi portafogli di minima
+varianza e costruire la frontiera efficiente.
+
+\section{Implementazione della programmazione quadratica}
+\label{sec:implementazione-qp}
+
+Una volta formulato il problema di allocazione di portafoglio come
+problema di programmazione quadratica, possiamo passare alla sua
+soluzione numerica.
+
+Il passaggio fondamentale consiste nel tradurre gli elementi del
+problema finanziario nella forma richiesta dal solver:
+
+\[
+\boxed{
+\begin{array}{c}
+\text{rischio del portafoglio}\\
++\\
+\text{vincoli finanziari}
+\end{array}
+\quad
+\longrightarrow
+\quad
+\begin{array}{c}
+\text{matrici e vettori}\\
+\text{utilizzati dal solver}.
+\end{array}
+}
+\]
+
+Questo passaggio è importante perché il software non conosce il
+significato economico delle variabili. Esso riceve semplicemente una
+funzione matematica da minimizzare e un insieme di vincoli da
+rispettare.
+
+
+\subsection{La funzione \texttt{solve.QP} in R}
+
+In R, il package \texttt{quadprog} mette a disposizione la funzione
+
+\begin{verbatim}
+solve.QP(Dmat, dvec, Amat, bvec, meq)
+\end{verbatim}
+
+per la soluzione di problemi di programmazione quadratica.
+
+Gli argomenti fondamentali sono:
+
+\begin{itemize}
+    \item \texttt{Dmat}: matrice associata al termine quadratico
+          della funzione obiettivo;
+    \item \texttt{dvec}: vettore associato al termine lineare;
+    \item \texttt{Amat}: matrice che contiene i coefficienti dei
+          vincoli;
+    \item \texttt{bvec}: vettore contenente i termini noti dei
+          vincoli;
+    \item \texttt{meq}: numero dei primi vincoli che devono essere
+          trattati come uguaglianze.
+\end{itemize}
+
+La funzione permette quindi di comunicare al solver sia la struttura
+della funzione obiettivo sia quella dell'insieme ammissibile.
+
+Nelle applicazioni è importante verificare attentamente la
+convenzione utilizzata dalla specifica funzione software per la
+disposizione dei vincoli nella matrice. La formulazione matematica
+del problema rimane infatti la stessa, ma la disposizione concreta
+dei coefficienti negli argomenti della funzione dipende
+dall'interfaccia del solver utilizzato.
+
+
+\subsection{Un esempio con tre attività finanziarie}
+
+Consideriamo ora l'esempio numerico proposto nelle slide.
+
+Supponiamo di avere tre attività finanziarie con rendimenti attesi
+
+\[
+\mathbf{c}
+=
+\begin{bmatrix}
+0.10\\
+0.20\\
+0.15
+\end{bmatrix}.
+\]
+
+La matrice delle varianze e covarianze è
+
+\[
+\mathbf{H}
+=
+\begin{bmatrix}
+0.005 & -0.01 & 0.004\\
+-0.01 & 0.04 & -0.002\\
+0.004 & -0.002 & 0.023
+\end{bmatrix}.
+\]
+
+Le variabili decisionali sono le quote
+
+\[
+\mathbf{x}
+=
+\begin{bmatrix}
+x_1\\
+x_2\\
+x_3
+\end{bmatrix}.
+\]
+
+Come nelle sezioni precedenti, imponiamo
+
+\[
+x_1+x_2+x_3=1
+\]
+
+e
+
+\[
+x_1,x_2,x_3\geq0.
+\]
+
+Il nostro primo obiettivo è individuare il portafoglio di minima
+varianza.
+
+
+\subsection{Il portafoglio di minima varianza}
+
+La varianza del portafoglio è
+
+\[
+\sigma_p^2
+=
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}.
+\]
+
+Dobbiamo quindi risolvere
+
+\[
+\min_{\mathbf{x}}
+\quad
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}
+\]
+
+sotto i vincoli
+
+\[
+x_1+x_2+x_3=1
+\]
+
+e
+
+\[
+x_1\geq0,\qquad
+x_2\geq0,\qquad
+x_3\geq0.
+\]
+
+Poiché nella funzione obiettivo non è presente un termine lineare,
+il vettore corrispondente è
+
+\[
+\mathbf{d}
+=
+\begin{bmatrix}
+0\\
+0\\
+0
+\end{bmatrix}.
+\]
+
+I vincoli possono essere rappresentati mediante
+
+\[
+\mathbf{A}
+=
+\begin{bmatrix}
+1&1&1\\
+1&0&0\\
+0&1&0\\
+0&0&1
+\end{bmatrix}
+\]
+
+e
+
+\[
+\mathbf{b}
+=
+\begin{bmatrix}
+1\\
+0\\
+0\\
+0
+\end{bmatrix}.
+\]
+
+La prima riga rappresenta il vincolo
+
+\[
+x_1+x_2+x_3=1,
+\]
+
+mentre le tre righe successive rappresentano rispettivamente
+
+\[
+x_1\geq0,
+\]
+
+\[
+x_2\geq0
+\]
+
+e
+
+\[
+x_3\geq0.
+\]
+
+Questa rappresentazione mostra chiaramente come le condizioni
+finanziarie vengano trasformate in elementi di una matrice.
+
+
+\subsection{La soluzione di minima varianza}
+
+Risolvendo il problema di programmazione quadratica, nelle slide si
+ottiene il portafoglio
+
+\[
+\boxed{
+\mathbf{x}_{\min}
+=
+\begin{bmatrix}
+0.7692\\
+0.2308\\
+0
+\end{bmatrix}.
+}
+\]
+
+Ciò significa che il portafoglio di minima varianza investe circa il
+
+\[
+76.92\%
+\]
+
+della ricchezza nella prima attività e il
+
+\[
+23.08\%
+\]
+
+nella seconda, mentre non investe nella terza attività.
+
+Il risultato è interessante anche dal punto di vista economico.
+Il portafoglio di rischio minimo non è necessariamente costituito
+dall'attività che, considerata singolarmente, presenta la varianza
+più bassa.
+
+Il rischio dipende infatti anche dalle covarianze tra i rendimenti.
+La combinazione delle prime due attività permette in questo caso di
+sfruttare il beneficio della diversificazione.
+
+Il rendimento atteso del portafoglio ottenuto è
+
+\[
+c_{\min}
+=
+\mathbf{x}_{\min}^{T}\mathbf{c}.
+\]
+
+Utilizzando i valori dell'esempio,
+
+\[
+c_{\min}
+\simeq
+0.123.
+\]
+
+Il portafoglio di minima varianza permette quindi di identificare il
+punto dal quale inizieremo la costruzione della frontiera efficiente.
+
+
+\subsection{Il rendimento massimo}
+
+Dobbiamo ora identificare l'altro estremo dell'intervallo di
+rendimenti che ci interessa.
+
+Poiché non sono ammesse vendite allo scoperto e
+
+\[
+\sum_{k=1}^{3}x_k=1,
+\]
+
+il rendimento massimo ottenibile viene raggiunto investendo
+interamente nell'attività che presenta il rendimento atteso più
+elevato.
+
+Nel nostro esempio,
+
+\[
+\mathbf{c}
+=
+\begin{bmatrix}
+0.10\\
+0.20\\
+0.15
+\end{bmatrix},
+\]
+
+per cui il rendimento massimo è
+
+\[
+\boxed{
+c_{\max}=0.20.
+}
+\]
+
+Esso corrisponde all'allocazione
+
+\[
+\mathbf{x}
+=
+\begin{bmatrix}
+0\\
+1\\
+0
+\end{bmatrix}.
+\]
+
+Abbiamo quindi identificato l'intervallo rilevante per la
+costruzione della frontiera:
+
+\[
+c_{\min}
+\leq
+\bar{c}
+\leq
+c_{\max}.
+\]
+
+
+\subsection{Costruire una griglia di rendimenti}
+
+Il passo successivo consiste nel generare una sequenza di valori
+compresi tra $c_{\min}$ e $c_{\max}$.
+
+Nel nostro esempio,
+
+\[
+c_{\min}\simeq0.123
+\]
+
+e
+
+\[
+c_{\max}=0.20.
+\]
+
+Utilizzando, ad esempio, un passo pari a $0.01$, possiamo considerare
+la sequenza
+
+\[
+0.13,\;
+0.14,\;
+0.15,\;
+0.16,\;
+0.17,\;
+0.18,\;
+0.19.
+\]
+
+Indichiamo genericamente un elemento di questa sequenza con
+
+\[
+\bar{c}.
+\]
+
+Per ciascun valore di $\bar{c}$ dobbiamo trovare il portafoglio di
+minima varianza che abbia esattamente quel rendimento.
+
+La scelta del passo determina la quantità di punti utilizzati per
+rappresentare la frontiera. Un passo più piccolo produce una
+sequenza più fitta e quindi una rappresentazione più dettagliata
+dell'insieme di scelta, al costo di dover risolvere un numero
+maggiore di problemi di ottimizzazione.
+
+
+\subsection{Minima varianza dato un rendimento}
+
+Per ciascun rendimento obiettivo $\bar{c}$ risolviamo quindi
+
+\[
+\boxed{
+\begin{aligned}
+\min_{\mathbf{x}}
+\quad&
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}
+\\
+\text{s.t.}\quad&
+x_1+x_2+x_3=1,
+\\
+&
+c_1x_1+c_2x_2+c_3x_3=\bar{c},
+\\
+&
+x_1\geq0,
+\\
+&
+x_2\geq0,
+\\
+&
+x_3\geq0.
+\end{aligned}
+}
+\]
+
+Rispetto al problema precedente compare quindi un nuovo vincolo:
+
+\[
+\mathbf{x}^{T}\mathbf{c}
+=
+\bar{c}.
+\]
+
+Esso impone che il portafoglio presenti esattamente il rendimento
+che stiamo considerando.
+
+
+\subsection{La matrice dei vincoli}
+
+L'intero insieme dei vincoli può ora essere rappresentato mediante
+
+\[
+\mathbf{A}
+=
+\begin{bmatrix}
+1&1&1\\
+c_1&c_2&c_3\\
+1&0&0\\
+0&1&0\\
+0&0&1
+\end{bmatrix}
+\]
+
+e
+
+\[
+\mathbf{b}
+=
+\begin{bmatrix}
+1\\
+\bar{c}\\
+0\\
+0\\
+0
+\end{bmatrix}.
+\]
+
+Le prime due righe rappresentano vincoli di uguaglianza:
+
+\[
+x_1+x_2+x_3=1
+\]
+
+e
+
+\[
+c_1x_1+c_2x_2+c_3x_3=\bar{c}.
+\]
+
+Le ultime tre rappresentano i vincoli di non negatività.
+
+Rispetto al problema di minima varianza assoluta, quindi, la
+differenza è molto limitata dal punto di vista computazionale:
+abbiamo semplicemente aggiunto una riga alla matrice dei vincoli e
+un elemento al vettore dei termini noti.
+
+
+\subsection{Costruzione numerica della frontiera efficiente}
+
+Ripetiamo ora il problema per tutti i valori della griglia:
+
+\[
+\bar{c}_1,\bar{c}_2,\ldots,\bar{c}_m.
+\]
+
+Per ciascun valore otteniamo un vettore di quote ottimali
+
+\[
+\mathbf{x}^{*(j)}
+\]
+
+e possiamo calcolare la corrispondente varianza minima:
+
+\[
+(\sigma_j^*)^2
+=
+(\mathbf{x}^{*(j)})^T
+\mathbf{H}
+\mathbf{x}^{*(j)}.
+\]
+
+La deviazione standard è quindi
+
+\[
+\sigma_j^*
+=
+\sqrt{
+(\mathbf{x}^{*(j)})^T
+\mathbf{H}
+\mathbf{x}^{*(j)}
+}.
+\]
+
+A ogni problema di ottimizzazione corrisponde dunque una coppia
+
+\[
+\left(
+\sigma_j^*,
+\bar{c}_j
+\right).
+\]
+
+Rappresentando queste coppie nel piano rischio-rendimento otteniamo
+numericamente la frontiera efficiente.
+
+Possiamo sintetizzare l'algoritmo nel modo seguente:
+
+\[
+\boxed{
+\begin{array}{c}
+\mathbf{c},\mathbf{H}\\
+\downarrow\\
+\text{portafoglio di minima varianza}\\
+\downarrow\\
+c_{\min}\\
+\downarrow\\
+c_{\max}\\
+\downarrow\\
+\text{griglia }
+\{\bar{c}_1,\ldots,\bar{c}_m\}\\
+\downarrow\\
+\text{un problema QP per ogni }\bar{c}_j\\
+\downarrow\\
+(\sigma_j^*,\bar{c}_j)\\
+\downarrow\\
+\text{frontiera efficiente}
+\end{array}
+}
+\]
+
+
+\subsection{Un problema di ottimizzazione ripetuto}
+
+Dal punto di vista computazionale, è importante osservare che la
+frontiera efficiente non viene ottenuta risolvendo un unico problema.
+
+Il solver fornisce una soluzione per uno specifico insieme di
+vincoli. Per costruire la frontiera dobbiamo quindi modificare
+progressivamente il rendimento obiettivo $\bar{c}$ e risolvere
+ripetutamente il problema.
+
+Se consideriamo $m$ valori di rendimento, risolviamo $m$ problemi
+di programmazione quadratica:
+
+\[
+QP_1,\;QP_2,\;\ldots,\;QP_m.
+\]
+
+La matrice $\mathbf{H}$ rimane invariata, perché le caratteristiche
+dei rendimenti delle attività non cambiano.
+
+Rimangono invariati anche i vincoli
+
+\[
+\mathbf{1}^{T}\mathbf{x}=1
+\]
+
+e
+
+\[
+\mathbf{x}\geq\mathbf{0}.
+\]
+
+Ciò che cambia a ogni iterazione è il valore
+
+\[
+\bar{c}_j
+\]
+
+nel vincolo
+
+\[
+\mathbf{x}^{T}\mathbf{c}=\bar{c}_j.
+\]
+
+La costruzione della frontiera costituisce quindi un semplice
+esempio di come un algoritmo computazionale possa utilizzare
+ripetutamente un solver numerico modificando uno dei parametri del
+problema.
+
+
+\subsection{Altri strumenti per problemi di ottimizzazione}
+
+La programmazione quadratica è una classe particolarmente
+strutturata di problemi e può essere affrontata con funzioni
+specificamente progettate per essa.
+
+Esistono tuttavia problemi di ottimizzazione più generali, nei quali
+la funzione obiettivo o i vincoli possono essere non lineari.
+
+Nelle slide vengono ricordati, per R, alcuni strumenti più generali,
+tra cui:
+
+\begin{itemize}
+    \item \texttt{nloptr}, per problemi di ottimizzazione vincolata
+          non lineare;
+    \item \texttt{constrOptim}, per l'ottimizzazione di funzioni
+          generiche con vincoli lineari;
+    \item \texttt{NlcOptim}, per problemi con vincoli non lineari.
+\end{itemize}
+
+La scelta dello strumento numerico deve quindi dipendere dalla
+struttura matematica del problema.
+
+Quando la funzione obiettivo è quadratica e i vincoli sono lineari,
+come nel problema di Markowitz qui considerato, è conveniente
+sfruttare questa struttura utilizzando un solver di programmazione
+quadratica.
+
+
+\subsection{Il percorso computazionale}
+
+L'esempio permette infine di distinguere chiaramente tre livelli.
+
+Il primo è il \emph{problema finanziario}: vogliamo individuare le
+migliori combinazioni di rischio e rendimento disponibili
+all'investitore.
+
+Il secondo è la \emph{formulazione matematica}: rendimento e rischio
+vengono rappresentati mediante
+
+\[
+c_p=\mathbf{x}^{T}\mathbf{c}
+\]
+
+e
+
+\[
+\sigma_p^2=\mathbf{x}^{T}\mathbf{H}\mathbf{x},
+\]
+
+mentre le condizioni finanziarie vengono trasformate in vincoli.
+
+Il terzo è la \emph{soluzione computazionale}: matrici e vettori
+vengono forniti a un solver di programmazione quadratica, che
+determina il vettore ottimale delle quote.
+
+Possiamo quindi riassumere l'intero percorso sviluppato finora come
+
+\[
+\boxed{
+\begin{array}{c}
+\text{problema di allocazione}\\
+\downarrow\\
+\text{rendimento e rischio}\\
+\downarrow\\
+\text{vincoli}\\
+\downarrow\\
+\text{programmazione quadratica}\\
+\downarrow\\
+\text{solver}\\
+\downarrow\\
+\text{portafogli di minima varianza}\\
+\downarrow\\
+\text{frontiera efficiente}
+\end{array}
+}
+\]
+
+Questo conclude la formulazione e la soluzione del problema di
+allocazione quando il vettore dei rendimenti attesi $\mathbf{c}$ e
+la matrice delle varianze e covarianze $\mathbf{H}$ sono già noti.
+
+Nelle applicazioni reali, tuttavia, queste quantità non sono date
+direttamente. Devono essere ricavate dai dati osservati sui mercati
+finanziari.
+
+\section{Dalla teoria ai dati finanziari}
+\label{sec:portafoglio-dati-reali}
+
+Nelle sezioni precedenti abbiamo studiato il problema di allocazione
+di portafoglio assumendo di conoscere due oggetti fondamentali:
+
+\[
+\mathbf{c}
+=
+\begin{bmatrix}
+c_1\\
+c_2\\
+\vdots\\
+c_n
+\end{bmatrix},
+\]
+
+ossia il vettore dei rendimenti attesi delle attività finanziarie, e
+
+\[
+\mathbf{H}
+=
+\begin{bmatrix}
+\sigma_{11} & \cdots & \sigma_{1n}\\
+\vdots & \ddots & \vdots\\
+\sigma_{n1} & \cdots & \sigma_{nn}
+\end{bmatrix},
+\]
+
+ossia la matrice delle varianze e covarianze dei rendimenti.
+
+Conoscendo questi due oggetti possiamo calcolare il rendimento atteso
+di un portafoglio,
+
+\[
+c_p=\mathbf{x}^{T}\mathbf{c},
+\]
+
+e la sua varianza,
+
+\[
+\sigma_p^2=\mathbf{x}^{T}\mathbf{H}\mathbf{x}.
+\]
+
+Possiamo quindi formulare il problema di programmazione quadratica e
+determinare numericamente i portafogli appartenenti alla frontiera
+efficiente.
+
+Nelle applicazioni reali emerge tuttavia un problema preliminare:
+$\mathbf{c}$ e $\mathbf{H}$ non sono direttamente conosciuti.
+
+Per applicare il modello di Markowitz dobbiamo quindi costruire questi
+input utilizzando le informazioni osservabili sui mercati finanziari.
+
+
+\subsection{Che cosa osserviamo sul mercato?}
+
+Per un'attività finanziaria possiamo osservare una successione di
+prezzi:
+
+\[
+P_1,P_2,\ldots,P_T.
+\]
+
+Se consideriamo $n$ attività, disponiamo quindi di una serie storica
+dei prezzi per ciascuna di esse.
+
+Il modello di portafoglio, tuttavia, non utilizza direttamente i
+prezzi. Gli input necessari riguardano i \emph{rendimenti} delle
+attività e le relazioni esistenti tra tali rendimenti.
+
+Dobbiamo quindi trasformare le informazioni osservate sul mercato
+negli oggetti richiesti dal modello.
+
+Il problema può essere rappresentato schematicamente come
+
+\[
+\boxed{
+\text{dati osservati}
+\longrightarrow
+\text{rendimenti}
+\longrightarrow
+(\widehat{\mathbf{c}},\widehat{\mathbf{H}})
+\longrightarrow
+\text{ottimizzazione}.
+}
+\]
+
+Utilizziamo il simbolo ``$\widehat{\phantom{c}}$'' per ricordare che,
+nell'applicazione empirica, rendimento atteso, varianze e covarianze
+non sono quantità conosciute, ma vengono stimate utilizzando un
+campione di dati.
+
+
+\subsection{Il percorso dell'applicazione}
+
+L'applicazione con dati reali può essere suddivisa in una sequenza di
+operazioni.
+
+In primo luogo dobbiamo scegliere le attività finanziarie che
+intendiamo includere nel portafoglio.
+
+Per ciascuna attività dobbiamo quindi identificare il codice
+utilizzato dai database finanziari per riconoscerla. Questo codice
+prende il nome di \emph{ticker}.
+
+Una volta identificati i titoli possiamo acquisire le rispettive
+serie storiche dei prezzi:
+
+\[
+\text{attività}
+\longrightarrow
+\text{ticker}
+\longrightarrow
+\text{prezzi storici}.
+\]
+
+I prezzi devono successivamente essere trasformati in rendimenti:
+
+\[
+\text{prezzi}
+\longrightarrow
+\text{rendimenti}.
+\]
+
+A partire dalle serie storiche dei rendimenti possiamo stimare il
+vettore dei rendimenti attesi,
+
+\[
+\widehat{\mathbf{c}},
+\]
+
+e la matrice delle varianze e covarianze,
+
+\[
+\widehat{\mathbf{H}}.
+\]
+
+Poiché la frequenza con cui osserviamo i dati determina la scala
+temporale delle grandezze stimate, sarà inoltre necessario rendere
+coerente tale scala con quella utilizzata nell'analisi di portafoglio.
+Nel nostro caso questo richiederà di passare dalle grandezze
+giornaliere alle corrispondenti grandezze annualizzate.
+
+Solo dopo questi passaggi disporremo degli input necessari per
+applicare il problema di ottimizzazione studiato nelle sezioni
+precedenti.
+
+L'intero procedimento può quindi essere sintetizzato come
+
+\[
+\boxed{
+\begin{array}{c}
+\text{scelta delle attività}\\
+\downarrow\\
+\text{identificazione dei ticker}\\
+\downarrow\\
+\text{acquisizione dei prezzi storici}\\
+\downarrow\\
+\text{calcolo dei rendimenti}\\
+\downarrow\\
+\text{stima di }
+\widehat{\mathbf{c}}
+\text{ e }
+\widehat{\mathbf{H}}\\
+\downarrow\\
+\text{annualizzazione}\\
+\downarrow\\
+\text{ottimizzazione del portafoglio}
+\end{array}
+}
+\]
+
+
+\subsection{Un collegamento tra statistica e ottimizzazione}
+
+Questa applicazione mette in evidenza un aspetto importante
+dell'economia e della finanza computazionale.
+
+Il problema finale rimane quello studiato nella parte teorica:
+
+\[
+\min_{\mathbf{x}}
+\quad
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}
+\]
+
+sotto opportuni vincoli.
+
+Ciò che cambia è il modo in cui otteniamo gli input.
+
+Nel problema teorico $\mathbf{c}$ e $\mathbf{H}$ erano dati.
+Nell'applicazione empirica vengono sostituiti dalle loro stime:
+
+\[
+\mathbf{c}
+\longrightarrow
+\widehat{\mathbf{c}},
+\]
+
+\[
+\mathbf{H}
+\longrightarrow
+\widehat{\mathbf{H}}.
+\]
+
+Il problema utilizzato nell'applicazione diventa quindi
+
+\[
+\min_{\mathbf{x}}
+\quad
+\mathbf{x}^{T}
+\widehat{\mathbf{H}}
+\mathbf{x},
+\]
+
+mentre il rendimento atteso del portafoglio viene calcolato come
+
+\[
+\widehat{c}_p
+=
+\mathbf{x}^{T}\widehat{\mathbf{c}}.
+\]
+
+L'ottimizzazione utilizza pertanto quantità ottenute attraverso una
+precedente fase di elaborazione statistica dei dati.
+
+Possiamo distinguere due passaggi:
+
+\[
+\boxed{
+\underbrace{
+\text{dati}
+\longrightarrow
+(\widehat{\mathbf{c}},\widehat{\mathbf{H}})
+}_{\text{stima}}
+\qquad
+\longrightarrow
+\qquad
+\underbrace{
+\mathbf{x}^{*}
+}_{\text{ottimizzazione}}
+}
+\]
+
+La qualità della soluzione finale dipende quindi non soltanto
+dall'algoritmo di ottimizzazione, ma anche dalle informazioni
+utilizzate per costruire gli input del problema.
+
+Prima di affrontare il calcolo dei rendimenti e la stima di
+$\widehat{\mathbf{c}}$ e $\widehat{\mathbf{H}}$, dobbiamo però
+risolvere un problema più elementare: identificare correttamente le
+attività finanziarie e acquisire le relative serie storiche.
+
+\section{Identificazione delle attività e acquisizione dei dati}
+\label{sec:acquisizione-dati-finanziari}
+
+Una volta scelte le attività finanziarie da includere nel portafoglio,
+il primo passaggio operativo consiste nell'acquisire le informazioni
+necessarie per l'analisi.
+
+Come abbiamo visto, il modello di Markowitz richiede la conoscenza
+del vettore dei rendimenti attesi e della matrice delle varianze e
+covarianze. Queste quantità non sono direttamente osservabili e
+devono essere stimate utilizzando serie storiche dei rendimenti.
+
+Il punto di partenza è quindi costituito dai prezzi osservati delle
+attività finanziarie:
+
+\[
+P_{i,1},P_{i,2},\ldots,P_{i,T},
+\]
+
+dove $i$ identifica l'attività e $t=1,\ldots,T$ identifica il
+momento temporale.
+
+Prima di poter acquisire questi dati dobbiamo tuttavia identificare
+in modo univoco le attività che intendiamo analizzare.
+
+
+\subsection{Il ticker}
+
+Nei database finanziari le attività vengono normalmente identificate
+mediante un codice denominato \emph{ticker}.
+
+Il ticker è una sequenza di caratteri utilizzata per identificare
+un titolo sui mercati finanziari e nei servizi che distribuiscono
+dati di mercato.
+
+Ad esempio, nelle slide vengono considerate alcune società
+statunitensi e i rispettivi ticker:
+
+\[
+\begin{array}{ll}
+\text{Apple}     & \texttt{AAPL},\\
+\text{Microsoft} & \texttt{MSFT},\\
+\text{Amazon}    & \texttt{AMZN},\\
+\text{NVIDIA}    & \texttt{NVDA}.
+\end{array}
+\]
+
+Una volta individuato il ticker, esso può essere utilizzato per
+richiedere al servizio dati la serie storica relativa al titolo.
+
+Possiamo quindi rappresentare il primo passaggio dell'analisi come
+
+\[
+\boxed{
+\text{attività finanziaria}
+\longrightarrow
+\text{ticker}
+\longrightarrow
+\text{serie storica}.
+}
+\]
+
+
+\subsection{L'importanza dell'identificazione corretta}
+
+L'identificazione attraverso il ticker può sembrare un passaggio
+puramente operativo, ma è importante prestare attenzione.
+
+Il ticker identifica infatti uno specifico strumento finanziario
+all'interno di uno specifico mercato. Quando si lavora con dati
+reali è quindi necessario verificare che il codice selezionato
+corrisponda effettivamente all'attività che si intende analizzare.
+
+Inoltre, il formato utilizzato per identificare uno strumento può
+dipendere dal mercato sul quale esso è negoziato.
+
+Il problema generale consiste quindi nel passare dal nome
+dell'attività finanziaria utilizzato nel linguaggio comune
+all'identificativo richiesto dalla fonte dati.
+
+
+\subsection{Acquisizione dei dati in R}
+
+Le slide mostrano come sia possibile acquisire dati finanziari in R
+utilizzando il package \texttt{quantmod}.
+
+Il package può essere installato mediante
+
+\begin{verbatim}
+install.packages("quantmod")
+\end{verbatim}
+
+e successivamente caricato con
+
+\begin{verbatim}
+library(quantmod)
+\end{verbatim}
+
+Una delle funzioni centrali del package è \texttt{getSymbols()}.
+
+In forma schematica possiamo scrivere
+
+\begin{verbatim}
+getSymbols("TICKER", src = "yahoo",
+           from = "data_iniziale",
+           to   = "data_finale")
+\end{verbatim}
+
+Il ticker identifica l'attività finanziaria, mentre gli argomenti
+\texttt{from} e \texttt{to} permettono di definire l'intervallo
+temporale da acquisire.
+
+Il risultato è una serie storica contenente le informazioni
+disponibili per il titolo nel periodo considerato.
+
+
+\subsection{Acquisizione di più attività}
+
+Nel problema di portafoglio non siamo interessati a una sola attività.
+Dobbiamo acquisire simultaneamente i dati relativi a tutti i titoli
+che intendiamo includere nell'insieme di scelta.
+
+Possiamo quindi raccogliere i ticker in un vettore, ad esempio
+
+\begin{verbatim}
+tickers <- c("AAPL", "MSFT", "AMZN", "NVDA")
+\end{verbatim}
+
+e utilizzare tale vettore per richiedere le serie storiche.
+
+Concettualmente stiamo costruendo un insieme di dati della forma
+
+\[
+\begin{array}{c|cccc}
+ & 1 & 2 & \cdots & n\\
+\hline
+t_1 & P_{1,t_1} & P_{2,t_1} & \cdots & P_{n,t_1}\\
+t_2 & P_{1,t_2} & P_{2,t_2} & \cdots & P_{n,t_2}\\
+\vdots & \vdots & \vdots & \ddots & \vdots\\
+t_T & P_{1,t_T} & P_{2,t_T} & \cdots & P_{n,t_T}
+\end{array}
+\]
+
+dove ogni colonna corrisponde a un'attività e ogni riga a una data.
+
+Questa organizzazione sarà successivamente necessaria per calcolare
+i rendimenti e, soprattutto, le covarianze tra le diverse attività.
+
+
+\subsection{Le informazioni contenute nelle serie storiche}
+
+Quando scarichiamo dati di mercato non otteniamo necessariamente una
+sola serie di prezzi.
+
+Come mostrato nelle slide, una tipica serie storica azionaria può
+contenere variabili quali
+
+\begin{itemize}
+    \item \texttt{Open};
+    \item \texttt{High};
+    \item \texttt{Low};
+    \item \texttt{Close};
+    \item \texttt{Volume};
+    \item \texttt{Adjusted}.
+\end{itemize}
+
+Queste variabili descrivono aspetti differenti dell'attività di
+mercato osservata durante la giornata.
+
+Il prezzo di apertura, \texttt{Open}, rappresenta il prezzo
+all'inizio della seduta, mentre \texttt{High} e \texttt{Low}
+rappresentano rispettivamente il prezzo massimo e minimo osservati.
+
+Il prezzo \texttt{Close} rappresenta il prezzo di chiusura.
+
+La variabile \texttt{Volume} misura invece il volume degli scambi.
+
+Infine, la serie \texttt{Adjusted} fornisce un prezzo corretto per
+determinati eventi societari e risulta particolarmente utile quando
+si vogliono costruire serie storiche dei rendimenti.
+
+Il dataset acquisito contiene quindi più informazioni di quelle
+strettamente necessarie per il nostro problema. Sarà necessario
+selezionare la serie di prezzo che intendiamo utilizzare prima di
+procedere al calcolo dei rendimenti.
+
+
+\subsection{Acquisizione dei dati in Python}
+
+Lo stesso procedimento può essere effettuato utilizzando Python.
+
+Nelle slide viene utilizzato il package \texttt{yfinance}, che
+permette di acquisire dati finanziari specificando i ticker e
+l'intervallo temporale di interesse.
+
+Una struttura tipica è
+
+\begin{verbatim}
+import yfinance as yf
+
+data = yf.download(
+    tickers,
+    start = "data_iniziale",
+    end   = "data_finale"
+)
+\end{verbatim}
+
+Anche in questo caso l'idea è la stessa:
+
+\[
+\boxed{
+\text{ticker}
++
+\text{intervallo temporale}
+\longrightarrow
+\text{dati storici}.
+}
+\]
+
+La differenza tra R e Python riguarda quindi principalmente
+l'interfaccia software utilizzata, non la logica dell'analisi.
+
+
+\subsection{Separare il problema finanziario dal software}
+
+Questo esempio permette di introdurre una distinzione utile in
+economia e finanza computazionale.
+
+Il problema finanziario che stiamo affrontando è indipendente dal
+linguaggio di programmazione utilizzato.
+
+Abbiamo bisogno di una matrice di prezzi
+
+\[
+\mathbf{P}
+=
+\begin{bmatrix}
+P_{1,1} & P_{2,1} & \cdots & P_{n,1}\\
+P_{1,2} & P_{2,2} & \cdots & P_{n,2}\\
+\vdots & \vdots & \ddots & \vdots\\
+P_{1,T} & P_{2,T} & \cdots & P_{n,T}
+\end{bmatrix}.
+\]
+
+Possiamo costruirla utilizzando R, Python o altri strumenti.
+
+Una volta ottenuti i dati, i passaggi matematici successivi rimangono
+gli stessi:
+
+\[
+\mathbf{P}
+\longrightarrow
+\text{rendimenti}
+\longrightarrow
+\widehat{\mathbf{c}},
+\widehat{\mathbf{H}}
+\longrightarrow
+\text{ottimizzazione}.
+\]
+
+Il software costituisce quindi lo strumento attraverso il quale
+realizziamo computazionalmente una procedura definita dal modello.
+
+
+\subsection{La dimensione temporale dei dati}
+
+L'acquisizione dei dati richiede anche di scegliere il periodo
+temporale da utilizzare.
+
+Indicando con $t_0$ la data iniziale e con $t_T$ quella finale,
+l'intervallo
+
+\[
+[t_0,t_T]
+\]
+
+determina il campione sul quale verranno successivamente calcolati
+rendimenti medi, varianze e covarianze.
+
+Questa scelta ha una conseguenza importante: le quantità che
+utilizzeremo nell'ottimizzazione dipenderanno dal campione storico
+considerato.
+
+Possiamo esprimere questa relazione come
+
+\[
+\boxed{
+\text{periodo storico}
+\longrightarrow
+\text{prezzi osservati}
+\longrightarrow
+\text{rendimenti osservati}
+\longrightarrow
+\widehat{\mathbf{c}},
+\widehat{\mathbf{H}}.
+}
+\]
+
+Pertanto, l'acquisizione dei dati non rappresenta un passaggio
+separato dal problema di portafoglio: essa determina le informazioni
+empiriche sulle quali verrà costruita l'ottimizzazione.
+
+
+\subsection{Dai dati grezzi ai dati utilizzabili}
+
+Al termine di questa prima fase disponiamo delle serie storiche
+relative alle attività finanziarie selezionate.
+
+Il processo seguito può essere sintetizzato come
+
+\[
+\boxed{
+\begin{array}{c}
+\text{scelta delle attività}\\
+\downarrow\\
+\text{identificazione dei ticker}\\
+\downarrow\\
+\text{scelta dell'intervallo temporale}\\
+\downarrow\\
+\text{acquisizione dei dati}\\
+\downarrow\\
+\text{serie storiche dei prezzi}
+\end{array}
+}
+\]
+
+Non abbiamo però ancora ottenuto gli input richiesti dal modello di
+Markowitz.
+
+Le serie scaricate contengono prezzi, mentre il modello utilizza
+rendimenti.
+
+Il passaggio successivo consiste quindi nel selezionare dai dati
+acquisiti la misura di prezzo appropriata, organizzare le serie delle
+diverse attività in modo coerente e trasformare i prezzi in
+rendimenti.
+
+\section{Dai prezzi ai rendimenti}
+\label{sec:prezzi-rendimenti}
+
+Una volta acquisite le serie storiche delle attività finanziarie,
+dobbiamo trasformare i dati grezzi in informazioni utilizzabili
+nell'analisi di portafoglio.
+
+Come abbiamo visto, il modello di Markowitz non utilizza direttamente
+i prezzi delle attività finanziarie. Gli elementi fondamentali sono
+invece i rendimenti attesi e le relazioni tra i rendimenti delle
+diverse attività.
+
+Il percorso che dobbiamo seguire è quindi
+
+\[
+\boxed{
+\text{prezzi}
+\longrightarrow
+\text{rendimenti}
+\longrightarrow
+\widehat{\mathbf{c}},
+\widehat{\mathbf{H}}.
+}
+\]
+
+Prima di effettuare questa trasformazione è però necessario scegliere
+quale serie di prezzo utilizzare e organizzare in modo coerente le
+osservazioni relative alle diverse attività.
+
+
+\subsection{La scelta della serie di prezzo}
+
+I dati finanziari acquisiti dai database contengono generalmente
+diverse informazioni per ciascuna giornata di contrattazione.
+Come visto nella sezione precedente, possiamo disporre, ad esempio,
+di prezzi di apertura, prezzi massimi e minimi, prezzi di chiusura,
+volumi e prezzi aggiustati.
+
+Per costruire una serie storica dei rendimenti dobbiamo scegliere
+una misura di prezzo coerente nel tempo.
+
+Nelle applicazioni considerate nelle slide viene utilizzato il
+prezzo aggiustato, indicato generalmente come \texttt{Adjusted}.
+
+L'utilizzo di una serie aggiustata consente di lavorare con una
+sequenza di prezzi resa maggiormente comparabile nel tempo rispetto
+alla semplice successione dei prezzi di chiusura.
+
+Per ogni attività $i$ otteniamo quindi una serie
+
+\[
+P_{i,1},P_{i,2},\ldots,P_{i,T}.
+\]
+
+Il primo obiettivo consiste nel raccogliere le serie relative alle
+diverse attività all'interno di un'unica struttura dati.
+
+
+\subsection{Organizzazione delle serie di prezzo}
+
+Supponiamo di avere $n$ attività osservate in $T$ date.
+
+Possiamo organizzare i prezzi nella matrice
+
+\[
+\mathbf{P}
+=
+\begin{bmatrix}
+P_{1,1} & P_{2,1} & \cdots & P_{n,1}\\
+P_{1,2} & P_{2,2} & \cdots & P_{n,2}\\
+\vdots & \vdots & \ddots & \vdots\\
+P_{1,T} & P_{2,T} & \cdots & P_{n,T}
+\end{bmatrix}.
+\]
+
+Le righe corrispondono alle date, mentre le colonne identificano le
+diverse attività.
+
+Questa organizzazione è importante perché, nelle fasi successive,
+dovremo confrontare i rendimenti osservati nello stesso periodo per
+calcolare le covarianze.
+
+Per esempio, la covarianza tra le attività $i$ e $j$ deve essere
+calcolata utilizzando coppie di rendimenti riferite alle stesse date.
+
+Il tempo costituisce quindi l'indice comune che permette di
+allineare le diverse serie.
+
+
+\subsection{Perché utilizzare i rendimenti?}
+
+Consideriamo due prezzi consecutivi di una determinata attività:
+
+\[
+P_{t-1}
+\qquad\text{e}\qquad
+P_t.
+\]
+
+La differenza
+
+\[
+P_t-P_{t-1}
+\]
+
+misura la variazione assoluta del prezzo.
+
+Questa quantità, tuttavia, non è particolarmente adatta a confrontare
+attività caratterizzate da livelli di prezzo differenti.
+
+Una variazione di un euro ha infatti un significato molto diverso
+per un titolo che vale 10 euro rispetto a un titolo che vale
+200 euro.
+
+Per questo motivo è più utile considerare una variazione relativa,
+rapportando la variazione del prezzo al valore iniziale.
+
+
+\subsection{Il rendimento semplice}
+
+Il rendimento semplice tra i periodi $t-1$ e $t$ è definito come
+
+\[
+\boxed{
+r_t
+=
+\frac{P_t-P_{t-1}}{P_{t-1}}.
+}
+\]
+
+La stessa espressione può essere riscritta come
+
+\[
+r_t
+=
+\frac{P_t}{P_{t-1}}-1.
+\]
+
+Il rendimento misura quindi la variazione percentuale del valore
+dell'investimento tra due periodi consecutivi.
+
+Se, ad esempio,
+
+\[
+P_{t-1}=100
+\]
+
+e
+
+\[
+P_t=105,
+\]
+
+otteniamo
+
+\[
+r_t
+=
+\frac{105-100}{100}
+=
+0.05.
+\]
+
+Il rendimento è quindi pari al $5\%$.
+
+Se invece il prezzo passa da 100 a 97,
+
+\[
+r_t
+=
+\frac{97-100}{100}
+=
+-0.03,
+\]
+
+e il rendimento è pari a $-3\%$.
+
+
+\subsection{Dal prezzo al fattore di crescita}
+
+La relazione
+
+\[
+r_t
+=
+\frac{P_t}{P_{t-1}}-1
+\]
+
+può essere riscritta come
+
+\[
+1+r_t
+=
+\frac{P_t}{P_{t-1}}.
+\]
+
+Il termine
+
+\[
+1+r_t
+\]
+
+rappresenta quindi il fattore di crescita del valore dell'attività
+tra i due periodi.
+
+Da questa relazione segue
+
+\[
+P_t
+=
+P_{t-1}(1+r_t).
+\]
+
+Questa formulazione è utile quando vogliamo collegare rendimenti
+osservati in periodi successivi.
+
+
+\subsection{Rendimenti su più periodi}
+
+Supponiamo di considerare due periodi consecutivi.
+
+Abbiamo
+
+\[
+P_t
+=
+P_{t-1}(1+r_t)
+\]
+
+e
+
+\[
+P_{t+1}
+=
+P_t(1+r_{t+1}).
+\]
+
+Sostituendo la prima relazione nella seconda otteniamo
+
+\[
+P_{t+1}
+=
+P_{t-1}
+(1+r_t)
+(1+r_{t+1}).
+\]
+
+Il rendimento complessivo su due periodi soddisfa quindi
+
+\[
+1+r_{t-1,t+1}
+=
+(1+r_t)(1+r_{t+1}).
+\]
+
+Generalizzando, su più periodi i rendimenti semplici vengono
+composti moltiplicando i rispettivi fattori di crescita:
+
+\[
+\boxed{
+1+r_{0,T}
+=
+\prod_{t=1}^{T}(1+r_t).
+}
+\]
+
+Questo aspetto è importante: i rendimenti semplici di periodi
+successivi non sono, in generale, direttamente additivi.
+
+
+\subsection{Il rendimento logaritmico}
+
+Un modo alternativo di misurare il rendimento consiste nell'utilizzare
+la variazione logaritmica del prezzo.
+
+Definiamo il rendimento logaritmico come
+
+\[
+\boxed{
+r_t^{\log}
+=
+\log(P_t)-\log(P_{t-1}).
+}
+\]
+
+Utilizzando le proprietà dei logaritmi possiamo scrivere
+
+\[
+r_t^{\log}
+=
+\log\left(
+\frac{P_t}{P_{t-1}}
+\right).
+\]
+
+Poiché
+
+\[
+\frac{P_t}{P_{t-1}}
+=
+1+r_t,
+\]
+
+otteniamo anche
+
+\[
+r_t^{\log}
+=
+\log(1+r_t).
+\]
+
+Il rendimento logaritmico rappresenta quindi una trasformazione del
+rendimento semplice.
+
+
+\subsection{La proprietà additiva dei rendimenti logaritmici}
+
+Una proprietà particolarmente utile dei rendimenti logaritmici
+riguarda la loro aggregazione temporale.
+
+Consideriamo due periodi consecutivi:
+
+\[
+r_t^{\log}
+=
+\log(P_t)-\log(P_{t-1})
+\]
+
+e
+
+\[
+r_{t+1}^{\log}
+=
+\log(P_{t+1})-\log(P_t).
+\]
+
+Sommando le due espressioni otteniamo
+
+\[
+r_t^{\log}+r_{t+1}^{\log}
+=
+\log(P_{t+1})-\log(P_{t-1}),
+\]
+
+perché i termini $\log(P_t)$ si eliminano.
+
+Pertanto,
+
+\[
+r_{t-1,t+1}^{\log}
+=
+r_t^{\log}
++
+r_{t+1}^{\log}.
+\]
+
+Generalizzando,
+
+\[
+\boxed{
+r_{0,T}^{\log}
+=
+\sum_{t=1}^{T}r_t^{\log}.
+}
+\]
+
+I rendimenti logaritmici sono quindi additivi nel tempo.
+
+Questa proprietà rende particolarmente semplice il passaggio da una
+frequenza temporale a un'altra.
+
+
+\subsection{Rendimento semplice e rendimento logaritmico}
+
+Le due misure di rendimento sono collegate dalla relazione
+
+\[
+r_t^{\log}
+=
+\log(1+r_t).
+\]
+
+Viceversa,
+
+\[
+r_t
+=
+\exp(r_t^{\log})-1.
+\]
+
+Per variazioni di prezzo relativamente piccole, le due misure
+assumono valori molto simili.
+
+Infatti, utilizzando l'approssimazione
+
+\[
+\log(1+x)\simeq x
+\]
+
+per valori piccoli di $x$, abbiamo
+
+\[
+r_t^{\log}\simeq r_t.
+\]
+
+La distinzione rimane tuttavia importante dal punto di vista
+concettuale.
+
+I rendimenti semplici si compongono attraverso il prodotto:
+
+\[
+1+r_{0,T}
+=
+\prod_{t=1}^{T}(1+r_t),
+\]
+
+mentre i rendimenti logaritmici si aggregano attraverso la somma:
+
+\[
+r_{0,T}^{\log}
+=
+\sum_{t=1}^{T}r_t^{\log}.
+\]
+
+
+\subsection{Costruzione della matrice dei rendimenti}
+
+Una volta scelta la misura di rendimento, possiamo applicarla
+separatamente a ciascuna serie di prezzi.
+
+Per l'attività $i$ otteniamo
+
+\[
+r_{i,2},r_{i,3},\ldots,r_{i,T}.
+\]
+
+Poiché per calcolare il primo rendimento abbiamo bisogno sia di
+$P_{i,1}$ sia di $P_{i,2}$, una serie composta da $T$ prezzi genera
+$T-1$ rendimenti.
+
+Possiamo raccogliere tutte le serie nella matrice
+
+\[
+\mathbf{R}
+=
+\begin{bmatrix}
+r_{1,2} & r_{2,2} & \cdots & r_{n,2}\\
+r_{1,3} & r_{2,3} & \cdots & r_{n,3}\\
+\vdots & \vdots & \ddots & \vdots\\
+r_{1,T} & r_{2,T} & \cdots & r_{n,T}
+\end{bmatrix}.
+\]
+
+Ogni colonna contiene la serie dei rendimenti di una determinata
+attività, mentre ogni riga contiene i rendimenti delle diverse
+attività osservati nello stesso periodo.
+
+Questa matrice costituisce l'oggetto fondamentale per la fase
+statistica successiva.
+
+
+\subsection{Il passaggio dai dati di mercato agli input del modello}
+
+Possiamo ora vedere più chiaramente la trasformazione che stiamo
+realizzando.
+
+Il database finanziario ci fornisce prezzi:
+
+\[
+\mathbf{P}.
+\]
+
+Attraverso una trasformazione matematica costruiamo i rendimenti:
+
+\[
+\mathbf{P}
+\longrightarrow
+\mathbf{R}.
+\]
+
+La matrice $\mathbf{R}$ può quindi essere utilizzata per stimare i
+parametri necessari per il modello di portafoglio:
+
+\[
+\mathbf{R}
+\longrightarrow
+\widehat{\mathbf{c}},
+\widehat{\mathbf{H}}.
+\]
+
+Il percorso diventa pertanto
+
+\[
+\boxed{
+\text{prezzi aggiustati}
+\longrightarrow
+\text{rendimenti}
+\longrightarrow
+\text{statistiche dei rendimenti}
+\longrightarrow
+\text{input dell'ottimizzazione}.
+}
+\]
+
+È importante osservare che l'ottimizzazione non viene ancora
+effettuata in questa fase.
+
+Stiamo costruendo gli input empirici che verranno successivamente
+forniti al problema di programmazione quadratica.
+
+
+\subsection{La frequenza dei rendimenti}
+
+La frequenza dei rendimenti dipende dalla frequenza dei prezzi
+utilizzati.
+
+Se utilizziamo prezzi giornalieri, otteniamo rendimenti giornalieri.
+Se utilizziamo prezzi settimanali, otteniamo rendimenti settimanali,
+e così via.
+
+Indicando genericamente la frequenza con $\Delta t$, possiamo
+scrivere
+
+\[
+P_t
+\longrightarrow
+r_t^{(\Delta t)}.
+\]
+
+Questa osservazione diventerà particolarmente importante quando
+calcoleremo media, varianza e covarianza.
+
+Se utilizziamo rendimenti giornalieri, infatti, anche le quantità
+
+\[
+\widehat{\mathbf{c}}
+\]
+
+e
+
+\[
+\widehat{\mathbf{H}}
+\]
+
+inizialmente stimate saranno espresse su scala giornaliera.
+
+Per confrontarle con rendimenti e rischi espressi su base annuale
+sarà quindi necessario effettuare un'opportuna annualizzazione.
+
+
+\subsection{Sintesi del procedimento}
+
+Possiamo infine riassumere il passaggio dai dati grezzi alla matrice
+dei rendimenti nel modo seguente:
+
+\[
+\boxed{
+\begin{array}{c}
+\text{serie storiche scaricate}\\
+\downarrow\\
+\text{selezione della serie di prezzo}\\
+\downarrow\\
+P_{i,t}\\
+\downarrow\\
+\text{calcolo delle variazioni relative}\\
+\downarrow\\
+r_{i,t}\\
+\downarrow\\
+\mathbf{R}
+\end{array}
+}
+\]
+
+La matrice $\mathbf{R}$ contiene ora l'informazione necessaria per
+stimare i due oggetti che avevamo assunto noti nella formulazione
+teorica del problema di Markowitz: il vettore dei rendimenti attesi
+e la matrice delle varianze e covarianze.
+
+\section{Stima dei rendimenti e del rischio su base annuale}
+\label{sec:stima-annualizzazione}
+
+Una volta costruite le serie storiche dei rendimenti, possiamo
+utilizzarle per stimare le quantità necessarie per il problema di
+allocazione di portafoglio.
+
+Nella formulazione teorica abbiamo indicato con
+
+\[
+\mathbf{c}
+=
+\begin{bmatrix}
+c_1\\
+c_2\\
+\vdots\\
+c_n
+\end{bmatrix}
+\]
+
+il vettore dei rendimenti attesi e con
+
+\[
+\mathbf{H}
+\]
+
+la matrice delle varianze e covarianze.
+
+Con dati reali queste quantità non sono conosciute. Disponiamo invece
+di una successione di rendimenti osservati e dobbiamo utilizzarla per
+ottenere delle stime:
+
+\[
+\mathbf{c}
+\longrightarrow
+\widehat{\mathbf{c}},
+\qquad
+\mathbf{H}
+\longrightarrow
+\widehat{\mathbf{H}}.
+\]
+
+Prima di effettuare questa operazione è però necessario prestare
+attenzione alla frequenza temporale dei dati.
+
+
+\subsection{La frequenza dei rendimenti}
+
+Supponiamo di aver scaricato prezzi giornalieri.
+
+Calcolando
+
+\[
+r_t
+=
+\frac{P_t}{P_{t-1}}-1
+\]
+
+otteniamo necessariamente rendimenti giornalieri.
+
+Di conseguenza, tutte le statistiche calcolate utilizzando questi
+rendimenti sono inizialmente espresse sulla stessa scala temporale.
+
+In particolare:
+
+\begin{itemize}
+    \item la media dei rendimenti è un rendimento medio giornaliero;
+    \item la varianza è una varianza giornaliera;
+    \item la deviazione standard misura il rischio giornaliero;
+    \item le covarianze sono covarianze giornaliere.
+\end{itemize}
+
+Questo principio è generale:
+
+\[
+\boxed{
+\text{frequenza dei prezzi}
+\longrightarrow
+\text{frequenza dei rendimenti}
+\longrightarrow
+\text{frequenza delle statistiche}.
+}
+\]
+
+Se lavoriamo con dati giornalieri, quindi, non possiamo interpretare
+direttamente la media o la deviazione standard ottenute come
+grandezze annuali.
+
+
+\subsection{Perché utilizzare dati giornalieri?}
+
+Una possibile alternativa consisterebbe nell'utilizzare direttamente
+rendimenti annuali.
+
+Questa scelta presenta tuttavia un importante inconveniente:
+riduce notevolmente il numero di osservazioni disponibili.
+
+Supponiamo, ad esempio, di disporre di cinque anni di dati.
+
+Utilizzando rendimenti annuali avremmo approssimativamente
+
+\[
+5
+\]
+
+osservazioni per ciascuna attività.
+
+Utilizzando invece rendimenti giornalieri e considerando circa 252
+giorni di contrattazione per anno, possiamo disporre di circa
+
+\[
+5\times252=1260
+\]
+
+osservazioni.
+
+La differenza è notevole.
+
+I dati giornalieri forniscono quindi molte più osservazioni per
+stimare i rendimenti medi, le varianze e, soprattutto, le covarianze
+tra le attività.
+
+La strategia adottata consiste pertanto nel separare due aspetti:
+
+\[
+\boxed{
+\underbrace{\text{frequenza dei dati}}_{\text{giornaliera}}
+\qquad\neq\qquad
+\underbrace{\text{orizzonte di presentazione}}_{\text{annuale}}.
+}
+\]
+
+Utilizzeremo dati giornalieri per effettuare la stima, ma
+esprimeremo successivamente rendimento e rischio su base annuale.
+
+
+\subsection{La strategia di stima}
+
+Il procedimento può essere organizzato in quattro passaggi:
+
+\begin{enumerate}
+    \item utilizzare prezzi giornalieri;
+    \item calcolare rendimenti giornalieri;
+    \item stimare media e matrice delle varianze e covarianze
+          giornaliere;
+    \item annualizzare le quantità ottenute.
+\end{enumerate}
+
+Possiamo rappresentarlo schematicamente come
+
+\[
+\boxed{
+\begin{array}{c}
+\text{prezzi giornalieri}\\
+\downarrow\\
+\text{rendimenti giornalieri}\\
+\downarrow\\
+\widehat{\mathbf{c}}^{(d)},
+\widehat{\mathbf{H}}^{(d)}\\
+\downarrow\\
+\text{annualizzazione}\\
+\downarrow\\
+\widehat{\mathbf{c}}^{(a)},
+\widehat{\mathbf{H}}^{(a)}
+\end{array}
+}
+\]
+
+dove utilizziamo gli apici $(d)$ e $(a)$ per distinguere,
+rispettivamente, le grandezze giornaliere e annuali.
+
+
+\subsection{Stima del rendimento medio}
+
+Consideriamo il titolo $k$ e supponiamo di disporre di $T$
+rendimenti giornalieri
+
+\[
+r_{k,1},r_{k,2},\ldots,r_{k,T}.
+\]
+
+Il rendimento medio giornaliero può essere stimato mediante la media
+campionaria:
+
+\[
+\widehat{c}_k^{(d)}
+=
+\frac{1}{T}
+\sum_{t=1}^{T}r_{k,t}.
+\]
+
+Ripetendo il calcolo per tutte le $n$ attività otteniamo il vettore
+
+\[
+\widehat{\mathbf{c}}^{(d)}
+=
+\begin{bmatrix}
+\widehat{c}_1^{(d)}\\
+\widehat{c}_2^{(d)}\\
+\vdots\\
+\widehat{c}_n^{(d)}
+\end{bmatrix}.
+\]
+
+Questo vettore contiene i rendimenti medi stimati sulla base dei
+dati giornalieri.
+
+
+\subsection{Annualizzazione del rendimento}
+
+Per utilizzare un orizzonte annuale dobbiamo trasformare il
+rendimento medio giornaliero.
+
+Indicando con
+
+\[
+\widehat{c}_k^{(d)}
+\]
+
+il rendimento medio giornaliero stimato per il titolo $k$ e
+assumendo circa 252 giorni di contrattazione in un anno, nelle
+nostre applicazioni utilizzeremo
+
+\[
+\boxed{
+\widehat{c}_k^{(a)}
+=
+252\,\widehat{c}_k^{(d)}.
+}
+\]
+
+Il vettore annualizzato dei rendimenti attesi diventa quindi
+
+\[
+\boxed{
+\widehat{\mathbf{c}}^{(a)}
+=
+252\,\widehat{\mathbf{c}}^{(d)}.
+}
+\]
+
+In questo modo i rendimenti che verranno utilizzati e rappresentati
+nell'analisi di portafoglio sono espressi su base annuale.
+
+
+\subsection{Stima della varianza}
+
+La dispersione dei rendimenti di ciascun titolo viene misurata
+attraverso la varianza.
+
+Per il titolo $k$, la varianza giornaliera stimata è
+
+\[
+\left(\widehat{\sigma}_k^{(d)}\right)^2
+=
+\frac{1}{T-1}
+\sum_{t=1}^{T}
+\left(
+r_{k,t}-\widehat{c}_k^{(d)}
+\right)^2.
+\]
+
+Una varianza maggiore indica che i rendimenti osservati presentano
+una maggiore dispersione rispetto al loro valore medio.
+
+Nel modello media-varianza questa dispersione costituisce la misura
+del rischio associata al rendimento dell'attività.
+
+
+\subsection{Annualizzazione della varianza}
+
+Se la varianza giornaliera è
+
+\[
+\left(\widehat{\sigma}_k^{(d)}\right)^2,
+\]
+
+la corrispondente varianza annualizzata utilizzata nelle slide è
+
+\[
+\boxed{
+\left(\widehat{\sigma}_k^{(a)}\right)^2
+=
+252
+\left(\widehat{\sigma}_k^{(d)}\right)^2.
+}
+\]
+
+La varianza viene quindi moltiplicata per il numero di giornate di
+contrattazione considerate in un anno.
+
+
+\subsection{Annualizzazione della deviazione standard}
+
+La deviazione standard è la radice quadrata della varianza:
+
+\[
+\widehat{\sigma}_k^{(d)}
+=
+\sqrt{
+\left(\widehat{\sigma}_k^{(d)}\right)^2
+}.
+\]
+
+Partendo dalla relazione
+
+\[
+\left(\widehat{\sigma}_k^{(a)}\right)^2
+=
+252
+\left(\widehat{\sigma}_k^{(d)}\right)^2,
+\]
+
+otteniamo
+
+\[
+\widehat{\sigma}_k^{(a)}
+=
+\sqrt{
+252
+\left(\widehat{\sigma}_k^{(d)}\right)^2
+}.
+\]
+
+Pertanto,
+
+\[
+\boxed{
+\widehat{\sigma}_k^{(a)}
+=
+\sqrt{252}\,
+\widehat{\sigma}_k^{(d)}.
+}
+\]
+
+È importante distinguere attentamente le due trasformazioni:
+
+\[
+\boxed{
+\begin{aligned}
+\text{varianza:}\qquad&
+(\widehat{\sigma}^{(a)})^2
+=
+252(\widehat{\sigma}^{(d)})^2,
+\\[2mm]
+\text{deviazione standard:}\qquad&
+\widehat{\sigma}^{(a)}
+=
+\sqrt{252}\widehat{\sigma}^{(d)}.
+\end{aligned}
+}
+\]
+
+Varianza e deviazione standard non vengono quindi annualizzate nello
+stesso modo.
+
+
+\subsection{La covarianza tra due attività}
+
+Per costruire un portafoglio non è sufficiente conoscere il rischio
+delle singole attività.
+
+Come abbiamo visto nella formulazione del modello di Markowitz, è
+necessario considerare anche il modo in cui i rendimenti delle
+diverse attività si muovono congiuntamente.
+
+Per due attività $i$ e $j$, la covarianza giornaliera può essere
+stimata come
+
+\[
+\widehat{\sigma}_{ij}^{(d)}
+=
+\frac{1}{T-1}
+\sum_{t=1}^{T}
+\left(
+r_{i,t}-\widehat{c}_i^{(d)}
+\right)
+\left(
+r_{j,t}-\widehat{c}_j^{(d)}
+\right).
+\]
+
+Una covarianza positiva indica che i rendimenti delle due attività
+tendono a muoversi nella stessa direzione, mentre una covarianza
+negativa indica una tendenza a muoversi in direzioni opposte.
+
+È proprio attraverso le covarianze che il modello tiene conto dei
+benefici della diversificazione.
+
+
+\subsection{Annualizzazione delle covarianze}
+
+Lo stesso principio utilizzato per la varianza viene applicato alle
+covarianze.
+
+Se
+
+\[
+\widehat{\sigma}_{ij}^{(d)}
+=
+\widehat{\operatorname{Cov}}(r_i,r_j)
+\]
+
+è la covarianza giornaliera stimata tra le attività $i$ e $j$, la
+covarianza annualizzata è
+
+\[
+\boxed{
+\widehat{\sigma}_{ij}^{(a)}
+=
+252\,\widehat{\sigma}_{ij}^{(d)}.
+}
+\]
+
+Pertanto l'intera matrice delle varianze e covarianze può essere
+annualizzata mediante
+
+\[
+\boxed{
+\widehat{\mathbf{H}}^{(a)}
+=
+252\,\widehat{\mathbf{H}}^{(d)}.
+}
+\]
+
+Questa relazione è particolarmente conveniente dal punto di vista
+computazionale: non è necessario annualizzare separatamente ogni
+elemento della matrice. È sufficiente moltiplicare l'intera matrice
+giornaliera per 252.
+
+
+\subsection{Gli input empirici del problema di portafoglio}
+
+Al termine di questi passaggi disponiamo finalmente dei due oggetti
+necessari per applicare il modello di Markowitz ai dati reali:
+
+\[
+\boxed{
+\widehat{\mathbf{c}}^{(a)}
+}
+\]
+
+e
+
+\[
+\boxed{
+\widehat{\mathbf{H}}^{(a)}.
+}
+\]
+
+Il primo contiene i rendimenti medi annualizzati stimati delle
+attività finanziarie.
+
+Il secondo contiene le varianze e le covarianze annualizzate dei
+rendimenti.
+
+Possiamo quindi sostituire agli oggetti teorici
+
+\[
+\mathbf{c}
+\qquad\text{e}\qquad
+\mathbf{H}
+\]
+
+le loro controparti empiriche
+
+\[
+\widehat{\mathbf{c}}^{(a)}
+\qquad\text{e}\qquad
+\widehat{\mathbf{H}}^{(a)}.
+\]
+
+Il rendimento atteso stimato di un portafoglio sarà quindi
+
+\[
+\widehat{c}_p
+=
+\mathbf{x}^{T}
+\widehat{\mathbf{c}}^{(a)},
+\]
+
+mentre la sua varianza stimata sarà
+
+\[
+\widehat{\sigma}_p^2
+=
+\mathbf{x}^{T}
+\widehat{\mathbf{H}}^{(a)}
+\mathbf{x}.
+\]
+
+La corrispondente deviazione standard sarà
+
+\[
+\widehat{\sigma}_p
+=
+\sqrt{
+\mathbf{x}^{T}
+\widehat{\mathbf{H}}^{(a)}
+\mathbf{x}
+}.
+\]
+
+
+\subsection{Dai prezzi al problema di ottimizzazione}
+
+Possiamo ora completare il percorso iniziato con l'acquisizione dei
+dati finanziari.
+
+Siamo partiti dalle serie storiche dei prezzi:
+
+\[
+P_{i,t}.
+\]
+
+Da queste abbiamo ottenuto i rendimenti:
+
+\[
+r_{i,t}.
+\]
+
+Utilizzando i rendimenti giornalieri abbiamo stimato
+
+\[
+\widehat{\mathbf{c}}^{(d)}
+\qquad\text{e}\qquad
+\widehat{\mathbf{H}}^{(d)}.
+\]
+
+Abbiamo quindi annualizzato le due quantità:
+
+\[
+\widehat{\mathbf{c}}^{(a)}
+=
+252\widehat{\mathbf{c}}^{(d)}
+\]
+
+e
+
+\[
+\widehat{\mathbf{H}}^{(a)}
+=
+252\widehat{\mathbf{H}}^{(d)}.
+\]
+
+Il percorso complessivo può pertanto essere rappresentato come
+
+\[
+\boxed{
+\begin{array}{c}
+\text{prezzi storici}\\
+\downarrow\\
+\text{rendimenti giornalieri}\\
+\downarrow\\
+\widehat{\mathbf{c}}^{(d)},
+\widehat{\mathbf{H}}^{(d)}\\
+\downarrow\\
+\text{annualizzazione}\\
+\downarrow\\
+\widehat{\mathbf{c}}^{(a)},
+\widehat{\mathbf{H}}^{(a)}\\
+\downarrow\\
+\text{ottimizzazione del portafoglio}
+\end{array}
+}
+\]
+
+Abbiamo quindi trasformato le osservazioni disponibili sul mercato
+negli input numerici richiesti dal problema di programmazione
+quadratica.
+
+Il passaggio successivo consiste nell'utilizzare questi input per
+costruire, con dati reali, il portafoglio di minima varianza e la
+frontiera efficiente.
+
+\section{Dai dati reali all'ottimizzazione del portafoglio}
+\label{sec:dati-reali-ottimizzazione}
+
+Le sezioni precedenti hanno permesso di trasformare i dati osservati
+sui mercati finanziari negli input necessari per il problema di
+allocazione di portafoglio.
+
+Il punto di partenza era costituito dalle serie storiche dei prezzi.
+Da queste abbiamo calcolato i rendimenti giornalieri e, utilizzando
+le serie così ottenute, abbiamo stimato il vettore dei rendimenti
+medi e la matrice delle varianze e covarianze.
+
+Indicando con
+
+\[
+\widehat{\mathbf{c}}^{(d)}
+\]
+
+il vettore dei rendimenti medi giornalieri stimati e con
+
+\[
+\widehat{\mathbf{H}}^{(d)}
+\]
+
+la matrice delle varianze e covarianze giornaliere, abbiamo quindi
+proceduto alla loro annualizzazione.
+
+Utilizzando 252 giornate di contrattazione per anno, abbiamo ottenuto
+
+\[
+\boxed{
+\widehat{\mathbf{c}}^{(a)}
+=
+252\widehat{\mathbf{c}}^{(d)}
+}
+\]
+
+e
+
+\[
+\boxed{
+\widehat{\mathbf{H}}^{(a)}
+=
+252\widehat{\mathbf{H}}^{(d)}.
+}
+\]
+
+Disponiamo quindi finalmente degli input empirici da utilizzare
+nell'ottimizzazione del portafoglio.
+
+
+\subsection{Dalle quantità teoriche alle quantità stimate}
+
+Nella formulazione teorica del problema di Markowitz avevamo assunto
+di conoscere il vettore
+
+\[
+\mathbf{c}
+\]
+
+e la matrice
+
+\[
+\mathbf{H}.
+\]
+
+Con dati reali queste quantità vengono sostituite dalle loro stime:
+
+\[
+\boxed{
+\mathbf{c}
+\longrightarrow
+\widehat{\mathbf{c}}^{(a)}
+}
+\]
+
+e
+
+\[
+\boxed{
+\mathbf{H}
+\longrightarrow
+\widehat{\mathbf{H}}^{(a)}.
+}
+\]
+
+La struttura matematica del problema non cambia.
+
+Ciò che cambia è l'origine degli input: nella formulazione teorica
+erano considerati noti, mentre nell'applicazione empirica sono
+ottenuti elaborando le informazioni osservate sul mercato.
+
+Possiamo quindi utilizzare direttamente gli strumenti di
+programmazione quadratica introdotti nelle sezioni precedenti.
+
+
+\subsection{Rendimento e rischio del portafoglio con dati stimati}
+
+Dato un vettore di quote
+
+\[
+\mathbf{x}
+=
+\begin{bmatrix}
+x_1\\
+x_2\\
+\vdots\\
+x_n
+\end{bmatrix},
+\]
+
+il rendimento atteso annualizzato del portafoglio viene stimato come
+
+\[
+\boxed{
+\widehat{c}_p
+=
+\mathbf{x}^{T}
+\widehat{\mathbf{c}}^{(a)}.
+}
+\]
+
+La varianza annualizzata del portafoglio è invece
+
+\[
+\boxed{
+\widehat{\sigma}_p^2
+=
+\mathbf{x}^{T}
+\widehat{\mathbf{H}}^{(a)}
+\mathbf{x}.
+}
+\]
+
+La corrispondente deviazione standard è
+
+\[
+\boxed{
+\widehat{\sigma}_p
+=
+\sqrt{
+\mathbf{x}^{T}
+\widehat{\mathbf{H}}^{(a)}
+\mathbf{x}
+}.
+}
+\]
+
+Le formule sono quindi esattamente quelle utilizzate nella parte
+teorica, con la differenza che ora i parametri sono stati stimati
+utilizzando dati reali.
+
+
+\subsection{Il portafoglio di minima varianza}
+
+Possiamo innanzitutto cercare il portafoglio caratterizzato dalla
+minima varianza.
+
+Se l'intera ricchezza deve essere investita e non sono ammesse
+vendite allo scoperto, il problema è
+
+\[
+\boxed{
+\begin{aligned}
+\min_{\mathbf{x}}
+\quad&
+\mathbf{x}^{T}
+\widehat{\mathbf{H}}^{(a)}
+\mathbf{x}
+\\
+\text{s.t.}\quad&
+\mathbf{1}^{T}\mathbf{x}=1,
+\\
+&
+\mathbf{x}\geq\mathbf{0}.
+\end{aligned}
+}
+\]
+
+La soluzione
+
+\[
+\mathbf{x}_{\min}
+\]
+
+individua le quote delle attività che producono la minore varianza
+possibile tra tutti i portafogli ammissibili.
+
+Una volta ottenuta la soluzione, possiamo calcolarne il rendimento:
+
+\[
+\widehat{c}_{\min}
+=
+\mathbf{x}_{\min}^{T}
+\widehat{\mathbf{c}}^{(a)}.
+\]
+
+Questo valore rappresenta il rendimento del portafoglio di minima
+varianza.
+
+
+\subsection{La costruzione della frontiera efficiente}
+
+Come già visto nella parte teorica, il portafoglio di minima varianza
+rappresenta soltanto uno dei portafogli che ci interessano.
+
+Per costruire la frontiera efficiente dobbiamo considerare differenti
+livelli di rendimento obiettivo.
+
+Indichiamo con
+
+\[
+\bar{c}
+\]
+
+uno di questi livelli.
+
+Per ciascun valore di $\bar{c}$ risolviamo il problema
+
+\[
+\boxed{
+\begin{aligned}
+\min_{\mathbf{x}}
+\quad&
+\mathbf{x}^{T}
+\widehat{\mathbf{H}}^{(a)}
+\mathbf{x}
+\\
+\text{s.t.}\quad&
+\mathbf{x}^{T}
+\widehat{\mathbf{c}}^{(a)}
+=
+\bar{c},
+\\
+&
+\mathbf{1}^{T}\mathbf{x}=1,
+\\
+&
+\mathbf{x}\geq\mathbf{0}.
+\end{aligned}
+}
+\]
+
+La soluzione fornisce il portafoglio con la minima varianza possibile
+tra quelli che raggiungono il rendimento $\bar{c}$.
+
+Ripetendo il procedimento per diversi valori di $\bar{c}$ otteniamo
+una successione di portafogli
+
+\[
+\mathbf{x}^{*(1)},
+\mathbf{x}^{*(2)},
+\ldots,
+\mathbf{x}^{*(m)}.
+\]
+
+Per ciascuno possiamo calcolare la deviazione standard
+
+\[
+\widehat{\sigma}_j
+=
+\sqrt{
+(\mathbf{x}^{*(j)})^{T}
+\widehat{\mathbf{H}}^{(a)}
+\mathbf{x}^{*(j)}
+}.
+\]
+
+Otteniamo quindi le coppie
+
+\[
+\left(
+\widehat{\sigma}_j,\bar{c}_j
+\right),
+\qquad
+j=1,\ldots,m,
+\]
+
+che possono essere rappresentate nel piano rischio-rendimento.
+
+
+\subsection{Interpretazione della frontiera}
+
+La frontiera così costruita rappresenta le migliori combinazioni di
+rischio e rendimento ottenibili sulla base delle attività considerate
+e delle stime ricavate dai dati storici.
+
+Ogni punto della frontiera corrisponde a un diverso vettore di quote
+
+\[
+\mathbf{x}^*.
+\]
+
+Spostandoci lungo la frontiera cambia quindi la composizione del
+portafoglio.
+
+Portafogli caratterizzati da rendimenti attesi più elevati possono
+richiedere una maggiore esposizione alle attività che presentano
+rendimenti medi storicamente più elevati, mentre portafogli collocati
+verso la parte a minor rischio della frontiera sfruttano maggiormente
+le combinazioni di attività che consentono di ridurre la varianza.
+
+La frontiera non identifica pertanto necessariamente un unico
+portafoglio da scegliere.
+
+Essa identifica piuttosto un insieme di portafogli efficienti tra i
+quali l'investitore può scegliere in funzione delle proprie
+preferenze rispetto a rendimento e rischio.
+
+
+\subsection{Il ruolo della diversificazione}
+
+La costruzione empirica della frontiera permette anche di vedere
+concretamente il ruolo della matrice
+
+\[
+\widehat{\mathbf{H}}^{(a)}.
+\]
+
+Se il rischio del portafoglio dipendesse soltanto dalle varianze delle
+singole attività, la scelta sarebbe determinata essenzialmente dal
+confronto tra il rischio individuale dei diversi titoli.
+
+Nel modello di Markowitz entrano invece anche le covarianze.
+
+La varianza del portafoglio
+
+\[
+\mathbf{x}^{T}
+\widehat{\mathbf{H}}^{(a)}
+\mathbf{x}
+\]
+
+incorpora sia le varianze individuali sia il modo in cui i rendimenti
+delle diverse attività si muovono congiuntamente.
+
+È quindi possibile che l'inclusione di un'attività individualmente
+rischiosa contribuisca a ridurre il rischio complessivo del
+portafoglio se i suoi rendimenti presentano una relazione favorevole
+con quelli delle altre attività.
+
+È questo il meccanismo attraverso il quale la diversificazione entra
+formalmente nel problema di ottimizzazione.
+
+
+\subsection{Dati storici e soluzione ottima}
+
+È importante precisare il significato della soluzione ottenuta.
+
+Il solver determina il portafoglio ottimo rispetto agli input che gli
+sono stati forniti:
+
+\[
+\widehat{\mathbf{c}}^{(a)}
+\qquad\text{e}\qquad
+\widehat{\mathbf{H}}^{(a)}.
+\]
+
+Questi input sono stati stimati utilizzando uno specifico campione
+storico.
+
+Possiamo quindi rappresentare la catena logica come
+
+\[
+\boxed{
+\text{campione storico}
+\longrightarrow
+\widehat{\mathbf{c}},
+\widehat{\mathbf{H}}
+\longrightarrow
+\mathbf{x}^{*}.
+}
+\]
+
+La soluzione numerica è ottima rispetto al problema matematico
+costruito sulla base delle stime ottenute dai dati.
+
+Questo permette di distinguere due aspetti differenti.
+
+Da un lato abbiamo il problema computazionale: dato
+
+\[
+\widehat{\mathbf{c}}
+\quad\text{e}\quad
+\widehat{\mathbf{H}},
+\]
+
+il solver deve individuare correttamente il portafoglio che minimizza
+la funzione obiettivo rispettando i vincoli.
+
+Dall'altro abbiamo il problema statistico: le quantità
+
+\[
+\widehat{\mathbf{c}}
+\quad\text{e}\quad
+\widehat{\mathbf{H}}
+\]
+
+sono stime ottenute da un campione di osservazioni.
+
+L'algoritmo di ottimizzazione e la procedura di stima svolgono quindi
+ruoli differenti, anche se entrambi contribuiscono al risultato
+finale.
+
+
+\subsection{Il percorso completo}
+
+Possiamo infine ricostruire l'intera applicazione.
+
+Partiamo dalla scelta delle attività finanziarie e identifichiamo i
+rispettivi ticker.
+
+I ticker permettono di acquisire le serie storiche dei prezzi:
+
+\[
+\text{ticker}
+\longrightarrow
+\text{prezzi storici}.
+\]
+
+Dai prezzi ricaviamo i rendimenti:
+
+\[
+\text{prezzi storici}
+\longrightarrow
+\text{rendimenti}.
+\]
+
+Utilizzando le serie dei rendimenti stimiamo
+
+\[
+\widehat{\mathbf{c}}^{(d)}
+\qquad\text{e}\qquad
+\widehat{\mathbf{H}}^{(d)}.
+\]
+
+Le quantità vengono quindi annualizzate:
+
+\[
+\widehat{\mathbf{c}}^{(a)}
+=
+252\widehat{\mathbf{c}}^{(d)},
+\]
+
+\[
+\widehat{\mathbf{H}}^{(a)}
+=
+252\widehat{\mathbf{H}}^{(d)}.
+\]
+
+Questi oggetti vengono infine inseriti nel problema di programmazione
+quadratica.
+
+L'intero percorso può essere sintetizzato come
+
+\[
+\boxed{
+\begin{array}{c}
+\text{ticker}\\
+\downarrow\\
+\text{prezzi storici}\\
+\downarrow\\
+\text{rendimenti}\\
+\downarrow\\
+\widehat{\mathbf{c}},
+\widehat{\mathbf{H}}\\
+\downarrow\\
+\text{programmazione quadratica}\\
+\downarrow\\
+\mathbf{x}^{*}\\
+\downarrow\\
+\text{frontiera efficiente}
+\end{array}
+}
+\]
+
+L'applicazione con dati reali completa quindi il collegamento tra
+teoria finanziaria, analisi statistica e calcolo numerico.
+
+La teoria definisce il problema economico e le grandezze rilevanti;
+i dati permettono di stimare gli input necessari; la programmazione
+quadratica consente infine di individuare numericamente le
+allocazioni efficienti.
+
+\section{Il metodo Monte Carlo come strumento di ricerca numerica}
+\label{sec:monte-carlo-ottimizzazione}
+
+Nelle sezioni precedenti abbiamo affrontato il problema di allocazione
+di portafoglio utilizzando la programmazione quadratica.
+
+Consideriamo nuovamente $n$ attività finanziarie e indichiamo con
+
+\[
+\mathbf{x}
+=
+\begin{bmatrix}
+x_1\\
+x_2\\
+\vdots\\
+x_n
+\end{bmatrix}
+\]
+
+il vettore delle quote investite nelle diverse attività.
+
+Il rendimento atteso del portafoglio è
+
+\[
+c_p=\mathbf{x}^{T}\mathbf{c},
+\]
+
+mentre la sua varianza è
+
+\[
+\sigma_p^2=\mathbf{x}^{T}\mathbf{H}\mathbf{x}.
+\]
+
+Abbiamo già visto che il problema di individuazione del portafoglio
+di minimo rischio può essere formulato come
+
+\[
+\boxed{
+\begin{aligned}
+\min_{\mathbf{x}}
+\quad&
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}
+\\
+\text{s.t.}\quad&
+\sum_{k=1}^{n}x_k=1,
+\\
+&
+x_k\geq0,
+\qquad k=1,\ldots,n.
+\end{aligned}
+}
+\]
+
+Questo problema possiede una struttura matematica particolare:
+la funzione obiettivo è quadratica e i vincoli sono lineari.
+Possiamo quindi utilizzare algoritmi specificamente progettati
+per i problemi di programmazione quadratica.
+
+La disponibilità di un algoritmo specializzato non significa,
+tuttavia, che questa sia l'unica strategia computazionale possibile.
+Possiamo utilizzare lo stesso problema per introdurre un approccio
+completamente diverso.
+
+
+\subsection{Una strategia alternativa}
+
+Supponiamo, per il momento, di non voler sfruttare la particolare
+struttura matematica del problema.
+
+Una strategia estremamente semplice potrebbe consistere nel generare
+casualmente un grande numero di portafogli ammissibili.
+
+Per ciascun portafoglio possiamo calcolare la varianza
+
+\[
+\sigma_p^2
+=
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}
+\]
+
+e confrontare i valori ottenuti.
+
+Tra tutti i portafogli generati scegliamo quindi quello che presenta
+la varianza più bassa.
+
+Il procedimento può essere rappresentato come
+
+\[
+\boxed{
+\text{generazione casuale}
+\longrightarrow
+\text{valutazione}
+\longrightarrow
+\text{confronto}
+\longrightarrow
+\text{migliore soluzione osservata}.
+}
+\]
+
+Questa semplice idea introduce l'utilizzo del metodo Monte Carlo
+come strumento di ricerca numerica.
+
+
+\subsection{Il metodo Monte Carlo}
+
+Con il termine \emph{metodo Monte Carlo} si indica una famiglia di
+tecniche computazionali basate sull'utilizzo di numeri casuali.
+
+L'idea generale consiste nel:
+
+\begin{enumerate}
+    \item generare molte realizzazioni casuali;
+    \item valutare una quantità di interesse per ciascuna
+          realizzazione;
+    \item utilizzare i risultati ottenuti per approssimare la
+          quantità o la soluzione ricercata.
+\end{enumerate}
+
+La caratteristica fondamentale è quindi l'impiego della casualità
+come strumento computazionale.
+
+Il metodo Monte Carlo non è specifico dell'ottimizzazione né della
+teoria del portafoglio. Può essere utilizzato, ad esempio, per
+calcolare numericamente integrali, approssimare probabilità,
+simulare variabili casuali, valutare attività finanziarie o
+analizzare sistemi complessi.
+
+In questa parte del corso siamo interessati a un suo particolare
+utilizzo:
+
+\[
+\boxed{
+\text{esplorare casualmente lo spazio delle possibili soluzioni}.
+}
+\]
+
+
+\subsection{Monte Carlo e problemi di ottimizzazione}
+
+Consideriamo un problema generale di minimizzazione:
+
+\[
+\boxed{
+\min_{\mathbf{x}} f(\mathbf{x})
+}
+\]
+
+con
+
+\[
+\mathbf{x}\in\mathcal{X},
+\]
+
+dove $\mathcal{X}$ rappresenta l'insieme delle soluzioni ammissibili.
+
+Una strategia Monte Carlo consiste nel generare casualmente $N$
+soluzioni appartenenti a $\mathcal{X}$:
+
+\[
+\mathbf{x}^{(1)},
+\mathbf{x}^{(2)},
+\ldots,
+\mathbf{x}^{(N)}
+\in\mathcal{X}.
+\]
+
+Per ciascuna soluzione calcoliamo il valore della funzione obiettivo:
+
+\[
+f(\mathbf{x}^{(1)}),
+f(\mathbf{x}^{(2)}),
+\ldots,
+f(\mathbf{x}^{(N)}).
+\]
+
+Possiamo quindi confrontare tutti i valori ottenuti e scegliere la
+soluzione che presenta il valore minimo:
+
+\[
+\boxed{
+\widehat{\mathbf{x}}
+=
+\arg\min_{i=1,\ldots,N}
+f(\mathbf{x}^{(i)}).
+}
+\]
+
+Nel caso di un problema di massimizzazione, la stessa logica conduce
+invece a
+
+\[
+\boxed{
+\widehat{\mathbf{x}}
+=
+\arg\max_{i=1,\ldots,N}
+f(\mathbf{x}^{(i)}).
+}
+\]
+
+Il simbolo $\widehat{\mathbf{x}}$ è particolarmente appropriato in
+questo contesto. La soluzione individuata è infatti la migliore tra
+quelle che abbiamo esplorato, ma non è necessariamente l'ottimo
+esatto del problema.
+
+
+\subsection{Applicazione al portafoglio di minimo rischio}
+
+Torniamo al problema di Markowitz.
+
+La funzione obiettivo è
+
+\[
+f(\mathbf{x})
+=
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}.
+\]
+
+Generiamo casualmente $N$ portafogli
+
+\[
+\mathbf{x}^{(1)},
+\mathbf{x}^{(2)},
+\ldots,
+\mathbf{x}^{(N)}.
+\]
+
+Per ciascuno calcoliamo la varianza
+
+\[
+\sigma_i^2
+=
+\left(\mathbf{x}^{(i)}\right)^T
+\mathbf{H}
+\mathbf{x}^{(i)}.
+\]
+
+Otteniamo quindi una successione
+
+\[
+\sigma_1^2,
+\sigma_2^2,
+\ldots,
+\sigma_N^2.
+\]
+
+Il portafoglio di minimo rischio individuato mediante Monte Carlo è
+
+\[
+\boxed{
+\widehat{\mathbf{x}}_{\min}
+=
+\arg\min_{i=1,\ldots,N}
+\left[
+\left(\mathbf{x}^{(i)}\right)^T
+\mathbf{H}
+\mathbf{x}^{(i)}
+\right].
+}
+\]
+
+Non stiamo quindi risolvendo direttamente le condizioni matematiche
+del problema. Stiamo esplorando un insieme di possibili portafogli e
+conservando il migliore tra quelli osservati.
+
+
+\subsection{Generare portafogli ammissibili}
+
+La generazione casuale presenta immediatamente un problema.
+
+Non possiamo assegnare valori completamente arbitrari alle
+componenti di $\mathbf{x}$, perché il portafoglio deve rispettare i
+vincoli
+
+\[
+x_k\geq0
+\]
+
+e
+
+\[
+\sum_{k=1}^{n}x_k=1.
+\]
+
+Dobbiamo quindi costruire la procedura casuale in modo che produca
+portafogli ammissibili.
+
+Una possibilità molto semplice consiste nel generare $n$ numeri
+casuali non negativi
+
+\[
+z_1,z_2,\ldots,z_n,
+\qquad z_k\geq0,
+\]
+
+calcolarne la somma
+
+\[
+S=\sum_{k=1}^{n}z_k
+\]
+
+e definire
+
+\[
+\boxed{
+x_k=\frac{z_k}{S}.
+}
+\]
+
+Poiché $z_k\geq0$, abbiamo automaticamente
+
+\[
+x_k\geq0.
+\]
+
+Inoltre,
+
+\[
+\sum_{k=1}^{n}x_k
+=
+\sum_{k=1}^{n}
+\frac{z_k}{S}
+=
+\frac{\sum_{k=1}^{n}z_k}{S}
+=
+\frac{S}{S}
+=
+1.
+\]
+
+La normalizzazione trasforma quindi i numeri casuali iniziali in
+quote che soddisfano automaticamente i vincoli del portafoglio.
+
+
+\subsection{Un semplice esempio}
+
+Supponiamo di voler costruire un portafoglio composto da tre
+attività e di aver generato casualmente
+
+\[
+z_1=0.4,
+\qquad
+z_2=0.8,
+\qquad
+z_3=0.3.
+\]
+
+La loro somma è
+
+\[
+S
+=
+0.4+0.8+0.3
+=
+1.5.
+\]
+
+Normalizzando otteniamo
+
+\[
+x_1=\frac{0.4}{1.5},
+\qquad
+x_2=\frac{0.8}{1.5},
+\qquad
+x_3=\frac{0.3}{1.5}.
+\]
+
+Numericamente,
+
+\[
+\mathbf{x}
+\simeq
+\begin{bmatrix}
+0.267\\
+0.533\\
+0.200
+\end{bmatrix}.
+\]
+
+Possiamo verificare immediatamente che
+
+\[
+x_1+x_2+x_3=1
+\]
+
+e che tutte le quote sono non negative.
+
+Abbiamo quindi ottenuto un portafoglio ammissibile a partire da una
+semplice estrazione casuale.
+
+
+\subsection{Quanti portafogli dobbiamo generare?}
+
+La qualità della soluzione Monte Carlo dipende dalla parte dello
+spazio delle soluzioni che siamo riusciti a esplorare.
+
+Supponiamo di generare soltanto
+
+\[
+N=10
+\]
+
+portafogli.
+
+È possibile che nessuno di essi si trovi vicino al vero portafoglio
+di minima varianza.
+
+Possiamo allora aumentare il numero di simulazioni:
+
+\[
+N
+=
+100,\;
+1000,\;
+10000,\;
+100000,\ldots
+\]
+
+Aumentando $N$, generiamo un numero maggiore di punti nello spazio
+delle soluzioni e aumentiamo quindi le possibilità di osservare
+portafogli caratterizzati da valori molto bassi della funzione
+obiettivo.
+
+In termini generali,
+
+\[
+\boxed{
+N\uparrow
+\quad\Longrightarrow\quad
+\text{esplorazione più ampia dello spazio delle soluzioni}.
+}
+\]
+
+Esiste però un costo.
+
+Per ogni nuovo portafoglio dobbiamo generare le quote e calcolare
+
+\[
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}.
+\]
+
+Un aumento del numero di simulazioni comporta quindi un aumento del
+numero di operazioni che il computer deve eseguire.
+
+Si manifesta così un primo trade-off computazionale:
+
+\[
+\boxed{
+\text{maggiore esplorazione}
+\quad\longleftrightarrow\quad
+\text{maggiore costo computazionale}.
+}
+\]
+
+
+\subsection{La natura approssimata della soluzione}
+
+È importante comprendere la differenza tra il risultato ottenuto
+con il metodo Monte Carlo e quello ottenuto mediante un algoritmo
+specificamente progettato per il problema di programmazione
+quadratica.
+
+Nel Monte Carlo scegliamo
+
+\[
+\widehat{\mathbf{x}}
+=
+\arg\min_{i=1,\ldots,N}
+f(\mathbf{x}^{(i)}).
+\]
+
+La soluzione è quindi ottima solamente rispetto all'insieme finito
+di punti che abbiamo generato.
+
+Se esiste un portafoglio $\mathbf{x}^*$ tale che
+
+\[
+f(\mathbf{x}^*)
+<
+f(\widehat{\mathbf{x}}),
+\]
+
+ma $\mathbf{x}^*$ non è stato esplorato dalla simulazione, il metodo
+non può individuarlo.
+
+Possiamo quindi distinguere
+
+\[
+\boxed{
+\underbrace{\mathbf{x}^*}_{\text{ottimo del problema}}
+\qquad\text{da}\qquad
+\underbrace{\widehat{\mathbf{x}}}_{\text{migliore soluzione campionata}}.
+}
+\]
+
+Aumentare il numero di simulazioni può migliorare
+$\widehat{\mathbf{x}}$, ma la procedura rimane basata
+sull'esplorazione casuale dello spazio delle soluzioni.
+
+
+\subsection{Un limite della ricerca puramente casuale}
+
+Il metodo appena descritto non utilizza l'informazione prodotta
+durante la ricerca.
+
+Supponiamo, ad esempio, di aver già generato un portafoglio
+$\widehat{\mathbf{x}}$ caratterizzato da una varianza molto bassa.
+
+Se continuiamo con una ricerca Monte Carlo puramente casuale, il
+portafoglio successivo viene generato senza tenere conto di questo
+risultato.
+
+Potremmo quindi produrre molte nuove soluzioni molto lontane da
+
+\[
+\widehat{\mathbf{x}},
+\]
+
+anche se sappiamo già che la regione nella quale si trova
+$\widehat{\mathbf{x}}$ contiene almeno una buona soluzione.
+
+La procedura può essere rappresentata come
+
+\[
+\boxed{
+\begin{array}{cccccc}
+\mathbf{x}^{(1)}
+&
+\mathbf{x}^{(2)}
+&
+\mathbf{x}^{(3)}
+&
+\cdots
+&
+\mathbf{x}^{(N)}
+\\
+\downarrow&
+\downarrow&
+\downarrow&&
+\downarrow\\
+f(\mathbf{x}^{(1)})
+&
+f(\mathbf{x}^{(2)})
+&
+f(\mathbf{x}^{(3)})
+&
+\cdots
+&
+f(\mathbf{x}^{(N)})
+\end{array}
+}
+\]
+
+e soltanto alla fine scegliamo il risultato migliore.
+
+Ogni estrazione rimane, in questo senso, separata dalle informazioni
+ottenute attraverso le estrazioni precedenti.
+
+Questo suggerisce una possibile strategia alternativa.
+
+Se abbiamo già trovato una buona soluzione, possiamo utilizzarla
+come punto di partenza e concentrare una parte della ricerca nelle
+sue vicinanze.
+
+Invece di continuare a generare soluzioni completamente indipendenti,
+possiamo quindi fare in modo che
+
+\[
+\boxed{
+\text{il risultato della ricerca precedente}
+\longrightarrow
+\text{guidi la ricerca successiva}.
+}
+\]
+
+Questa idea costituisce il passaggio dalla ricerca puramente casuale
+alla \emph{ricerca stocastica iterativa}.
+
+\section{La ricerca stocastica iterativa}
+\label{sec:ricerca-stocastica-iterativa}
+
+Il metodo Monte Carlo descritto nella sezione precedente permette di
+esplorare lo spazio delle soluzioni generando casualmente un numero
+elevato di punti.
+
+Per un problema di minimizzazione
+
+\[
+\min_{\mathbf{x}\in\mathcal{X}} f(\mathbf{x}),
+\]
+
+possiamo generare
+
+\[
+\mathbf{x}^{(1)},\ldots,\mathbf{x}^{(N)}
+\]
+
+e conservare la soluzione che presenta il valore più basso della
+funzione obiettivo.
+
+Questa procedura presenta però un limite importante: le informazioni
+ottenute durante la ricerca non vengono utilizzate per orientare le
+estrazioni successive.
+
+Se abbiamo già individuato una buona soluzione, sarebbe naturale
+concentrare una parte della ricerca nelle sue vicinanze.
+
+Questa osservazione conduce alla \emph{ricerca stocastica iterativa}.
+
+
+\subsection{Dalla ricerca casuale alla ricerca guidata}
+
+Supponiamo che una prima esplorazione dello spazio delle soluzioni
+abbia individuato una buona soluzione
+
+\[
+\mathbf{x}^{(0)}.
+\]
+
+Invece di effettuare una nuova ricerca completamente indipendente,
+possiamo generare nuovi punti nelle vicinanze di
+$\mathbf{x}^{(0)}$.
+
+Una possibile rappresentazione è
+
+\[
+\mathbf{x}^{(1)}
+=
+\mathbf{x}^{(0)}
++
+\boldsymbol{\varepsilon}^{(1)},
+\]
+
+dove $\boldsymbol{\varepsilon}^{(1)}$ è un vettore di perturbazioni
+casuali.
+
+Generando diverse perturbazioni otteniamo una popolazione di
+soluzioni candidate:
+
+\[
+\mathbf{x}^{(1,1)},
+\mathbf{x}^{(1,2)},
+\ldots,
+\mathbf{x}^{(1,N)}.
+\]
+
+Queste soluzioni non vengono più estratte indipendentemente
+sull'intero spazio ammissibile, ma vengono generate attorno a una
+soluzione che la ricerca precedente ha indicato come promettente.
+
+
+\subsection{La struttura iterativa}
+
+Indichiamo con
+
+\[
+g=0,1,2,\ldots
+\]
+
+l'indice dell'iterazione.
+
+All'iterazione $g$ disponiamo di una soluzione di riferimento
+
+\[
+\mathbf{x}^{(g)}.
+\]
+
+Attorno a essa generiamo un insieme di $N$ soluzioni candidate:
+
+\[
+\mathbf{x}^{(g,1)},
+\mathbf{x}^{(g,2)},
+\ldots,
+\mathbf{x}^{(g,N)}.
+\]
+
+Per ciascuna calcoliamo il valore della funzione obiettivo:
+
+\[
+f\left(\mathbf{x}^{(g,1)}\right),
+\ldots,
+f\left(\mathbf{x}^{(g,N)}\right).
+\]
+
+Nel caso di un problema di minimizzazione scegliamo quindi
+
+\[
+\mathbf{x}^{(g+1)}
+=
+\arg\min_{i=1,\ldots,N}
+f\left(\mathbf{x}^{(g,i)}\right).
+\]
+
+La soluzione migliore individuata nell'iterazione corrente diventa
+quindi il riferimento per l'iterazione successiva.
+
+Il procedimento può essere sintetizzato come
+
+\[
+\boxed{
+\mathbf{x}^{(g)}
+\longrightarrow
+\text{generazione di candidati}
+\longrightarrow
+\text{valutazione}
+\longrightarrow
+\text{selezione}
+\longrightarrow
+\mathbf{x}^{(g+1)}.
+}
+\]
+
+La ricerca diventa quindi \emph{iterativa}: ciò che viene trovato in
+un'iterazione influenza il modo in cui viene effettuata la ricerca
+nell'iterazione successiva.
+
+
+\subsection{Perturbazioni casuali}
+
+Un modo semplice per generare le nuove soluzioni consiste
+nell'aggiungere una perturbazione casuale alla soluzione corrente.
+
+Per il candidato $i$ possiamo scrivere
+
+\[
+\mathbf{x}^{(g,i)}
+=
+\mathbf{x}^{(g)}
++
+\boldsymbol{\varepsilon}^{(g,i)}.
+\]
+
+Il vettore
+
+\[
+\boldsymbol{\varepsilon}^{(g,i)}
+\]
+
+determina sia la direzione sia l'ampiezza dello spostamento rispetto
+alla soluzione corrente.
+
+Possiamo, ad esempio, rappresentarlo come
+
+\[
+\boldsymbol{\varepsilon}^{(g,i)}
+=
+\delta_g\mathbf{u}^{(g,i)},
+\]
+
+dove $\mathbf{u}^{(g,i)}$ è un vettore casuale e $\delta_g$ controlla
+l'ampiezza della regione esplorata.
+
+Otteniamo quindi
+
+\[
+\boxed{
+\mathbf{x}^{(g,i)}
+=
+\mathbf{x}^{(g)}
++
+\delta_g\mathbf{u}^{(g,i)}.
+}
+\]
+
+Il parametro $\delta_g$ assume un ruolo importante nella ricerca.
+
+Se $\delta_g$ è grande, i nuovi punti possono trovarsi relativamente
+lontano dalla soluzione corrente.
+
+Se $\delta_g$ è piccolo, la ricerca viene invece concentrata in una
+regione più ristretta.
+
+
+\subsection{Ricerca globale e ricerca locale}
+
+La scelta dell'ampiezza della perturbazione introduce una distinzione
+fondamentale.
+
+Una ricerca effettuata su una regione molto ampia dello spazio delle
+soluzioni può essere definita \emph{ricerca globale}.
+
+Il suo obiettivo è esplorare parti differenti dello spazio e ridurre
+il rischio di concentrare prematuramente l'attenzione su una regione
+non particolarmente buona.
+
+Una ricerca concentrata nelle vicinanze di una soluzione già
+individuata può invece essere definita \emph{ricerca locale}.
+
+Il suo obiettivo è migliorare con maggiore precisione una soluzione
+promettente.
+
+Possiamo rappresentare i due comportamenti come
+
+\[
+\boxed{
+\begin{array}{ccc}
+\delta_g\ \text{grande}
+&
+\longrightarrow
+&
+\text{esplorazione ampia},
+\\[2mm]
+\delta_g\ \text{piccolo}
+&
+\longrightarrow
+&
+\text{esplorazione locale}.
+\end{array}
+}
+\]
+
+Una ricerca efficace deve quindi trovare un equilibrio tra queste
+due esigenze.
+
+
+\subsection{Esplorazione e sfruttamento dell'informazione}
+
+Il problema può essere interpretato anche come un trade-off tra
+\emph{esplorazione} e \emph{sfruttamento dell'informazione già
+ottenuta}.
+
+L'esplorazione consiste nel visitare regioni nuove dello spazio delle
+soluzioni.
+
+Lo sfruttamento consiste invece nell'utilizzare l'informazione già
+acquisita per approfondire la ricerca nelle regioni che hanno
+prodotto buoni risultati.
+
+Una ricerca esclusivamente globale dedica molte risorse
+all'esplorazione:
+
+\[
+\text{molta esplorazione}
+\qquad
+\text{poco sfruttamento}.
+\]
+
+Una ricerca eccessivamente locale presenta il problema opposto:
+
+\[
+\text{poca esplorazione}
+\qquad
+\text{molto sfruttamento}.
+\]
+
+Nel primo caso possiamo impiegare molte valutazioni della funzione
+obiettivo in regioni poco promettenti.
+
+Nel secondo possiamo invece concentrare troppo presto la ricerca
+attorno a una soluzione che non rappresenta l'ottimo globale.
+
+
+\subsection{Restringere progressivamente la regione di ricerca}
+
+Una possibile strategia consiste nel modificare l'ampiezza della
+ricerca nel corso delle iterazioni.
+
+Nelle prime fasi possiamo utilizzare perturbazioni relativamente
+ampie:
+
+\[
+\delta_0
+\quad\text{grande}.
+\]
+
+Successivamente, quando abbiamo individuato una regione promettente,
+possiamo ridurre progressivamente $\delta_g$:
+
+\[
+\delta_{g+1}<\delta_g.
+\]
+
+La sequenza può quindi assumere la forma
+
+\[
+\delta_0>\delta_1>\delta_2>\cdots.
+\]
+
+In termini intuitivi, nelle prime iterazioni cerchiamo di capire
+\emph{dove} si trova una buona soluzione; nelle iterazioni
+successive cerchiamo di determinarla con maggiore precisione.
+
+Possiamo rappresentare il processo come
+
+\[
+\boxed{
+\text{ricerca ampia}
+\longrightarrow
+\text{regione promettente}
+\longrightarrow
+\text{ricerca più concentrata}
+\longrightarrow
+\text{raffinamento}.
+}
+\]
+
+
+\subsection{Conservare la soluzione migliore}
+
+Un altro elemento importante riguarda la selezione della soluzione
+da utilizzare nell'iterazione successiva.
+
+Supponiamo che la soluzione corrente sia
+
+\[
+\mathbf{x}^{(g)}
+\]
+
+e che tutti i nuovi candidati generati nell'iterazione $g$ risultino
+peggiori:
+
+\[
+f\left(\mathbf{x}^{(g,i)}\right)
+>
+f\left(\mathbf{x}^{(g)}\right)
+\qquad
+\forall i.
+\]
+
+In questo caso non vi è motivo di sostituire la soluzione corrente
+con una soluzione peggiore.
+
+Possiamo quindi includere anche $\mathbf{x}^{(g)}$ nell'insieme delle
+soluzioni tra cui effettuare la selezione:
+
+\[
+\boxed{
+\mathbf{x}^{(g+1)}
+=
+\arg\min
+\left\{
+f(\mathbf{x}^{(g)}),
+f(\mathbf{x}^{(g,1)}),
+\ldots,
+f(\mathbf{x}^{(g,N)})
+\right\}.
+}
+\]
+
+In questo modo la qualità della migliore soluzione individuata non
+può peggiorare passando da un'iterazione alla successiva.
+
+Per un problema di minimizzazione abbiamo infatti
+
+\[
+f(\mathbf{x}^{(g+1)})
+\leq
+f(\mathbf{x}^{(g)}).
+\]
+
+Nel caso di massimizzazione avremo, simmetricamente,
+
+\[
+f(\mathbf{x}^{(g+1)})
+\geq
+f(\mathbf{x}^{(g)}).
+\]
+
+
+\subsection{Il ruolo dei vincoli}
+
+Quando il problema presenta dei vincoli, le perturbazioni casuali
+possono generare punti che non appartengono all'insieme ammissibile.
+
+Nel problema di portafoglio, ad esempio, dobbiamo rispettare
+
+\[
+x_k\geq0
+\]
+
+e
+
+\[
+\sum_{k=1}^{n}x_k=1.
+\]
+
+Una perturbazione arbitraria
+
+\[
+\mathbf{x}^{(g)}
++
+\boldsymbol{\varepsilon}
+\]
+
+non garantisce il rispetto di queste condizioni.
+
+La procedura di ricerca deve quindi essere costruita in modo da
+generare o ricondurre le soluzioni candidate all'interno
+dell'insieme ammissibile.
+
+Questo punto è essenziale: una soluzione che produce un valore molto
+buono della funzione obiettivo ma viola i vincoli non costituisce
+una soluzione valida del problema.
+
+
+\subsection{Il vantaggio rispetto alla ricerca casuale indipendente}
+
+Possiamo ora confrontare le due strategie.
+
+Nel Monte Carlo puro abbiamo
+
+\[
+\mathbf{x}^{(1)},
+\mathbf{x}^{(2)},
+\ldots,
+\mathbf{x}^{(N)},
+\]
+
+con soluzioni generate senza utilizzare i risultati ottenuti in
+precedenza.
+
+Nella ricerca stocastica iterativa abbiamo invece
+
+\[
+\mathbf{x}^{(g)}
+\longrightarrow
+\mathbf{x}^{(g+1)}
+\longrightarrow
+\mathbf{x}^{(g+2)}
+\longrightarrow\cdots
+\]
+
+e ogni passaggio dipende dall'informazione ottenuta nei passaggi
+precedenti.
+
+La differenza fondamentale può essere sintetizzata come
+
+\[
+\boxed{
+\begin{array}{ccc}
+\text{Monte Carlo puro}
+&
+&
+\text{ricerca stocastica iterativa}
+\\[2mm]
+\text{estrazioni indipendenti}
+&&
+\text{ricerca guidata dai risultati}
+\\
+\text{spazio ampio}
+&&
+\text{regione aggiornata}
+\\
+\text{nessun apprendimento}
+&&
+\text{informazione riutilizzata}.
+\end{array}
+}
+\]
+
+
+\subsection{Un algoritmo generale}
+
+La struttura di una semplice ricerca stocastica iterativa può essere
+riassunta nei seguenti passaggi.
+
+Si sceglie innanzitutto una soluzione iniziale
+
+\[
+\mathbf{x}^{(0)}.
+\]
+
+Successivamente, per
+
+\[
+g=0,1,2,\ldots,
+\]
+
+si procede nel modo seguente:
+
+\begin{enumerate}
+    \item si genera un insieme di soluzioni candidate attorno a
+          $\mathbf{x}^{(g)}$;
+    \item si verifica che le soluzioni rispettino i vincoli;
+    \item si calcola la funzione obiettivo per ciascuna soluzione;
+    \item si confrontano le nuove soluzioni con la migliore soluzione
+          disponibile;
+    \item si sceglie $\mathbf{x}^{(g+1)}$;
+    \item si aggiorna eventualmente l'ampiezza della regione di
+          ricerca;
+    \item si ripete il procedimento.
+\end{enumerate}
+
+In forma schematica,
+
+\[
+\boxed{
+\begin{array}{c}
+\mathbf{x}^{(0)}
+\\
+\downarrow\\
+\text{generazione casuale locale}
+\\
+\downarrow\\
+\text{valutazione}
+\\
+\downarrow\\
+\text{selezione}
+\\
+\downarrow\\
+\mathbf{x}^{(1)}
+\\
+\downarrow\\
+\text{nuova ricerca}
+\\
+\downarrow\\
+\mathbf{x}^{(2)}
+\\
+\downarrow\\
+\vdots
+\end{array}
+}
+\]
+
+
+\subsection{Quando interrompere la ricerca?}
+
+Poiché il procedimento è iterativo, è necessario stabilire quando
+fermarlo.
+
+Un criterio molto semplice consiste nel fissare a priori un numero
+massimo di iterazioni,
+
+\[
+g_{\max}.
+\]
+
+La ricerca termina quando
+
+\[
+g=g_{\max}.
+\]
+
+Un altro possibile criterio consiste nell'osservare il miglioramento
+della funzione obiettivo.
+
+Per un problema di minimizzazione possiamo considerare
+
+\[
+\left|
+f(\mathbf{x}^{(g+1)})
+-
+f(\mathbf{x}^{(g)})
+\right|.
+\]
+
+Se questa differenza diventa sufficientemente piccola,
+
+\[
+\left|
+f(\mathbf{x}^{(g+1)})
+-
+f(\mathbf{x}^{(g)})
+\right|
+<
+\varepsilon,
+\]
+
+possiamo interpretare il risultato come un'indicazione del fatto che
+la ricerca non sta producendo ulteriori miglioramenti rilevanti.
+
+In applicazioni concrete è possibile combinare più criteri di
+arresto.
+
+
+\subsection{Una soluzione approssimata}
+
+Anche in questo caso è importante ricordare che la ricerca
+stocastica non fornisce automaticamente una dimostrazione di aver
+individuato l'ottimo globale.
+
+La soluzione finale
+
+\[
+\widehat{\mathbf{x}}
+\]
+
+è il risultato della particolare traiettoria di ricerca generata
+dall'algoritmo.
+
+Essa può dipendere da diversi elementi:
+
+\[
+\boxed{
+\begin{array}{c}
+\text{soluzione iniziale}\\
+\text{numeri casuali generati}\\
+\text{numero di candidati}\\
+\text{ampiezza delle perturbazioni}\\
+\text{numero di iterazioni}\\
+\text{criterio di arresto}.
+\end{array}
+}
+\]
+
+La natura stocastica dell'algoritmo suggerisce quindi, quando
+possibile, di ripetere la procedura utilizzando differenti
+realizzazioni casuali e confrontare i risultati ottenuti.
+
+
+\subsection{Dal metodo generale al problema di portafoglio}
+
+Abbiamo introdotto la ricerca stocastica iterativa in termini
+generali.
+
+Il passaggio successivo consiste nell'applicarla nuovamente al
+problema di allocazione di portafoglio.
+
+In questo caso
+
+\[
+f(\mathbf{x})
+=
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}
+\]
+
+e la ricerca deve essere effettuata nell'insieme
+
+\[
+\mathcal{X}
+=
+\left\{
+\mathbf{x}:
+x_k\geq0,\;
+\sum_{k=1}^{n}x_k=1
+\right\}.
+\]
+
+Il problema diventa quindi
+
+\[
+\boxed{
+\min_{\mathbf{x}\in\mathcal{X}}
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}.
+}
+\]
+
+A differenza della programmazione quadratica, tuttavia, non
+utilizzeremo direttamente la particolare forma analitica della
+funzione per determinare la soluzione.
+
+Utilizzeremo invece una successione di esplorazioni casuali,
+aggiornando progressivamente la regione nella quale concentrare la
+ricerca.
+
+\section{Applicazione della ricerca stocastica al problema di portafoglio}
+\label{sec:ricerca-stocastica-portafoglio}
+
+La ricerca stocastica iterativa introdotta nella sezione precedente
+può essere applicata al problema di allocazione di portafoglio.
+
+Consideriamo nuovamente il problema di individuazione del portafoglio
+di minima varianza:
+
+\[
+\min_{\mathbf{x}}
+\quad
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}
+\]
+
+sotto i vincoli
+
+\[
+\sum_{k=1}^{n}x_k=1
+\]
+
+e
+
+\[
+x_k\geq0,
+\qquad k=1,\ldots,n.
+\]
+
+L'obiettivo è quindi trovare, all'interno dell'insieme dei portafogli
+ammissibili, il vettore di pesi che produce il valore minimo della
+varianza.
+
+A differenza della programmazione quadratica, la ricerca stocastica
+non sfrutta direttamente la particolare struttura analitica della
+funzione obiettivo. La soluzione viene cercata esplorando
+numericamente lo spazio dei portafogli.
+
+
+\subsection{La regione iniziale di ricerca}
+
+La prima fase consiste nel definire la regione nella quale effettuare
+la ricerca.
+
+Poiché non sono ammesse vendite allo scoperto, per ciascuna quota
+abbiamo
+
+\[
+0\leq x_k\leq1.
+\]
+
+Inoltre,
+
+\[
+\sum_{k=1}^{n}x_k=1.
+\]
+
+L'insieme ammissibile è quindi
+
+\[
+\mathcal{X}
+=
+\left\{
+\mathbf{x}\in\mathbb{R}^{n}:
+x_k\geq0,\;
+\sum_{k=1}^{n}x_k=1
+\right\}.
+\]
+
+La ricerca iniziale deve esplorare questo insieme in modo
+sufficientemente ampio da consentire l'individuazione di regioni
+promettenti.
+
+
+\subsection{Prima esplorazione}
+
+Generiamo un insieme di $N$ portafogli ammissibili:
+
+\[
+\mathbf{x}^{(1)},
+\mathbf{x}^{(2)},
+\ldots,
+\mathbf{x}^{(N)}.
+\]
+
+Per ciascun portafoglio calcoliamo la funzione obiettivo
+
+\[
+f(\mathbf{x}^{(i)})
+=
+\left(\mathbf{x}^{(i)}\right)^T
+\mathbf{H}
+\mathbf{x}^{(i)}.
+\]
+
+Otteniamo quindi
+
+\[
+f(\mathbf{x}^{(1)}),
+f(\mathbf{x}^{(2)}),
+\ldots,
+f(\mathbf{x}^{(N)}).
+\]
+
+Poiché stiamo cercando il portafoglio di minima varianza,
+selezioniamo quello caratterizzato dal valore più basso:
+
+\[
+\boxed{
+\mathbf{x}^{*}_{(0)}
+=
+\arg\min_{i=1,\ldots,N}
+f(\mathbf{x}^{(i)}).
+}
+\]
+
+La soluzione $\mathbf{x}^{*}_{(0)}$ non viene ancora considerata
+come soluzione definitiva. Essa fornisce piuttosto un'informazione
+sulla regione dello spazio nella quale potrebbe trovarsi una
+soluzione migliore.
+
+
+\subsection{Aggiornamento della regione di ricerca}
+
+L'elemento caratteristico della procedura iterativa consiste
+nell'utilizzare il risultato ottenuto per modificare la ricerca
+successiva.
+
+Una volta individuato
+
+\[
+\mathbf{x}^{*}_{(0)},
+\]
+
+possiamo concentrare la nuova esplorazione in una regione posta
+attorno a questo portafoglio.
+
+Indichiamo genericamente con
+
+\[
+\mathcal{R}^{(0)}
+\]
+
+la regione iniziale di ricerca.
+
+Dopo la prima iterazione costruiamo una nuova regione
+
+\[
+\mathcal{R}^{(1)}
+\]
+
+centrata sulla soluzione migliore individuata.
+
+Possiamo quindi rappresentare il passaggio come
+
+\[
+\boxed{
+\mathcal{R}^{(0)}
+\longrightarrow
+\mathbf{x}^{*}_{(0)}
+\longrightarrow
+\mathcal{R}^{(1)}.
+}
+\]
+
+La nuova regione è generalmente più piccola della precedente:
+
+\[
+\mathcal{R}^{(1)}
+\subset
+\mathcal{R}^{(0)}.
+\]
+
+L'obiettivo non è più esplorare uniformemente tutto lo spazio, ma
+approfondire la ricerca nella zona che ha prodotto i risultati
+migliori.
+
+
+\subsection{Le iterazioni successive}
+
+All'interno della nuova regione generiamo una nuova popolazione di
+portafogli:
+
+\[
+\mathbf{x}^{(1,1)},
+\mathbf{x}^{(1,2)},
+\ldots,
+\mathbf{x}^{(1,N)}.
+\]
+
+Per ciascuno calcoliamo nuovamente
+
+\[
+f(\mathbf{x}^{(1,i)})
+=
+\left(\mathbf{x}^{(1,i)}\right)^T
+\mathbf{H}
+\mathbf{x}^{(1,i)}.
+\]
+
+Selezioniamo quindi la migliore soluzione della nuova popolazione.
+
+Il procedimento viene ripetuto:
+
+\[
+\mathcal{R}^{(0)}
+\rightarrow
+\mathbf{x}^{*}_{(0)}
+\rightarrow
+\mathcal{R}^{(1)}
+\rightarrow
+\mathbf{x}^{*}_{(1)}
+\rightarrow
+\mathcal{R}^{(2)}
+\rightarrow
+\cdots
+\]
+
+In termini generali, all'iterazione $g$ abbiamo
+
+\[
+\boxed{
+\mathcal{R}^{(g)}
+\longrightarrow
+\mathbf{x}^{*}_{(g)}
+\longrightarrow
+\mathcal{R}^{(g+1)}.
+}
+\]
+
+La ricerca utilizza quindi progressivamente l'informazione prodotta
+nelle iterazioni precedenti.
+
+
+\subsection{Restringimento progressivo della ricerca}
+
+Una possibile strategia consiste nel ridurre progressivamente
+l'ampiezza della regione esplorata.
+
+Indichiamo con $\delta_g$ una misura dell'ampiezza della regione di
+ricerca all'iterazione $g$.
+
+Possiamo utilizzare, ad esempio, una regola del tipo
+
+\[
+\boxed{
+\delta_{g+1}
+=
+\alpha\delta_g,
+\qquad
+0<\alpha<1.
+}
+\]
+
+Ne segue che
+
+\[
+\delta_0
+>
+\delta_1
+>
+\delta_2
+>
+\cdots.
+\]
+
+Nelle prime iterazioni la ricerca è quindi relativamente ampia,
+mentre nelle iterazioni successive diventa progressivamente più
+locale.
+
+La logica può essere sintetizzata come
+
+\[
+\boxed{
+\text{esplorazione}
+\longrightarrow
+\text{identificazione di una buona regione}
+\longrightarrow
+\text{raffinamento}.
+}
+\]
+
+
+\subsection{Generazione delle nuove quote}
+
+Nel problema di portafoglio occorre prestare particolare attenzione
+alla generazione delle nuove soluzioni.
+
+Supponiamo che il portafoglio migliore all'iterazione $g$ sia
+
+\[
+\mathbf{x}^{*}_{(g)}
+=
+\begin{bmatrix}
+x_{1,(g)}^*\\
+x_{2,(g)}^*\\
+\vdots\\
+x_{n,(g)}^*
+\end{bmatrix}.
+\]
+
+Possiamo generare nuovi candidati perturbando le singole componenti:
+
+\[
+\widetilde{x}_{k}^{(g,i)}
+=
+x_{k,(g)}^*
++
+\varepsilon_{k}^{(g,i)}.
+\]
+
+Le perturbazioni devono essere sufficientemente piccole da
+concentrare la ricerca nella regione desiderata.
+
+Tuttavia, il vettore ottenuto in questo modo non soddisfa
+necessariamente i vincoli del problema.
+
+Potremmo infatti avere
+
+\[
+\widetilde{x}_{k}^{(g,i)}<0
+\]
+
+oppure
+
+\[
+\sum_{k=1}^{n}
+\widetilde{x}_{k}^{(g,i)}
+\neq1.
+\]
+
+È quindi necessario costruire la procedura di generazione in modo
+che le soluzioni utilizzate per la valutazione siano ammissibili.
+
+
+\subsection{Normalizzazione delle quote}
+
+Una possibilità consiste nel partire da valori non negativi e
+normalizzarli.
+
+Se il candidato intermedio è
+
+\[
+\widetilde{\mathbf{x}}
+=
+\begin{bmatrix}
+\widetilde{x}_1\\
+\widetilde{x}_2\\
+\vdots\\
+\widetilde{x}_n
+\end{bmatrix},
+\]
+
+possiamo definire
+
+\[
+x_k
+=
+\frac{\widetilde{x}_k}
+{\displaystyle\sum_{j=1}^{n}\widetilde{x}_j}.
+\]
+
+In questo modo,
+
+\[
+\sum_{k=1}^{n}x_k=1.
+\]
+
+La normalizzazione consente quindi di riportare le soluzioni generate
+sulla regione compatibile con il vincolo di bilancio.
+
+Occorre naturalmente assicurarsi anche che le componenti utilizzate
+nella normalizzazione siano non negative, così da rispettare il
+vincolo
+
+\[
+x_k\geq0.
+\]
+
+
+\subsection{Valutazione e selezione}
+
+Una volta generati i portafogli ammissibili, il passaggio successivo
+consiste nel valutarli.
+
+Per ciascun candidato calcoliamo
+
+\[
+\sigma_{p,i}^{2}
+=
+\left(\mathbf{x}^{(g,i)}\right)^T
+\mathbf{H}
+\mathbf{x}^{(g,i)}.
+\]
+
+Il criterio di selezione è quindi molto semplice:
+
+\[
+\boxed{
+\text{minore varianza}
+\quad\Longrightarrow\quad
+\text{soluzione migliore}.
+}
+\]
+
+Se la migliore soluzione della nuova iterazione presenta una
+varianza inferiore a quella della soluzione precedente, essa diventa
+il nuovo riferimento.
+
+Se invece nessun candidato migliora il risultato già disponibile,
+possiamo conservare la soluzione precedente.
+
+In questo modo il miglior valore della funzione obiettivo trovato
+dall'algoritmo non aumenta nel corso delle iterazioni.
+
+
+\subsection{La precisione della ricerca}
+
+Il restringimento progressivo della regione ha una conseguenza
+importante.
+
+Supponiamo che nelle prime iterazioni le quote vengano esplorate
+all'interno di intervalli relativamente ampi. L'algoritmo è in grado
+di individuare la zona nella quale si trovano buoni portafogli, ma
+la soluzione ottenuta può essere ancora poco precisa.
+
+Riducendo progressivamente l'ampiezza degli intervalli possiamo
+distinguere portafogli sempre più simili tra loro.
+
+La ricerca diventa quindi progressivamente più fine:
+
+\[
+\boxed{
+\delta_g\downarrow
+\quad\Longrightarrow\quad
+\text{maggiore precisione locale}.
+}
+\]
+
+Il numero di iterazioni e la velocità con cui viene ridotta
+$\delta_g$ determinano quindi il grado di raffinamento della ricerca.
+
+
+\subsection{Il rischio di una ricerca troppo locale}
+
+Restringere la regione di ricerca produce però anche un possibile
+problema.
+
+Supponiamo che nelle prime iterazioni venga individuata una buona
+soluzione
+
+\[
+\mathbf{x}_A,
+\]
+
+ma che in un'altra regione dello spazio esista una soluzione migliore
+
+\[
+\mathbf{x}_B
+\]
+
+tale che
+
+\[
+f(\mathbf{x}_B)<f(\mathbf{x}_A).
+\]
+
+Se concentriamo troppo rapidamente tutte le nuove estrazioni nelle
+vicinanze di $\mathbf{x}_A$, la regione contenente $\mathbf{x}_B$
+potrebbe non essere più esplorata.
+
+L'algoritmo può quindi convergere verso una buona soluzione locale
+senza individuare la migliore soluzione disponibile nello spazio
+complessivo.
+
+Si ripresenta quindi il trade-off tra
+
+\[
+\boxed{
+\text{esplorazione globale}
+\qquad\text{e}\qquad
+\text{raffinamento locale}.
+}
+\]
+
+
+\subsection{Combinare ricerca globale e locale}
+
+Una possibile soluzione consiste nel non abbandonare completamente
+la ricerca globale.
+
+A ogni iterazione possiamo destinare una parte delle estrazioni alla
+regione individuata come promettente e una parte all'esplorazione
+dell'intero spazio ammissibile.
+
+Se generiamo $N$ portafogli, possiamo ad esempio distinguere
+
+\[
+N=N_L+N_G,
+\]
+
+dove
+
+\[
+N_L
+\]
+
+è il numero di portafogli generati localmente e
+
+\[
+N_G
+\]
+
+il numero di portafogli generati globalmente.
+
+La componente locale permette di affinare la soluzione:
+
+\[
+N_L
+\longrightarrow
+\text{raffinamento},
+\]
+
+mentre la componente globale mantiene la possibilità di individuare
+regioni alternative:
+
+\[
+N_G
+\longrightarrow
+\text{esplorazione}.
+\]
+
+La ricerca può quindi essere rappresentata come
+
+\[
+\boxed{
+\begin{array}{ccc}
+\text{ricerca globale}
+&&
+\text{ricerca locale}
+\\
+\searrow&&\swarrow\\
+&
+\text{nuova popolazione di candidati}
+&
+\\
+&
+\downarrow
+&
+\\
+&
+\text{selezione della soluzione migliore}.
+&
+\end{array}
+}
+\]
+
+
+\subsection{La logica dell'algoritmo}
+
+L'applicazione al problema di portafoglio può essere riassunta
+attraverso la seguente sequenza:
+
+\begin{enumerate}
+    \item generare una popolazione iniziale di portafogli ammissibili;
+    \item calcolare la varianza di ciascun portafoglio;
+    \item individuare il portafoglio con varianza minima;
+    \item utilizzare la sua posizione per definire una regione di
+          ricerca più promettente;
+    \item generare nuovi portafogli nella regione aggiornata;
+    \item mantenere eventualmente una componente di ricerca globale;
+    \item confrontare le nuove soluzioni con la migliore già trovata;
+    \item restringere progressivamente la ricerca locale;
+    \item ripetere il procedimento fino al criterio di arresto.
+\end{enumerate}
+
+In forma compatta,
+
+\[
+\boxed{
+\begin{array}{c}
+\text{popolazione casuale}\\
+\downarrow\\
+\text{valutazione della varianza}\\
+\downarrow\\
+\text{selezione}\\
+\downarrow\\
+\text{aggiornamento della regione}\\
+\downarrow\\
+\text{nuova popolazione}\\
+\downarrow\\
+\vdots\\
+\downarrow\\
+\widehat{\mathbf{x}}_{\min}
+\end{array}
+}
+\]
+
+
+\subsection{Una differenza rispetto alla programmazione quadratica}
+
+È utile tornare al confronto con il metodo utilizzato nelle sezioni
+precedenti.
+
+Nel problema di Markowitz la programmazione quadratica sfrutta
+direttamente la struttura
+
+\[
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}
+\]
+
+della funzione obiettivo e la linearità dei vincoli.
+
+La ricerca stocastica segue invece una logica differente:
+
+\[
+\boxed{
+\text{generare}
+\longrightarrow
+\text{valutare}
+\longrightarrow
+\text{selezionare}
+\longrightarrow
+\text{aggiornare}.
+}
+\]
+
+Nel caso del semplice problema media-varianza, utilizzare un solver
+specifico di programmazione quadratica è generalmente più naturale.
+
+L'interesse della ricerca stocastica risiede soprattutto nella
+maggiore generalità della procedura: il meccanismo di ricerca non
+richiede necessariamente che la funzione obiettivo abbia una forma
+quadratica.
+
+La stessa struttura computazionale può quindi essere adattata a
+problemi nei quali la funzione da ottimizzare è più complessa.
+
+
+\subsection{Dal minimo rischio a criteri di scelta più generali}
+
+Finora abbiamo utilizzato come funzione obiettivo esclusivamente la
+varianza:
+
+\[
+f(\mathbf{x})
+=
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}.
+\]
+
+Il criterio di scelta era quindi
+
+\[
+\min_{\mathbf{x}} f(\mathbf{x}).
+\]
+
+Ma un investitore non è normalmente interessato soltanto a
+minimizzare il rischio. La scelta di portafoglio dipende anche dal
+rendimento che può essere ottenuto.
+
+Una possibile estensione consiste quindi nel costruire una funzione
+obiettivo che consideri contemporaneamente
+
+\[
+\text{rendimento}
+\qquad\text{e}\qquad
+\text{rischio}.
+\]
+
+In questo modo, invece di costruire prima l'intera frontiera
+efficiente e scegliere successivamente un punto sulla frontiera,
+possiamo formulare direttamente un problema nel quale la soluzione
+dipende dalle preferenze dell'investitore.
+
+Questo conduce alla massimizzazione di una funzione di utilità del
+portafoglio.
+
+\section{Massimizzazione dell'utilità e scelta del portafoglio}
+\label{sec:massimizzazione-utilita-portafoglio}
+
+Finora abbiamo utilizzato il problema di portafoglio per cercare
+l'allocazione caratterizzata dal rischio minimo. La funzione
+obiettivo era quindi
+
+\[
+\min_{\mathbf{x}}
+\quad
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}.
+\]
+
+Questo criterio considera soltanto uno dei due elementi fondamentali
+della scelta finanziaria: il rischio.
+
+Un investitore, tuttavia, non è normalmente interessato a minimizzare
+il rischio indipendentemente dal rendimento. Un portafoglio con un
+rischio maggiore può essere preferibile se offre, in cambio, un
+rendimento atteso sufficientemente elevato.
+
+È quindi naturale formulare il problema in modo da considerare
+simultaneamente rendimento e rischio.
+
+
+\subsection{Una funzione di utilità del portafoglio}
+
+Consideriamo la funzione
+
+\[
+\boxed{
+U(\mathbf{x})
+=
+\mathbf{x}^{T}\mathbf{c}
+-
+\gamma
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}.
+}
+\]
+
+Il primo termine,
+
+\[
+\mathbf{x}^{T}\mathbf{c},
+\]
+
+rappresenta il rendimento atteso del portafoglio.
+
+Il secondo termine,
+
+\[
+\gamma
+\mathbf{x}^{T}\mathbf{H}\mathbf{x},
+\]
+
+rappresenta invece la penalizzazione associata al rischio.
+
+Poiché
+
+\[
+c_p=\mathbf{x}^{T}\mathbf{c}
+\]
+
+e
+
+\[
+\sigma_p^2=\mathbf{x}^{T}\mathbf{H}\mathbf{x},
+\]
+
+la funzione può essere scritta anche come
+
+\[
+\boxed{
+U(\mathbf{x})
+=
+c_p-\gamma\sigma_p^2.
+}
+\]
+
+L'utilità aumenta quindi quando aumenta il rendimento atteso e
+diminuisce quando aumenta il rischio.
+
+Il problema dell'investitore diventa
+
+\[
+\boxed{
+\begin{aligned}
+\max_{\mathbf{x}}
+\quad&
+\mathbf{x}^{T}\mathbf{c}
+-
+\gamma\mathbf{x}^{T}\mathbf{H}\mathbf{x}
+\\
+\text{s.t.}\quad&
+\sum_{k=1}^{n}x_k=1,
+\\
+&
+x_k\geq0,
+\qquad k=1,\ldots,n.
+\end{aligned}
+}
+\]
+
+
+\subsection{Il ruolo del parametro $\gamma$}
+
+Il parametro
+
+\[
+\gamma
+\]
+
+determina il peso attribuito al rischio nella funzione obiettivo.
+
+Per comprenderne il significato, consideriamo nuovamente
+
+\[
+U(\mathbf{x})
+=
+c_p-\gamma\sigma_p^2.
+\]
+
+A parità di rendimento e di rischio, un valore maggiore di
+$\gamma$ rende più importante la penalizzazione associata alla
+varianza.
+
+Possiamo quindi scrivere
+
+\[
+\boxed{
+\gamma\uparrow
+\quad\Longrightarrow\quad
+\text{maggiore peso attribuito al rischio}.
+}
+\]
+
+Un investitore caratterizzato da un valore elevato di $\gamma$
+tenderà quindi a preferire portafogli meno rischiosi, anche se ciò
+comporta la rinuncia a una parte del rendimento atteso.
+
+Al contrario,
+
+\[
+\boxed{
+\gamma\downarrow
+\quad\Longrightarrow\quad
+\text{minore peso attribuito al rischio}.
+}
+\]
+
+In questo caso l'investitore è maggiormente disposto ad accettare
+rischio per ottenere un rendimento atteso più elevato.
+
+
+\subsection{Il caso $\gamma=0$}
+
+Un caso limite particolarmente utile per comprendere il significato
+del parametro è
+
+\[
+\gamma=0.
+\]
+
+La funzione di utilità diventa
+
+\[
+U(\mathbf{x})
+=
+\mathbf{x}^{T}\mathbf{c}.
+\]
+
+Il rischio scompare completamente dal criterio di scelta e il
+problema diventa
+
+\[
+\max_{\mathbf{x}}
+\quad
+\mathbf{x}^{T}\mathbf{c}.
+\]
+
+Se non sono ammesse vendite allo scoperto e tutta la ricchezza deve
+essere investita, la soluzione consiste nell'investire interamente
+nell'attività con il rendimento atteso più elevato.
+
+In questo caso, infatti, l'investitore non attribuisce alcun costo
+alla maggiore variabilità dei rendimenti.
+
+
+\subsection{L'effetto di un aumento di $\gamma$}
+
+Supponiamo ora di aumentare progressivamente il valore di $\gamma$.
+
+Per valori relativamente bassi, la componente
+
+\[
+\mathbf{x}^{T}\mathbf{c}
+\]
+
+ha un peso importante nella determinazione della soluzione.
+
+All'aumentare di $\gamma$, invece, il termine
+
+\[
+\gamma\mathbf{x}^{T}\mathbf{H}\mathbf{x}
+\]
+
+diventa progressivamente più importante.
+
+L'investitore sarà quindi disposto a rinunciare a una parte del
+rendimento atteso per ridurre il rischio.
+
+Possiamo rappresentare schematicamente questo comportamento come
+
+\[
+\boxed{
+\begin{array}{ccc}
+\gamma\ \text{basso}
+&
+\longrightarrow
+&
+\text{maggiore importanza del rendimento},
+\\[2mm]
+\gamma\ \text{alto}
+&
+\longrightarrow
+&
+\text{maggiore importanza del rischio}.
+\end{array}
+}
+\]
+
+Il parametro $\gamma$ permette quindi di rappresentare differenti
+atteggiamenti nei confronti del trade-off tra rendimento e rischio.
+
+
+\subsection{Dalla frontiera efficiente alla scelta del portafoglio}
+
+La funzione di utilità permette anche di reinterpretare la frontiera
+efficiente studiata nelle sezioni precedenti.
+
+La frontiera efficiente identifica un insieme di portafogli
+caratterizzati dalle migliori combinazioni disponibili di rischio e
+rendimento.
+
+Essa, tuttavia, non determina da sola quale portafoglio debba essere
+scelto.
+
+Due investitori possono osservare la stessa frontiera efficiente ma
+scegliere portafogli differenti perché attribuiscono un peso diverso
+al rischio.
+
+Indicando con $\gamma_A$ e $\gamma_B$ i parametri di due investitori,
+possiamo avere, ad esempio,
+
+\[
+\gamma_A>\gamma_B.
+\]
+
+L'investitore $A$ attribuisce una penalizzazione maggiore al rischio
+e tenderà quindi a scegliere un portafoglio meno rischioso.
+
+L'investitore $B$ è invece disposto ad accettare una maggiore
+varianza in cambio di un rendimento atteso più elevato.
+
+La frontiera descrive quindi le opportunità disponibili, mentre
+$\gamma$ contribuisce a determinare la scelta effettuata
+dall'investitore.
+
+
+\subsection{La funzione obiettivo nella ricerca stocastica}
+
+La ricerca stocastica introdotta nelle sezioni precedenti può essere
+utilizzata anche per questo nuovo problema.
+
+La struttura generale dell'algoritmo non deve essere modificata.
+
+Generiamo una popolazione di portafogli ammissibili
+
+\[
+\mathbf{x}^{(1)},
+\mathbf{x}^{(2)},
+\ldots,
+\mathbf{x}^{(N)}.
+\]
+
+Per ciascun portafoglio calcoliamo ora
+
+\[
+U\left(\mathbf{x}^{(i)}\right)
+=
+\left(\mathbf{x}^{(i)}\right)^T\mathbf{c}
+-
+\gamma
+\left(\mathbf{x}^{(i)}\right)^T
+\mathbf{H}
+\mathbf{x}^{(i)}.
+\]
+
+Poiché si tratta di un problema di massimizzazione, scegliamo il
+portafoglio caratterizzato dal valore più elevato dell'utilità:
+
+\[
+\boxed{
+\widehat{\mathbf{x}}
+=
+\arg\max_{i=1,\ldots,N}
+U\left(\mathbf{x}^{(i)}\right).
+}
+\]
+
+Questa soluzione viene quindi utilizzata per aggiornare la regione
+nella quale effettuare la ricerca nell'iterazione successiva.
+
+
+\subsection{La procedura iterativa}
+
+Indichiamo con
+
+\[
+\mathbf{x}^{*(g)}
+\]
+
+la migliore soluzione individuata all'iterazione $g$.
+
+Attorno a questa soluzione generiamo una nuova popolazione
+
+\[
+\mathbf{x}^{(g,1)},
+\ldots,
+\mathbf{x}^{(g,N)}.
+\]
+
+Per ciascun candidato calcoliamo
+
+\[
+U\left(\mathbf{x}^{(g,i)}\right).
+\]
+
+La nuova soluzione di riferimento sarà quindi
+
+\[
+\boxed{
+\mathbf{x}^{*(g+1)}
+=
+\arg\max
+\left\{
+U(\mathbf{x}^{*(g)}),
+U(\mathbf{x}^{(g,1)}),
+\ldots,
+U(\mathbf{x}^{(g,N)})
+\right\}.
+}
+\]
+
+Il procedimento può essere rappresentato come
+
+\[
+\boxed{
+\begin{array}{c}
+\text{generazione dei portafogli}\\
+\downarrow\\
+\text{calcolo di rendimento e rischio}\\
+\downarrow\\
+\text{calcolo dell'utilità}\\
+\downarrow\\
+\text{selezione del portafoglio con utilità maggiore}\\
+\downarrow\\
+\text{aggiornamento della regione di ricerca}\\
+\downarrow\\
+\text{nuova iterazione}.
+\end{array}
+}
+\]
+
+
+\subsection{Cambiare la funzione obiettivo senza cambiare il metodo}
+
+Questo esempio permette di mettere in evidenza una caratteristica
+importante della ricerca stocastica.
+
+Nel problema precedente utilizzavamo
+
+\[
+f(\mathbf{x})
+=
+\mathbf{x}^{T}\mathbf{H}\mathbf{x}
+\]
+
+e cercavamo
+
+\[
+\min_{\mathbf{x}} f(\mathbf{x}).
+\]
+
+Ora utilizziamo
+
+\[
+U(\mathbf{x})
+=
+\mathbf{x}^{T}\mathbf{c}
+-
+\gamma\mathbf{x}^{T}\mathbf{H}\mathbf{x}
+\]
+
+e cerchiamo
+
+\[
+\max_{\mathbf{x}}U(\mathbf{x}).
+\]
+
+La funzione obiettivo è cambiata, ma la logica computazionale rimane
+sostanzialmente la stessa:
+
+\[
+\boxed{
+\text{generare}
+\longrightarrow
+\text{valutare}
+\longrightarrow
+\text{selezionare}
+\longrightarrow
+\text{aggiornare}.
+}
+\]
+
+Questa flessibilità costituisce uno degli aspetti interessanti dei
+metodi di ricerca stocastica.
+
+Una volta definita una funzione che associa a ogni soluzione
+ammissibile un valore numerico, la stessa struttura generale può
+essere utilizzata per confrontare le soluzioni e orientare la
+ricerca.
+
+
+\subsection{Una funzione obiettivo più generale}
+
+Il problema di portafoglio mostra anche come la funzione obiettivo
+possa incorporare direttamente le caratteristiche economiche
+rilevanti per il decisore.
+
+Nel nostro esempio abbiamo utilizzato
+
+\[
+U(\mathbf{x})
+=
+c_p-\gamma\sigma_p^2.
+\]
+
+La ricerca stocastica, tuttavia, non richiede che la funzione
+obiettivo abbia necessariamente questa particolare forma.
+
+In termini generali possiamo immaginare una funzione
+
+\[
+U(\mathbf{x})
+=
+U\left(
+\text{rendimento},
+\text{rischio},
+\text{altri criteri}
+\right).
+\]
+
+Il problema diventerebbe
+
+\[
+\max_{\mathbf{x}\in\mathcal{X}}
+U(\mathbf{x}).
+\]
+
+Se siamo in grado di calcolare $U(\mathbf{x})$ per ogni soluzione
+candidata, possiamo utilizzare il valore ottenuto come criterio per
+confrontare i portafogli.
+
+Questo permette, almeno in linea di principio, di affrontare
+problemi nei quali la funzione obiettivo è più complessa di quella
+prevista dal modello media-varianza.
+
+
+\subsection{Il significato computazionale dell'esempio}
+
+Il percorso seguito consente infine di distinguere chiaramente il
+\emph{modello economico} dal \emph{metodo numerico}.
+
+Il modello economico stabilisce che cosa rappresenta una buona
+soluzione.
+
+Nel problema di minima varianza il criterio era
+
+\[
+\text{minimizzare il rischio}.
+\]
+
+Nel problema appena introdotto il criterio diventa
+
+\[
+\text{massimizzare}
+\left(
+\text{rendimento}
+-
+\text{penalizzazione per il rischio}
+\right).
+\]
+
+Il metodo numerico stabilisce invece come cercare la soluzione.
+
+Nel nostro caso utilizziamo la ricerca stocastica iterativa:
+
+\[
+\boxed{
+\text{modello}
+\longrightarrow
+\text{funzione obiettivo}
+\longrightarrow
+\text{ricerca numerica}
+\longrightarrow
+\text{soluzione}.
+}
+\]
+
+La distinzione è importante perché lo stesso metodo numerico può
+essere applicato a funzioni obiettivo differenti, mentre lo stesso
+problema economico può, in alcuni casi, essere affrontato mediante
+metodi numerici diversi.
+
+Il problema di portafoglio costituisce un esempio particolarmente
+utile di questo principio: la sua struttura semplice ci ha permesso
+di confrontare la programmazione quadratica con metodi basati sulla
+ricerca casuale e, successivamente, di estendere la funzione
+obiettivo senza modificare la logica fondamentale della ricerca
+stocastica.
+
+\section{Ricerca stocastica e algoritmi evolutivi}
+\label{sec:ricerca-stocastica-algoritmi-evolutivi}
+
+La ricerca stocastica iterativa descritta nelle sezioni precedenti
+presenta alcune caratteristiche che possono ricordare quelle degli
+algoritmi evolutivi.
+
+Entrambi gli approcci utilizzano infatti la casualità per esplorare
+lo spazio delle possibili soluzioni ed entrambi utilizzano
+l'informazione ottenuta durante la ricerca per orientare le
+iterazioni successive.
+
+È quindi utile precisare la relazione tra i due approcci e,
+soprattutto, evidenziarne la differenza fondamentale.
+
+
+\subsection{Un elemento comune: l'esplorazione casuale}
+
+Consideriamo un generico problema di ottimizzazione
+
+\[
+\max_{\mathbf{x}\in\mathcal{X}} f(\mathbf{x})
+\]
+
+oppure
+
+\[
+\min_{\mathbf{x}\in\mathcal{X}} f(\mathbf{x}).
+\]
+
+Sia nella ricerca stocastica sia negli algoritmi evolutivi vengono
+generate diverse soluzioni candidate
+
+\[
+\mathbf{x}^{(1)},
+\mathbf{x}^{(2)},
+\ldots,
+\mathbf{x}^{(N)}
+\]
+
+e per ciascuna viene calcolato il valore della funzione obiettivo.
+
+La casualità permette quindi di esplorare lo spazio
+
+\[
+\mathcal{X}
+\]
+
+senza dover determinare analiticamente, prima della ricerca, la
+direzione nella quale si trova la soluzione migliore.
+
+In entrambi i casi possiamo quindi riconoscere una struttura generale
+del tipo
+
+\[
+\boxed{
+\text{generazione delle soluzioni}
+\longrightarrow
+\text{valutazione}
+\longrightarrow
+\text{utilizzo dei risultati}
+\longrightarrow
+\text{nuova iterazione}.
+}
+\]
+
+La differenza fondamentale riguarda il modo in cui i risultati
+ottenuti vengono utilizzati per costruire l'iterazione successiva.
+
+
+\subsection{La ricerca stocastica iterativa}
+
+Nella ricerca stocastica sviluppata nelle sezioni precedenti, a ogni
+iterazione viene individuata una soluzione particolarmente
+promettente.
+
+Indichiamola con
+
+\[
+\mathbf{x}^{*(g)}.
+\]
+
+Il risultato ottenuto viene utilizzato per aggiornare la regione
+dello spazio nella quale effettuare la ricerca successiva.
+
+Possiamo rappresentare schematicamente il procedimento come
+
+\[
+\boxed{
+\mathcal{R}^{(g)}
+\longrightarrow
+\mathbf{x}^{*(g)}
+\longrightarrow
+\mathcal{R}^{(g+1)},
+}
+\]
+
+dove
+
+\[
+\mathcal{R}^{(g)}
+\]
+
+indica la regione esplorata all'iterazione $g$.
+
+Una volta determinata la nuova regione, viene generato al suo interno
+un nuovo insieme di soluzioni candidate.
+
+Il punto importante è che la popolazione di soluzioni utilizzata
+nell'iterazione precedente non viene trasformata nella popolazione
+dell'iterazione successiva.
+
+Essa viene utilizzata per ottenere informazione sulla qualità delle
+diverse zone dello spazio delle soluzioni.
+
+È quindi principalmente la \emph{regione di ricerca} a essere
+aggiornata.
+
+
+\subsection{Gli algoritmi evolutivi}
+
+Negli algoritmi evolutivi la logica è differente.
+
+Anche in questo caso consideriamo una popolazione di soluzioni
+
+\[
+\mathcal{P}^{(g)}
+=
+\left\{
+\mathbf{x}^{(g,1)},
+\mathbf{x}^{(g,2)},
+\ldots,
+\mathbf{x}^{(g,N)}
+\right\}.
+\]
+
+Ogni membro della popolazione viene valutato sulla base della
+funzione obiettivo.
+
+I risultati ottenuti vengono però utilizzati per determinare
+l'evoluzione della popolazione stessa.
+
+In termini schematici,
+
+\[
+\boxed{
+\mathcal{P}^{(g)}
+\longrightarrow
+\text{valutazione dei membri}
+\longrightarrow
+\mathcal{P}^{(g+1)}.
+}
+\]
+
+La nuova popolazione dipende quindi dal successo relativo dei membri
+della popolazione precedente.
+
+Le soluzioni che hanno prodotto risultati migliori hanno un ruolo
+maggiore nel processo che conduce alla generazione successiva.
+
+Per questo motivo si parla di algoritmi \emph{evolutivi}: la
+popolazione cambia nel tempo sulla base dei risultati ottenuti dai
+suoi membri.
+
+
+\subsection{Regione di ricerca e popolazione}
+
+Possiamo quindi mettere a confronto direttamente i due meccanismi.
+
+Nella ricerca stocastica iterativa descritta in questo corso abbiamo
+
+\[
+\boxed{
+\text{risultati dell'iterazione}
+\longrightarrow
+\text{aggiornamento della regione di ricerca}.
+}
+\]
+
+Negli algoritmi evolutivi abbiamo invece
+
+\[
+\boxed{
+\text{risultati dell'iterazione}
+\longrightarrow
+\text{evoluzione della popolazione}.
+}
+\]
+
+La distinzione può essere sintetizzata come
+
+\[
+\boxed{
+\begin{array}{c|c}
+\text{Ricerca stocastica}
+&
+\text{Algoritmi evolutivi}
+\\
+\hline
+\text{si aggiorna la regione}
+&
+\text{evolve la popolazione}
+\\
+\text{di ricerca}
+&
+\text{delle soluzioni}
+\end{array}
+}
+\]
+
+Questa differenza è importante perché, nei due casi, l'informazione
+prodotta dalla funzione obiettivo viene conservata e utilizzata in
+modo diverso.
+
+
+\subsection{Il significato della popolazione}
+
+Nella ricerca stocastica la popolazione generata in una determinata
+iterazione può essere interpretata principalmente come un
+\emph{campione di punti} utilizzato per esplorare una determinata
+regione dello spazio.
+
+Una volta valutati i punti, l'informazione rilevante viene utilizzata
+per decidere dove concentrare la ricerca successiva.
+
+Possiamo rappresentare il procedimento come
+
+\[
+\mathcal{P}^{(g)}
+\longrightarrow
+\text{informazione}
+\longrightarrow
+\mathcal{R}^{(g+1)}
+\longrightarrow
+\mathcal{P}^{(g+1)}.
+\]
+
+La nuova popolazione viene quindi generata all'interno della nuova
+regione.
+
+Negli algoritmi evolutivi, invece, la popolazione assume un ruolo
+centrale anche nel collegamento tra due iterazioni consecutive:
+
+\[
+\mathcal{P}^{(g)}
+\longrightarrow
+\mathcal{P}^{(g+1)}.
+\]
+
+La popolazione non costituisce soltanto uno strumento per osservare
+lo spazio delle soluzioni: è l'oggetto che evolve nel corso
+dell'algoritmo.
+
+
+\subsection{Il ruolo delle soluzioni di maggior successo}
+
+La differenza può essere compresa anche considerando il ruolo delle
+soluzioni che producono i risultati migliori.
+
+Nella ricerca stocastica, una buona soluzione può essere utilizzata
+per individuare una regione promettente:
+
+\[
+\mathbf{x}^{*(g)}
+\longrightarrow
+\mathcal{R}^{(g+1)}.
+\]
+
+Successivamente vengono generate nuove soluzioni all'interno della
+regione aggiornata.
+
+Negli algoritmi evolutivi, invece, il successo dei membri della
+popolazione influenza direttamente la composizione della popolazione
+successiva.
+
+In termini generali,
+
+\[
+\boxed{
+\text{maggiore successo}
+\quad\Longrightarrow\quad
+\text{maggiore influenza sull'evoluzione successiva}.
+}
+\]
+
+È proprio questo meccanismo a richiamare l'idea di selezione che
+caratterizza l'interpretazione evolutiva dell'algoritmo.
+
+
+\subsection{Due modi di utilizzare la stessa informazione}
+
+È utile osservare che entrambi gli approcci cercano di risolvere lo
+stesso problema fondamentale: utilizzare le informazioni ottenute
+durante la ricerca per evitare che ogni nuova esplorazione riparta
+completamente da zero.
+
+Supponiamo che una determinata parte dello spazio abbia prodotto
+soluzioni particolarmente buone.
+
+La ricerca stocastica può utilizzare questa informazione dicendo:
+
+\[
+\boxed{
+\text{cerchiamo maggiormente in questa regione}.
+}
+\]
+
+Un algoritmo evolutivo utilizza invece l'informazione secondo una
+logica del tipo:
+
+\[
+\boxed{
+\text{facciamo dipendere maggiormente la nuova popolazione}
+\atop
+\text{dai membri che hanno avuto maggiore successo}.
+}
+\]
+
+Entrambi i metodi introducono quindi una forma di apprendimento dalle
+iterazioni precedenti, ma l'informazione viene incorporata
+nell'algoritmo in modo differente.
+
+
+\subsection{Una distinzione schematica}
+
+Possiamo sintetizzare l'intero confronto attraverso i due percorsi
+
+\[
+\boxed{
+\begin{array}{ccccc}
+\multicolumn{5}{c}{\text{Ricerca stocastica iterativa}}
+\\[2mm]
+\mathcal{P}^{(g)}
+&
+\longrightarrow
+&
+\mathbf{x}^{*(g)}
+&
+\longrightarrow
+&
+\mathcal{R}^{(g+1)}
+\\
+&&&&
+\downarrow
+\\
+&&&&
+\mathcal{P}^{(g+1)}
+\end{array}
+}
+\]
+
+e
+
+\[
+\boxed{
+\begin{array}{ccccc}
+\multicolumn{5}{c}{\text{Algoritmo evolutivo}}
+\\[2mm]
+\mathcal{P}^{(g)}
+&
+\longrightarrow
+&
+\text{valutazione e selezione}
+&
+\longrightarrow
+&
+\mathcal{P}^{(g+1)}.
+\end{array}
+}
+\]
+
+Nel primo caso il collegamento fondamentale tra le iterazioni passa
+attraverso l'aggiornamento della regione di ricerca.
+
+Nel secondo passa attraverso l'evoluzione della popolazione.
+
+
+\subsection{Il percorso seguito nel problema di portafoglio}
+
+Possiamo infine ricostruire il percorso computazionale sviluppato
+nelle sezioni precedenti.
+
+Siamo partiti da una ricerca Monte Carlo nella quale i portafogli
+venivano generati casualmente:
+
+\[
+\boxed{
+\text{generazione casuale}
+\longrightarrow
+\text{valutazione}
+\longrightarrow
+\text{migliore soluzione osservata}.
+}
+\]
+
+Abbiamo poi introdotto una ricerca stocastica iterativa nella quale
+l'informazione ottenuta viene utilizzata per modificare la regione
+esplorata:
+
+\[
+\boxed{
+\text{ricerca}
+\longrightarrow
+\text{buona soluzione}
+\longrightarrow
+\text{aggiornamento della regione}
+\longrightarrow
+\text{nuova ricerca}.
+}
+\]
+
+Infine abbiamo osservato che esiste un'altra famiglia di metodi,
+gli algoritmi evolutivi, nei quali il collegamento tra le iterazioni
+avviene facendo evolvere la popolazione delle soluzioni.
+
+Possiamo quindi rappresentare i tre casi come
+
+\[
+\boxed{
+\begin{array}{c|c}
+\text{Metodo}
+&
+\text{Informazione trasferita alle iterazioni successive}
+\\
+\hline
+\text{Monte Carlo puro}
+&
+\text{nessuna}
+\\[1mm]
+\text{Ricerca stocastica iterativa}
+&
+\text{regione di ricerca}
+\\[1mm]
+\text{Algoritmi evolutivi}
+&
+\text{popolazione}
+\end{array}
+}
+\]
+
+
+\subsection{Considerazioni conclusive}
+
+Il confronto tra questi metodi mette in evidenza un principio
+generale dell'ottimizzazione numerica.
+
+Quando lo spazio delle possibili soluzioni è molto ampio, una ricerca
+completamente casuale può utilizzare in modo poco efficiente le
+risorse computazionali disponibili.
+
+Diventa quindi utile conservare l'informazione prodotta durante la
+ricerca e utilizzarla nelle iterazioni successive.
+
+La ricerca stocastica iterativa e gli algoritmi evolutivi
+rappresentano due modi differenti di realizzare questo principio.
+
+Nel primo caso viene aggiornata la regione dello spazio nella quale
+effettuare la ricerca; nel secondo è la popolazione delle soluzioni
+a evolvere nel tempo in funzione dei risultati ottenuti dai suoi
+membri.
+
+Questa distinzione consente di collocare correttamente la procedura
+utilizzata nelle sezioni precedenti all'interno della più ampia
+famiglia dei metodi stocastici di ottimizzazione.
+
+
 
 
 \end{document}
