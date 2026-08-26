@@ -1,0 +1,270 @@
+# Il problema
+
+- Sia $W$ una somma di denaro che si intende investire complessivamente in attività finanziarie rischiose (ovvero in azioni).
+- Nel mercato di borsa ci siano $n$ azioni.
+- Determinare le percentuali di $W$ da allocare ad ogni azione.
+- Una prima soluzione al problema fu descritta nell'articolo H. Markowitz (1952) Portfolio selection, The Journal of Finance.
+- Harry Markowitz è un economista statunitense, vincitore, insieme a Merton Miller e William Sharpe, del premio Nobel per l'economia nel 1990, ``per i contributi pionieristici nell'ambito dell'economia finanziaria''.
+
+# Ipotesi
+
+- Il rendimento di ogni azione è descritto da una variabile casuale gaussiana (normale) avente media $c_k$ e deviazione standard $\sigma_k$
+- Questo implica che il rendimento di un portafoglio composto da più azioni, in cui ogni azione compare con quota $x_k$, è una variabile casuale normale con media:
+$$c=\sum_k c_k x_k$$
+e deviazione standard:
+$$\sigma=\sqrt{\sum_k \sigma^2_k x^2_k+ \sum_{k\neq j}\sigma_{kj}x_k x_j}$$
+(ovvero, occorre tener conto di tutte le correlazioni che i titoli hanno tra di
+loro: $\sum_{k\neq j}\sigma_{kj}x_k x_j$).
+
+# La forma matriciale
+$$
+\mathbf{x}=
+\left[
+\begin{array}{c}
+x_1\\
+\vdots\\
+x_n
+\end{array}
+\right]
+\qquad
+\mathbf{c}=
+\left[
+\begin{array}{c}
+c_1\\
+\vdots\\
+c_n
+\end{array}
+\right]
+\qquad
+\mathbf{H}=
+\left[
+\begin{array}{c c c c}
+\sigma_1 & \sigma_{12}& \cdots&\sigma_{1n}\\
+\sigma_{21} & \sigma_2 & \cdots&\sigma_{2n}\\
+\vdots & \vdots & \ddots&\vdots\\
+\sigma_{n1}&\sigma_{n2}&\cdots&\sigma_{n}
+\end{array}
+\right]
+$$
+
+dove:
+
+$\mathbf{x}$ quote dei titoli in portafoglio. Caratteristiche: 
+
+- $\sum_{k=1}^nx_k=1$
+- richiediamo inoltre che $x_k\ge0 \ \forall k$
+
+$\mathbf{c}$ rendimenti atteso
+
+$\mathbf{H}$ matrice varianze-covarianze
+
+#
+
+Con la notazione appena esposta,
+
+il rendimento di un portafoglio può essere scritto come:
+$$c=\mathbf{x^Tc}$$
+
+la varianza del portafoglio può essere scritta come
+$$\sigma^2=\mathbf{x^THx}$$
+
+
+# Teoria economica
+
+Per poter mettere in condizione un soggetto di scegliere occorre:
+
+- Individuare l'insieme di scelta, ovvero identificare tutte le possibili combinazioni $c$ e $\sigma$ disponibili al soggetto, date le caratteristiche delle azioni considerate
+- Dotare il soggetto di preferenze che consentano di metterlo in grado di ordinare il suo gradimento di tutte le coppie $c$ e $\sigma$ a lui disponibili
+- In queste diapositive affronteremo il primo argomento. Lo studente interessato al secondo, può rivedere la teoria microeconomica della scelta in condizioni di rischio.
+
+# L'individuazione dell'insieme di scelta
+
+Può essere fatta attraverso i seguenti passaggi:
+
+- individuazione del portafoglio di minimo rischio (minima varianza)
+- calcolo del rendimento del portafoglio di minimo rischio ($c_{\min}$)
+- individuazione del titolo efficiente con massimo rendimento e identificarne il rendimento ($c_{\max}$)
+- generare una sequenza di valori a intervalli regolari tra $c_{\min}$ e $c_{\max}$
+- per ogni valore della sequenza determinare il portafoglio di minima varianza che abbia quel rendimento
+
+# Minimizzazione vincolata
+
+- Nella sequenza precedente, appare per due volte il compito di trovare il portafoglio di minima varianza.
+
+- Tuttavia dobbiamo anche rispettare dei vincoli. 
+
+- Ad esempio, sappiamo dalle diapositive precedenti che 
+	- $\sum_{k=1}^nx_k=1$
+	- richiediamo inoltre che $x_k\ge0 \ \forall k$
+- nell'ultimo punto della diapositiva precedente, richiediamo inoltre
+	- $\mathbf{x^Tc}=\bar{c}$
+
+# Il problema
+
+Il problema può essere scritto come
+$$min \ \mathbf{x^T H x}$$
+sotto i vincoli
+$$\mathbf{Ax\ge b}$$
+dove i vincoli possono essere espressi come uguaglianze oppure come disuguaglianze.
+
+# La programmazione quadratica
+
+- Fortunatamente, il problema scritto sopra rientra tra quelli denominati di programmazione quadratica, la cui soluzione è stata a lungo studiata.
+- Un problema di programmazione quadratica nella forma generale viene scritto come
+$$min \ \mathbf{x^T H x +x^T d}$$
+sotto i vincoli
+$$\mathbf{Ax\ge b}$$
+- per la soluzione di tali problemi i pacchetti di calcolo scientifico hanno apposite funzioni. 
+
+# Software
+
+- in R: quadprog::solve.QP(Dmat, dvec, Amat, bvec, meq)
+	- Dmat:matrix appearing in the quadratic function to be minimized.
+	- dvec: vector appearing in the quadratic function to be minimized.
+	- Amat: matrix defining the constraints under which we want to minimize the quadratic function.
+	- bvec: vector holding the values of b_0 (defaults to zero).
+	- meq: the first meq constraints are treated as equality constraints, all further as inequality constraints (defaults to 0).
+	- factorized: logical flag: if TRUE, then we are passing R^(-1) (where D = R^T R) instead of the matrix D in the argument Dmat.
+- oppure: pracma:quadprog(...)
+
+# Esempio
+
+$$
+\mathbf{c}=
+\left[
+\begin{array}{l}
+0.1\\
+0.2\\
+0.15
+\end{array}
+\right]
+\qquad
+\mathbf{H}=
+\left[
+\begin{array}{c c c}
+0.005 & -0.01& 0.004\\
+-0.01 & 0.04 & -0.002\\
+0.004 & -0.002 & 0.023
+\end{array}
+\right]
+$$
+
+dove
+
+$\mathbf{c}$ rendimento atteso
+
+$\mathbf{H}$ matrice varianze-covarianze
+
+Seguiamo i passi esposti alla diapositiva 7 per individuare l'insieme di scelta. 
+
+# Portafoglio di minima varianza
+
+$$min \ \mathbf{x^T H x +x^T d}$$
+$$\textnormal{sotto i vincoli}$$
+$$
+\begin{array}{c c c c c c c}
+x_1&+&x_2&+&x_3&=&1\\
+x_1&+&0&+&0&\ge&0\\
+0&+&x_2&+&0&\ge&0\\
+0&+&0&+&x_3&\ge&0
+\end{array}
+$$
+ovvero 
+$$\mathbf{Ax\ge b}$$
+$$
+\mathbf{d}=
+\left[
+\begin{array}{l}
+0\\
+0\\
+0
+\end{array}
+\right]
+\mathbf{A}=
+\left[
+\begin{array}{lll}
+1&1&1\\
+1&0&0\\
+0&1&0\\
+0&0&1
+\end{array}
+\right]
+\mathbf{b}=
+\left[
+\begin{array}{l}
+1\\
+0\\
+0\\
+0
+\end{array}
+\right]
+$$
+
+# Identificazione sequenza di rendimenti
+
+- La soluzione del problema precedente identifica il seguente portafoglio: $x_1=0.7692 \ x_2=0.2308 \ x_3=0$
+
+- Il rendimento del portafoglio di minima varianza è 0.123
+
+- il rendimento del titolo efficiente di massimo rendimento è 0.2 
+
+- Generare la sequenza. La lunghezza della sequenza dipende dal passo utilizzato. Con un passo più piccolo avremo sequenze con più elementi e soluzioni più accurate.
+- Esempio: con passo 0.01 avremo la sequenza {0.13, 0.14, 0.15, ...., 0.19}. 
+- Per ogni elemento della sequenza si risolve il problema della diapositiva seguente, dove $\bar{c}$ è l'elemento della sequenza.
+
+
+# Portafoglio di minima varianza dato un certo rendimento
+
+\vskip-1cm
+$$min \ \mathbf{x^T H x +x^T d}$$
+$$\textnormal{sotto i vincoli}$$
+$$
+\begin{array}{r c r c r c c}
+x_1&+&x_2&+&x_3&=&1\\
+c_1x_1&+&c_2x_2&+&c_3x_3&=&\bar{c}\\
+x_1&+&0&+&0&\ge&0\\
+0&+&x_2&+&0&\ge&0\\
+0&+&0&+&x_3&\ge&0
+\end{array}
+$$
+ovvero 
+$$\mathbf{Ax\ge b}$$
+$$
+\mathbf{d}=
+\left[
+\begin{array}{l}
+0\\
+0\\
+0
+\end{array}
+\right]
+\mathbf{A}=
+\left[
+\begin{array}{lll}
+1&1&1\\
+c_1&c_2&c_3\\
+1&0&0\\
+0&1&0\\
+0&0&1
+\end{array}
+\right]
+\mathbf{b}=
+\left[
+\begin{array}{l}
+1\\
+\bar{c}\\
+0\\
+0\\
+0
+\end{array}
+\right]
+$$
+
+
+
+
+# Altri packages R
+
+- nloptr: ottimizzazione vincolata non lineare, (anche non quadratica).
+- constrOptim: ottimizza funzione generica con vincoli lineari.
+- NlcOptim: ottimizzazione lineare con vincoli non lineari
