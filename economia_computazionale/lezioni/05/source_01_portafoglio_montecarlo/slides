@@ -1,10 +1,3 @@
----
-title: "Economia Computazionale"
-subtitle: "Simulazione Monte Carlo e ricerca stocastica"
-author: ""
-date: ""
----
-
 # Un problema già conosciuto
 
 Consideriamo nuovamente il problema di scelta del portafoglio.
@@ -46,10 +39,8 @@ x_k\geq0 \qquad \forall k.
 $$
 Questo problema possiede una struttura matematica particolare.
 
-È un problema di **programmazione quadratica**.
-
-Possiamo quindi utilizzare algoritmi specificamente progettati
-per risolverlo.
+È un problema di **programmazione quadratica** e possiamo utilizzare
+algoritmi specificamente progettati per risolverlo.
 
 ---
 
@@ -75,18 +66,17 @@ come strumento di ricerca numerica.
 Con il termine **metodo Monte Carlo** si indica una famiglia di
 tecniche computazionali basate sull'utilizzo di numeri casuali.
 
-L'idea generale è:
+L'idea generale consiste nel:
 
-- generare molte realizzazioni casuali di un fenomeno o di una variabile;
+- generare molte realizzazioni casuali;
 - valutare una quantità di interesse per ciascuna realizzazione;
 - utilizzare i risultati ottenuti per approssimare una soluzione.
 
-Il nome richiama il carattere casuale dei giochi praticati
-nel celebre casinò di Monte Carlo.
+La casualità diventa quindi uno **strumento computazionale**.
 
 ---
 
-# Un'idea molto generale
+# Un metodo molto generale
 
 Il metodo Monte Carlo non è specifico della teoria del portafoglio.
 
@@ -153,13 +143,13 @@ Non è necessariamente l'ottimo esatto.
 
 # Monte Carlo e portafoglio
 
-Nel nostro problema:
+Nel problema di minimo rischio:
 $$
 f(\mathbf{x})
 =
 \mathbf{x}^T\mathbf{H}\mathbf{x}.
 $$
-Generiamo quindi $N$ portafogli:
+Generiamo $N$ portafogli:
 $$
 \mathbf{x}^{(1)},\ldots,\mathbf{x}^{(N)}
 $$
@@ -177,8 +167,7 @@ la più piccola varianza osservata.
 
 # Generare portafogli ammissibili
 
-Non possiamo però generare valori di $\mathbf{x}$ completamente
-arbitrari.
+Non possiamo generare valori di $\mathbf{x}$ completamente arbitrari.
 
 Dobbiamo rispettare:
 $$
@@ -194,12 +183,11 @@ Una possibilità consiste nel:
 2. calcolarne la somma;
 3. dividere ogni numero per tale somma.
 
-Otteniamo così automaticamente un portafoglio le cui quote
-sommano a uno.
+Otteniamo così automaticamente un portafoglio ammissibile.
 
 ---
 
-# Un esempio
+# Un semplice esempio
 
 Supponiamo di generare casualmente:
 $$
@@ -223,7 +211,7 @@ Abbiamo generato casualmente un portafoglio ammissibile.
 
 ---
 
-# Aumentare il numero di simulazioni
+# Quante simulazioni?
 
 Supponiamo di generare solamente 10 portafogli.
 
@@ -241,25 +229,25 @@ Il costo è un aumento del tempo di calcolo.
 
 ---
 
-# Un limite della ricerca casuale
+# Un limite della ricerca puramente casuale
 
 Supponiamo di avere già trovato un portafoglio con una varianza
 molto bassa.
 
 Se continuiamo a generare portafogli completamente a caso,
-gran parte delle nuove simulazioni potrebbe trovarsi molto
-lontano dalla buona soluzione già individuata.
+molte nuove simulazioni potrebbero trovarsi molto lontano
+dalla buona soluzione già individuata.
 
 Sorge quindi una domanda:
 
-> Perché non utilizzare l'informazione ottenuta dalle simulazioni
-> precedenti?
+> Se abbiamo già trovato una buona soluzione, perché non utilizzare
+> questa informazione per guidare la ricerca successiva?
 
-Questa domanda conduce alla **ricerca stocastica iterativa**.
+Questa idea conduce alla **ricerca stocastica iterativa**.
 
 ---
 
-# Dalla ricerca casuale alla ricerca locale
+# Dalla ricerca casuale alla ricerca stocastica
 
 Indichiamo con
 $$
@@ -267,9 +255,8 @@ $$
 $$
 la migliore soluzione trovata all'iterazione $g$.
 
-Invece di generare nuovi portafogli in tutto lo spazio delle
-possibili soluzioni, possiamo generarli nelle vicinanze di
-$\mathbf{x}^{(g)}$:
+Invece di generare nuovi portafogli indipendentemente dalla
+soluzione corrente, possiamo generarli nelle sue vicinanze:
 $$
 \widetilde{\mathbf{x}}_j^{(g)}
 =
@@ -277,13 +264,17 @@ $$
 +
 \boldsymbol{\varepsilon}_j^{(g)},
 $$
-dove $\boldsymbol{\varepsilon}_j^{(g)}$ è una perturbazione casuale.
+dove $\boldsymbol{\varepsilon}_j^{(g)}$ rappresenta una
+perturbazione casuale.
+
+La ricerca utilizza quindi l'informazione ottenuta nelle
+iterazioni precedenti.
 
 ---
 
 # Una popolazione di candidati
 
-A ogni iterazione generiamo una popolazione di $N$ candidati:
+A ogni iterazione generiamo $N$ candidati:
 $$
 \widetilde{\mathbf{x}}_1^{(g)},
 \widetilde{\mathbf{x}}_2^{(g)},
@@ -303,7 +294,7 @@ V_j^{(g)}
 $$
 ---
 
-# La selezione
+# Valutazione e selezione
 
 Tra tutti i candidati scegliamo quello con la funzione obiettivo
 migliore.
@@ -318,7 +309,7 @@ $$
 La soluzione selezionata diventa il punto di partenza
 dell'iterazione successiva.
 
-Abbiamo quindi il processo:
+Abbiamo quindi:
 $$
 \text{generazione}
 \rightarrow
@@ -326,47 +317,47 @@ $$
 \rightarrow
 \text{selezione}
 \rightarrow
-\text{nuova generazione}.
+\text{nuova ricerca}.
 $$
 ---
 
 # Conservare la soluzione migliore
 
-È utile includere tra i candidati della nuova iterazione anche
-la migliore soluzione già trovata:
+Tra i candidati possiamo includere anche la migliore soluzione
+già trovata:
 $$
 \mathbf{x}^{(g)}.
 $$
-In questo modo la nuova soluzione viene accettata soltanto se
-è almeno altrettanto buona della precedente.
+In questo modo la soluzione precedente non viene perduta se
+le nuove perturbazioni producono solamente risultati peggiori.
 
-Nel problema di minimo rischio avremo quindi:
+Nel problema di minimo rischio avremo:
 $$
 V(\mathbf{x}^{(g+1)})
 \leq
 V(\mathbf{x}^{(g)}).
 $$
-La migliore soluzione trovata non viene perduta.
+La qualità della migliore soluzione trovata non peggiora
+nel corso delle iterazioni.
 
 ---
 
 # Ricerca globale e ricerca locale
 
-Possiamo distinguere due idee.
+La ricerca casuale può essere utilizzata con due finalità.
 
 **Ricerca globale**
 
-- generiamo soluzioni in un'ampia regione dello spazio;
-- esploriamo molte possibilità differenti;
-- riduciamo il rischio di concentrarci troppo presto in una regione.
+- esplorare regioni molto diverse dello spazio delle soluzioni;
+- cercare nuove regioni promettenti.
 
 **Ricerca locale**
 
-- generiamo soluzioni vicino alla migliore soluzione corrente;
-- concentriamo il calcolo nelle regioni più promettenti;
-- possiamo migliorare progressivamente la precisione.
+- esplorare le vicinanze di una buona soluzione;
+- migliorare progressivamente la soluzione corrente.
 
-Le due strategie possono essere combinate.
+Una buona procedura di ricerca deve trovare un equilibrio
+tra **esplorazione** e **raffinamento**.
 
 ---
 
@@ -375,145 +366,59 @@ Le due strategie possono essere combinate.
 La dimensione della perturbazione casuale determina quanto
 ci allontaniamo dalla soluzione corrente.
 
-Se la perturbazione è grande:
+Una perturbazione grande favorisce:
 $$
-\widetilde{\mathbf{x}}
-=
-\mathbf{x}
-+
-\text{grande perturbazione},
+\boxed{\text{esplorazione}}
 $$
-esploriamo una regione più ampia.
-
-Se la perturbazione è piccola:
+Una perturbazione piccola favorisce:
 $$
-\widetilde{\mathbf{x}}
-=
-\mathbf{x}
-+
-\text{piccola perturbazione},
+\boxed{\text{ricerca locale}}
 $$
-effettuiamo una ricerca più precisa nelle vicinanze della
-soluzione corrente.
+Riducendo progressivamente l'ampiezza delle perturbazioni possiamo
+passare da una ricerca relativamente ampia a una ricerca sempre
+più precisa intorno alle soluzioni migliori.
 
 ---
 
-# Tre parametri importanti
+# I parametri della ricerca
 
-La qualità e il costo della ricerca dipendono quindi da almeno
-tre elementi:
+La qualità e il costo della ricerca dipendono da almeno tre elementi:
 
 - **numero di candidati** generati a ogni iterazione;
-- **numero di iterazioni** effettuate;
+- **numero di iterazioni**;
 - **ampiezza delle perturbazioni** casuali.
 
-Aumentare il numero di candidati o di iterazioni può migliorare
-l'esplorazione, ma aumenta il costo computazionale.
+Più candidati e più iterazioni permettono una ricerca più estesa,
+ma aumentano il costo computazionale.
 
-L'ampiezza della perturbazione influenza invece il compromesso
-tra esplorazione e ricerca locale.
+L'ampiezza della perturbazione determina invece quanto
+intensamente esploriamo le vicinanze della soluzione corrente.
 
 ---
 
-# Monte Carlo o ricerca stocastica?
+# Monte Carlo e ricerca stocastica iterativa
 
-È utile distinguere le due procedure.
-
-Nel **Monte Carlo semplice**:
+Nel Monte Carlo semplice possiamo rappresentare la procedura come:
 $$
-\text{generazione casuale}
+\text{estrazione casuale}
 \rightarrow
 \text{valutazione}
 \rightarrow
-\text{scelta del migliore}.
+\text{migliore soluzione osservata}.
 $$
-Le nuove estrazioni non dipendono necessariamente dalle
-soluzioni precedenti.
-
-Nella **ricerca stocastica iterativa**:
+Nella ricerca stocastica iterativa abbiamo invece:
 $$
-\text{generazione}
+\mathbf{x}^{(g)}
 \rightarrow
-\text{valutazione}
+\text{generazione di candidati}
 \rightarrow
 \text{selezione}
 \rightarrow
-\text{nuova generazione}.
+\mathbf{x}^{(g+1)}.
 $$
-Le nuove soluzioni dipendono dai risultati ottenuti in precedenza.
+La differenza fondamentale è che la ricerca successiva utilizza
+l'informazione prodotta dalla ricerca precedente.
 
----
-
-# Un'idea evolutiva
-
-La ricerca stocastica iterativa presenta alcuni elementi che
-ricordano un processo evolutivo:
-
-- viene generata una popolazione di candidati;
-- i candidati vengono valutati;
-- viene selezionata la soluzione migliore;
-- la soluzione selezionata genera una nuova popolazione;
-- il processo viene ripetuto.
-
-Possiamo quindi interpretarla come un ponte tra
-**Monte Carlo** e **algoritmi evolutivi**.
-
----
-
-# Gli algoritmi evolutivi
-
-Gli algoritmi evolutivi estendono questa idea mantenendo e facendo
-evolvere una popolazione di possibili soluzioni.
-
-In generale possono includere:
-
-- una **popolazione** di individui;
-- una funzione di **fitness**;
-- meccanismi di **selezione**;
-- **mutazioni**;
-- combinazioni tra individui;
-- conservazione delle migliori soluzioni.
-
-L'evoluzione della popolazione viene utilizzata per esplorare
-lo spazio delle possibili soluzioni.
-
----
-
-# Il nostro algoritmo è un algoritmo genetico?
-
-Non propriamente.
-
-Nella procedura utilizzata per il portafoglio:
-
-- conserviamo essenzialmente una migliore soluzione corrente;
-- generiamo nuovi candidati perturbando casualmente tale soluzione;
-- selezioniamo il candidato migliore;
-- conserviamo la soluzione precedente se non troviamo miglioramenti.
-
-Non introduciamo invece un vero meccanismo di
-**crossover** tra differenti soluzioni.
-
-La procedura è quindi più semplice di un algoritmo genetico completo.
-
----
-
-# Una classificazione
-
-Possiamo rappresentare la progressione nel seguente modo:
-$$
-\boxed{\text{Monte Carlo}}
-\rightarrow
-\boxed{\text{Ricerca stocastica iterativa}}
-\rightarrow
-\boxed{\text{Algoritmi evolutivi}}
-$$
-Passando da sinistra verso destra aumenta l'utilizzo
-dell'informazione prodotta dalle generazioni precedenti.
-
-La casualità rimane importante, ma la ricerca diventa
-progressivamente più strutturata.
-
----
 
 # Applicazione 1: portafoglio di minimo rischio
 
@@ -535,42 +440,133 @@ approssimare la soluzione.
 
 ---
 
-# L'algoritmo di minimo rischio
+# Il portafoglio iniziale
 
-Possiamo sintetizzare la procedura nel modo seguente:
-
-1. scegliamo un portafoglio iniziale $\mathbf{x}$;
-2. generiamo casualmente una popolazione nelle sue vicinanze;
-3. normalizziamo i pesi dei portafogli;
-4. calcoliamo la varianza di ogni candidato;
-5. selezioniamo il portafoglio con varianza minima;
-6. utilizziamo il vincitore come nuovo $\mathbf{x}$;
-7. ripetiamo il procedimento.
-
-La soluzione migliora progressivamente attraverso le iterazioni.
+La ricerca deve partire da una soluzione iniziale:
+$$
+\mathbf{x}^{(0)}.
+$$
+Possiamo, ad esempio, partire da un portafoglio
+equamente distribuito:
+$$
+x_k^{(0)}=\frac{1}{n}
+\qquad k=1,\ldots,n.
+$$
+Con $n=3$:
+$$
+\mathbf{x}^{(0)}
+=
+\begin{bmatrix}
+1/3\\
+1/3\\
+1/3
+\end{bmatrix}.
+$$
+Da questo punto inizieremo la ricerca.
 
 ---
 
-# La funzione di valutazione
+# Generare nuovi portafogli
 
-Nel problema di minimo rischio ogni candidato viene valutato
-attraverso:
+A partire dalla soluzione corrente generiamo perturbazioni casuali:
+$$
+\widetilde{\mathbf{x}}_j
+=
+\mathbf{x}
++
+\boldsymbol{\varepsilon}_j.
+$$
+I valori negativi eventualmente generati devono essere corretti
+per rispettare:
+$$
+x_k\geq0.
+$$
+Successivamente normalizziamo le quote in modo da ottenere:
+$$
+\sum_{k=1}^n x_k=1.
+$$
+Ogni candidato rappresenta quindi un portafoglio ammissibile.
+
+---
+
+# Valutare i candidati
+
+Per ciascun portafoglio candidato calcoliamo:
 $$
 V(\mathbf{x})
 =
 \mathbf{x}^T\mathbf H\mathbf{x}.
 $$
-Un valore più basso indica una soluzione migliore.
+Confrontiamo quindi i valori ottenuti.
 
-La selezione può quindi essere scritta come:
+Il candidato con la varianza più bassa viene selezionato:
 $$
 \mathbf{x}^{(g+1)}
 =
-\arg\min_{\mathbf{x}\in\mathcal P_g}
+\arg\min_{\mathbf{x}\in\mathcal C_g}
 \mathbf{x}^T\mathbf H\mathbf{x},
 $$
-dove $\mathcal P_g$ rappresenta la popolazione generata
-all'iterazione $g$.
+dove $\mathcal C_g$ rappresenta l'insieme dei candidati
+dell'iterazione $g$.
+
+---
+
+# Ripetere la ricerca
+
+Il portafoglio selezionato diventa la nuova soluzione corrente.
+
+Generiamo quindi una nuova popolazione nelle sue vicinanze:
+$$
+\mathbf{x}^{(g+1)}
+\rightarrow
+\left\{
+\widetilde{\mathbf{x}}_1^{(g+1)},
+\ldots,
+\widetilde{\mathbf{x}}_N^{(g+1)}
+\right\}.
+$$
+Il processo viene ripetuto per un numero prefissato
+di iterazioni.
+
+Progressivamente la ricerca si concentra nelle regioni
+più promettenti.
+
+---
+
+# L'algoritmo di minimo rischio
+
+La procedura può essere sintetizzata nel modo seguente:
+
+1. scegliere un portafoglio iniziale $\mathbf{x}$;
+2. generare casualmente candidati nelle sue vicinanze;
+3. imporre la non negatività dei pesi;
+4. normalizzare i pesi;
+5. calcolare la varianza di ogni candidato;
+6. selezionare il portafoglio con varianza minima;
+7. utilizzarlo come nuova soluzione corrente;
+8. ripetere il procedimento.
+
+---
+
+# Ridurre progressivamente la perturbazione
+
+Durante la ricerca possiamo ridurre progressivamente
+l'ampiezza delle perturbazioni.
+
+All'inizio:
+$$
+\text{perturbazioni più ampie}
+\rightarrow
+\text{maggiore esplorazione}.
+$$
+Successivamente:
+$$
+\text{perturbazioni più piccole}
+\rightarrow
+\text{maggiore precisione}.
+$$
+L'algoritmo passa quindi gradualmente dall'esplorazione
+al raffinamento della soluzione.
 
 ---
 
@@ -578,7 +574,7 @@ all'iterazione $g$.
 
 Abbiamo ora due modi per affrontare lo stesso problema:
 $$
-\boxed{\text{minima varianza}}
+\boxed{\text{Portafoglio di minima varianza}}
 $$
 $$
 \begin{array}{ccc}
@@ -590,27 +586,26 @@ $$
 La programmazione quadratica sfrutta direttamente la struttura
 matematica del problema.
 
-La ricerca stocastica esplora numericamente lo spazio delle soluzioni.
+La ricerca stocastica esplora numericamente lo spazio
+delle soluzioni.
 
 ---
 
-# Perché usare una ricerca stocastica?
+# Quale metodo utilizzare?
 
 Per il semplice problema di Markowitz, la programmazione quadratica
 è generalmente preferibile.
 
-Perché studiare allora una tecnica stocastica?
+È una tecnica specificamente adatta alla struttura del problema.
 
-Perché la stessa idea può essere utilizzata anche quando:
+Perché studiare allora la ricerca stocastica?
 
-- la funzione obiettivo diventa più complessa;
-- introduciamo vincoli non standard;
-- il problema non è quadratico;
-- non disponiamo di una soluzione analitica;
-- gli algoritmi specializzati diventano difficili da applicare.
+Perché introduce una strategia molto più generale, che può essere
+utilizzata anche quando la struttura matematica del problema
+diventa più complessa.
 
-Il portafoglio rappresenta quindi un esempio semplice con cui
-comprendere una tecnica più generale.
+Il portafoglio di Markowitz rappresenta quindi un esempio semplice
+con cui comprendere la tecnica.
 
 ---
 
@@ -626,8 +621,8 @@ Normalmente desidera:
 - un rendimento atteso elevato;
 - un rischio contenuto.
 
-Dobbiamo quindi rappresentare il compromesso tra
-**rendimento e rischio**.
+Dobbiamo quindi rappresentare esplicitamente il compromesso
+tra **rendimento e rischio**.
 
 ---
 
@@ -657,6 +652,33 @@ U(\mathbf{x})
 $$
 ---
 
+# Rendimento e rischio
+
+Nella funzione:
+$$
+U(\mathbf{x})
+=
+\mathbf{x}^T\mathbf c
+-
+\gamma\mathbf{x}^T\mathbf H\mathbf{x}
+$$
+il primo termine:
+$$
+\mathbf{x}^T\mathbf c
+$$
+premia un rendimento atteso elevato.
+
+Il secondo termine:
+$$
+\gamma\mathbf{x}^T\mathbf H\mathbf{x}
+$$
+penalizza il rischio.
+
+L'utilità combina quindi rendimento e rischio in un unico
+criterio di scelta.
+
+---
+
 # Il parametro di avversione al rischio
 
 Il parametro
@@ -665,34 +687,14 @@ $$
 $$
 misura il peso attribuito al rischio nella funzione di utilità.
 
-Se $\gamma$ è elevato, la penalizzazione associata alla varianza
-è maggiore.
+Se $\gamma$ aumenta, la penalizzazione associata alla varianza
+diventa maggiore.
 
-Se $\gamma$ è più basso, l'investitore attribuisce relativamente
-più importanza al rendimento.
+Se $\gamma$ diminuisce, il rendimento assume relativamente
+più importanza.
 
 Il portafoglio ottimale dipende quindi anche dalle
 **preferenze dell'investitore**.
-
----
-
-# Effetto di gamma
-
-Consideriamo:
-$$
-U(\mathbf{x})
-=
-\mathbf{x}^T\mathbf c
--
-\gamma\mathbf{x}^T\mathbf H\mathbf{x}.
-$$
-A parità di rendimento e rischio:
-
-- aumentando $\gamma$, il rischio pesa maggiormente;
-- diminuendo $\gamma$, il rendimento assume relativamente più importanza.
-
-Possiamo quindi ottenere portafogli differenti semplicemente
-modificando il grado di avversione al rischio dell'investitore.
 
 ---
 
@@ -721,63 +723,84 @@ Selezioniamo quello con **utilità massima**.
 
 ---
 
-# L'algoritmo di massimizzazione
+# La ricerca stocastica dell'utilità
 
-La procedura è molto simile a quella precedente:
-
-1. scegliamo un portafoglio iniziale $\mathbf{x}$;
-2. generiamo una popolazione nelle sue vicinanze;
-3. normalizziamo i pesi;
-4. calcoliamo rendimento e varianza di ogni candidato;
-5. calcoliamo l'utilità;
-6. selezioniamo il candidato con utilità maggiore;
-7. utilizziamo il vincitore come nuovo $\mathbf{x}$;
-8. ripetiamo il procedimento.
-
-Cambia la funzione obiettivo, non la logica della ricerca.
+Generiamo candidati intorno alla soluzione corrente:
+$$
+\widetilde{\mathbf{x}}_j^{(g)}
+=
+\mathbf{x}^{(g)}
++
+\boldsymbol{\varepsilon}_j^{(g)}.
+$$
+Per ogni candidato calcoliamo:
+$$
+U_j^{(g)}
+=
+(\widetilde{\mathbf{x}}_j^{(g)})^T\mathbf c
+-
+\gamma
+(\widetilde{\mathbf{x}}_j^{(g)})^T
+\mathbf H
+\widetilde{\mathbf{x}}_j^{(g)}.
+$$
+Selezioniamo quindi il candidato con utilità maggiore.
 
 ---
 
 # La selezione per utilità
 
-Per ogni candidato calcoliamo:
-$$
-U_j^{(g)}
-=
-(\mathbf{x}_j^{(g)})^T\mathbf c
--
-\gamma
-(\mathbf{x}_j^{(g)})^T
-\mathbf H
-\mathbf{x}_j^{(g)}.
-$$
-Selezioniamo quindi:
+La nuova soluzione corrente è:
 $$
 \mathbf{x}^{(g+1)}
 =
 \arg\max_j U_j^{(g)}.
 $$
-La ricerca si sposta progressivamente verso portafogli
-che offrono una combinazione di rendimento e rischio
-preferita dall'investitore.
+Il processo viene quindi ripetuto:
+$$
+\mathbf{x}^{(g)}
+\rightarrow
+\text{candidati}
+\rightarrow
+\text{calcolo dell'utilità}
+\rightarrow
+\mathbf{x}^{(g+1)}.
+$$
+La logica computazionale è la stessa utilizzata
+nel problema di minimo rischio.
 
 ---
 
-# Due problemi, uno stesso algoritmo
+# L'algoritmo di massimizzazione
 
-Possiamo ora confrontare le due applicazioni.
+La procedura può essere sintetizzata nel modo seguente:
 
-**Minimo rischio**
+1. scegliere un portafoglio iniziale $\mathbf{x}$;
+2. generare una popolazione di candidati;
+3. imporre i vincoli sui pesi;
+4. calcolare rendimento e varianza;
+5. calcolare l'utilità di ciascun candidato;
+6. selezionare il candidato con utilità maggiore;
+7. utilizzarlo come nuova soluzione corrente;
+8. ripetere il procedimento.
+
+Cambia la funzione obiettivo, non la logica della ricerca.
+
+---
+
+# Due problemi, uno stesso metodo
+
+Nel primo problema valutiamo ogni candidato attraverso:
 $$
-f(\mathbf{x})
+V(\mathbf{x})
 =
 \mathbf{x}^T\mathbf H\mathbf{x}
 $$
 e scegliamo:
 $$
-\arg\min f(\mathbf{x}).
+\arg\min V(\mathbf{x}).
 $$
-**Massima utilità**
+Nel secondo utilizziamo:
 $$
 U(\mathbf{x})
 =
@@ -789,82 +812,101 @@ e scegliamo:
 $$
 \arg\max U(\mathbf{x}).
 $$
-La struttura della ricerca stocastica rimane sostanzialmente la stessa.
+La struttura della ricerca stocastica rimane la stessa.
 
 ---
 
-# Un principio importante
+# Problema e algoritmo
 
-Questo esempio mette in evidenza una caratteristica importante
-dei metodi computazionali.
+Questo esempio mette in evidenza una distinzione importante.
 
 Possiamo separare:
 
-- il **problema economico o finanziario**;
+- il **problema finanziario**;
 - la **funzione obiettivo**;
-- la **tecnica numerica utilizzata per cercare la soluzione**.
+- i **vincoli**;
+- l'**algoritmo numerico** utilizzato per cercare la soluzione.
 
-Modificando la funzione obiettivo possiamo utilizzare
-la stessa struttura computazionale per problemi differenti.
+Lo stesso algoritmo può essere adattato a problemi differenti
+modificando la funzione con cui vengono valutate le soluzioni.
 
 ---
 
-# Tecniche diverse per lo stesso problema
+# Il percorso seguito
 
-Il problema del portafoglio ci ha permesso di incontrare
-diverse tecniche:
+Siamo partiti da un problema già conosciuto:
+$$
+\boxed{\text{Portafoglio di Markowitz}}
+$$
+e abbiamo considerato diverse strategie computazionali:
 $$
 \boxed{\text{Programmazione quadratica}}
 \rightarrow
 \boxed{\text{Monte Carlo}}
 \rightarrow
-\boxed{\text{Ricerca stocastica}}
-\rightarrow
-\boxed{\text{Idea evolutiva}}
+\boxed{\text{Ricerca stocastica iterativa}}.
 $$
-La programmazione quadratica è una tecnica specializzata.
-
-Monte Carlo utilizza il campionamento casuale.
-
-La ricerca stocastica utilizza anche l'informazione ottenuta
-durante la ricerca.
-
-Gli algoritmi evolutivi sviluppano ulteriormente questa idea.
-
----
-
-# Metodi specializzati e metodi generali
-
-Non esiste una tecnica numerica migliore in assoluto.
-
-Se il problema possiede una struttura semplice e conosciuta,
-un algoritmo specializzato può essere:
-
-- più veloce;
-- più preciso;
-- più affidabile.
-
-I metodi stocastici diventano particolarmente interessanti quando
-la struttura del problema è più complessa.
-
-La scelta dell'algoritmo dipende quindi anche dalla
-**struttura matematica del problema**.
+Abbiamo inoltre distinto la ricerca stocastica dagli
+**algoritmi evolutivi**, nei quali è una popolazione di soluzioni
+a evolvere nel corso delle generazioni.
 
 ---
 
 # Il messaggio finale
 
-Il metodo Monte Carlo introduce una nuova idea fondamentale:
+Il metodo Monte Carlo introduce un principio fondamentale:
 $$
-\boxed{\text{utilizzare la casualità come strumento computazionale}}
+\boxed{\text{utilizzare la casualità come strumento computazionale}}.
 $$
-La ricerca stocastica aggiunge un secondo principio:
+La ricerca stocastica iterativa aggiunge:
 $$
-\boxed{\text{utilizzare i risultati precedenti per guidare la ricerca}}
+\boxed{\text{utilizzare i risultati precedenti per guidare la ricerca}}.
 $$
-Gli algoritmi evolutivi sviluppano ulteriormente questo principio
-attraverso popolazioni, selezione e variazione.
+Gli algoritmi evolutivi sviluppano ulteriormente questa idea:
+$$
+\boxed{\text{far evolvere una popolazione di soluzioni}}.
+$$
+La scelta della tecnica dipende dalla struttura del problema,
+dalla precisione richiesta e dal costo computazionale.
 
-Il problema del portafoglio permette di osservare in modo semplice
-il passaggio da una tecnica di ottimizzazione specializzata
-a tecniche di ricerca numerica più generali.
+
+# Una nota: ricerca stocastica e algoritmi evolutivi
+
+Molto conosciuti sono gli **algoritmi evolutivi**. Conviene pertanto
+precisare la loro relazione con la ricerca stocastica.
+
+La ricerca stocastica iterativa e gli algoritmi evolutivi utilizzano
+entrambi la **casualità** per esplorare lo spazio delle possibili
+soluzioni.
+
+La differenza fondamentale riguarda il modo in cui l'informazione
+ottenuta viene utilizzata nelle iterazioni successive.
+
+Nella **procedura di ricerca stocastica qui considerata** viene
+aggiornata la regione dello spazio nella quale effettuare la ricerca,
+ma non viene fatta evolvere la popolazione dei candidati.
+
+Negli **algoritmi evolutivi**, invece, è la popolazione stessa a
+evolvere nel tempo: gli individui con fitness migliore contribuiscono
+maggiormente alla generazione della popolazione successiva.
+
+
+# Una nota: ricerca stocastica e algoritmi evolutivi
+
+Molto conosciuti sono gli **algoritmi evolutivi**. Conviene pertanto
+precisare la loro relazione con la ricerca stocastica.
+
+La ricerca stocastica iterativa e gli algoritmi evolutivi utilizzano
+entrambi la **casualità** per esplorare lo spazio delle possibili
+soluzioni.
+
+La differenza fondamentale riguarda il modo in cui l'informazione
+ottenuta viene utilizzata nelle iterazioni successive.
+
+Nella **procedura di ricerca stocastica qui considerata** viene
+aggiornata la regione dello spazio nella quale effettuare la ricerca,
+ma l'universo su cui effettuare la ricerca rimane invariato.
+
+Negli **algoritmi evolutivi**, invece, è la popolazione stessa a
+evolvere nel tempo: gli individui con fitness migliore contribuiscono
+maggiormente alla generazione della popolazione successiva.
