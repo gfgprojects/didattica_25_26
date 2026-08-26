@@ -1,0 +1,648 @@
+
+# Le scelte delle famiglie 
+
+Le scelte finanziarie delle famiglie riguardano:
+
+1.  la formazione del saldo economico.
+
+    I saldi economici deteminano nel tempo la posizione patrimoniale
+    delle famiglie. Si apre dunque
+
+2.  la questione della suddivisione del patrimonio tra le varie
+    attività finanziarie.
+
+Nelle diapositive seguenti analizziamo il punto 2.
+
+# Un nuovo modello microeconomico
+
+- La scelta consumo-risparmio viene analizzata dalla teoria microeconomica
+con la teoria della scelta intertemporale.
+
+- In questa si assume che ci sia un unico tasso di interesse ($r$) e
+quindi \blu un’unica attività finanziaria\w. Tale attività è rappresentata da
+titoli a rendimento fisso.
+
+- Per questi titoli, il tasso di rendimento è uguale al tasso di
+interesse. In sostanza si tratta di \blu titoli di credito per i quali non
+esiste un mercato secondario\w.
+
+# Altri titoli
+
+Nei mercati finanziari esistono molte tipologie di titoli che hanno
+rendimenti differenti tra di loro. Inoltre il rendimento di un titolo
+può variare nel tempo.
+
+\vskip5mm
+I titoli a rendimento variabile sono 
+
+\vskip2mm
+
+- i titoli di credito  e 
+- i titoli di proprietà.
+
+\vskip2mm
+qualora esista un mercato secondario.
+
+# Il rendimento dei titoli
+
+Il rendimento di un titolo è dato da $$r_t=\frac{V_t-x}{x}$$ Dove\
+$x$ è la somma impiegata e\
+$V_t$ è il valore dell’investimento al tempo $t$.
+
+# Calcolo del rendimento
+
+Si consideri la situazione seguente:
+
+- Il titolo ha un valore nominale pari a $v_n$;
+- Il suo valore di mercato $v_t$ cambia nel tempo.
+- Indichiamo con $v_0$ il suo valore di emissione.
+- Il numero di titoli che è possibile acquistare investendo una somma $x$
+è dunque $n=\frac{x}{v_0}$;
+- sia $c$ il compenso riconosciuto dall’emittente su ogni titolo.
+
+Il valore dell’investimento finanziario è $$V_t=n v_t+n c,$$
+
+# Calcolo del rendimento (continua)  
+
+ma $n=x/v_0$. Sosituendo $$V_t=\frac{x}{v_0}v_t+\frac{x}{v_0}c$$
+$$V_t-x=\frac{x}{v_0}v_t+\frac{x}{v_0}c-x=x\left[\left(\frac{v_t}{v_0}-1\right)+\frac{c}{v_0}\right]$$
+
+Il rendimento è dunque
+
+$$r_t=\frac{V_t-x}{x}=\frac{x\left[\left(\frac{v_t}{v_0}-1\right)+\frac{c}{v_0}\right]}{x}=\blu \left(\frac{v_t - v_0}{v_0}\right)+\frac{c}{v_0}.$$
+
+# Alcuni casi
+
+Per un titolo di credito che non ha mercato secondario abbiamo
+$v_t=v_0=v_n$ e $c=v_nr$:
+$$r_t=\left(\frac{v_t - v_0}{v_0}\right)+\frac{c}{v_0}=\left(\frac{v_n - v_n}{v_n}\right)+\frac{v_nr}{v_n}= r$$
+
+Per un titolo di credito che ha mercato secondario abbiamo $c=v_nr$, ma
+i vari $v$ possono essere diversi tra di loro:
+$$r_t=\left(\frac{v_t - v_0}{v_0}\right)+\frac{v_n}{v_0}r$$
+
+Per un titoli di proprietà abbiamo $c=E[D|I(t)]$ (dividendo atteso in
+$t$) $$r_t=\left(\frac{v_t - v_0}{v_0}\right)+\frac{E[D|I(t)]}{v_0}$$
+
+# Alcune questioni da analizzare
+
+- \blu Perché i soggetti detengono attività che hanno un rendimento più basso
+di quello massimo?\w
+
+	- Ad esempio: perché si detengono depositi bancari (che hanno un basso
+rendimento) accanto ad altri titoli con un più alto rendimento? Non
+sarebbe meglio investire tutto nei titoli con un più alto rendimento
+atteso?
+
+- \blu Secondo quali criteri i soggetti in surplus scelgono le attività
+finanziarie in cui allocare tali surplus?\w 
+
+# I titoli come variabili casuali (VC)
+
+Sul mercato secondario, il
+prezzo dei titoli cambia nel tempo. Ad una certa data futura il prezzo
+può assumere diversi valori. Supponiamo di conoscere i prezzi possibili
+e che siamo in grado di attribuire ad ognuno di questi una probabilità (\blu situazione di rischio\w).
+In sostanza il prezzo di un titolo ad una data futura è una \blu Variabile
+Casuale \w di cui conosciamo la distribuzione di probabilità.
+
+\vskip3mm
+Se vogliamo analizzare la scelta del soggetto in presenza di questi
+titoli dobbiamo stabilire come egli decide in presenza di Variabili
+Casuali.
+
+# Microeconomia: la scelta tra VC
+
+Esempio: scelta tra aprire uno stabilimento balneare o una sala giochi.\
+Indichiamo con $x_1$ il ricavo se il tempo è buono; $x_2$ il ricavo se
+il tempo è cattivo.\
+L’insieme di scelta è costituito dai due punti della figura.\
+In questo esempio il soggetto sceglie di aprire la sala giochi (curva di
+indifferenza più alta).
+
+\centerline{\includegraphics[width=4cm]{ext_fig1.pdf}}
+
+
+# Combinazione di due VC
+
+Supponiamo ora che la decisione non sia o l’una o l’altra Variabile
+casuale, ma che si possa possedere contemporaneamente le due attività
+(sala giochi e stabilimento) con le seguenti limitazioni:
+
+- non si può tenere aperte le due attività contemporaneamente; 
+- si viene a conoscenza delle condizioni climatiche solo dopo essersi recati al
+lavoro; 
+- non si può cambiare decisione dopo aver osservato le condizioni
+climatiche.
+
+#
+
+Quindi ogni mattina il soggetto deve decidere quale attività fare e una
+volta arrivato al lavoro saprà se il tempo è buono o cattivo.
+
+In questo contesto la decisione è sul numero di giorni (in un certo
+periodo) in cui andare allo stabilimento o alla sala giochi.
+
+In sostanza si deve decidere come combinare le due Variabili Casuali.
+
+#
+
+Se si ha la possibilità di combinare le variabili casuali, l’insieme di
+scelta si amplia.
+
+\centerline{\includegraphics[width=4cm]{ext_fig3.pdf}}
+
+Ad esempio:\
+il punto A rappresenta la combinazione di redditi che si ottiene tenendo
+aperta la sala giochi il 75% dei giorni;\
+il punto B quella che si ottiene aprendo la sala giochi per il 50% dei
+giorni. Ecc.
+
+# Scelta
+
+La possibilità di combinare variabili casuali consente di raggiungere
+utilità più elevate.
+
+\centerline{\includegraphics[width=4cm]{ext_fig2.pdf}}
+
+Nella figura, il soggetto sceglie il punto D.
+
+Il punto D identifica una variabile casuale ottenuta combinando le due
+variabili casuali di partenza.
+
+# Rappresentazione di una VC
+
+VC= variabile casuale.
+
+Negli esempi precedenti abbiamo potuto rappresentare le VC nel piano
+$x_1$, $x_2$ in quanto si tratta di casi particolari, ovvero: 
+
+- gli esiti possibili sono due e sono uguali per tutte le VC; 
+- le probabilità sono le
+stesse nei due stati.
+
+Ma in genere, soprattutto quando si parla del prezzo o del rendimento
+dei titoli, il numero di esiti possibili è elevatissimo (infinito) e la
+probabilità di un certo stato varia da VC a VC.
+
+\vskip2mm
+Esiste un modo per sintetizzare questo numero elevatissimo di
+informazioni?
+
+# Rappresentazione di una VC
+
+Quando si ha una VC è possibile calcolare dei valori che la
+descrivono parzialmente o in modo completo.
+
+\vskip2mm
+Ad esempio la VC gaussiana (o normale) è descritta totalmente dalla sua
+media e dalla sua deviazione standard.
+
+\vskip2mm
+Questo significa che se conosciamo media e deviazione standard di una VC
+distribuita “normalmente” siamo in grado di 
+
+- conoscere tutti i possibili esiti e 
+- abbinare ad ogni possibile esito una probabilità.
+
+# Riassumendo
+
+Le VC possono essere rappresentate sinteticamente da un ridotto numero
+di parametri. Nel caso di VC normali ne bastano due: media e deviazione
+standard.
+
+\vskip2mm
+Nel nostro studio assumeremo che: 
+
+- esistono titoli a valore e rendimanto
+variabile (che chiameremo nel prosieguo titoli rischiosi) e titoli a
+rendimento fisso (che chiameremo titoli privi di rischio), e che 
+- il
+valore e il rendimento dei titoli rischiosi sono delle VC normali.
+
+Possiamo dunque rappresentare graficamente i nostri titoli sul piano
+deviazione standard-media.
+
+# Nelle prossime diapositive
+
+Per consentire la scelta occorre:\
+1. identificare l’insieme ammissibile;\
+2. determinare le curve di indifferenza;\
+3. effettuare la scelta utilizzando i due concetti precedenti.
+
+\vskip2mm
+Nelle prossime diapositive faremo questi tre passi con una
+rappresentazione media-deviazione standard delle VC.
+
+\vskip2mm
+La parte più laboriosa è l’individuazione dell’insieme ammissibile. A
+tale scopo adottiamo la seguente strategia:
+
+- identificazione dell’insieme sotto l’ipotesi che esistano solo
+titoli rischiosi;
+- estensione di tale insieme al caso in cui ci siano titoli
+privi di rischio.
+
+# 1 Insieme ammissibile con due titoli rischiosi
+
+Situazione:
+
+\vskip2mm
+abbiamo soltanto due titoli rischiosi (i titoli a rendimento fisso
+verranno inseriti successivamente). indichiamo con $r_1$ e $r_2$ le
+medie del rendimento e $\sigma_1$ e $\sigma_2$ le relative deviazioni
+standard.
+
+\vskip2mm
+Dobbiamo investire la ricchezza ($F$) in uno di questi o una
+combinazione dei due.
+
+\vskip2mm
+Chiamiamo $b_1$ la percentuale di ricchezza investita nel titolo 1 e
+$b_2$ quella investita nel titolo 2.
+
+\vskip2mm
+Una combinazione dei titoli è una nuova VC. Per rappresentarla dobbiamo
+calcolare la sua media e la sua deviazione standard.
+
+#
+
+Sappiamo dalla statistica che la media di una combinazioni di VC è
+$$r=r_1 b_1+r_2 b_2 \qquad (1)
+\label{eq:mu}$$ mentre la deviazione standard è
+$$\sigma=\sqrt{\sigma^2}=\sqrt{\sigma^2_1 b^2_1+\sigma^2_2
+b^2_2+2 b_1 b_2  \sigma_{12}}
+\qquad (2)$$ 
+dove
+
+$$ \sigma_{12} =\color{red} \rho \white \sigma_1 \sigma_2$$ è
+la covarianza e $\rho$ il coefficiente di correlazione.
+$\color{red} \rho$ è importante in quanto varia tra -1 e 1 e quindi è un
+indice che permette confronti.
+
+# Combinazione di due titoli con $\rho=1$
+
+Se $\rho=1$ le variazioni del rendimento dei due titoli in un certo
+periodo sono uguali. Ad esempio, se il rendimento del titolo 1 è
+aumentato dello 0,5% anche quello del titolo 2 è aumentato dello 0,5%.
+
+
+\begin{minipage}{5cm}
+L'equazione (2) diventa
+$$\sigma=\sqrt{\left(\sigma_1 b_1+\sigma_2
+b_2\right)^2}$$ $$\sigma=\sigma_1 b_1+\sigma_2
+b_2$$
+\end{minipage}
+\begin{minipage}{4cm}
+\includegraphics[width=4.5cm]{capm0001.jpg}
+\end{minipage}
+
+Si noti che in questo caso non esiste nessuna combinazione $(b_1,b_2)$
+con $\sigma=0$: \blu il rischio \color{red} non \blu può essere eliminato\w.
+
+# Combinazione di due titoli con $\rho=-1$
+
+Se $\rho=-1$ le variazioni del rendimento dei due titoli in un certo
+periodo sono uguali ma di segno contrario. Ad esempio se il rendimento
+del titolo 1 è aumentato dello 0,5% quello del titolo 2 è diminuito
+dello 0,5%.
+
+\begin{minipage}{5cm}
+L'equazione (2) diventa
+$$\sigma=\sqrt{\left(\sigma_1 b_1-\sigma_2
+b_2\right)^2}$$ $$\sigma=|\sigma_1 b_1-\sigma_2
+b_2|$$
+\end{minipage}
+\begin{minipage}{4cm}
+\includegraphics[width=4.5cm]{capm0002.jpg}
+\end{minipage}
+
+Si noti che in questo caso esiste una combinazione $(b_1,b_2)$ con
+$\sigma=0$: \blu il rischio può essere eliminato.
+
+# Combinazione di due titoli con $-1 < \rho=1 < 1$
+
+\centerline{\includegraphics[width=5cm]{capm0003.jpg}}
+
+La situazione è intermedia rispetto alle due precedenti. 
+
+# Frontiera efficiente
+
+- \blu La frontiera
+efficiente \w è il sottoinsieme di tutti i portafogli possibili che
+contiene i portafogli efficienti.
+- \blu Portafoglio efficiente\w: un portafoglio è efficiente se non esistono
+altri portafogli che hanno
+	- lo stesso rendimento ma minor rischio;
+	- lo stesso rischio ma maggior rendimento;
+	- un maggior rendimento e un minor rischio.
+
+\centerline{\hskip-4cm\includegraphics[width=4.0cm]{capm0003.jpg}}
+
+
+# Combinare più di due titoli rischiosi
+
+In questo caso le variabili che ci interessano hanno un’espressione più
+complicata $$r=\sum_k r_k b_k$$
+$$\sigma=\sqrt{\sum_k \sigma^2_k b^2_k+\blu \sum_{k\neq j}\sigma_{kj}b_k b_j}$$
+occorre tener conto di tutte le correlazioni che i titoli hanno tra di
+loro: $\blu \sum_{k\neq j}\sigma_{kj}b_k b_j$.
+
+#
+
+\small
+Calcolando i valori di $r$ e $\sigma$ per tutte le combinazioni
+$\{b_i\}$ che soddisfano $\sum b_i=1$ si ottiene l’insieme delle
+possibilità ammissibili.
+
+\centerline{\includegraphics[width=4.5cm]{capm0005.jpg}}
+
+Graficamente: l’area ombreggiata è l’insieme delle possibilità
+ammissibili.
+
+\vskip2mm
+Ogni punto è una combinazione di titoli che chiamiamo portafoglio.
+
+\vskip2mm
+Un portafoglio è una variabile casuale che può a sua volta essere
+combinata con altre.
+
+# Combinazione di un titolo privo di rischio e di un portafoglio rischioso
+
+
+- Anche un titolo privo di rischio può essere visto come una VC. Si tratta
+di una particolare VC detta “degenere” ovvero che può assumere un solo
+valore con probabilità pari a 1.
+
+- Le nuove combinazioni ammissibili si trovano lungo una retta in quanto
+il titolo privo di rischio ha *standar deviation* uguale a zero.
+
+# In formule
+
+Sia il titolo 1 il portafoglio di titoli rischiosi caratterizzato da
+$(r_r,\sigma_r)$ e il titolo 2 quello privo di rischio caratterizzato da
+$(R_f,0)$.
+Le equazioni (1) e (2) diventano: $$r=r_r b_r+R_f b_f$$
+$$\sigma=\sqrt{\sigma^2_r b^2_r+\blu 0 \w
+b^2_f+2 b_r b_f \rho \sigma_{r} \blu 0\w}=\sqrt{\sigma^2_r b^2_r}=\sigma_r b_r$$
+dove:\
+$b_r$ è la percentuale di $F$ detenuta nel portafoglio di titoli
+rischiosi;\
+$b_f$ è la percentuale di $F$ detenuta nel titolo privo di rischio.
+
+Si ricordi che $$b_r+b_f=1$$
+
+#
+
+Dalla seconda equazione della diapositiva precedente otteniamo
+$$b_r=\frac{\sigma}{\sigma_r}$$ ricordando che $b_f=1-b_r$, la prima
+equazione diventa $$r=r_r b_r+R_f -R_fb_r=R_f+(r_r-R_f)b_r$$ utilizzando
+la prima equazione di questa diapositiva si ottiene
+$$r=R_f+\frac{r_r-R_f}{\sigma_r}\sigma$$ che è l’equazione di una retta
+con intercetta $R_f$ e coefficiente angolare $\frac{r_r-R_f}{\sigma_r}$.
+
+# Rappresentazione grafica
+
+\centerline{\includegraphics[width=4.5cm]{capm0006.jpg}}
+
+l’insieme ammissibile individuato nella figura precedente non è quello
+migliore: è possibile scegliere portafogli rischiosi (da combinare con
+il titolo privo di rischio) che diano maggiore rendimento a parità di
+rischio.
+
+È possibile in sostanza ampliare l’insieme ammissibile.
+
+#
+
+L’insieme ammissibile più ampio che è possibile ottenere è rappresentato
+qui sotto
+
+\centerline{\includegraphics[width=4.5cm]{capm0009.jpg}}
+
+Il portafoglio indicato con $m$ è molto importante: è quello che se
+verrà scelto consentirà di ampliare al massimo l’insieme di scelta.
+
+\vskip2mm
+Viene detto “\blu portafoglio di mercato\w ”.
+
+#
+
+Se diamo ai soggetti la possibilità di vendere allo scoperto ($b_f<0$)
+si ottiene un ulteriore ampliamento dell’insieme ammissibile.
+
+\centerline{\includegraphics[width=4.5cm]{capm0007.jpg}}
+
+#
+
+Possiamo scrivere l’equazione della frontiera efficiente. Si tratta di
+una retta con intercetta pari al tasso privo di rischio ($R_f$) e
+passante per il punto ($\sigma_m$, $r_m$)
+$$r=R_f+\frac{r_m-R_f}{\sigma_m}\sigma.$$
+
+Questa viene detta “retta di mercato” (*capital market line*).
+
+\vskip2mm
+L’inclinazione della linea ci dice quanto rendimento possiamo ottenere
+se accettiamo aumenti di rischio. Il coefficiente
+$\frac{r_m-R_f}{\sigma_m}$ è definito come il prezzo del rischio o
+premio per il rischio.
+
+# Curve di indifferenza
+
+- Per poter effettuare la scelta, il soggetto deve avere un ordinamento di
+preferenze sulle variabili casuali.
+- La teoria dell’\blu utilità attesa \w consente di ottenere tale ordinamento.
+- Ricordando gli insegnamenti della teoria dell’\blu utilità attesa\w , le curve
+di indifferenza di un soggetto avverso al rischio possono essere
+rappresentate come nella figura seguente
+
+#
+
+\centerline{\includegraphics[width=4.5cm]{capm0004.jpg}}
+
+Un aumento del rischio richiede un aumento del rendimento più che
+proporzionale per mantenere l’utilità costante.
+
+# Scelta
+
+\centerline{\includegraphics[width=4.5cm]{capm0007_a.jpg}}
+
+Sul mercato possiamo osservare tassi di interesse diversi in quanto a
+impieghi più rischiosi devono corrispondere rendimenti attesi più alti.
+
+#
+
+- Contrariamente a quello che si potrebbe pensare, i soggetti detengono
+attività liquide anche se rendono poco. La loro presenza nei portafogli
+può essere giustificata dal fatto che queste attività non sono
+rischiose.
+
+- Tra tutti i portafogli che comprendono solo titoli rischiosi ne esiste
+\blu uno solo che è ottimale\w (il portafoglio di mercato). Tutti gli individui
+sceglieranno di detenere questo portafoglio. La percentuale della
+ricchezza investita in questo portafoglio varia da individuo a individuo
+in base all’avversione al rischio.
+
+# Applicazioni
+
+\normalsize
+
+- La domanda delle varie attività finanziarie:
+	- moneta; 
+	- titoli rischiosi.
+- Rendimenti teorici dei titoli rischiosi (modello CAPM). 
+
+Di queste verrà approfondita in particolare la domanda di monetala e la domanda di titoli rischiosi
+. 
+
+# La domanda di moneta
+
+Ricordiamo le equazioni del rendimento atteso e della deviazione standard nel caso di due titoli rischiosi:
+$$E(R)=b_1r_1+b_2r_2$$
+$$\sigma(R)=\sqrt{(b_1\sigma_1)^2+(b_2\sigma_2)^2+2b_1b_2\rho\sigma_1\sigma_2}$$
+sostituendo il primo titolo con la moneta caratterizzata da \blu $r_M$ \bla e \blu $\sigma_M$ \bla abbiamo
+$$E(R)=b_Mr_M+b_2r_2$$
+$$\sigma(R)=\sqrt{(\blu b_M\sigma_M \bla)^2+(b_2\sigma_2)^2+2\blu b_M \bla b_2\rho\blu \sigma_M \bla \sigma_2}$$
+
+# 
+
+Essendo \blu $\sigma_M=0$\bla, la seconda equazione risulta molto semplice
+$$\sigma(R)=\sqrt{\color{blue}0\color{black}+(b_2\sigma_2)^2+\color{blue}0\color{black}}$$
+dunque
+$$E(R)=b_Mr_M+b_2r_2$$
+$$\sigma(R)=\sqrt{(b_2\sigma_2)^2}=b_2\sigma_2$$
+e dunque dalla seconda otteniamo 
+\red
+$$b_2=\frac{1}{\sigma_2}\sigma(R)$$
+\bla
+
+# 
+
+Ora, possiamo esprimere la prima equazione:
+$$E(R)=\blu b_M \bla r_M+b_2r_2$$
+in termini di $b_2$ ricordando che $b_M+b_2=1$ e pertanto 
+$$\blu b_M=1-b_2\bla$$
+sostituendo abbiamo dunque
+$$E(R)=(\blu 1-b_2\bla)r_M+b_2r_2$$
+$$E(R)=r_M+b_2(r_2-r_M)$$
+
+# 
+
+$$E(R)=r_M+\blu b_2\bla(r_2-r_M) \qquad (per \ memoria)$$
+ricordando che alla diapositiva 3 abbiamo ottenuto
+\blu
+$$b_2=\frac{1}{\sigma_2}\sigma(R)$$
+\bla
+sostituendo $b_2$ nella prima otteniamo
+$$E(R)=r_M+\frac{r_2-r_M}{\blu\sigma_2}\blu\sigma(R)$$
+
+# 
+
+$$E(R)=\blu r_M\bla+\frac{r_2-\blu r_M\bla}{\sigma_2}\sigma(R) \qquad (per \ memoria)$$
+Se si assume inoltre \blu $r_M=0$ \bla l'equazione può essere scritta in modo molto semplice:
+$$\red E(R)=\frac{r_2}{\sigma_2}\sigma(R)$$
+
+# Ricapitolando
+
+Se consideriamo la moneta caraterizzata da $r_M=0$ e $\sigma_M=0$
+abbiamo:
+\red
+$$E(R)=\frac{r_2}{\sigma_2}\sigma(R)$$
+$$b_2=\frac{1}{\sigma_2}\sigma(R)$$
+\bla
+Dunque, una volta identificato un livello del rischio del portafoglio ($\sigma(R)$), utilizzando queste equazioni conosciamo il rendimento atteso di tale portafoglio ($E(R)$) e la composizione ($b_2 \ e \ b_M=1-b_2$).
+
+
+# Trattazione grafica
+
+Le equazioni a cui siamo giunti vengono usate nella figura 3 pag. 100 del libro di testo.
+
+\centerline{\includegraphics[scale=0.7]{fig3.jpg}}
+
+
+# La domanda di titoli rischiosi
+
+- La teoria fin qui vista ci consente di derivare
+\blu la funzione di domanda delle varie attività\w .
+
+- Questa, unita ad una funzione di offerta, ci permette di individuare
+l’\blu equilibrio \w sui vari mercati e di analizzare come esso varia al variare
+di alcuni fattori come le aspettative e il rischio delle attività.
+
+#
+
+In particolare la domanda dell’attività $K$ è data da: $$K=b_K F$$ dove
+\blu $b_K$ è la frazione di ricchezza \bla che viene detenuta nel titolo $K$ e che
+possiamo \blu determinare utilizzando la teoria del portafoglio \bla e $F$ è la
+ricchezza.
+
+Utilizzando la teoria del portafoglio è possibile vedere che $b_K$ dipende
+
+- positivamente 
+	- dal rendimento atteso del titolo ($r^e_K$) e 
+	- dal rischio dei titoli alternativi ($\sigma_J$)
+- negativamente 
+	- dal rischio del titolo ($\sigma_K$) e 
+	- dal rendimento atteso dei titoli alternativi ($r^e_J$).
+
+#
+
+In formule:
+$$b_K=K(\blu \underset{\blu +}{r^e_K},\underset{\blu -}{r^e_J},\underset{\blu -}{\sigma_K},\underset{\blu +}{\sigma_J})$$
+e visto che $$K^d=b_K F$$ possiamo scrivere
+$$K^d=K(\underset{+}{r^e_K},\underset{-}{r^e_J},\underset{-}{\sigma_K},\underset{+}{\sigma_J},\blu \underset{+}{F})$$
+
+Un ulteriore passo può essere fatto richiamando la formulazione
+matematica del rendimento derivata in precedenza (diapositiva 8):
+
+#
+
+$$r_K^e=\left(\frac{v^e - v}{v}\right)+\frac{v_n}{v}r$$
+
+Da questa equazione vediamo come il redimento atteso di un titolo varia
+in modo inverso con il suo valore di mercato ($v$):
+$$r_K^e=r^e_K(\underset{-}{v},\cdots)$$
+
+Possiamo dunque scrivere
+$$K^d=K(\blu\underset{-}{v}\w,\underset{-}{r^e_J},\underset{-}{\sigma_K},\underset{+}{\sigma_J},\underset{+}{F})$$
+
+# La domanda di moneta
+
+La domanda di moneta di portafoglio si ottiene come caso particolare in
+cui il rischio e il rendimento del titolo vengono posti pari a zero:
+$r^e_K=0$ e $\sigma_K=0$.\
+Abbiamo dunque $$b_M=M(\underset{-}{r^e_J},\underset{+}{\sigma_J})$$ e
+dunque
+$$M^d=b_MF=M(\underset{-}{r^e_J},\underset{+}{\sigma_J},\underset{+}{F})$$
+
+#
+
+Concludiamo quindi che la domanda di moneta di portafoglio 
+
+- diminuisce se aumenta il tasso di rendimento delle attività alternative ($r^e_J$),
+- aumenta se cresce il loro rischio ($\sigma_J$),
+- aumenta se aumenta la ricchezza ($F$)
+
+# La risposta alla nostra domanda
+
+- All’inizio di questa lezione c’eravamo chiesti:
+
+	- \blu
+Perchè i soggetti detengono attività che hanno un rendimento più basso
+di quello massimo?
+\w
+
+- La risposta è dunque che i soggetti tengono conto anche del rischio, e
+attività con rendimento basso possono contribuire a massimizzare
+l’utilità al pari di quelle con rendimento alto in quanto hanno un più
+basso livello di rischio.\
+<!--
+- Ci sono tuttavia fenomeni come la lentezza dell’aggiustamento dei portafogli che la teoria del portafoglio non spiega.
+-->
+
+# Un'osservazione importante
+
+Se si hanno delle variabili casuali non perfettamente correlate tra di
+loro, la diversificazione riduce il rischio.
+
+
