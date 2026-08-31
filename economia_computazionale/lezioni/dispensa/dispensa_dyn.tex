@@ -1,0 +1,596 @@
+\documentclass{book}
+\usepackage{amsmath,amssymb}
+
+\begin{document}
+
+\tableofcontents
+
+\chapter{Introduzione alle teniche numeriche usate nei modelli dinamici}
+
+\section{Una tassonomia dei modelli dinamici}
+
+Un modello dinamico descrive l'evoluzione nel tempo di una o più variabili che rappresentano lo stato di un sistema economico o finanziario. A differenza di un modello statico, nel quale l'attenzione è concentrata sulle relazioni tra variabili in un determinato istante, un modello dinamico permette di studiare una \emph{traiettoria}, ossia una successione di stati del sistema nel corso del tempo.
+
+La varietà dei modelli dinamici utilizzati in economia e finanza è molto ampia. Prima di affrontare i metodi computazionali necessari per risolverli è quindi utile introdurre una tassonomia che permetta di distinguere le principali classi di problemi. La classificazione adottata in questo capitolo si basa su alcune caratteristiche fondamentali: la natura discreta o continua del tempo, la presenza o meno di variabili di controllo, la natura discreta o continua delle variabili di stato e di controllo e, infine, la presenza o meno di incertezza.
+
+Queste caratteristiche non rappresentano semplicemente modi diversi di scrivere uno stesso modello. Esse determinano la struttura matematica del problema e, di conseguenza, i metodi computazionali più appropriati per risolverlo.
+
+\subsection{Modelli dinamici senza controllo}
+
+La classe più semplice è costituita dai modelli nei quali la legge di evoluzione del sistema è assegnata. Una volta conosciuto lo stato iniziale, non vi è alcuna decisione da prendere: l'obiettivo è determinare la traiettoria generata dalla legge di movimento.
+
+La prima distinzione riguarda la rappresentazione del tempo.
+
+In un modello a \emph{tempo discreto}, il tempo assume valori appartenenti a una successione numerabile,
+
+$$
+t=0,1,2,\ldots
+$$
+
+e una semplice legge di movimento può essere rappresentata nella forma
+
+$$
+x_{t+1}=F(x_t).
+$$
+
+Conoscendo $x_0$, il modello determina successivamente
+
+$$
+x_1,\;x_2,\;x_3,\ldots
+$$
+
+La soluzione può quindi essere ottenuta, nei casi più semplici, mediante iterazione in avanti. Modelli di questo tipo sono particolarmente naturali quando il fenomeno considerato presenta una periodicità economicamente significativa, come nel caso di decisioni annuali di investimento, cicli produttivi, pagamenti periodici o osservazioni associate a periodi ben definiti.
+
+In un modello a \emph{tempo continuo}, invece, il tempo può assumere qualsiasi valore reale,
+
+$$
+t\in\mathbb{R}_{+},
+$$
+
+e l'evoluzione dello stato viene generalmente descritta mediante un'equazione differenziale,
+
+$$
+\dot{x}(t)=f(x(t)).
+$$
+
+Assegnata la condizione iniziale
+
+$$
+x(0)=x_0,
+$$
+
+il problema consiste nel determinare la funzione $x(t)$ che descrive l'intera traiettoria del sistema. Questa formulazione è naturale quando si vuole rappresentare un processo che può modificarsi in ogni istante, come l'accumulazione di uno stock, la dinamica di una risorsa o l'evoluzione di alcune variabili finanziarie.
+
+La scelta tra tempo discreto e continuo è quindi innanzitutto una scelta di modellizzazione. Non esiste una formulazione universalmente preferibile. Il tempo discreto può essere più naturale quando la periodicità delle decisioni costituisce una caratteristica essenziale del problema; il tempo continuo può risultare più appropriato quando interessa rappresentare tassi istantanei di variazione o quando una suddivisione del tempo in periodi sarebbe prevalentemente artificiale.
+
+È inoltre importante distinguere la frequenza con cui un fenomeno viene osservato dalla natura temporale del modello. Il fatto che una variabile sia disponibile, ad esempio, con frequenza trimestrale non implica necessariamente che il processo economico sottostante si modifichi soltanto una volta ogni trimestre. La frequenza dei dati e la rappresentazione temporale del modello sono pertanto concetti distinti.
+
+La scelta ha anche conseguenze computazionali. Una legge di movimento discreta ed esplicita può essere direttamente iterata. Un'equazione differenziale deve invece essere generalmente approssimata numericamente su una griglia temporale. Ad esempio, applicando il metodo di Euler a
+
+$$
+\dot{x}=f(x)
+$$
+
+si ottiene
+
+$$
+x_{n+1}=x_n+h f(x_n),
+$$
+
+dove $h$ rappresenta il passo temporale utilizzato dall'algoritmo. Il modello economico rimane formulato in tempo continuo, mentre la sua soluzione numerica viene calcolata su un insieme discreto di punti. È quindi necessario distinguere il \emph{tempo del modello} dalla discretizzazione utilizzata dal metodo computazionale.
+
+\subsection{Modelli dinamici con controllo}
+
+Una seconda classe di problemi emerge quando l'evoluzione del sistema non è completamente determinata dalla legge di movimento, ma dipende anche dalle decisioni di uno o più agenti.
+
+In tempo discreto possiamo scrivere
+
+$$
+x_{t+1}=F(x_t,u_t),
+$$
+
+mentre in tempo continuo possiamo avere
+
+$$
+\dot{x}(t)=f(x(t),u(t)).
+$$
+
+La variabile $x$ è detta \emph{variabile di stato}, mentre $u$ è detta \emph{variabile di controllo}. Lo stato descrive la situazione nella quale si trova il sistema, mentre il controllo rappresenta una decisione che può modificarne l'evoluzione.
+
+La presenza di una variabile di controllo modifica profondamente la natura del problema. Nei modelli senza controllo la domanda fondamentale era
+
+\begin{quote}
+Data la legge di movimento, quale traiettoria seguirà il sistema?
+\end{quote}
+
+Nei modelli con controllo la domanda diventa invece
+
+\begin{quote}
+Quali decisioni devono essere prese affinché il sistema segua la traiettoria desiderata o ottimale?
+\end{quote}
+
+Alla distinzione tra tempo discreto e continuo si aggiunge quindi quella relativa alla natura della variabile di controllo.
+
+Un controllo è \emph{discreto} quando l'agente può scegliere tra un insieme discreto di alternative. Ad esempio,
+
+$$
+u_t\in\{0,1\}
+$$
+
+può rappresentare la decisione di investire o non investire, entrare o non entrare in un mercato, sostituire o non sostituire un macchinario oppure esercitare o non esercitare un'opzione.
+
+Un controllo è invece \emph{continuo} quando può assumere valori appartenenti a un intervallo,
+
+$$
+u_t\in U\subseteq\mathbb{R}^m.
+$$
+
+Il consumo, l'investimento, la quantità prodotta o la quota di ricchezza investita in una determinata attività finanziaria costituiscono esempi tipici di controlli continui.
+
+È importante non confondere la natura del tempo con quella del controllo. Un modello può essere formulato in tempo discreto e avere un controllo continuo, oppure essere formulato in tempo continuo e prevedere decisioni discrete. Le due classificazioni descrivono caratteristiche differenti del problema.
+
+\subsection{La natura della variabile di stato}
+
+Nei modelli con controllo diventa inoltre particolarmente rilevante distinguere tra stati discreti e continui.
+
+Una variabile di stato discreta assume valori appartenenti a un insieme finito o numerabile,
+
+$$
+x_t\in\{x_1,x_2,\ldots,x_N\}.
+$$
+
+Essa può rappresentare, ad esempio, lo stato occupazionale di un individuo, il rating di un'obbligazione, lo stato operativo di un macchinario o un regime economico.
+
+Una variabile di stato continua assume invece valori in un sottoinsieme di $\mathbb{R}^n$,
+
+$$
+x_t\in X\subseteq\mathbb{R}^n,
+$$
+
+come avviene nel caso della ricchezza, del capitale, del debito o dello stock di una risorsa.
+
+Questa distinzione è particolarmente importante dal punto di vista computazionale. Se lo spazio degli stati è finito, una funzione che associa un valore a ciascuno stato può essere rappresentata mediante un vettore. Se lo stato è continuo, occorre invece rappresentare numericamente un'intera funzione. Diventano allora importanti tecniche quali l'interpolazione, l'approssimazione di funzioni e i metodi di collocazione.
+
+La natura dello stato e quella del controllo costituiscono pertanto ulteriori dimensioni della classificazione dei modelli dinamici e contribuiscono a determinare il metodo computazionale più appropriato.
+
+\subsection{L'introduzione dell'incertezza}
+
+Finora abbiamo implicitamente considerato modelli deterministici. In un modello deterministico, una volta specificati lo stato iniziale e, quando presenti, i controlli, l'evoluzione futura del sistema è completamente determinata.
+
+L'incertezza può essere introdotta come un ulteriore livello di complessità che si sovrappone alla classificazione precedente. Non costituisce quindi una categoria alternativa ai modelli con o senza controllo: entrambe le classi possono essere formulate in versione deterministica oppure stocastica.
+
+Ad esempio, una legge di movimento discreta senza controllo,
+
+$$
+x_{t+1}=F(x_t),
+$$
+
+può essere estesa introducendo uno shock casuale,
+
+$$
+x_{t+1}=F(x_t,\varepsilon_{t+1}),
+$$
+
+dove $\varepsilon_{t+1}$ è una variabile aleatoria.
+
+Analogamente, in tempo continuo, una dinamica deterministica della forma
+
+$$
+dx_t=\mu(x_t)\,dt
+$$
+
+può essere trasformata in un processo stocastico introducendo un termine di diffusione,
+
+$$
+dx_t=\mu(x_t)\,dt+\sigma(x_t)\,dW_t,
+$$
+
+dove $W_t$ rappresenta un moto browniano.
+
+L'incertezza può naturalmente essere introdotta anche nei modelli con controllo. In tempo discreto possiamo avere
+
+$$
+x_{t+1}=F(x_t,u_t,\varepsilon_{t+1}),
+$$
+
+mentre in tempo continuo una possibile formulazione è
+
+$$
+dx_t=
+\mu(x_t,u_t)\,dt+
+\sigma(x_t,u_t)\,dW_t.
+$$
+
+In questi casi l'agente deve prendere decisioni senza conoscere con certezza gli stati futuri del sistema. Il problema computazionale non riguarda quindi più soltanto l'evoluzione dinamica e l'ottimizzazione, ma anche la rappresentazione e l'integrazione rispetto all'incertezza.
+
+\subsection{Una classificazione multidimensionale}
+
+La tassonomia appena descritta può essere interpretata come una classificazione costruita lungo dimensioni differenti e, almeno in parte, indipendenti.
+
+Una prima dimensione riguarda la presenza di decisioni:
+
+$$
+\text{senza controllo}
+\qquad\text{oppure}\qquad
+\text{con controllo}.
+$$
+
+Una seconda dimensione riguarda la rappresentazione del tempo:
+
+$$
+\text{tempo discreto}
+\qquad\text{oppure}\qquad
+\text{tempo continuo}.
+$$
+
+Nei modelli con controllo diventano inoltre rilevanti la natura dello stato,
+
+$$
+\text{stato discreto}
+\qquad\text{oppure}\qquad
+\text{stato continuo},
+$$
+
+e la natura del controllo,
+
+$$
+\text{controllo discreto}
+\qquad\text{oppure}\qquad
+\text{controllo continuo}.
+$$
+
+Infine, a ciascuna delle precedenti configurazioni può essere aggiunta l'incertezza:
+
+$$
+\text{deterministico}
+\qquad\longrightarrow\qquad
+\text{stocastico}.
+$$
+
+Non tutte le possibili combinazioni verranno studiate con lo stesso livello di dettaglio. Lo scopo della tassonomia è piuttosto fornire una mappa concettuale che permetta di collocare i diversi modelli e, soprattutto, di comprendere perché essi richiedano tecniche computazionali differenti.
+
+La progressione seguita nei capitoli successivi sarà pertanto graduale. Si partirà dai modelli deterministici senza controllo, studiando separatamente il tempo discreto e quello continuo. Si introdurranno successivamente le decisioni e i problemi di controllo dinamico. Infine, l'incertezza verrà considerata come un ulteriore elemento che può essere incorporato sia nei modelli dinamici senza controllo sia nei problemi di decisione dinamica.
+
+Questa progressione può essere sintetizzata come
+
+$$
+\boxed{
+\text{dinamica}
+\;\longrightarrow\;
+\text{decisione}
+\;\longrightarrow\;
+\text{incertezza}
+}
+$$
+
+e costituisce anche una progressione dal punto di vista computazionale. A ogni passaggio, infatti, nuovi problemi numerici si aggiungono a quelli già incontrati: l'iterazione e l'integrazione numerica per determinare le traiettorie, l'ottimizzazione e la soluzione di problemi con condizioni al contorno quando vengono introdotte le decisioni, e infine la simulazione, l'integrazione rispetto a distribuzioni di probabilità e l'approssimazione di funzioni quando viene introdotta l'incertezza.
+
+La classificazione dei modelli dinamici non costituisce quindi soltanto un'organizzazione formale dei diversi casi. Essa permette di stabilire un collegamento diretto tra la struttura economica del modello e gli strumenti computazionali necessari per studiarlo.
+
+
+
+
+\section{Tempo discreto e tempo continuo}
+
+La tassonomia introdotta nella sezione precedente distingue i modelli dinamici secondo diverse dimensioni. Alcune di queste caratteristiche sono in larga misura determinate dalla natura economica del problema. Altre dipendono maggiormente dalle scelte effettuate dal modellista. La distinzione tra tempo discreto e tempo continuo appartiene soprattutto a questa seconda categoria.
+
+Si consideri, ad esempio, la natura di una variabile di controllo. Se un'impresa deve decidere se entrare oppure non entrare in un mercato, il controllo ha una natura intrinsecamente discreta:
+
+$$
+u\in\{0,1\}.
+$$
+
+Se invece l'impresa deve scegliere la quantità da produrre, la decisione può essere naturalmente rappresentata mediante una variabile continua:
+
+$$
+q\in\mathbb{R}_{+}.
+$$
+
+Considerazioni analoghe valgono per le variabili di stato. Il rating di un'obbligazione appartiene a un insieme discreto di categorie, mentre la ricchezza di un investitore, il capitale di un'impresa o lo stock di una risorsa vengono generalmente rappresentati mediante variabili continue.
+
+Naturalmente anche queste rappresentazioni contengono una componente di modellizzazione. Una variabile teoricamente continua può essere discretizzata e una realtà complessa può essere rappresentata mediante un numero finito di stati. Tuttavia, la natura economica della variabile fornisce spesso un'indicazione abbastanza chiara sulla rappresentazione più appropriata.
+
+La scelta tra un modello a tempo discreto e uno a tempo continuo è invece generalmente meno immediata. Uno stesso fenomeno economico può spesso essere rappresentato in entrambi i modi. L'accumulazione del capitale, la dinamica della ricchezza, l'evoluzione del debito, la crescita economica e la dinamica dei prezzi finanziari forniscono esempi nei quali entrambe le formulazioni sono possibili.
+
+La domanda rilevante non è quindi quale delle due rappresentazioni sia in assoluto corretta, ma quale sia più appropriata rispetto al fenomeno studiato, alla domanda di ricerca e agli strumenti analitici e computazionali che si intendono utilizzare.
+
+\subsection{Due rappresentazioni del tempo}
+
+In un modello a tempo discreto il tempo assume valori appartenenti a un insieme numerabile:
+
+$$
+t=0,1,2,\ldots
+$$
+
+e la dinamica può essere descritta, nella forma più semplice, mediante
+
+$$
+x_{t+1}=F(x_t).
+$$
+
+Il passaggio da $t$ a $t+1$ rappresenta un intervallo temporale la cui durata deve essere definita dal modellista: un giorno, un mese, un trimestre, un anno o qualsiasi altra unità appropriata.
+
+In un modello a tempo continuo, invece,
+
+$$
+t\in\mathbb{R}_{+},
+$$
+
+e la dinamica viene tipicamente rappresentata attraverso il tasso istantaneo di variazione dello stato:
+
+$$
+\dot{x}(t)=f(x(t)).
+$$
+
+In questo caso non viene imposto un intervallo fondamentale tra due date consecutive. Il sistema viene idealmente considerato in grado di modificarsi in ogni istante.
+
+Questa differenza apparentemente formale riflette due diverse rappresentazioni del processo economico. Nel primo caso l'evoluzione viene descritta attraverso transizioni tra periodi; nel secondo attraverso variazioni istantanee.
+
+Nella scelta del tipo di modello da usare, pesano in modo particolare considerazioni relative alla natura economica del fenomeno e alla frequenza temporale e dei dati con le quali può essere rappresentato.
+
+\subsubsection{La natura economica del fenomeno}
+
+Un primo criterio per scegliere tra le due formulazioni riguarda il modo in cui il fenomeno economico evolve nel tempo.
+
+Il tempo discreto è particolarmente naturale quando esiste una periodicità economicamente significativa. Si pensi a una decisione di semina effettuata una volta per stagione, alla sostituzione annuale di un macchinario, al pagamento di una cedola in date prestabilite o a una decisione di politica economica presa periodicamente. In questi casi il periodo può corrispondere a una caratteristica effettiva del processo decisionale.
+
+Il tempo continuo può risultare più naturale quando non esiste una frequenza fondamentale degli aggiustamenti. Il valore di un'attività finanziaria, uno stock di capitale, una risorsa naturale o un saldo monetario possono, almeno idealmente, modificarsi in qualsiasi momento. Una rappresentazione continua evita allora di introdurre artificialmente una periodicità che non appartiene necessariamente al fenomeno.
+
+Tuttavia, questa distinzione non deve essere interpretata in maniera troppo rigida. Molte decisioni che nella realtà avvengono in date specifiche possono essere convenientemente approssimate mediante modelli continui; analogamente, processi potenzialmente continui possono essere rappresentati mediante modelli discreti.
+
+La scelta della rappresentazione temporale costituisce quindi un compromesso tra realismo, semplicità e finalità del modello.
+
+\subsubsection{Frequenza del modello e frequenza dei dati}
+
+Una distinzione particolarmente importante riguarda la frequenza delle osservazioni disponibili.
+
+Il fatto che una variabile sia osservata trimestralmente non implica che il processo economico sottostante evolva soltanto una volta ogni trimestre. Analogamente, la disponibilità di dati giornalieri non obbliga a formulare un modello con periodo giornaliero.
+
+In generale,
+
+$$
+\boxed{
+\text{frequenza delle osservazioni}
+\neq
+\text{frequenza del processo economico}
+}.
+$$
+
+Un processo formulato in tempo continuo viene necessariamente osservato a intervalli discreti. Allo stesso modo, un modello teorico discreto può utilizzare periodi differenti dalla frequenza alla quale i dati sono originariamente raccolti.
+
+La frequenza dei dati rappresenta quindi un elemento da considerare nella scelta del modello, ma non costituisce da sola un criterio sufficiente per determinare la rappresentazione temporale.
+
+\subsection{Il tempo discreto}
+\subsubsection{Vantaggi del tempo discreto}
+
+Uno dei principali vantaggi del tempo discreto è la semplicità della struttura ricorsiva. Se la legge di movimento è esplicita,
+
+$$
+x_{t+1}=F(x_t),
+$$
+
+e lo stato iniziale $x_0$ è noto, la traiettoria può essere costruita mediante successive iterazioni:
+
+$$
+x_0
+\longrightarrow
+x_1
+\longrightarrow
+x_2
+\longrightarrow
+\cdots.
+$$
+
+In questo caso non è necessaria alcuna discretizzazione numerica del tempo: la struttura discreta appartiene al modello stesso.
+
+Il tempo discreto rende inoltre particolarmente trasparente il timing degli eventi. È possibile specificare se una decisione viene presa prima o dopo l'osservazione di uno shock, se gli interessi vengono pagati prima o dopo un prelievo, oppure se una decisione di investimento influenza la capacità produttiva corrente o quella del periodo successivo.
+
+Questa caratteristica rende la formulazione discreta particolarmente naturale per molti modelli ricorsivi e per il dynamic programming.
+
+Un ulteriore vantaggio è la vicinanza con numerosi dati economici e finanziari, che vengono osservati a frequenze discrete. Sebbene, come osservato in precedenza, ciò non imponga una formulazione discreta, può facilitare l'interpretazione, la calibrazione e la stima del modello.
+
+\subsubsection{Limiti del tempo discreto}
+
+La formulazione discreta richiede tuttavia di scegliere la durata del periodo. Tale scelta può essere economicamente rilevante.
+
+Si consideri, ad esempio, una semplice equazione di accumulazione:
+
+$$
+K_{t+1}=(1-\delta)K_t+I_t.
+$$
+
+Il parametro $\delta$ rappresenta il tasso di deprezzamento per periodo. Il suo significato dipende quindi dalla durata del periodo adottato. Un tasso annuale non può essere utilizzato senza modifiche in un modello mensile.
+
+Più in generale, modificare la durata del periodo può richiedere una trasformazione dei parametri e, in alcuni casi, può modificare anche la struttura economica del modello.
+
+Il tempo discreto richiede inoltre di specificare l'ordine degli eventi all'interno del periodo. Ad esempio,
+
+$$
+a_{t+1}=(1+r)a_t+y_t-c_t
+$$
+
+e
+
+$$
+a_{t+1}=(1+r)(a_t+y_t-c_t)
+$$
+
+non descrivono lo stesso timing economico. Nel primo caso soltanto la ricchezza iniziale produce il rendimento $r$ durante il periodo; nel secondo anche il reddito netto del consumo viene investito allo stesso rendimento.
+
+Quando la suddivisione del tempo è puramente artificiale, tali scelte di timing possono diventare esse stesse artificiose.
+
+
+\subsection{Il tempo continuo}
+\subsubsection{Vantaggi del tempo continuo}
+
+La formulazione continua descrive direttamente il tasso istantaneo di variazione di una variabile. Ad esempio,
+
+$$
+\dot K(t)=I(t)-\delta K(t)
+$$
+
+separa immediatamente il flusso di investimento dal deprezzamento istantaneo dello stock di capitale.
+
+Il tempo continuo permette inoltre di utilizzare gli strumenti dell'analisi differenziale e della teoria delle equazioni differenziali. Concetti quali stabilità, sistemi dinamici, controllo ottimo e, in presenza di incertezza, equazioni differenziali stocastiche possono essere formulati in maniera particolarmente naturale.
+
+In alcuni problemi la formulazione continua può anche migliorare la trattabilità matematica. Relazioni che in tempo discreto coinvolgono condizioni tra periodi successivi possono diventare condizioni locali basate su derivate. Ciò spiega in parte l'ampio utilizzo del tempo continuo in macroeconomia, finanza e teoria del controllo.
+
+In finanza, in particolare, il continuous time fornisce un linguaggio naturale per rappresentare prezzi che possono modificarsi in ogni istante e per sviluppare argomenti di arbitraggio, hedging e valutazione dei derivati.
+
+\subsubsection{Limiti del tempo continuo}
+
+La maggiore eleganza analitica non implica necessariamente una maggiore semplicità computazionale.
+
+Un computer non può rappresentare direttamente un continuum di istanti. Per calcolare numericamente la soluzione di
+
+$$
+\dot x(t)=f(x(t)),
+$$
+
+è necessario considerare una griglia
+
+$$
+t_0,t_1,\ldots,t_N
+$$
+
+e approssimare la soluzione nei punti della griglia.
+
+Ad esempio, il metodo di Euler produce
+
+$$
+x_{n+1}=x_n+h f(x_n),
+$$
+
+dove $h$ rappresenta il passo utilizzato per la discretizzazione.
+
+Questo introduce una distinzione fondamentale:
+
+$$
+\boxed{
+\text{modello continuo}
+\neq
+\text{algoritmo continuo}
+}.
+$$
+
+Il modello può essere formulato in tempo continuo, ma la sua soluzione numerica viene necessariamente approssimata utilizzando un numero finito di operazioni.
+
+Di conseguenza, nella soluzione numerica dei modelli continui compare un problema che non esiste nella stessa forma quando si itera una legge di movimento originariamente discreta: l'errore di discretizzazione temporale. La scelta del passo $h$ implica generalmente un compromesso tra accuratezza e costo computazionale.
+
+È tuttavia importante non concludere che i modelli continui siano necessariamente più difficili da risolvere. In alcune applicazioni la formulazione continua produce equazioni con una struttura matematica particolarmente favorevole e, dopo la discretizzazione, sistemi sparsi che possono essere risolti in modo molto efficiente. La convenienza computazionale deve quindi essere valutata con riferimento allo specifico problema.
+
+\subsection{Il legame tra le due rappresentazioni}
+
+Tempo discreto e tempo continuo non costituiscono due mondi completamente separati. In molti casi esiste una relazione molto stretta tra le due formulazioni.
+
+Consideriamo
+
+$$
+\dot x(t)=f(x(t)).
+$$
+
+Per un piccolo intervallo temporale $h$,
+
+$$
+\frac{x(t+h)-x(t)}{h}
+\approx
+f(x(t)),
+$$
+
+da cui
+
+$$
+x(t+h)
+\approx
+x(t)+h f(x(t)).
+$$
+
+Ponendo
+
+$$
+x_n=x(t_n),
+$$
+
+otteniamo
+
+$$
+x_{n+1}=x_n+h f(x_n).
+$$
+
+La discretizzazione produce quindi una legge di movimento in tempo discreto. Al diminuire di $h$, sotto opportune condizioni, la traiettoria discreta può convergere alla soluzione del modello continuo.
+
+Questa relazione è importante, ma richiede una precisazione. Una equazione alle differenze ottenuta discretizzando un'equazione differenziale non deve essere confusa con un modello formulato originariamente in tempo discreto. Nel primo caso il periodo $h$ è un parametro dell'algoritmo numerico; nel secondo la durata del periodo appartiene alla struttura economica del modello.
+
+\subsubsection{Quando discreto e continuo producono risultati simili}
+
+In numerosi problemi le due rappresentazioni possono descrivere sostanzialmente lo stesso meccanismo economico.
+
+Un semplice modello di aggiustamento può, ad esempio, essere scritto in tempo continuo come
+
+$$
+\dot x(t)=\alpha\left[x^*-x(t)\right],
+$$
+
+oppure, in tempo discreto, come
+
+$$
+x_{t+1}-x_t
+=
+\gamma\left(x^*-x_t\right).
+$$
+
+Entrambi descrivono un processo nel quale lo stato si muove verso $x^*$. Scegliendo opportunamente la relazione tra $\alpha$, $\gamma$ e la durata del periodo, le due formulazioni possono generare traiettorie molto simili.
+
+Lo stesso principio emerge in molti modelli di crescita, accumulazione della ricchezza e dinamica finanziaria. Quando il periodo discreto è sufficientemente breve rispetto alla velocità con cui evolve il fenomeno e i parametri vengono trasformati in maniera coerente, il modello discreto può fornire una buona approssimazione della corrispondente dinamica continua.
+
+Questa possibilità spiega perché numerosi meccanismi economici possano essere studiati indifferentemente, almeno per alcuni obiettivi, utilizzando una delle due rappresentazioni.
+
+\subsubsection{Quando discreto e continuo possono produrre risultati diversi}
+
+La possibilità di collegare le due formulazioni non implica tuttavia una loro equivalenza generale.
+
+Innanzitutto, una diversa struttura temporale può modificare il timing delle decisioni e dell'informazione. In un modello discreto può essere essenziale stabilire se uno shock viene osservato prima o dopo una decisione. Nel limite continuo alcune di queste distinzioni assumono una forma differente.
+
+In secondo luogo, le proprietà dinamiche possono dipendere dalla frequenza di aggiustamento. Una dinamica discreta può, ad esempio, generare oscillazioni o comportamenti complessi che non emergono necessariamente dalla corrispondente equazione differenziale.
+
+Inoltre, in modelli con aspettative, vincoli finanziari, non linearità o decisioni forward-looking, il passaggio da una formulazione all'altra può modificare le proprietà quantitative e, in alcuni casi, qualitative dell'equilibrio.
+
+Infine, soprattutto nella finanza stocastica, il tempo continuo consente di costruire processi e strutture matematiche che non possiedono necessariamente un equivalente discreto esatto.
+
+Pertanto,
+
+\begin{quotation}
+tempo discreto e tempo continuo possono essere approssimativamente equivalenti in alcuni problemi,
+\end{quotation}
+ma
+\begin{quotation}
+non sono rappresentazioni universalmente equivalenti.
+\end{quotation}
+
+
+La scelta della struttura temporale può quindi avere conseguenze sulle conclusioni economiche del modello e non deve essere considerata esclusivamente una questione di convenienza matematica.
+
+\subsection{Considerazioni finali}
+
+Non esiste una regola generale che permetta di stabilire che il tempo discreto sia preferibile al tempo continuo, o viceversa. La scelta dovrebbe derivare dalla valutazione congiunta di diversi elementi.
+
+Il primo riguarda il \emph{meccanismo economico}. Se esiste una periodicità intrinseca nelle decisioni o negli eventi, una formulazione discreta può essere più naturale. Se il processo può modificarsi continuamente e la periodicità sarebbe prevalentemente artificiale, il tempo continuo può essere più appropriato.
+
+Il secondo riguarda la \emph{domanda di ricerca}. Un modello costruito per studiare decisioni annuali di investimento può richiedere una rappresentazione diversa da un modello costruito per valutare un derivato finanziario.
+
+Il terzo riguarda la \emph{trattabilità}. In alcuni problemi il tempo discreto produce una struttura ricorsiva semplice; in altri il passaggio al continuo consente una formulazione matematica più compatta e trattabile.
+
+Il quarto riguarda la \emph{soluzione computazionale}. È necessario considerare quali algoritmi siano disponibili, il grado di accuratezza richiesto, la dimensionalità del problema e il costo della soluzione.
+
+Infine, occorre considerare il collegamento con i \emph{dati}. Sebbene la frequenza delle osservazioni non determini automaticamente la frequenza del modello, la disponibilità e la struttura dei dati possono rendere una formulazione più conveniente dell'altra.
+
+La scelta tra tempo discreto e continuo deve pertanto precedere la scelta dell'algoritmo numerico. Prima si stabilisce quale rappresentazione del tempo sia più appropriata per il fenomeno che si intende studiare; successivamente si individua il metodo computazionale adatto a risolvere il modello così formulato.
+
+Questo principio sarà importante nelle sezioni successive. Inizieremo studiando separatamente i modelli dinamici deterministici a tempo discreto e a tempo continuo. Il confronto tra le due formulazioni permetterà non soltanto di comprendere i diversi metodi numerici, ma anche di valutare come una scelta apparentemente tecnica sulla rappresentazione del tempo possa influenzare la costruzione e le implicazioni di un modello economico o finanziario.
+
+
+\section{Illustrazione dei contenuti di questa parte}
+
+TBW
+
+\end{document}
