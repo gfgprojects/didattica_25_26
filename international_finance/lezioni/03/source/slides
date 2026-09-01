@@ -1,0 +1,416 @@
+# Contents
+
+\Large
+\begin{enumerate}
+	\item The exchange rate
+	\item The foreign exchange market
+	\item The determination of the exchange rate
+\end{enumerate}
+
+
+
+
+# Contents
+
+\begin{enumerate}
+\huge
+	\item The exchange rate
+\normalsize
+\color{gray}
+	\item The foreign exchange market
+	\item Determining the exchange rate
+\end{enumerate}
+
+# Definition
+
+- Suppose there are two subjects: 
+	- A is in possession of euros and needs dollars
+	- B is in possession of dollars and needs euros
+- reach the following agreement
+	- exchange 100000\texteuro\ in exchange for 125000\$
+- 2 ratios can be calculated:
+
+$$E_{\$/\textnormal{\texteuro}}=\frac{125000}{100000}=1.25$$
+
+$$E_{\textnormal{\texteuro}/\$}=\frac{100000}{125000}=0.8$$
+
+# Meaning
+
+- $E_{\$/\textnormal{\texteuro}}$ is the number of dollars per 1 euro
+
+- $E_{\textnormal{\texteuro}/\$}$ is the number of euros for 1 dollar
+
+- we have the following relationship:
+
+$$E_{\$/\textnormal{\texteuro}}=\frac{1}{E_{\textnormal{\texteuro}/\$}}$$
+
+# Quotes
+
+- $E_{\textnormal{\texteuro}/\$}$ is said
+
+	- \textbf{direct} quotation of the \texteuro\ against the \$
+
+	- \textbf{indirect} quotation of the \$ against the \texteuro
+
+# Quotes
+
+- $E_{\$/\textnormal{\texteuro}}$ is said
+
+	- \textbf{indirect} quotation of the \texteuro \ against the $
+
+	- \textbf{direct} quotation of the \$ against the \texteuro
+
+# Example of quotes
+
+Both in Europe and in the USA $E_{\$/\textnormal{\texteuro}}$ is used, therefore:
+
+- In Europe, the quotation of the \texteuro \ against the \$ is indirect
+
+- In the USA, the quotation of the \$ against the \texteuro \ is direct 
+
+# Appreciation and depreciation
+
+Let A and B be two currencies
+
+- A \textbf{appreciates} against B if the amount of B that is obtained with one unit of A increases
+
+- A \textbf{depreciates} against B, if the amount of B that is obtained with one unit of A decreases
+
+If A appreciates against B, B automatically depreciates against A. 
+
+# Appreciation, Depreciation, and Exchange Rate
+
+- If A \textbf{appreciates} on B, then its indirect \textbf{exchange rate} \textbf{increases}
+
+- If A \textbf{appreciates} on B, then its direct \textbf{exchange rate}  \textbf{decreases}
+
+- If A depreciates against B, then its indirect exchange rate decreases
+
+- If A depreciates against B, then its direct exchange rate increases
+
+# Examples
+
+- Euro appreciates against the dollar as $E_{\$/\textnormal{\texteuro}}$ rises
+
+- The dollar appreciates against the euro if $E_{\$/\textnormal{\texteuro}}$ decreases
+
+# Appreciation, depreciation, and international trade
+
+- If the currency of country A appreciates against the currency of country B:
+
+	- increases the convenience of residents in A to buy goods in B
+
+	- decreases the convenience of residents in B to buy goods in A
+
+- it follows that:
+
+	- A's trade balance worsens 
+
+# Example
+
+- Consider the following situation
+	- jeans are sold in the USA at a price of $100
+	- the shirts are sold in Italy at the price of 150\texteuro 
+- an increase of $E_{\$/\textnormal{\texteuro}}$ reduces the cost of jeans for Italians and increases the cost of shirts for Americans
+- The cost of a jeas for an Italian is 
+	- $90.91$\texteuro \ if $E_{\$/\textnormal{\texteuro}}=1.1$ $\left(\frac{100}{1,1}=90.91\right)$
+	- $83.33$\texteuro \ if $E_{\$/\textnormal{\texteuro}}=1.2$ $\left(\frac{100}{1,2}=83.33\right)$
+- The cost of a shirt for an American is
+	- 165\$ if $E_{\$/\textnormal{\texteuro}}=1.1$ $(150\times 1.1 =165)$
+	- 180\$ if $E_{\$/\textnormal{\texteuro}}=1.2$ $(150\times 1.2 =180)$
+
+# Result 1
+
+When a country's currency depreciates, non-residents find goods produced by that country cheaper, while residents find goods produced abroad more expensive.
+
+
+\hskip5mm
+As a result, exports are increasing and imports are decreasing
+
+
+
+\hskip5mm
+The opposite happens in case of appreciation.
+
+
+# Relative prices
+
+- Assuming that the prices of the two goods remain the same
+
+- the relative price of jeans compared to shirts in Italy is
+	- 0.606 ($\frac{90.91}{150}$) if $E_{\$/\textnormal{\texteuro}}=1.1$
+	- 0.555 ($\frac{83.33}{150}$) if $E_{\$/\textnormal{\texteuro}}=1.2$
+- the relative price of jeans compared to shirts in the USA is
+	- 0.606 ($\frac{100}{165}$) if $E_{\$/\textnormal{\texteuro}}=1.1$
+	- 0.555 ($\frac{100}{180}$) if $E_{\$/\textnormal{\texteuro}}=1.2$
+
+An appreciation of the euro against the dollar decreases the price of jeans compared to shirts
+
+# Result 2
+
+All other things being equal, an appreciation of a country's currency increases the relative price of its exports and reduces the price of its imports.
+
+
+\hskip5mm
+As a result, exports are falling and imports are increasing.
+
+
+\hskip5mm
+The opposite happens in the event of depreciation.
+
+# Contents
+
+\begin{enumerate}
+\color{gray}
+	\item The exchange rate
+	\color{black}
+\huge
+	\item The foreign exchange market
+\normalsize
+\color{gray}
+\item The determination of the exchange rate
+\end{enumerate}
+
+
+
+
+# FOReign EXchange (FOREX) market
+
+- The main value market is FOREX
+
+- Beginning of the week Sunday at 11 pm Italian time (Sydney opening)
+
+- Weekend Friday at 11 pm Italian time (Closed NY)
+
+- Open 24 hours a day
+
+# FOREX: main markets
+
+\includegraphics[scale=0.2]{forex_h14.png}
+\includegraphics[scale=0.205]{forex_h17.png}
+
+\includegraphics[scale=0.2]{forex_orari_1.png}
+
+\includegraphics[scale=0.2]{forex_orari_2.png}
+
+<!--
+\url{http://www.forexmind.it/guida-al-forex/basi-trading-forex/orari-del-forex}
+# FOReign EXchange (FOREX)
+
+The change in exchange rates is measured in pips.
+
+pip (percentage in point)
+
+\includegraphics[scale=0.5]{prezzi.png}
+
+For additional information, please visit the following websites:
+
+- \url{www.tuttoforex.com}
+
+- \url{http://www.borsaitaliana.it/notizie/speciali/guerra-valute/mercato-valutario/mercato-cambi/mercato-cambi.htm}
+-->
+
+# Operators
+
+- Banks
+	- International Payment Services
+	- Portfolio investments
+
+- other financial institutions (investment funds, pension funds, brokers...) 
+	- diversification
+	- research investment opportunities
+
+- Enterprises
+	- carry out international exchanges
+	- Hedging against exchange rate risk
+
+- Central banks
+	- exchange rate control
+
+# FOREX: the operations
+
+- Spot
+	- Instant currency exchange
+
+- fixed-term
+	- Future Currency Exchange
+
+- Future
+
+- Options
+
+- Swap
+
+
+
+
+
+
+# Contents
+
+\begin{enumerate}
+\color{gray}
+	\item The exchange rate
+	\item The foreign exchange market
+\color{black}
+\huge
+	\item The determination of the exchange rate
+\normalsize
+\end{enumerate}
+
+
+
+# The demand for financial assets
+
+- The demand for foreign currency financial assets is relevant for the determination of the exchange rate.
+- the demand for a generic financial asset depends on
+	- yield
+	- risk
+	- liquidity 
+- In the next few slides, we will introduce some notions for calculating the rate of return on financial assets in foreign currency.
+- We will neglect risk and liquidity for the moment, considering stocks that have the same levels for these two variables.
+
+# Refereeing: indirect quotation
+
+- If A has an indirect quotation with respect to B
+- the holders of A are better off buying B at a high exchange rate and 
+- sell B at a low exchange rate.
+
+example: A=\texteuro \ and B=\$; if $E_{\$/\textnormal{\texteuro}}=$1.3 in London and $E_{\$/\textnormal{\texteuro}}=$1.1 in NY, it is better to buy \$ in London and sell it in NY:
+
+- Purchase of $1 million in London for 769231 texteuro
+- sale of $1 million in NY in exchange for 909091 texteuro
+
+Calculation of performance:
+
+$$ \frac{909091-769231}{769231}=0.1818=\frac{1.3-1.1}{1.1} $$
+
+# Refereeing: direct quotation
+
+- If A has a direct quotation with respect to B
+- holders of A are better off buying B at a low exchange rate and 
+- sell B at a high exchange rate.
+
+example: A=\$ \ and B=\texteuro; if $E_{\$/\textnormal{\texteuro}}=$1.3 in London and $E_{\$/\textnormal{\texteuro}}=$1.1 in NY, it is worth buying \texteuro \ in NY and selling them in London:
+
+- Purchase of 1 million \texteuro\ in NY for \$1.1ml
+- sale of 1 million \texteuro\ in London in exchange for \$1.3ml
+
+$$ \frac{\$1.3ml-\$1.1ml}{\$1.1ml}=0.1818=\frac{1.3-1.1}{1.1} $$
+
+# Time
+
+If you buy/sell currency to sell/buy it in the future
+
+- you know the spot exchange rate
+
+$$E_{\$/\textnormal{\texteuro}}$$
+
+- Expectations about the future exchange rate must be formulated
+
+$$E^e_{\$/\textnormal{\texteuro}}$$
+
+# Time: indirect quotation
+
+The observations are similar to the arbitrage case:
+
+- if A has a direct quotation with respect to B, it is better to buy B at a low exchange rate and sell it at a different exchange rate
+
+- i.e., to buy B you should expect an increase in the exchange rate
+
+- in a direct quotation an increase in the exchange rate is a depreciation of A with respect to B
+
+# Time: direct quotation (example)
+
+Example: A=\$ \ and B=\texteuro; If $E_{\$/\textnormal{\texteuro}}=1.1$, it is worth buying euros to sell them in the future if $E^e_{\$/\textnormal{\texteuro}}>1.1$.
+
+Suppose $E^e_{\$/\textnormal{\texteuro}}=1.3$
+
+- Purchase 1 million \texteuro\ today for \$1.1ml
+- Future sale of 1 million \texteuro\ in exchange for \$1.3ml
+
+$$ \frac{\$1.3ml-\$1.1ml}{\$1.1ml}=0.1818=\frac{1.3-1.1}{1.1} $$
+
+The return on the transaction is equal to the expected percentage depreciation of the exchange rate:
+
+$$\frac{E^e_{\$/\textnormal{\texteuro}}-E_{\$/\textnormal{\texteuro}}}{E_{\$/\textnormal{\texteuro}}}$$
+ 
+# Time: indirect quotation
+
+The observations are similar to the arbitrage case:
+
+- if A has an indirect quotation compared to B, it is better to buy B at a high exchange rate and sell it at a low exchange rate
+
+# Time: indirect quotation
+Example: A=\texteuro \ and B=\$; If $E_{\$/\textnormal{\texteuro}}=$1.3, it is worth buying dollars to sell them in the future if $E^e_{\$/\textnormal{\texteuro}}<1.3$.
+
+Suppose $E^e_{\$/\textnormal{\texteuro}}=1.1$
+
+- purchase of $1 million today for 769231 texteuro
+- future sale of $1 million in exchange for 909091 texteuro
+
+$$ \frac{909091-769231}{769231}=0.1818=\frac{1.3-1.1}{1.1} $$
+
+The expected return of the operation is equal to the expected change in the exchange rate divided by the expected exchange rate, all changed in sign:
+
+$$\frac{E_{\$/\textnormal{\texteuro}}-E^e_{\$/\textnormal{\texteuro}}}{E^e_{\$/\textnormal{\texteuro}}}=-\frac{E^e_{\$/\textnormal{\texteuro}}-E_{\$/\textnormal{\texteuro}}}{E^e_{\$/\textnormal{\texteuro}}}$$
+ 
+# The yield on foreign securities (direct quotation)
+
+Unlike buying and selling currency, buying and selling a foreign security yields an interest rate.
+
+- an American pledges $E_{\$/\textnormal{\texteuro}}$ dollars to get 1 euro and expects to get back $(1+R_{\textnormal{\texteuro}})E^e_{\$/\textnormal{\texteuro}}$ dollars
+- its expected return will therefore be
+$$R_{\textnormal{ EU title in US}}=\frac{(1+R_{\textnormal{\texteuro}})E^e_{\$/\textnormal{\texteuro}}-E_{\$/\textnormal{\texteuro}}}{E_{\$/\textnormal{\texteuro}}}$$
+$$R_{\textnormal{ EU title in US}}=R_{\textnormal{\texteuro}}\frac{E^e_{\$/\textnormal{\texteuro}}}{E_{\$/\textnormal{\texteuro}}}+\frac{E^e_{\$/\textnormal{\texteuro}}-E_{\$/\textnormal{\texteuro}}}{E_{\$/\textnormal{\texteuro}}}$$
+
+# The yield on foreign securities (indirect quotation)
+
+- A European pledges $\frac{1}{E_{\$/\textnormal{\texteuro}}}$ euro to get $1 and expects to get $\frac{(1+R_{\textnormal{\$}})}{E^e_{\$/\textnormal{\texteuro}}}$ euro
+- its expected return will therefore be
+$$R_{\textnormal{ US title in EU}}=\frac{\frac{(1+R_{\textnormal{\$}})}{E^e_{\$/\textnormal{\texteuro}}}-\frac{1}{E_{\$/\textnormal{\texteuro}}}}{\frac{1}{E_{\$/\textnormal{\texteuro}}}}$$
+$$R_{\textnormal{ US title in EU}}=R_{\textnormal{\$}}\frac{E_{\$/\textnormal{\texteuro}}}{E^e_{\$/\textnormal{\texteuro}}}-\frac{E^e_{\$/\textnormal{\texteuro}}-E_{\$/\textnormal{\texteuro}}}{E^e_{\$/\textnormal{\texteuro}}}$$
+
+
+
+# Approximations
+
+The expressions we arrived at in the previous slides can be simplified as follows:
+
+- For an American, the yield on a European bond is approximately equal to:
+$$R_{\textnormal{ EU title in US}}=R_{\textnormal{\texteuro}}+\underbrace{\frac{E^e_{\$/\textnormal{\texteuro}}-E_{\$/\textnormal{\texteuro}}}{E_{\$/\textnormal{\texteuro}}}}_{\textnormal{deprez. \$}}$$
+- For a European, the yield on an American bond is approximately equal to:
+$$R_{\textnormal{ US title in EU}}=R_{\textnormal{\$}}-\underbrace{\frac{E^e_{\$/\textnormal{\texteuro}}-E_{\$/\textnormal{\texteuro}}}{E_{\$/\textnormal{\texteuro}}}}_{\textnormal{apprez. \texteuro}}$$
+
+# The relationship between return in \$ and exchange rate
+
+Let's be explicit with respect to the exchange rate:
+
+\vskip5mm
+$R_{\textnormal{EU title in US}}=R_{\textnormal{\texteuro}}+\frac{E^e_{\$/\textnormal{\texteuro}}-E_{\$/\textnormal{\texteuro}}}{E_{\$/\textnormal{\texteuro}}}$
+
+$R_{\textnormal{EU title in US}}\times E_{\$/\textnormal{\texteuro}}=R_{\textnormal{\texteuro}}\times E_{\$/\textnormal{\texteuro}}+E^e_{\$/\textnormal{\texteuro}}-E_{\$/\textnormal{\texteuro}}$
+
+$R_{\textnormal{EU title in US}}\times E_{\$/\textnormal{\texteuro}}-R_{\textnormal{\texteuro}}\times E_{\$/\textnormal{\texteuro}}+E_{\$/\textnormal{\texteuro}}=E^e_{\$/\textnormal{\texteuro}}$
+
+$(R_{\textnormal{EU title in US}}-R_{\textnormal{\texteuro}}+1)\times E_{\$/\textnormal{\texteuro}}=E^e_{\$/\textnormal{\texteuro}}$
+
+\vskip4mm
+$E_{\$/\textnormal{\texteuro}}=\frac{E^e_{\$/\textnormal{\texteuro}}}{R_{\textnormal{EU title in US}}+1-R_{\textnormal{\texteuro}}}$ \hskip2mm \footnotesize{graphically} \raisebox{-1cm}{\includegraphics[scale=0.4]{R_titolo_staniero.pdf}}
+
+
+# The equilibrium exchange rate
+
+The equilibrium is for $R_{\textnormal{EU stock in US}}=R_{\$}$
+
+$$ E^*_{\$/\textnormal{\texteuro}}=\frac{E^e_{\$/\textnormal{\texteuro}}}{R_{\$}+1-R_{\textnormal{\texteuro}}}$$
+
+It follows that:
+
+- an increase of $E^e_{\$/\textnormal{\texteuro}}$ causes an increase of $E^*_{\$/\textnormal{\texteuro}}$
+- an increase of $R_{\$}$ causes a reduction of $E^*_{\$/\textnormal{\texteuro}}$
+- An increase of $R_{\textnormal{\texteuro}}$ causes an increase of $E^*_{\$/\textnormal{\texteuro}}$
+
+Opposite conclusions are reached in the cases of reductions of $E^e_{\$/\textnormal{\texteuro}}$, $R_{\$}$ and $R_{\textnormal{\texteuro}}$.
+
+
