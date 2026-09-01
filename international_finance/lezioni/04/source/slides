@@ -1,0 +1,271 @@
+# The determinants of E
+
+So far we have established that:
+
+- $E$ varies in the same direction as $R_{foreigner}$ and $E^e$
+- $E$ varies in the opposite direction to $R_{national}$
+
+# The determinants of determinants
+
+Now, our goal is to understand how they are determined
+
+- the interest rates $R_{domestic}$ and $R_{foreign}$.
+- the exchange rate expectation $E^e$.
+
+# Determining the interest rate $R$
+
+The interest rate is determined on the money market as the equilibrium between the supply and demand of money.
+
+We must therefore study:
+
+- the demand for money ($M^d$);
+- the money supply ($M^s$).
+
+# The demand for money
+
+The demand for money is the amount of purchasing power that the private sectors decide to keep in liquid form. That is, in the form of
+
+- circulating (banknotes or coins);
+- bank deposits.
+
+This amount depends mainly on 
+
+- the desired level of expenditure (settlement reason);
+- the fact that it is sometimes necessary to deal with unforeseen events (precautionary reason).
+
+# The demand for money
+
+- The amounts of desired liquidity identified on the basis of the two reasons listed above are also influenced by the interest rate $R$ on less liquid securities:
+
+- the increases in the interest rate convince subjects to hold less liquidity and therefore to ask for less money because:
+
+	- the liquidity does not earn interest;
+	- the securities yield an interest rate of $R$ (speculative reason).
+
+
+# The demand for money
+
+- We distinguish the demand for money in real terms from that in nominal terms.
+
+- The demand for money in real terms expresses the amount of goods that the money you own can buy.
+
+- It is identified with the letter $L$ and, as mentioned above:
+
+	- it increases if real income increases ($Y$);
+	- it decreases if the interest rate increases ($R$).
+
+- Formally, we write
+$$L(R\hskip-3mm\raisebox{-4mm}{$-$}\hskip1mm,Y\hskip-3.5mm\raisebox{-4mm}{+})$$
+
+ 
+# The demand for money ($M^d$)
+
+To obtain the demand for money in nominal terms ($M^d$), we need to multiply the demand for money in real terms ($L$) by the price level ($P$):
+
+$$M^d=P \times L(R\hskip-3mm\raisebox{-4mm}{$-$}\hskip1mm,Y\hskip-3.5mm\raisebox{-4mm}{+})$$
+
+# The money supply ($M^s$)
+
+- The money supply is decided by the Central Bank.
+
+- It therefore does not depend on other variables such as $Y$ or $R$.  
+
+# Determining the interest rate $R$
+
+The interest rate is determined by the equilibrium of the money market:
+$$M^s=M^d$$
+
+By substituting the previously obtained expression of $M^d$, the equilibrium condition becomes
+
+$$M^s=P \times L(R,Y)$$
+
+that for given levels of $M^S$, $P$, and $Y$, determines the level of the equilibrium interest rate $R^*$.
+
+# The national interest rate $R^*_{NAT}$
+
+The national interest rate is determined by the national supply and demand for money:
+
+$$M^s_{NAT}=P_{NAT} \times L_{NAT}(R^*_{NAT},Y_{NAT})$$
+
+Which can also be written as
+
+$$\frac{M^s_{NAT}}{P_{NAT}} = L_{NAT}(\underbrace{R^*_{NAT}}_{-},\underbrace{Y_{NAT}}_{+})$$
+
+Explicating with respect to $R^*_{NAT}$ we have:
+
+$$R^*_{NAT} = R\left(\underbrace{\frac{M^s_{NAT}}{P_{NAT}}}_{-},\underbrace{Y_{NAT}}_{+}\right)$$
+
+#
+
+The previous equation allows us to say that, other variables being equal:
+
+- an increase in the real supply of national money causes the national interest rate to fall. Note that the increase in the quantity of real money occurs when:
+	- at the same price level, the supply of nominal money increases $M^s_{NAT}$
+	- with the same nominal money supply, the price level $P^s_{NAT}$ decreases. 
+- an increase in national income raises the national interest rate.
+
+# The foreign interest rate $R^*_{FORE}$
+
+The foreign interest rate is determined by the demand and supply of money in the foreign country:
+
+$$M^s_{FORE}=P_{FORE} \times L_{FORE}(R^*_{FORE},Y_{FORE})$$
+
+Which can also be written as
+
+$$\frac{M^s_{FORE}}{P_{FORE}} = L_{FORE}(R^*_{FORE},Y_{FORE})$$
+
+Explicating with respect to $R^*_{FORE}$ we have:
+
+$$R^*_{FORE} = R\left(\underbrace{\frac{M^s_{FORE}}{P_{FORE}}}_{-},\underbrace{Y_{FORE}}_{+}\right)$$
+
+#
+
+The previous equation allows us to say that, other variables being equal:
+
+- an increase in the real supply of foreign money causes the foreign interest rate to fall. Note that the increase in the quantity of real money occurs when:
+	- at the same price level, the supply of nominal money increases $M^s_{FORE}$
+	- with the same nominal money supply, the price level $P^s_{FORE}$ decreases. 
+- an increase in foreign national income causes the foreign interest rate to rise.
+
+
+# Conclusion
+
+We can now go back to the effects of the money market on the exchange rate by concatenating the observations just made with the parity of interest rates:
+
+other variables being equal, if
+
+- $M^s_{NAT}\uparrow$ then $R^*_{NAT}\downarrow$ and therefore $E\uparrow$
+- $P_{NAT}\downarrow$ then $R^*_{NAT}\downarrow$ and therefore $E\uparrow$
+- $Y_{NAT}\uparrow$ then $R^*_{NAT}\uparrow$ and therefore $E\downarrow$
+- $M^s_{FORE}\uparrow$ then $R^*_{FORE}\downarrow$ and therefore $E\downarrow$
+- $P_{FORE}\downarrow$ then $R^*_{FORE}\downarrow$ and therefore $E\downarrow$
+- $Y_{FORE}\uparrow$ then $R^*_{FORE}\uparrow$ and therefore $E\uparrow$
+
+The conclusions are contrary if the initial variables move in the opposite direction.
+
+# The determination of the expected exchange rate $E^e$
+
+- $E^e$ changes as a result of permanent changes in the quantity of a country's currency.
+- To understand the long-term effects of these changes, it is useful to compare them to monetary reforms 
+
+# The effects of a monetary reform
+
+- In a monetary reform, a new currency is introduced using a certain conversion ratio with the old currency.  
+- Suppose that one unit of the old currency is replaced with $c$ units of the new currency
+- As a result of the reform, the money supply goes from $M^s_0$ to $M^s_1$ where
+$$M^s_1=cM^s_0$$
+
+# The situation before the reform
+
+Let us remember the condition of equilibrium on the money market
+$$M^S=PL(R,Y)$$
+which can be expressed as
+$$P=\frac{M^S}{L(R,Y)}$$
+
+Given the levels of money supply, interest rate and aggregate product before the reform, it is possible to calculate the price level
+$$P_0=\frac{M^S_0}{L(R_0,Y_0)}$$
+
+
+# The situation after the reform
+
+The reform does not change the levels of interest rate and aggregate output. The price level after the reform will therefore be
+$$P_1=\frac{M^S_1}{L(R_0,Y_0)}$$
+Remembering that $M^S_1=cM^S_0$ we can write
+$$P_1=c\underbrace{\frac{M^S_0}{L(R_0,Y_0)}}_{P_0}$$
+We conclude that monetary reform involves only a change in the price level according to the rule
+$$P_1=cP_0$$
+
+# The exchange rate after the reform
+
+- In a direct quotation, the exchange rate is the domestic currency price of one unit of foreign currency. The same rule therefore applies to national prices
+$$E_1=cE_0$$
+
+- In an indirect quotation, it will be necessary to divide the old exchange rate by the conversion coefficient:
+$$E_1=\frac{E_0}{c}$$
+
+# Examples
+
+- direct quotation:
+	- if in the US every dollar is replaced with half of the new dollar, i.e. we have $c=$0.5, the quantity of money in the US will halve and so will the exchange rate.
+- indirect quotation:
+	- if in Europe every euro is replaced by half a new euro, the amount of money in Europe will halve, and the exchange rate will double 
+
+# Permanent changes in the quantity of money
+
+It is necessary to distinguish the effects they have in the long term from those they have in the short term.
+
+However, it should be borne in mind that:
+
+- cause changes in the expected exchange rate $E^e$ at the time of their announcement. 
+
+# Permanent changes in the quantity of money: long run
+
+They have the same effects in the long run as a monetary reform.
+
+- Permanent reductions in the quantity of money in a country cause an appreciation of its currency.
+
+The opposite applies to increases in the quantity of money:
+
+- Permanent increases in the quantity of money in a country cause depreciation of its currency
+
+
+# Permanent changes in the quantity of money: short run
+
+- The effects depend on the degree of flexibility of the prices.
+
+- We will analyze cases of 
+
+	- perfectly flexible prices (monetary reform);
+	- prices with gradual adjustment.
+
+# Permanent changes of $M^s$: short term with perfectly flexible prices
+
+- perfectly flexible prices neutralize the variation in the quantity of money, making the $M/P$ ratio remain unchanged;
+
+- the national interest rate remains constant;
+
+- the expected exchange rate $E^e$ varies immediately;
+
+- the $E$ exchange rate immediately moves to the $E^e$ level.
+
+In conclusion, the effects are the same as in a monetary reform.
+
+# Permanent changes in $M^s$: short run with gradual adjustment prices
+
+- Gradual price adjustment implies a $M/P$ level that changes over time, even if this ratio returns to its original level in the long run;
+
+- the national interest rate will change over time until it returns to its original value in the long run;
+
+- the expected exchange rate $E^e$ varies immediately;
+
+- There are two effects on the $E$ exchange rate:
+	- The one due to the change of $E^e$ (as in the case of perfect price flexibility);
+	- The one due to the change in the interest rate.
+
+# Overshooting
+
+The combination of the two effects described above causes more pronounced changes in the exchange rate than expected in the long run.
+
+This phenomenon is referred to as exchange rate overshooting.
+
+# Effects of a permanent increase of $M^s_{NAT}$ with gradual price adjustment
+
+- The $M/P$ ratio increases sharply and gradually returns to the original level;
+
+- the interest rate $R$ decreases sharply and gradually returns to its original level.
+
+- the expected exchange rate $E^e$ increases immediately and remains constant over time;
+
+- the exchange rate $E$ goes immediately above $E^e$, then slowly decreases until it reaches the $E^e$ level.
+
+# Effects of a permanent decrease of $M^s_{NAT}$ with gradual price adjustment
+
+- The $M/P$ ratio decreases sharply and gradually returns to the original level;
+
+- the interest rate $R$ rises sharply and gradually returns to its original level.
+
+- the expected exchange rate $E^e$ decreases immediately and remains constant over time;
+
+- the $E$ exchange rate moves immediately below $E^e$, then slowly increases until it reaches the $E^e$ level.
+
+
