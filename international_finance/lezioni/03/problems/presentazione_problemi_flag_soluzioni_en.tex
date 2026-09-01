@@ -1,0 +1,289 @@
+\documentclass[12pt,aspectratio=169]{beamer}  
+%\usetheme{default}                 
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}{\color{gray}\hrule \hfill \scriptsize Corso di Finanza Internazionale e Sostenibilità\insertslidenavigationsymbol \insertframenavigationsymbol \scriptsize \insertframenumber/\inserttotalframenumber \hspace*{2mm}}
+\setbeamertemplate{headline}{\color{gray}\vskip1mm \hskip2mm \scriptsize UNICH, LM56 EFIMEC - mercati globali e politiche per lo sviluppo sostenibile \vskip0.5mm \hrule}
+%\setbeamertemplate{headline}{\hskip0.5mm\includegraphics[scale=0.2]{../../../../loghi/logolm56.png}}
+%\usepackage[italian]{babel}
+%\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+
+\newcommand{\red}{\color{blue}}
+\newcommand{\bla}{\color{black}}
+
+
+\newif\ifshowsolution
+\showsolutionfalse
+%\showsolutiontrue
+
+
+\begin{document}
+\begin{frame}
+
+\begin{center}
+
+\rule{\textwidth}{2pt}
+
+\vskip3mm
+INTERNATIONAL FINANCE
+
+Exchange Rates and the Foreign Exchange Market
+
+(Problems)
+\rule{\textwidth}{2pt}
+
+\end{center}
+
+\end{frame}
+
+
+\begin{frame}{Problem 1}
+	Cost of a haircut
+	\begin{itemize}
+		\item In Delhi 135 rupees ($INR$)
+		\item In Singapore 15 Singapore dollars ($SGD$)
+	\end{itemize}
+
+	If $E_{INR/SGD}=50$, What is the price of an Indian haircut compared to a Singaporean one?
+
+	If $E_{INR/SGD}=55$, is the Singapore haircut more or less expensive in terms of the Indian one?
+
+\end{frame}
+
+\ifshowsolution
+\begin{frame}{Problem 1 - solution}
+			\begin{itemize}
+				\item[]$E_{INR/SGD}=50$\\ An Indian calculates the cost in Singapore denomination as follows:\\ $P_{INR,Sing}=P_{SGD,Sing}\times E_{INR/SGD}=15\times50=750$\\ the price of the Indian denomination in terms of the Singapore denomination is \[P_{INR, India}/P_{INR,Sing}=135:750=0.18\] the Indian denomination is worth 0.18 Singapore denominations.
+		\end{itemize}
+\end{frame}
+\begin{frame}{Problem 1 - solution}
+			\begin{itemize}
+				\item[]$E_{INR/SGD}=55$\\ An Indian calculates the cost in rupees of the Singapore denomination as follows:\\ $P_{INR,SING}=P_{SGD,Sing}\times E_{INR/SGD}=15\times55=825$\\ the price of the Indian denomination in terms of that of Singapore is \[P_{INR, India}/P_{INR,Sing}=135:825=0.1636\] the Indian denomination is worth 0.1636 Singapore denominations.
+		\end{itemize}
+		The haircut in India becomes more convenient. Singapore residents will increase their demand for Indian cuts.
+
+
+\end{frame}
+
+
+\fi
+
+
+\begin{frame}{Problem 2}
+
+\small
+Cross exchange rates are exchange rates between currencies other than the U.S. dollar. If you look at Table 3.1 in the text, you will notice that it lists not only the exchange rates against the dollar, but also the cross rates against the euro and the pound. The possibility of deriving the exchange rate between Swiss franc and Israeli shekel, for example, from the dollar/Swiss franc and dollar/shekel rates follows from the exclusion of a potential profitable arbitrage strategy called triangular arbitrage. For example, suppose the Swiss franc price of a shekel is less than the Swiss franc price of a dollar multiplied by the dollar dollar price of a shekel. Explain why, instead of buying shekels using dollars, it would be cheaper to buy Swiss francs with dollars and use Swiss francs to buy shekels. Therefore, the assumed situation offers a risk-free profit opportunity and is therefore not consistent with profit maximization.
+
+\end{frame}
+
+\ifshowsolution
+
+\begin{frame}{Problem 2 - solution}
+
+The Swiss who needs Schekel can:
+
+- buy Shekels at the exchange rate $E_{Shekel/Fr}$
+
+- buy another currency that can then convert to Sheckel
+
+Regarding this second strategy, we assume that 
+
+- Francs are converted into US Dollars at $E_{\$/Fr}$
+
+- the \$ is converted to Shekels at $E_{Shekel/\$}$
+
+The product $$E_{\$/Fr}\times E_{Shekel/\$}=\hat{E}_{Shekel/Fr}$$ informs us about the amount of Sheckel obtained with one franc following the second strategy.
+
+If $\hat{E}_{Shekel/Fr}>E_{Shekel/Fr}$, you get more Shekels with 1 franc by implementing the second strategy. The choice of this strategy implies an increase in demand for \$, and therefore an appreciation of \$ against the franc ($E_{\$/Fr} \downarrow$). This will decrease the difference $\hat{E}_{Shekel/Fr}-E_{Shekel/Fr}$ until it is cancelled.
+\end{frame}
+
+\fi
+
+\begin{frame}{Problem 3}
+Table 3.1 of the text shows the exchange rates not only against the US dollar, but also against the euro and the pound sterling (each row shows the price of the dollar, euro and pound sterling, respectively, in terms of a different currency). At the same time, the table provides the current dollar price of the euro ($0.9797 per euro) and the pound ($1.1166 per pound). Choose five currencies from the table and show that the three spot exchange rates (in terms of dollars, euros and pounds) roughly exclude triangular arbitrage. Why do we need to add the word "approximately"?
+\end{frame}
+
+\ifshowsolution
+\begin{frame}{Problem 3 - solution}
+	Perform the calculations shown in the solution to the previous problem to perform the required verification. Note that the table in the twelfth Italian edition has errors in the column headers.
+
+The verification produces approximate values because the second strategy precedes two conversions and consequently higher costs.
+
+\end{frame}
+\fi
+
+\begin{frame}{Problem 4}
+Oil is sold on the world market, but its price is expressed in dollars. A chemical company in Morocco must import oil to be used in production. How do the company's profits change when the dirham depreciates against the dollar?
+\end{frame}
+
+\ifshowsolution
+\begin{frame}{Problem 4 - solution}
+	If the exchange rate is $E_{MAD/\$}$ (for a Moroccan is direct quotation)\\ $P_{MAD,oil}=P_{\$}\times E_{MAD/\$}$ \\A depreciation of MAD implies $E_{MAD/\$}\uparrow$ and therefore $P_{MAD,oil} \uparrow$ \\ If the exchange rate is $E_{\$/MAD}$ (for a Moroccan certain for uncertain or indirect quotation)\\ $P_{MAD, oil}=P_{\$}/ E_{\$/MAD}$ \\A depreciation of MAD implies $E_{\$/MAD}\downarrow$ and therefore $P_{MAD, oil} \uparrow$ \\ \red When a currency depreciates, imports become more expensive. The company will have to pay more for oil and, other things being equal, the profit will decrease. \bla
+		
+
+\end{frame}
+
+\fi
+
+
+\begin{frame}{Problem 5 a)}
+Calculate the dollar rates of return on the following assets: \newline
+a) a painting whose price rises from $200,000 to $250,000 over the course of a year;
+\end{frame}
+
+\ifshowsolution
+	\begin{frame}{Problem 5 a) - solution}
+\[\frac{250000-200000}{200000}=0.25\] The yield is 25\%. 
+\end{frame}
+
+\fi
+
+\begin{frame}{Problem 5 b)}
+b) a diamond whose price rises from 20000 to 21000 euros between 2014 and 2015;
+\end{frame}
+
+\ifshowsolution
+	\begin{frame}{Problem 5 b) - solution}
+	\[\frac{21000-20000}{20000}=0.05\] The yield is 5\%. 
+\end{frame}
+
+\fi
+
+\begin{frame}{Problem 5 c)}
+c) a deposit of £10,000 with a London bank, in a year in which the interest rate on sterling deposits is 2\% and the dollar/pound exchange rate goes from 1.36 to 1.17.
+\end{frame}
+
+\ifshowsolution
+	\begin{frame}{Problem 5 c) - solution}
+	\[0.02+\frac{1.17-1.36}{1.36}=0.02-0.14=-0.12\] The yield is -12\%. 
+\end{frame}
+
+\fi
+
+\begin{frame}{Problem 6}
+What would be the real rate of return on the assets described in the previous year if the price changes indicated were accompanied by a simultaneous increase of 10\% in all prices in euro?
+\end{frame}
+
+\ifshowsolution
+\begin{frame}{Problem 6 - solution}
+The returns calculated before 10\% must be reduced. For example, the deposit in pounds sterling will have a negative return of 22\%.
+\end{frame}
+
+\fi
+
+\begin{frame}{Problem 7}
+Assume that the interest rate in Mexico and India is equal to and equal to 5\% per annum. What is the relationship between the equilibrium peso/rupee exchange rate and its expected future level? Suppose the expected future exchange rate: 3.4 rupees per peso remains constant, while the Indian interest rate increases to 10\%. If the Mexican interest rate remains constant, what is the new equilibrium level of the peso/rupee exchange rate?
+\end{frame}
+
+\ifshowsolution
+\begin{frame}{Problem 7 - solution}
+	\begin{itemize}
+		\item If the two interest rates are equal, the exchange rate is equal to the expected rate.
+		\item If the Indian rate increases to 10\%, the exchange rate is obtained from the interest rate parity.
+
+			For an Indian it will be:
+			
+		\[0.1=0.05+\frac{3.4-E_{rupee/peso}}{E_{rupee/peso}}\] \[0.1E_{rupee/peso}=0.05E_{rupee/peso}+3.4-E_{rupee/weigh} \]
+		\[(1+0.1-0.05)E=3.4 \rightarrow E=\frac{3.4}{1.05}\] \[E_{rupee/weight}=3.24 \textnormal{ or }E_{peso/rupee}=1/3.24=0.3086\]		
+		\end{itemize}
+		\end{frame}
+\fi
+
+\begin{frame}{Problem 8}
+Traders suddenly learn that the dollar interest rate will decrease in the near future. Use the graphical analysis introduced in this chapter to determine the effect on the current dollar/euro exchange rate, assuming that the current interest rate on dollar and euro deposits does not change.
+\end{frame}
+
+\ifshowsolution
+\begin{frame}{Problem 8 - solution}
+Starting from a situation $R_{naz}=R_{foreigner}$ we will have $E=E^e$. The future lowering of $R_{naz}$ implies a future depreciation. The $E$ level calculated for the future is assumed as an expectation, therefore, immediately after the news there will be an increase of $E^e$. The increase of $E^e$ increases $E$ by the same amount. Therefore, after the news, interest rate parity will apply again: $R_{naz}=R_{foreign}$ and $E=E^e$, but with a higher level of the latter. The increase of $E^e$ and $E$ will continue in tandem until the central bank declares that it wants to reduce the interest rate. However, note that in the context we are analyzing, this news is not credible as two assets with similar characteristics cannot have different returns.	
+\end{frame}
+\begin{frame}{Problem 8 - graphical solution}
+
+	\includegraphics[scale=0.7]{pg_0001.pdf} 
+
+\end{frame}
+\begin{frame}{Problem 8 - solution (further clarification)}
+	\begin{itemize}
+\item $E^e$ increases and the line of return on foreign financial assets shifts to the right (see paragraph 3.4.6 p. 74 of the book).
+\item The spot exchange rate $E$ increases.
+\item The expectation of depreciation increases the expected return on foreign financial assets. There will be more demand for foreign currency to buy foreign financial assets and foreign currency will appreciate while the domestic currency will depreciate.
+	\end{itemize}
+\end{frame}
+
+
+
+
+\fi
+
+
+\begin{frame}{Problem 9}
+We have already noted that we could present the graphical analysis of the equilibrium on the foreign exchange market from the point of view of European traders, using the euro/dollar exchange rate $E_{euro/\$} (= 1 / E_{\$/euro})$ on the vertical axis, a vertical curve at the R level to indicate the euro yields on euro deposits, and a negatively sloping curve to show the relationship between the euro yields on dollar deposits and the $E_{euro/\$}$ exchange rate. Now provide this alternative representation of equilibrium and use it to examine the effects of changes in expected future interest rates and exchange rates. Are the answers obtained in agreement with those in the text?
+\end{frame}
+
+\ifshowsolution
+\begin{frame}{Problem 9 - solution}
+\begin{itemize}
+\item
+  A European commits \(\frac{1}{E_{\$/\textnormal{\texteuro}}}\) euros for
+  Get \$1 and plan to get it back
+  \(\frac{(1+R_{\textnormal{\$}})}{E^e_{\$/\textnormal{\texteuro}}}\) euro
+\item
+  its expected return will therefore be
+  \[R_{\textnormal{ US title in \texteuro}}=\frac{\frac{(1+R_{\textnormal{\$}})}{E^e_{\$/\textnormal{\texteuro}}}-\frac{1}{E_{\$/\textnormal{\texteuro}}}}{\frac{1}{E_{\$/\textnormal{\texteuro}}}}\]
+  \[R_{\textnormal{ US title in \texteuro}}=R_{\textnormal{\$}}\frac{E_{\$/\textnormal{\texteuro}}}{E^e_{\$/\textnormal{\texteuro}}}-\frac{E^e_{\$/\textnormal{\texteuro}}-E_{\$/\textnormal{\texteuro}}}{E^e_{\$/\textnormal{\texteuro}}}\]
+  which we approximate as follows
+  \[R_{\textnormal{ US title in \texteuro}}=R_{\textnormal{\$}}-\frac{E^e_{\$/\textnormal{\texteuro}}-E_{\$/\textnormal{\texteuro}}}{E_{\$/\textnormal{\texteuro}}}\]
+\end{itemize}
+%	\includegraphics[scale=0.5]{pg_0002.pdf} 
+\end{frame}
+\begin{frame}{Problem 9 - solution}
+  \[R_{\textnormal{ US title in \texteuro}}E_{\$/\textnormal{\texteuro}}=R_{\textnormal{\$}}E_{\$/\textnormal{\texteuro}}-E^e_{\$/\textnormal{\texteuro}}+E_{\$/\textnormal{\texteuro}}\]
+  \[R_{\textnormal{ US title in \texteuro}}E_{\$/\textnormal{\texteuro}}-R_{\textnormal{\$}}E_{\$/\textnormal{\texteuro}}-E_{\$/\textnormal{\texteuro}}=-E^e_{\$/\textnormal{\texteuro}}\]
+  \[-(-R_{\textnormal{ US title in \texteuro}}+R_{\textnormal{\$}}+1)E_{\$/\textnormal{\texteuro}}=-E^e_{\$/\textnormal{\texteuro}}\]
+  \[E_{\$/\textnormal{\texteuro}}=\frac{E^e_{\$/\textnormal{\texteuro}}}{(1+R_{\textnormal{\$}}-R_{\textnormal{ US title in \texteuro}})}\]
+  imposing the non-arbitrage condition $R_{\textnormal{ US security in \texteuro}}=R_{\textnormal{\texteuro}}$
+Get
+  \[E^*_{\$/\textnormal{\texteuro}}=\frac{E^e_{\$/\textnormal{\texteuro}}}{(1+R_{\textnormal{\$}}-R_{\textnormal{\texteuro}})}\]
+\end{frame}
+\begin{frame}{Problem 9 - solution}
+From the equation 
+  \[E^*_{\$/\textnormal{\texteuro}}=\frac{E^e_{\$/\textnormal{\texteuro}}}{(1+R_{\textnormal{\$}}-R_{\textnormal{\texteuro}})}\]
+We infer that other things being equal:
+\begin{itemize}
+	\item $E^*_{\$/\textnormal{\texteuro}}$ varies in the same direction as $E^e_{\$/\textnormal{\texteuro}}$;
+	\item $E^*_{\$/\textnormal{\texteuro}}$ decreases (i.e. the \texteuro\ depreciates against the dollar) when the US interest rate increases ($R_{\$}$);
+	\item $E^*_{\$/\textnormal{\texteuro}}$ increases (i.e. the \texteuro appreciates against the dollar) when the European interest rate increases ($R_{\textnormal{\texteuro}}$);
+\end{itemize}
+\end{frame}
+\begin{frame}{Problem 9 - solution}
+ \includegraphics[scale=0.25]{pg_0004} 
+\end{frame}
+\fi
+
+\begin{frame}{Problem 11}
+Suppose that the exchange rates of the dollar against the euro and the yen are equally flexible. However, the euro tends to depreciate unexpectedly against the dollar when the returns provided by the rest of the wealth are unexpectedly high. Conversely, in the same situation, the yen tends to appreciate unexpectedly. If you were a US citizen, which of the two currencies, euro or yen, would you consider riskier? \end{frame}
+
+\ifshowsolution
+\begin{frame}{Problem 11 - solution}
+	From an American's point of view, when domestic assets increase their yield, the euro depreciates. If the euro depreciates, the dollar appreciates ($E_{\$/euro}\downarrow$). The return on foreign assets will decrease.
+
+	The euro stabilizes the return of the entire portfolio and thus reduces risk.\newline Therefore, the Yen is riskier. \bla
+\end{frame}
+\fi
+
+
+\end{document}
+
+\begin{frame}{Problema}
+
+\end{frame}
+
+\ifshowsolution
+\begin{frame}{Problema soluzione}
+
+\end{frame}
+\fi
+
+
+
+
