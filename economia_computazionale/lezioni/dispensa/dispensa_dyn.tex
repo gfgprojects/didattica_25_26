@@ -593,4 +593,3386 @@ Questo principio sarà importante nelle sezioni successive. Inizieremo studiando
 
 TBW
 
+
+\part{Modelli in tempo discreto senza controllo}
+
+
+Molti problemi economici e finanziari sono formulati in tempo discreto.
+Il tempo è rappresentato da una successione di periodi,
+\[
+t=0,1,2,\ldots,
+\]
+e l'evoluzione del sistema è descritta attraverso relazioni che collegano
+le variabili economiche osservate in periodi differenti.
+
+La formulazione più semplice è quella già introdotta in precedenza:
+\[
+x_{t+1}=F(x_t),
+\]
+dove $x_t$ rappresenta lo stato del sistema al tempo $t$ e $F$ ne
+descrive la legge di movimento. Una volta assegnato lo stato iniziale
+$x_0$, il modello può essere iterato in avanti:
+\[
+x_0 \longrightarrow x_1 \longrightarrow x_2
+\longrightarrow \cdots.
+\]
+
+Quando il sistema contiene più variabili, è conveniente raccoglierle
+nel vettore
+\[
+\mathbf{x}_t=
+\begin{bmatrix}
+x_{1,t}\\
+x_{2,t}\\
+\vdots\\
+x_{n,t}
+\end{bmatrix}.
+\]
+La legge di movimento assume allora la forma
+\[
+\mathbf{x}_{t+1}=F(\mathbf{x}_t).
+\]
+
+Questa rappresentazione, tuttavia, non esaurisce le possibili
+formulazioni dei modelli dinamici discreti. Dal punto di vista
+computazionale è utile distinguere almeno tre casi: sistemi espliciti
+o ricorsivi, sistemi impliciti e sistemi forward-looking.
+
+\paragraph{Sistemi espliciti o ricorsivi}
+
+Nel caso più semplice, le variabili del periodo successivo sono
+espresse direttamente in funzione delle variabili già note:
+\[
+\mathbf{x}_{t+1}=F(\mathbf{x}_t).
+\]
+
+Dato $\mathbf{x}_t$, è quindi possibile calcolare direttamente
+$\mathbf{x}_{t+1}$. La simulazione consiste semplicemente
+nell'applicazione ripetuta della legge di movimento:
+\[
+\mathbf{x}_0
+\rightarrow
+\mathbf{x}_1
+\rightarrow
+\mathbf{x}_2
+\rightarrow\cdots.
+\]
+
+Nel caso lineare la legge di movimento può essere scritta come
+\[
+\mathbf{x}_{t+1}
+=
+A\mathbf{x}_t+\mathbf{b},
+\]
+dove $A$ è la matrice che descrive le relazioni dinamiche tra le
+variabili e $\mathbf{b}$ raccoglie i termini costanti.
+
+Il problema computazionale fondamentale consiste quindi nella
+\emph{forward iteration}: a ogni periodo si utilizza lo stato corrente
+per calcolare quello successivo.
+
+\paragraph{Sistemi impliciti}
+
+Non tutti i modelli economici forniscono direttamente una legge di
+movimento della forma precedente. In molti casi alcune variabili dello
+stesso periodo sono determinate simultaneamente.
+
+Una rappresentazione generale è
+\[
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0.
+\]
+
+Dato $\mathbf{x}_t$, non è quindi possibile ottenere
+$\mathbf{x}_{t+1}$ mediante la semplice valutazione di una funzione:
+occorre prima risolvere il sistema di equazioni rappresentato da $G$.
+
+Nel caso lineare possiamo avere, ad esempio,
+\[
+A\mathbf{x}_{t+1}
+=
+B\mathbf{x}_t+\mathbf{c}.
+\]
+
+Se $A$ è non singolare, il sistema ammette la rappresentazione
+\[
+\mathbf{x}_{t+1}
+=
+A^{-1}B\mathbf{x}_t+A^{-1}\mathbf{c}.
+\]
+
+Dal punto di vista matematico il modello è stato così ricondotto a una
+forma ricorsiva. Dal punto di vista computazionale, tuttavia, non è
+generalmente conveniente calcolare esplicitamente $A^{-1}$: a ogni
+periodo si risolve direttamente il sistema lineare
+\[
+A\mathbf{x}_{t+1}
+=
+B\mathbf{x}_t+\mathbf{c}.
+\]
+
+Se $G$ è non lineare, la determinazione di $\mathbf{x}_{t+1}$ può
+invece richiedere, a ogni periodo, la soluzione numerica di un sistema
+di equazioni non lineari.
+
+La distinzione tra sistemi espliciti e impliciti è quindi importante
+anche dal punto di vista computazionale:
+\[
+\begin{array}{ccc}
+\text{sistema esplicito}
+&
+\Rightarrow
+&
+\text{valutazione della legge di movimento},
+\\[2mm]
+\text{sistema implicito}
+&
+\Rightarrow
+&
+\text{soluzione di un sistema di equazioni}.
+\end{array}
+\]
+
+\paragraph{Sistemi forward-looking}
+
+Una difficoltà diversa emerge quando le decisioni o le variabili
+correnti dipendono da valori futuri del sistema. In questo caso
+compaiono variabili \emph{forward-looking}.
+
+In un modello deterministico con previsione perfetta possiamo avere,
+ad esempio,
+\[
+G(\mathbf{x}_{t+1},\mathbf{x}_t,\mathbf{x}_{t-1})=0,
+\]
+dove alcune condizioni correnti dipendono direttamente da variabili
+future.
+
+Quando è presente incertezza, la formulazione tipica coinvolge invece
+aspettative condizionate:
+\[
+G(E_t\mathbf{x}_{t+1},\mathbf{x}_t,\mathbf{x}_{t-1})=0,
+\]
+dove $E_t\mathbf{x}_{t+1}$ rappresenta il valore atteso delle variabili
+future sulla base dell'informazione disponibile al tempo $t$.
+
+Questa struttura è particolarmente importante nei modelli con
+aspettative razionali. Le aspettative utilizzate dagli agenti devono
+essere coerenti con la dinamica generata dal modello stesso.
+
+In questi casi non è generalmente possibile procedere semplicemente
+da
+\[
+\mathbf{x}_t
+\quad\text{a}\quad
+\mathbf{x}_{t+1}
+\]
+come nei sistemi ricorsivi. Il problema deve essere risolto tenendo
+conto congiuntamente delle condizioni che collegano presente e futuro.
+
+Dal punto di vista computazionale emerge quindi una distinzione
+fondamentale:
+\begin{quotation}
+	le traiettorie generate dai sistemi esprimibili in forma ricorsiva possono essere generate dalle equazioni del sistema
+\end{quotation}
+mentre, nei modelli forward-looking,
+
+\begin{quotation}
+	occorre risolvere il problema e poi si possono ricavare le traiettorie
+\end{quotation}
+
+Occorre cioè determinare prima una soluzione del modello coerente con
+le condizioni intertemporali e, successivamente, utilizzare tale
+soluzione per generare le traiettorie delle variabili.
+
+\paragraph{Una prima tassonomia computazionale}
+
+Le tre formulazioni possono essere sintetizzate come segue:
+\[
+\begin{array}{lll}
+\textbf{Esplicito:}
+&
+\mathbf{x}_{t+1}=F(\mathbf{x}_t)
+&
+\Rightarrow \text{ iterazione diretta},
+\\[2mm]
+\textbf{Implicito:}
+&
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0
+&
+\Rightarrow \text{ soluzione periodo per periodo},
+\\[2mm]
+\textbf{Forward-looking:}
+&
+G(E_t\mathbf{x}_{t+1},\mathbf{x}_t,\ldots)=0
+&
+\Rightarrow \text{ soluzione intertemporale e successiva simulazione}.
+\end{array}
+\]
+
+Questa classificazione riguarda il modo in cui la dinamica è
+formulata e, di conseguenza, il tipo di problema computazionale che
+deve essere risolto. Essa è distinta dalla classificazione tra modelli
+deterministici e stocastici.
+
+Un sistema ricorsivo, ad esempio, può essere deterministico,
+\[
+\mathbf{x}_{t+1}=F(\mathbf{x}_t),
+\]
+oppure stocastico,
+\[
+\mathbf{x}_{t+1}
+=
+F(\mathbf{x}_t,\boldsymbol{\varepsilon}_{t+1}).
+\]
+
+Analogamente, un sistema forward-looking può essere studiato in un
+ambiente deterministico con previsione perfetta oppure in presenza di
+incertezza, nel qual caso le aspettative sul futuro assumono un ruolo
+centrale.
+
+Nei prossimi capitoli procederemo quindi gradualmente. Inizieremo dai
+modelli discreti deterministici senza controllo, per i quali sarà
+possibile osservare direttamente le traiettorie generate dalle
+equazioni alle differenze. Vedremo che tali traiettorie possono
+cambiare profondamente al variare dei parametri del modello. Questo
+condurrà naturalmente al problema della stabilità e, nel caso dei
+sistemi multidimensionali, allo studio degli autovalori.
+
+Successivamente introdurremo l'incertezza, passando dai modelli
+discreti deterministici ai modelli discreti stocastici e dalle singole
+traiettorie alle distribuzioni delle possibili traiettorie.
+
+
+\paragraph{Condizioni iniziali, condizioni al contorno e traiettorie}
+
+Una volta specificate le equazioni che descrivono la dinamica del sistema,
+occorre stabilire quali condizioni siano necessarie per determinare una
+particolare traiettoria. La natura di tali condizioni dipende dalla
+struttura temporale del modello.
+
+Consideriamo innanzitutto un sistema esplicito della forma
+\[
+\mathbf{x}_{t+1}=F(\mathbf{x}_t).
+\]
+Per generare una particolare traiettoria è sufficiente specificare lo
+stato iniziale
+\[
+\mathbf{x}_0.
+\]
+Il problema costituito dalla legge di movimento e dalla condizione
+iniziale prende il nome di \emph{initial value problem} (IVP):
+\[
+\begin{cases}
+\mathbf{x}_{t+1}=F(\mathbf{x}_t),\\
+\mathbf{x}_0=\bar{\mathbf{x}}.
+\end{cases}
+\]
+
+Una volta assegnato $\mathbf{x}_0$, l'iterazione della legge di
+movimento genera la traiettoria
+\[
+\mathbf{x}_0,\mathbf{x}_1,\mathbf{x}_2,\ldots.
+\]
+
+La stessa logica si applica ai sistemi formulati in forma implicita:
+\[
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0,
+\]
+purché, dato $\mathbf{x}_t$, le equazioni determinino univocamente
+$\mathbf{x}_{t+1}$. Anche in questo caso una condizione iniziale è
+sufficiente per determinare la traiettoria. La differenza è di natura
+computazionale: mentre nel sistema esplicito lo stato successivo è
+ottenuto mediante la valutazione di $F$, nel sistema implicito occorre
+risolvere, a ogni periodo, il sistema
+\[
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0.
+\]
+
+Possiamo quindi rappresentare schematicamente i due casi come
+\[
+\text{sistema esplicito:}
+\qquad
+\mathbf{x}_t
+\longrightarrow
+F
+\longrightarrow
+\mathbf{x}_{t+1},
+\]
+e
+\[
+\text{sistema implicito:}
+\qquad
+\mathbf{x}_t
+\longrightarrow
+\text{solver}
+\longrightarrow
+\mathbf{x}_{t+1}.
+\]
+
+In entrambi i casi, una volta noto lo stato iniziale, il problema può
+essere risolto procedendo in avanti nel tempo e può quindi essere
+interpretato come un IVP.
+
+Una situazione diversa si presenta nei modelli \emph{forward-looking}.
+In questi modelli alcune variabili correnti dipendono da condizioni
+future. Una rappresentazione schematica può essere
+\[
+\begin{aligned}
+\mathbf{x}_{t+1}
+&=
+F(\mathbf{x}_t,\mathbf{q}_t),\\
+\mathbf{q}_t
+&=
+G(\mathbf{x}_t,\mathbf{q}_{t+1}),
+\end{aligned}
+\]
+dove $\mathbf{x}_t$ rappresenta un insieme di variabili predeterminate
+e $\mathbf{q}_t$ un insieme di variabili forward-looking.
+
+In questo caso conoscere
+\[
+\mathbf{x}_0
+\]
+non è generalmente sufficiente per determinare l'intera traiettoria.
+Il valore iniziale delle variabili forward-looking non può essere
+assegnato arbitrariamente, ma deve essere determinato in modo che la
+traiettoria soddisfi opportune condizioni future.
+
+A una condizione iniziale come
+\[
+\mathbf{x}_0=\bar{\mathbf{x}}
+\]
+si affianca quindi una condizione terminale, una condizione asintotica,
+una condizione di non esplosività oppure, a seconda del modello, una
+condizione di trasversalità.
+
+Il problema non è più, in generale, un semplice IVP, ma assume la
+struttura di un \emph{boundary value problem} (BVP), nel quale le
+condizioni necessarie per selezionare la soluzione non sono concentrate
+esclusivamente nel periodo iniziale.
+
+In un problema a orizzonte finito possiamo avere, ad esempio,
+\[
+\mathbf{x}_0=\bar{\mathbf{x}},
+\qquad
+\mathbf{q}_T=\bar{\mathbf{q}}.
+\]
+Alcune condizioni sono quindi specificate all'inizio dell'orizzonte e
+altre alla fine. Si parla, in questo caso, di condizioni al contorno
+miste.
+
+Nei modelli a orizzonte infinito la condizione futura non deve
+necessariamente specificare il valore assunto da una variabile in un
+periodo terminale. Può invece imporre un comportamento asintotico della
+traiettoria, come una condizione di non esplosività.
+
+La distinzione tra IVP e BVP introduce quindi una prima importante
+differenza computazionale:
+\[
+\boxed{
+\begin{array}{rcl}
+\text{IVP}
+&:&
+\text{condizione iniziale}
+\longrightarrow
+\text{simulazione in avanti},\\[2mm]
+\text{BVP}
+&:&
+\text{condizioni iniziali e future}
+\longrightarrow
+\text{soluzione della traiettoria}.
+\end{array}
+}
+\]
+
+Nel caso forward-looking occorre quindi distinguere tra la
+\emph{soluzione del modello} e la successiva \emph{simulazione della
+soluzione}. Una volta risolto il BVP, è spesso possibile ottenere una
+regola di soluzione ricorsiva della forma
+\[
+\mathbf{q}_t=P\mathbf{x}_t
+\]
+e una legge di movimento
+\[
+\mathbf{x}_{t+1}=H(\mathbf{x}_t).
+\]
+La soluzione così ottenuta può nuovamente essere simulata procedendo in
+avanti a partire dalla condizione iniziale.
+
+Questa distinzione può essere sintetizzata come
+\[
+\text{modelli ricorsivi}
+\quad\longrightarrow\quad
+\text{simulate},
+\]
+mentre
+\[
+\text{modelli forward-looking}
+\quad\longrightarrow\quad
+\text{solve first, then simulate}.
+\]
+
+
+\paragraph{Condizioni iniziali, traiettorie e stabilità}
+
+Nei sistemi che possono essere simulati come IVP, condizioni iniziali
+differenti generano, in generale, traiettorie differenti. Se, ad esempio,
+\[
+\mathbf{x}_0^{(1)}\neq\mathbf{x}_0^{(2)},
+\]
+le due condizioni iniziali producono
+\[
+\mathbf{x}_0^{(1)}
+\rightarrow
+\mathbf{x}_1^{(1)}
+\rightarrow
+\mathbf{x}_2^{(1)}
+\rightarrow\cdots
+\]
+e
+\[
+\mathbf{x}_0^{(2)}
+\rightarrow
+\mathbf{x}_1^{(2)}
+\rightarrow
+\mathbf{x}_2^{(2)}
+\rightarrow\cdots.
+\]
+
+La simulazione numerica consente di costruire e visualizzare queste
+traiettorie. Tuttavia, l'osservazione di una singola traiettoria non è
+sufficiente per comprendere il comportamento generale del sistema.
+Occorre chiedersi che cosa accade modificando le condizioni iniziali
+e i parametri della legge di movimento.
+
+Due traiettorie differenti possono infatti presentare lo stesso
+comportamento qualitativo. Possono, ad esempio, convergere entrambe
+verso lo stesso equilibrio, pur partendo da condizioni iniziali molto
+diverse. In altri casi, piccole variazioni delle condizioni iniziali o
+dei parametri possono modificare profondamente l'evoluzione del
+sistema.
+
+Questo conduce a uno dei problemi fondamentali nello studio dei
+modelli dinamici: l'\emph{analisi della stabilità}.
+
+
+\paragraph{Il problema della stabilità}
+
+Consideriamo uno stato stazionario, o \emph{steady state},
+$\mathbf{x}^*$, definito dalla condizione
+\[
+\mathbf{x}^*=F(\mathbf{x}^*).
+\]
+Se il sistema raggiunge tale stato, in assenza di perturbazioni vi
+rimane:
+\[
+\mathbf{x}_t=\mathbf{x}^*
+\quad\Rightarrow\quad
+\mathbf{x}_{t+1}=\mathbf{x}^*.
+\]
+
+L'esistenza di uno steady state non implica, tuttavia, che il sistema
+tenda verso di esso. La domanda rilevante è che cosa accade quando il
+sistema parte da uno stato diverso, ma eventualmente vicino, a
+$\mathbf{x}^*$.
+
+In termini intuitivi, uno steady state è \emph{stabile} se piccole
+perturbazioni dello stato iniziale non producono traiettorie che si
+allontanano arbitrariamente dall'equilibrio.
+
+Una proprietà più forte è la \emph{stabilità asintotica}. Uno steady
+state è localmente asintoticamente stabile se, partendo
+sufficientemente vicino a $\mathbf{x}^*$, la traiettoria non soltanto
+rimane nelle sue vicinanze, ma converge nuovamente verso di esso:
+\[
+\lim_{t\rightarrow\infty}\mathbf{x}_t=\mathbf{x}^*.
+\]
+
+È utile distinguere quindi due idee:
+\[
+\text{stabilità}
+\quad\Rightarrow\quad
+\text{le perturbazioni non allontanano il sistema dall'equilibrio},
+\]
+mentre
+\[
+\text{stabilità asintotica}
+\quad\Rightarrow\quad
+\text{le perturbazioni vengono progressivamente riassorbite}.
+\]
+
+L'analisi della stabilità permette quindi di andare oltre la
+simulazione di singole traiettorie. Invece di provare numericamente un
+numero molto elevato di condizioni iniziali, cerchiamo di individuare
+proprietà della legge di movimento che consentano di caratterizzare
+il comportamento delle traiettorie.
+
+Nel caso lineare scalare
+\[
+x_{t+1}=a x_t+b,
+\]
+tale comportamento dipende dal coefficiente $a$. Nel caso di un
+sistema lineare
+\[
+\mathbf{x}_{t+1}=A\mathbf{x}_t+\mathbf{b},
+\]
+il ruolo svolto dal singolo coefficiente $a$ viene assunto dalla
+matrice $A$.
+
+L'analisi della stabilità dei sistemi multidimensionali conduce così
+naturalmente allo studio degli autovalori della matrice di transizione.
+In particolare, la posizione degli autovalori rispetto al cerchio
+unitario permette di stabilire se le perturbazioni tendono a
+scomparire, a persistere oppure ad amplificarsi nel tempo.
+
+Nei modelli forward-looking, come vedremo, gli autovalori assumono
+anche un ruolo ulteriore. La presenza di radici esterne al cerchio
+unitario non implica necessariamente l'instabilità della soluzione:
+le variabili forward-looking possono aggiustarsi in modo da eliminare
+le componenti esplosive. Il numero delle radici stabili e instabili
+diventa quindi rilevante anche per determinare l'esistenza e
+l'unicità della soluzione.
+
+Il calcolo degli autovalori diventa pertanto un problema
+computazionale centrale nello studio dei sistemi dinamici discreti.
+Per sistemi di piccole dimensioni gli autovalori possono essere
+analizzati direttamente; per sistemi più grandi è invece necessario
+ricorrere ad algoritmi numerici specifici, che verranno discussi in
+seguito.
+
+Per i sistemi ricorsivi la sequenza concettuale che seguiremo sarà
+quindi:
+\begin{itemize}
+    \item condizione iniziale;
+    \item traiettoria;
+    \item variazione di condizioni iniziali e parametri;
+    \item steady state;
+    \item stabilità;
+    \item autovalori;
+    \item metodi numerici.
+\end{itemize}
+
+Per i sistemi forward-looking questa sequenza dovrà essere preceduta
+dalla soluzione del problema intertemporale, utilizzando congiuntamente
+le condizioni iniziali e le condizioni imposte sul comportamento futuro
+della traiettoria.
+
+
+\chapter{Modelli deterministici}
+
+\section{Equazioni alle differenze lineari del primo ordine}
+
+Il punto di partenza più semplice per lo studio dei modelli dinamici
+discreti è costituito da una singola equazione alle differenze lineare
+del primo ordine. La sua forma generale è
+\[
+x_{t+1}=a x_t+b,
+\]
+dove $x_t$ rappresenta lo stato del sistema al tempo $t$, mentre $a$ e
+$b$ sono parametri.
+
+L'equazione è detta \emph{del primo ordine} perché il valore della
+variabile al periodo successivo dipende dal valore assunto nel periodo
+corrente. È detta \emph{lineare} perché la relazione tra $x_{t+1}$ e
+$x_t$ è lineare.
+
+Per ottenere una particolare traiettoria è necessario specificare una
+condizione iniziale:
+\[
+x_0=\bar{x}.
+\]
+Il problema
+\[
+\begin{cases}
+x_{t+1}=a x_t+b,\\
+x_0=\bar{x}
+\end{cases}
+\]
+costituisce quindi un \emph{Initial Value Problem}.
+
+Dal punto di vista computazionale, questo è uno dei problemi dinamici
+più semplici. Una volta conosciuto $x_t$, il valore successivo può
+essere calcolato direttamente:
+\[
+x_{t+1}=a x_t+b.
+\]
+Ripetendo l'operazione si ottiene
+\[
+x_0\longrightarrow x_1\longrightarrow x_2
+\longrightarrow\cdots\longrightarrow x_T.
+\]
+
+Questa procedura prende il nome di \emph{forward iteration}. Non è
+necessario risolvere alcun sistema simultaneo: a ogni periodo tutte le
+informazioni necessarie per determinare lo stato successivo sono già
+disponibili.
+
+
+\subsection{Dalla condizione iniziale alla traiettoria}
+
+Consideriamo, ad esempio, il modello
+\[
+x_{t+1}=0.8x_t+2
+\]
+e supponiamo che
+\[
+x_0=5.
+\]
+I primi valori della traiettoria sono
+\[
+x_1=0.8(5)+2=6,
+\]
+\[
+x_2=0.8(6)+2=6.8,
+\]
+\[
+x_3=0.8(6.8)+2=7.44,
+\]
+e così via.
+
+Il computer esegue esattamente questa operazione, ma può ripeterla per
+un numero molto elevato di periodi. Un semplice algoritmo può essere
+rappresentato schematicamente come
+\[
+\begin{aligned}
+&x[0]\leftarrow x_0,\\
+&\text{per }t=0,\ldots,T-1:\\
+&\qquad x[t+1]\leftarrow a\,x[t]+b.
+\end{aligned}
+\]
+
+La semplicità dell'algoritmo non deve far pensare che il problema
+dinamico sia privo di interesse. La simulazione permette infatti di
+porre immediatamente alcune domande.
+
+Che cosa accade se cambiamo $x_0$? Le diverse traiettorie tendono verso
+lo stesso valore? Che cosa accade se modifichiamo $a$? La traiettoria
+continua a convergere oppure può iniziare a oscillare o a divergere?
+
+È utile distinguere chiaramente questi due esperimenti.
+
+Se cambiamo la condizione iniziale mantenendo invariati $a$ e $b$,
+consideriamo diversi IVP associati alla stessa legge di movimento. Se
+cambiamo $a$ oppure $b$, modifichiamo invece la legge di movimento e
+quindi il sistema dinamico stesso.
+
+
+\subsection{Lo steady state}
+
+Per studiare sistematicamente queste traiettorie è utile individuare
+innanzitutto gli stati che rimangono invariati nel tempo.
+
+Uno \emph{steady state}, o punto fisso, $x^*$ soddisfa
+\[
+x^*=a x^*+b.
+\]
+Se $a\neq 1$, possiamo quindi ottenere
+\[
+x^*=\frac{b}{1-a}.
+\]
+
+Nel precedente esempio,
+\[
+x_{t+1}=0.8x_t+2,
+\]
+lo steady state è
+\[
+x^*=\frac{2}{1-0.8}=10.
+\]
+
+Se $x_t=10$, infatti,
+\[
+x_{t+1}=0.8(10)+2=10.
+\]
+
+Lo steady state rappresenta quindi un valore che, una volta raggiunto,
+viene riprodotto dalla legge di movimento.
+
+Questo risultato, tuttavia, non ci dice ancora se una traiettoria che
+parte da un valore diverso da $x^*$ tenderà verso lo steady state.
+
+
+\subsection{La dinamica rispetto allo steady state}
+
+Per studiare il comportamento della traiettoria è conveniente
+considerare la deviazione dallo steady state:
+\[
+\widetilde{x}_t=x_t-x^*.
+\]
+
+Poiché
+\[
+x_{t+1}=a x_t+b
+\]
+e
+\[
+x^*=a x^*+b,
+\]
+sottraendo la seconda relazione dalla prima otteniamo
+\[
+x_{t+1}-x^*=a(x_t-x^*).
+\]
+Pertanto
+\[
+\widetilde{x}_{t+1}=a\widetilde{x}_t.
+\]
+
+Iterando questa relazione:
+\[
+\widetilde{x}_1=a\widetilde{x}_0,
+\]
+\[
+\widetilde{x}_2=a^2\widetilde{x}_0,
+\]
+e, in generale,
+\[
+\widetilde{x}_t=a^t\widetilde{x}_0.
+\]
+
+Possiamo quindi scrivere la soluzione come
+\[
+x_t=x^*+a^t(x_0-x^*).
+\]
+
+Questa espressione è particolarmente importante. Essa separa la
+traiettoria in due componenti:
+\[
+\underbrace{x^*}_{\text{steady state}}
++
+\underbrace{a^t(x_0-x^*)}_{\text{deviazione dallo steady state}}.
+\]
+
+Il comportamento dinamico dipende quindi dal comportamento di $a^t$
+quando $t$ cresce.
+
+
+\subsection{Il ruolo del parametro dinamico}
+
+Consideriamo inizialmente
+\[
+0<a<1.
+\]
+In questo caso
+\[
+a^t\rightarrow0
+\]
+e quindi
+\[
+x_t\rightarrow x^*.
+\]
+Inoltre, il segno della deviazione iniziale non cambia: la traiettoria
+si avvicina progressivamente allo steady state senza alternare valori
+al di sopra e al di sotto di esso.
+
+Abbiamo quindi una \emph{convergenza monotona}.
+
+Se invece
+\[
+-1<a<0,
+\]
+abbiamo ancora
+\[
+a^t\rightarrow0,
+\]
+ma il segno di $a^t$ cambia a ogni periodo. La traiettoria passa
+alternativamente da un lato all'altro dello steady state, mentre
+l'ampiezza delle oscillazioni si riduce progressivamente.
+
+Abbiamo quindi una \emph{convergenza oscillatoria}.
+
+Se
+\[
+a>1,
+\]
+il valore assoluto di $a^t$ cresce. Una deviazione iniziale dallo
+steady state viene quindi progressivamente amplificata. La traiettoria
+si allontana dallo steady state senza alternarne il lato.
+
+Se
+\[
+a<-1,
+\]
+anche il valore assoluto della deviazione aumenta, ma il suo segno
+cambia a ogni periodo. Otteniamo pertanto oscillazioni di ampiezza
+crescente.
+
+I casi limite $a=1$ e $a=-1$ richiedono un'attenzione particolare.
+Nel primo caso le deviazioni non vengono ridotte:
+\[
+\widetilde{x}_{t+1}=\widetilde{x}_t.
+\]
+Nel secondo:
+\[
+\widetilde{x}_{t+1}=-\widetilde{x}_t,
+\]
+e il sistema continua a oscillare con ampiezza costante.
+
+La condizione fondamentale per la convergenza verso lo steady state è
+quindi
+\[
+|a|<1.
+\]
+
+In questo caso lo steady state è asintoticamente stabile.
+
+
+\subsection{Stabilità e dipendenza dalle condizioni iniziali}
+
+Il risultato precedente permette di comprendere meglio la differenza
+tra simulazione e analisi della stabilità.
+
+Consideriamo due condizioni iniziali $x_0^{(1)}$ e $x_0^{(2)}$. Le
+corrispondenti traiettorie soddisfano
+\[
+x_t^{(1)}
+=
+x^*+a^t(x_0^{(1)}-x^*)
+\]
+e
+\[
+x_t^{(2)}
+=
+x^*+a^t(x_0^{(2)}-x^*).
+\]
+
+La loro distanza è
+\[
+x_t^{(1)}-x_t^{(2)}
+=
+a^t\left(x_0^{(1)}-x_0^{(2)}\right).
+\]
+
+Se
+\[
+|a|<1,
+\]
+allora
+\[
+\left|x_t^{(1)}-x_t^{(2)}\right|
+\rightarrow0.
+\]
+
+Condizioni iniziali differenti producono quindi traiettorie differenti
+nel breve periodo, ma l'influenza della condizione iniziale scompare
+progressivamente.
+
+Se invece
+\[
+|a|>1,
+\]
+piccole differenze iniziali vengono amplificate.
+
+La stabilità consente pertanto di formulare una conclusione sul
+comportamento di un'intera famiglia di traiettorie senza dover
+simulare separatamente ogni possibile condizione iniziale.
+
+
+\subsection{Un esempio economico: il modello cobweb}
+
+Un'applicazione classica delle equazioni alle differenze è il modello
+\emph{cobweb}, utilizzato per descrivere l'aggiustamento dinamico dei
+prezzi in mercati nei quali l'offerta reagisce con ritardo alle
+condizioni di mercato.
+
+Consideriamo una funzione di domanda
+\[
+Q_t^D=\alpha-\beta P_t,
+\qquad \beta>0,
+\]
+e supponiamo che la quantità offerta nel periodo $t$ sia stata decisa
+sulla base del prezzo osservato nel periodo precedente:
+\[
+Q_t^S=\gamma+\delta P_{t-1},
+\qquad \delta>0.
+\]
+
+L'ipotesi economica fondamentale è quindi che i produttori non possano
+modificare immediatamente la quantità offerta. La produzione del
+periodo $t$ è stata programmata utilizzando l'informazione disponibile
+nel periodo $t-1$.
+
+L'equilibrio di mercato richiede
+\[
+Q_t^D=Q_t^S.
+\]
+Pertanto
+\[
+\alpha-\beta P_t
+=
+\gamma+\delta P_{t-1}.
+\]
+
+Risolvendo rispetto a $P_t$ otteniamo
+\[
+P_t
+=
+\frac{\alpha-\gamma}{\beta}
+-
+\frac{\delta}{\beta}P_{t-1}.
+\]
+
+Il modello cobweb assume quindi esattamente la forma
+\[
+x_{t+1}=ax_t+b,
+\]
+con
+\[
+a=-\frac{\delta}{\beta}.
+\]
+
+Il segno negativo del coefficiente dinamico ha una conseguenza
+immediata: quando il sistema converge, la convergenza avviene attraverso
+oscillazioni.
+
+La condizione di stabilità è
+\[
+\left|-\frac{\delta}{\beta}\right|<1,
+\]
+ossia
+\[
+\frac{\delta}{\beta}<1.
+\]
+
+Pertanto
+\[
+\delta<\beta.
+\]
+
+L'interpretazione economica è particolarmente intuitiva. Se l'offerta
+reagisce al prezzo precedente meno intensamente di quanto la domanda
+reagisca al prezzo corrente, le deviazioni dall'equilibrio tendono a
+ridursi. Se invece la risposta dell'offerta è troppo forte, il
+meccanismo di aggiustamento può amplificare le oscillazioni.
+
+Il modello mostra quindi come una condizione matematica di stabilità
+possa essere tradotta in una condizione sui parametri economici.
+
+
+\subsection{Un esempio finanziario: aggiustamento verso il valore fondamentale}
+
+La stessa struttura matematica può essere utilizzata per rappresentare
+un semplice processo di aggiustamento di un prezzo finanziario verso
+un valore fondamentale.
+
+Indichiamo con $P_t$ il prezzo dell'attività finanziaria e con $P^*$
+il suo valore fondamentale, che supponiamo per il momento costante.
+
+Consideriamo la regola di aggiustamento
+\[
+P_{t+1}-P_t
+=
+\alpha(P^*-P_t),
+\]
+dove $\alpha$ misura la velocità con cui il prezzo reagisce alla
+distanza dal valore fondamentale.
+
+Se
+\[
+P_t<P^*,
+\]
+la differenza $P^*-P_t$ è positiva e il meccanismo tende ad aumentare
+il prezzo. Se
+\[
+P_t>P^*,
+\]
+la differenza è negativa e il meccanismo tende invece a ridurlo.
+
+Riscrivendo l'equazione otteniamo
+\[
+P_{t+1}
+=
+(1-\alpha)P_t+\alpha P^*.
+\]
+
+Ancora una volta abbiamo la forma generale
+\[
+x_{t+1}=ax_t+b,
+\]
+con
+\[
+a=1-\alpha
+\]
+e
+\[
+b=\alpha P^*.
+\]
+
+Lo steady state soddisfa
+\[
+P^*
+=
+(1-\alpha)P^*+\alpha P^*,
+\]
+ed è quindi precisamente il valore fondamentale.
+
+Definiamo ora il mispricing
+\[
+m_t=P_t-P^*.
+\]
+La sua dinamica è
+\[
+m_{t+1}
+=
+(1-\alpha)m_t.
+\]
+
+La condizione di convergenza diventa pertanto
+\[
+|1-\alpha|<1,
+\]
+ossia
+\[
+0<\alpha<2.
+\]
+
+Il valore del parametro $\alpha$ determina inoltre il tipo di
+aggiustamento.
+
+Se
+\[
+0<\alpha<1,
+\]
+il prezzo converge monotonicamente verso il valore fondamentale.
+
+Se
+\[
+1<\alpha<2,
+\]
+il prezzo reagisce più che proporzionalmente al mispricing corrente.
+Esso supera quindi il valore fondamentale e la traiettoria converge
+attraverso oscillazioni.
+
+Se
+\[
+\alpha>2,
+\]
+l'overshooting è sufficientemente forte da produrre oscillazioni di
+ampiezza crescente e il valore fondamentale diventa instabile.
+
+Questo semplice modello non intende rappresentare in modo completo il
+processo di formazione dei prezzi nei mercati finanziari. Il suo
+obiettivo è mostrare come un meccanismo economico di aggiustamento possa
+essere tradotto in un'equazione alle differenze e analizzato con gli
+stessi strumenti utilizzati per il modello cobweb.
+
+
+\subsection{Due modelli, lo stesso problema computazionale}
+
+I due esempi considerati descrivono fenomeni molto diversi.
+
+Nel modello cobweb la dinamica nasce dal ritardo con cui i produttori
+adeguano l'offerta alle condizioni di mercato. Nel modello finanziario
+la dinamica deriva invece da un meccanismo di correzione della distanza
+tra prezzo osservato e valore fondamentale.
+
+Dal punto di vista computazionale, tuttavia, entrambi conducono alla
+stessa struttura:
+\[
+x_{t+1}=ax_t+b.
+\]
+
+In entrambi i casi dobbiamo:
+
+\begin{enumerate}
+    \item specificare i parametri;
+    \item individuare la condizione iniziale;
+    \item iterare la legge di movimento;
+    \item costruire la traiettoria;
+    \item determinare lo steady state;
+    \item verificare se le deviazioni dallo steady state tendono a
+    ridursi o ad amplificarsi.
+\end{enumerate}
+
+Questo esempio illustra una caratteristica fondamentale
+dell'economia e della finanza computazionale. Modelli con
+interpretazioni economiche molto diverse possono generare lo stesso
+problema matematico e richiedere, di conseguenza, le stesse tecniche
+numeriche.
+
+Nel caso di una singola equazione lineare la dinamica è governata da
+un solo coefficiente, $a$, e la condizione
+\[
+|a|<1
+\]
+permette di caratterizzare completamente la stabilità dello steady
+state.
+
+Nei modelli economici e finanziari più realistici, tuttavia, lo stato
+del sistema è generalmente descritto da più variabili che interagiscono
+tra loro. La legge di movimento assume allora la forma
+\[
+\mathbf{x}_{t+1}=A\mathbf{x}_t+\mathbf{b}.
+\]
+
+Il problema che affronteremo nella prossima sezione sarà quindi quello
+di comprendere quale sia, per una matrice $A$, l'analogo della semplice
+condizione $|a|<1$. Questo passaggio condurrà naturalmente allo studio
+degli autovalori e alle tecniche computazionali utilizzate per
+determinarli.
+
+\section{Sistemi lineari di equazioni alle differenze}
+
+Nella sezione precedente abbiamo considerato modelli dinamici descritti da
+una sola variabile di stato:
+\[
+x_{t+1}=ax_t+b.
+\]
+In questo caso il comportamento dinamico dipende da un unico coefficiente,
+$a$, e la condizione
+\[
+|a|<1
+\]
+garantisce la convergenza verso lo steady state.
+
+Molti modelli economici e finanziari richiedono tuttavia più variabili di
+stato. Produzione, prezzi, reddito, capitale, tassi di interesse e prezzi
+delle attività possono evolvere congiuntamente e influenzarsi
+reciprocamente.
+
+Consideriamo, ad esempio, due variabili:
+\[
+x_{1,t}
+\qquad\text{e}\qquad
+x_{2,t}.
+\]
+Un sistema lineare del primo ordine può essere scritto come
+\[
+\begin{aligned}
+x_{1,t+1}
+&=
+a_{11}x_{1,t}+a_{12}x_{2,t}+b_1,\\
+x_{2,t+1}
+&=
+a_{21}x_{1,t}+a_{22}x_{2,t}+b_2.
+\end{aligned}
+\]
+
+Utilizzando la notazione matriciale, definiamo
+\[
+\mathbf{x}_t=
+\begin{bmatrix}
+x_{1,t}\\
+x_{2,t}
+\end{bmatrix},
+\qquad
+A=
+\begin{bmatrix}
+a_{11}&a_{12}\\
+a_{21}&a_{22}
+\end{bmatrix},
+\qquad
+\mathbf{b}=
+\begin{bmatrix}
+b_1\\
+b_2
+\end{bmatrix}.
+\]
+Il sistema può allora essere rappresentato mediante una sola equazione:
+\[
+\mathbf{x}_{t+1}
+=
+A\mathbf{x}_t+\mathbf{b}.
+\]
+
+La matrice $A$ prende il nome di \emph{matrice di transizione}. I suoi
+elementi descrivono il modo in cui lo stato corrente influenza quello del
+periodo successivo.
+
+Gli elementi sulla diagonale,
+\[
+a_{11},\qquad a_{22},
+\]
+misurano la dipendenza di ciascuna variabile dal proprio valore precedente,
+mentre gli elementi fuori diagonale,
+\[
+a_{12},\qquad a_{21},
+\]
+rappresentano le interazioni dinamiche tra le variabili.
+
+
+\subsection{L'Initial Value Problem}
+
+Anche nel caso multidimensionale è necessario specificare una condizione
+iniziale:
+\[
+\mathbf{x}_0=\bar{\mathbf{x}}.
+\]
+L'Initial Value Problem è quindi
+\[
+\begin{cases}
+\mathbf{x}_{t+1}=A\mathbf{x}_t+\mathbf{b},\\
+\mathbf{x}_0=\bar{\mathbf{x}}.
+\end{cases}
+\]
+
+La forward iteration procede esattamente come nel caso scalare:
+\[
+\mathbf{x}_1=A\mathbf{x}_0+\mathbf{b},
+\]
+\[
+\mathbf{x}_2=A\mathbf{x}_1+\mathbf{b},
+\]
+e così via.
+
+L'algoritmo può essere rappresentato schematicamente come
+\[
+\begin{aligned}
+&\mathbf{x}[0]\leftarrow\mathbf{x}_0,\\
+&\text{per }t=0,\ldots,T-1:\\
+&\qquad
+\mathbf{x}[t+1]\leftarrow
+A\mathbf{x}[t]+\mathbf{b}.
+\end{aligned}
+\]
+
+Dal punto di vista concettuale, quindi, il passaggio da una variabile a
+molte variabili non modifica la logica della simulazione. Cambia invece
+la complessità della dinamica che può essere generata.
+
+
+\subsection{Lo steady state}
+
+Uno steady state $\mathbf{x}^*$ soddisfa
+\[
+\mathbf{x}^*
+=
+A\mathbf{x}^*+\mathbf{b}.
+\]
+Riordinando:
+\[
+(I-A)\mathbf{x}^*
+=
+\mathbf{b}.
+\]
+
+Se la matrice $I-A$ è non singolare, lo steady state è unico e può essere
+ottenuto risolvendo il sistema lineare
+\[
+(I-A)\mathbf{x}^*=\mathbf{b}.
+\]
+
+Formalmente possiamo scrivere
+\[
+\mathbf{x}^*
+=
+(I-A)^{-1}\mathbf{b},
+\]
+ma, come già osservato nello studio dei sistemi lineari, dal punto di vista
+computazionale è generalmente preferibile risolvere direttamente il sistema
+piuttosto che calcolare esplicitamente l'inversa.
+
+Ritroviamo quindi una tecnica computazionale già studiata:
+\[
+\boxed{
+\text{calcolo dello steady state}
+\longrightarrow
+\text{soluzione di un sistema lineare}
+}.
+\]
+
+
+\subsection{La dinamica rispetto allo steady state}
+
+Definiamo la deviazione dallo steady state:
+\[
+\widetilde{\mathbf{x}}_t
+=
+\mathbf{x}_t-\mathbf{x}^*.
+\]
+
+Poiché
+\[
+\mathbf{x}_{t+1}=A\mathbf{x}_t+\mathbf{b}
+\]
+e
+\[
+\mathbf{x}^*=A\mathbf{x}^*+\mathbf{b},
+\]
+sottraendo le due equazioni otteniamo
+\[
+\widetilde{\mathbf{x}}_{t+1}
+=
+A\widetilde{\mathbf{x}}_t.
+\]
+
+Iterando:
+\[
+\widetilde{\mathbf{x}}_1
+=
+A\widetilde{\mathbf{x}}_0,
+\]
+\[
+\widetilde{\mathbf{x}}_2
+=
+A^2\widetilde{\mathbf{x}}_0,
+\]
+e, in generale,
+\[
+\widetilde{\mathbf{x}}_t
+=
+A^t\widetilde{\mathbf{x}}_0.
+\]
+
+La soluzione può pertanto essere scritta come
+\[
+\mathbf{x}_t
+=
+\mathbf{x}^*
++
+A^t(\mathbf{x}_0-\mathbf{x}^*).
+\]
+
+Questa espressione costituisce l'analogo multidimensionale della soluzione
+ottenuta nel caso scalare:
+\[
+x_t=x^*+a^t(x_0-x^*).
+\]
+
+Il problema della stabilità può quindi essere formulato in modo molto
+semplice. Nel caso scalare ci siamo chiesti se
+\[
+a^t\rightarrow0.
+\]
+Nel caso multidimensionale dobbiamo invece chiederci se
+\[
+A^t\rightarrow0.
+\]
+
+
+\subsection{Perché non basta guardare gli elementi di $A$?}
+
+Nel caso scalare esiste un unico coefficiente dinamico. In un sistema
+multidimensionale, invece, le variabili interagiscono tra loro.
+
+Consideriamo, ad esempio,
+\[
+A=
+\begin{bmatrix}
+a_{11}&a_{12}\\
+a_{21}&a_{22}
+\end{bmatrix}.
+\]
+
+Non è sufficiente analizzare separatamente $a_{11}$ e $a_{22}$, perché
+l'evoluzione di $x_{1,t}$ dipende anche da $x_{2,t}$ e viceversa.
+
+Una variazione di $x_{1,t}$ può modificare $x_{2,t+1}$ attraverso
+$a_{21}$; la variazione di $x_{2,t+1}$ può successivamente tornare a
+influenzare $x_{1,t+2}$ attraverso $a_{12}$.
+
+Si generano quindi meccanismi di retroazione dinamica che dipendono
+dall'intera matrice $A$.
+
+Abbiamo bisogno di uno strumento che permetta di sintetizzare queste
+interazioni.
+
+
+\subsection{Autovalori e autovettori}
+
+Consideriamo un vettore non nullo $\mathbf{v}$ tale che
+\[
+A\mathbf{v}=\lambda\mathbf{v}.
+\]
+Il numero $\lambda$ è un \emph{autovalore} di $A$ e $\mathbf{v}$ è il
+corrispondente \emph{autovettore}.
+
+L'importanza dinamica di questa relazione è immediata. Se una perturbazione
+si trova nella direzione dell'autovettore $\mathbf{v}$, dopo un periodo
+avremo
+\[
+A\mathbf{v}=\lambda\mathbf{v}.
+\]
+Dopo due periodi:
+\[
+A^2\mathbf{v}
+=
+A(\lambda\mathbf{v})
+=
+\lambda^2\mathbf{v}.
+\]
+Dopo $t$ periodi:
+\[
+A^t\mathbf{v}
+=
+\lambda^t\mathbf{v}.
+\]
+
+L'autovalore svolge quindi, lungo la direzione individuata
+dall'autovettore, esattamente il ruolo che il coefficiente $a$ svolgeva nel
+modello scalare.
+
+Se
+\[
+|\lambda|<1,
+\]
+la componente associata a quell'autovalore tende ad attenuarsi.
+
+Se
+\[
+|\lambda|>1,
+\]
+essa tende invece ad amplificarsi.
+
+Se l'autovalore è negativo o complesso, la dinamica può inoltre presentare
+oscillazioni.
+
+
+\subsection{La condizione di stabilità}
+
+Un sistema lineare discreto è asintoticamente stabile se tutte le componenti
+della deviazione dallo steady state tendono a zero.
+
+Questo richiede che tutti gli autovalori della matrice $A$ abbiano modulo
+inferiore a uno:
+\[
+|\lambda_i|<1
+\qquad
+\text{per ogni }i.
+\]
+
+Definiamo il \emph{raggio spettrale} della matrice come
+\[
+\rho(A)
+=
+\max_i|\lambda_i|.
+\]
+
+La condizione di stabilità può quindi essere espressa in forma compatta:
+\[
+\boxed{\rho(A)<1}.
+\]
+
+Il risultato generalizza direttamente quello ottenuto nel caso scalare:
+\[
+|a|<1
+\quad\longrightarrow\quad
+\rho(A)<1.
+\]
+
+Il cerchio di raggio unitario nel piano complesso prende il nome di
+\emph{cerchio unitario}. Per un sistema dinamico discreto lineare, la
+stabilità asintotica richiede quindi che tutti gli autovalori si trovino
+all'interno del cerchio unitario.
+
+
+\subsection{Un esempio economico: un duopolio dinamico}
+
+Consideriamo ora un mercato nel quale operano due imprese. Ciascuna impresa
+sceglie la quantità da produrre nel periodo successivo reagendo alla
+quantità osservata dell'altra impresa nel periodo corrente.
+
+Una semplice rappresentazione è
+\[
+q_{1,t+1}
+=
+\alpha_1-\beta_1 q_{2,t},
+\]
+\[
+q_{2,t+1}
+=
+\alpha_2-\beta_2 q_{1,t},
+\]
+con
+\[
+\beta_1>0,
+\qquad
+\beta_2>0.
+\]
+
+L'interpretazione è che una maggiore produzione del concorrente induce
+ciascuna impresa a ridurre la propria produzione nel periodo successivo.
+
+Definiamo
+\[
+\mathbf{q}_t=
+\begin{bmatrix}
+q_{1,t}\\
+q_{2,t}
+\end{bmatrix}.
+\]
+Il sistema diventa
+\[
+\mathbf{q}_{t+1}
+=
+\begin{bmatrix}
+0&-\beta_1\\
+-\beta_2&0
+\end{bmatrix}
+\mathbf{q}_t
++
+\begin{bmatrix}
+\alpha_1\\
+\alpha_2
+\end{bmatrix}.
+\]
+
+La matrice di transizione è quindi
+\[
+A=
+\begin{bmatrix}
+0&-\beta_1\\
+-\beta_2&0
+\end{bmatrix}.
+\]
+
+Gli autovalori soddisfano
+\[
+\det(A-\lambda I)=0.
+\]
+Pertanto
+\[
+\det
+\begin{bmatrix}
+-\lambda&-\beta_1\\
+-\beta_2&-\lambda
+\end{bmatrix}
+=0,
+\]
+da cui
+\[
+\lambda^2-\beta_1\beta_2=0.
+\]
+
+Gli autovalori sono quindi
+\[
+\lambda_1=\sqrt{\beta_1\beta_2},
+\qquad
+\lambda_2=-\sqrt{\beta_1\beta_2}.
+\]
+
+Il raggio spettrale è
+\[
+\rho(A)=\sqrt{\beta_1\beta_2}.
+\]
+
+La condizione di stabilità è pertanto
+\[
+\sqrt{\beta_1\beta_2}<1,
+\]
+equivalentemente
+\[
+\beta_1\beta_2<1.
+\]
+
+La stabilità dipende quindi dall'interazione tra le reazioni delle due
+imprese. Anche se ciascuna equazione appare semplice, le decisioni delle
+imprese generano un circuito di retroazione:
+\[
+q_{1,t}
+\longrightarrow
+q_{2,t+1}
+\longrightarrow
+q_{1,t+2}
+\longrightarrow\cdots.
+\]
+
+Se il prodotto delle intensità di reazione è sufficientemente piccolo, le
+perturbazioni vengono progressivamente attenuate. Se le reazioni sono
+troppo forti, il meccanismo di risposta reciproca può invece amplificare le
+deviazioni dall'equilibrio.
+
+
+\subsection{Un esempio finanziario: prezzo e momentum}
+
+Consideriamo ora un semplice modello nel quale la dinamica del prezzo di
+un'attività finanziaria dipende sia dalla distanza dal valore fondamentale
+sia dal movimento recente del prezzo.
+
+Indichiamo con $P^*$ il valore fondamentale e definiamo il mispricing:
+\[
+m_t=P_t-P^*.
+\]
+
+Introduciamo inoltre una variabile $z_t$ che rappresenta una componente di
+momentum, ossia una misura sintetica della recente tendenza del prezzo.
+
+Consideriamo il sistema
+\[
+m_{t+1}
+=
+(1-\alpha)m_t+\gamma z_t,
+\]
+\[
+z_{t+1}
+=
+\delta m_t+\phi z_t.
+\]
+
+Il parametro $\alpha$ rappresenta la forza del meccanismo di ritorno verso
+il valore fondamentale, mentre $\gamma$, $\delta$ e $\phi$ descrivono la
+trasmissione e la persistenza della componente di momentum.
+
+Definendo
+\[
+\mathbf{x}_t=
+\begin{bmatrix}
+m_t\\
+z_t
+\end{bmatrix},
+\]
+otteniamo
+\[
+\mathbf{x}_{t+1}
+=
+A\mathbf{x}_t,
+\]
+con
+\[
+A=
+\begin{bmatrix}
+1-\alpha&\gamma\\
+\delta&\phi
+\end{bmatrix}.
+\]
+
+Lo steady state naturale è
+\[
+\mathbf{x}^*
+=
+\begin{bmatrix}
+0\\
+0
+\end{bmatrix},
+\]
+che corrisponde a
+\[
+P_t=P^*
+\]
+e all'assenza di momentum.
+
+La dinamica dipende tuttavia dall'interazione tra i due meccanismi.
+
+Il ritorno verso il fondamentale tende a correggere il mispricing, mentre
+il momentum può propagare nel tempo i movimenti precedenti del prezzo.
+
+Per determinare quale dei due meccanismi prevalga non è sufficiente
+considerare separatamente i parametri. Occorre analizzare gli autovalori
+della matrice
+\[
+A=
+\begin{bmatrix}
+1-\alpha&\gamma\\
+\delta&\phi
+\end{bmatrix}.
+\]
+
+Se
+\[
+\rho(A)<1,
+\]
+una perturbazione del prezzo o del momentum viene progressivamente
+riassorbita e il sistema ritorna verso
+\[
+(m,z)=(0,0).
+\]
+
+Se invece
+\[
+\rho(A)>1,
+\]
+esiste almeno una componente della dinamica che tende ad amplificarsi.
+
+L'esempio mostra quindi come l'interazione tra meccanismi di correzione e
+meccanismi di propagazione possa essere studiata attraverso le proprietà
+spettrali della matrice di transizione.
+
+
+\subsection{Dalla simulazione all'analisi spettrale}
+
+Il duopolio e il modello finanziario descrivono fenomeni differenti, ma
+conducono allo stesso problema computazionale:
+\[
+\mathbf{x}_{t+1}
+=
+A\mathbf{x}_t+\mathbf{b}.
+\]
+
+Una possibile strategia consiste nel simulare il modello per numerosi
+periodi e osservare se le variabili sembrano convergere.
+
+Questo approccio è utile per visualizzare la dinamica, ma presenta un
+limite importante. Una simulazione riguarda una specifica condizione
+iniziale e un particolare orizzonte temporale. Una traiettoria che sembra
+stabile per un certo numero di periodi non costituisce, da sola, una prova
+della stabilità del sistema.
+
+L'analisi degli autovalori consente invece di caratterizzare direttamente
+la dinamica asintotica.
+
+Per un sistema lineare discreto:
+\[
+\boxed{
+\rho(A)<1
+\quad\Longleftrightarrow\quad
+\text{stabilità asintotica}
+}.
+\]
+
+Il problema della stabilità si trasforma quindi in un problema di
+\emph{eigenvalue computation}.
+
+
+\subsection{Il calcolo degli autovalori come problema computazionale}
+
+Per matrici molto piccole possiamo determinare gli autovalori risolvendo
+l'equazione caratteristica
+\[
+\det(A-\lambda I)=0.
+\]
+
+Questa procedura è utile dal punto di vista teorico e permette di
+comprendere la definizione di autovalore. Non rappresenta però il metodo
+generale utilizzato dal computer per matrici di dimensione elevata.
+
+Già per una matrice $n\times n$, l'equazione caratteristica è un polinomio
+di grado $n$. All'aumentare della dimensione del sistema, costruire
+esplicitamente tale polinomio e determinarne successivamente le radici
+diventa una strategia numericamente poco conveniente.
+
+Gli algoritmi numerici operano invece direttamente sulla matrice.
+
+Per matrici dense di dimensione moderata, uno degli strumenti fondamentali
+per il calcolo dello spettro è l'\emph{algoritmo QR}. L'idea generale
+consiste nel costruire una successione di matrici simili ad $A$ che
+conservano gli stessi autovalori ma assumono progressivamente una forma
+dalla quale questi possono essere estratti più facilmente.
+
+Quando i sistemi diventano molto grandi, tuttavia, può non essere
+conveniente calcolare tutti gli autovalori.
+
+
+\subsection{Sistemi grandi e matrici sparse}
+
+Molti modelli economici e finanziari possono generare matrici di dimensione
+elevata. Inoltre, ogni variabile interagisce spesso soltanto con una parte
+limitata delle altre variabili.
+
+La matrice di transizione può quindi essere \emph{sparsa}: molti dei suoi
+elementi sono uguali a zero.
+
+In questi casi emergono due considerazioni computazionali.
+
+La prima riguarda la memoria. Memorizzare tutti gli $n^2$ elementi di una
+matrice molto grande è inefficiente quando soltanto una piccola frazione di
+essi è diversa da zero. Le rappresentazioni sparse memorizzano quindi
+soltanto gli elementi non nulli e la loro posizione.
+
+La seconda riguarda il calcolo degli autovalori. Per studiare la stabilità
+non siamo necessariamente interessati all'intero spettro. La condizione
+\[
+\rho(A)<1
+\]
+dipende soprattutto dagli autovalori di modulo maggiore.
+
+Diventa quindi naturale cercare direttamente gli autovalori dominanti,
+evitando di calcolare quelli che non sono rilevanti per il problema.
+
+
+\subsection{Metodi iterativi per gli autovalori dominanti}
+
+Il più semplice esempio è il \emph{power method}. Partendo da un vettore
+iniziale $\mathbf{v}_0$, si costruisce la successione
+\[
+\mathbf{v}_{k+1}
+=
+\frac{A\mathbf{v}_k}
+{\|A\mathbf{v}_k\|}.
+\]
+
+Sotto opportune condizioni, la direzione di $\mathbf{v}_k$ tende verso
+l'autovettore associato all'autovalore dominante.
+
+Il metodo mostra un principio computazionale importante: se siamo
+interessati soltanto alla parte dello spettro rilevante per la stabilità,
+può non essere necessario risolvere l'intero problema agli autovalori.
+
+Per problemi più complessi vengono utilizzati metodi basati sui
+\emph{Krylov subspaces}, tra i quali il metodo di Arnoldi per matrici
+generali.
+
+L'idea è costruire spazi della forma
+\[
+\mathcal{K}_m(A,\mathbf{v})
+=
+\operatorname{span}
+\left\{
+\mathbf{v},
+A\mathbf{v},
+A^2\mathbf{v},
+\ldots,
+A^{m-1}\mathbf{v}
+\right\},
+\]
+all'interno dei quali è possibile ottenere approssimazioni degli
+autovalori rilevanti senza trattare esplicitamente l'intero problema
+spettrale.
+
+La scelta del metodo dipende quindi dalla struttura del problema:
+
+\begin{itemize}
+    \item per sistemi molto piccoli, il calcolo diretto permette anche
+    un'analisi teorica;
+    \item per matrici dense di dimensione moderata, si utilizzano
+    algoritmi numerici per il problema completo agli autovalori;
+    \item per matrici grandi e sparse, sono spesso preferibili metodi
+    iterativi che determinano soltanto una parte dello spettro.
+\end{itemize}
+
+
+\subsection{Una nuova prospettiva sulla stabilità}
+
+Il passaggio dalla singola equazione ai sistemi mostra bene il ruolo delle
+tecniche computazionali nell'analisi dinamica.
+
+Nel caso scalare avevamo
+\[
+x_{t+1}=ax_t+b
+\]
+e la stabilità dipendeva da
+\[
+|a|<1.
+\]
+
+Nel caso multidimensionale abbiamo
+\[
+\mathbf{x}_{t+1}
+=
+A\mathbf{x}_t+\mathbf{b}
+\]
+e la condizione diventa
+\[
+\rho(A)<1.
+\]
+
+La struttura logica rimane quindi la stessa:
+\[
+\boxed{
+\text{legge di movimento}
+\longrightarrow
+\text{traiettorie}
+\longrightarrow
+\text{steady state}
+\longrightarrow
+\text{stabilità}
+\longrightarrow
+\text{autovalori}
+}.
+\]
+
+Ciò che cambia è il problema computazionale. Al crescere del numero delle
+variabili, la simulazione richiede ripetute operazioni matrice-vettore,
+il calcolo dello steady state richiede la soluzione di un sistema lineare
+e l'analisi della stabilità richiede informazioni sullo spettro della
+matrice di transizione.
+
+Finora abbiamo però considerato sistemi nei quali, dato lo stato corrente,
+lo stato successivo è immediatamente determinabile:
+\[
+\mathbf{x}_{t+1}
+=
+A\mathbf{x}_t+\mathbf{b}.
+\]
+
+Non tutti i modelli economici e finanziari possiedono questa struttura.
+Quando alcune variabili del nuovo periodo sono determinate
+simultaneamente, il modello può presentarsi invece in forma implicita:
+\[
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0.
+\]
+
+Prima di poter effettuare la forward iteration sarà allora necessario
+risolvere, a ogni periodo, un ulteriore problema numerico. Questo sarà
+l'oggetto della prossima sezione.
+
+\section{Sistemi dinamici in forma implicita}
+
+Finora abbiamo considerato sistemi dinamici nei quali lo stato del periodo
+successivo è espresso direttamente in funzione dello stato corrente:
+\[
+\mathbf{x}_{t+1}=F(\mathbf{x}_t).
+\]
+
+Questa rappresentazione è particolarmente conveniente perché consente di
+procedere direttamente mediante forward iteration. Una volta noto
+$\mathbf{x}_t$, il computer valuta la funzione $F$ e ottiene
+$\mathbf{x}_{t+1}$.
+
+Molti modelli economici e finanziari non vengono tuttavia formulati
+direttamente in questa forma. In particolare, alcune variabili riferite allo
+stesso periodo possono essere determinate simultaneamente.
+
+Una rappresentazione più generale è
+\[
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0.
+\]
+
+In questo caso, dato $\mathbf{x}_t$, lo stato successivo non è ottenuto
+mediante la semplice valutazione di una funzione. Occorre invece risolvere
+il sistema
+\[
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0
+\]
+rispetto a $\mathbf{x}_{t+1}$.
+
+Dal punto di vista computazionale, la dinamica assume quindi la struttura
+\[
+\mathbf{x}_t
+\longrightarrow
+\boxed{\text{soluzione del sistema}}
+\longrightarrow
+\mathbf{x}_{t+1}.
+\]
+
+La procedura deve essere ripetuta per ciascun periodo della simulazione.
+
+
+\subsection{Forma esplicita e forma implicita}
+
+È utile confrontare direttamente i due casi.
+
+In un sistema esplicito:
+\[
+\mathbf{x}_{t+1}=F(\mathbf{x}_t),
+\]
+l'algoritmo può essere rappresentato schematicamente come
+\[
+\begin{aligned}
+&\mathbf{x}[0]\leftarrow\mathbf{x}_0,\\
+&\text{per }t=0,\ldots,T-1:\\
+&\qquad
+\mathbf{x}[t+1]\leftarrow
+F(\mathbf{x}[t]).
+\end{aligned}
+\]
+
+In un sistema implicito:
+\[
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0,
+\]
+l'algoritmo diventa invece
+\[
+\begin{aligned}
+&\mathbf{x}[0]\leftarrow\mathbf{x}_0,\\
+&\text{per }t=0,\ldots,T-1:\\
+&\qquad
+\text{risolvere }
+G(\mathbf{x}[t+1],\mathbf{x}[t])=0
+\\
+&\qquad
+\text{rispetto a }\mathbf{x}[t+1].
+\end{aligned}
+\]
+
+La differenza è quindi importante: nel secondo caso una singola
+transizione temporale incorpora a sua volta un problema numerico.
+
+
+\subsection{Il caso lineare}
+
+Consideriamo un sistema implicito lineare:
+\[
+A\mathbf{x}_{t+1}
+=
+B\mathbf{x}_t+\mathbf{c}.
+\]
+
+Se $A$ è non singolare, dal punto di vista matematico possiamo scrivere
+\[
+\mathbf{x}_{t+1}
+=
+A^{-1}B\mathbf{x}_t
++
+A^{-1}\mathbf{c}.
+\]
+
+Il sistema può quindi essere ricondotto formalmente alla forma ricorsiva
+\[
+\mathbf{x}_{t+1}
+=
+C\mathbf{x}_t+\mathbf{d},
+\]
+dove
+\[
+C=A^{-1}B
+\]
+e
+\[
+\mathbf{d}=A^{-1}\mathbf{c}.
+\]
+
+Questa trasformazione è utile per analizzare teoricamente il sistema.
+
+Dal punto di vista computazionale, tuttavia, non è generalmente conveniente
+calcolare esplicitamente $A^{-1}$. A ogni periodo è preferibile risolvere
+direttamente
+\[
+A\mathbf{x}_{t+1}
+=
+B\mathbf{x}_t+\mathbf{c}.
+\]
+
+Ritroviamo quindi una delle tecniche già studiate nella parte precedente
+del corso:
+\[
+\boxed{
+\text{sistema dinamico implicito lineare}
+\longrightarrow
+\text{linear solver a ogni periodo}
+}.
+\]
+
+
+\subsection{Quando la forma ricorsiva esiste}
+
+La presenza di simultaneità non significa necessariamente che il modello
+debba essere risolto numericamente a ogni periodo.
+
+In alcuni casi le equazioni possono essere manipolate algebricamente in
+modo da ottenere direttamente
+\[
+\mathbf{x}_{t+1}=F(\mathbf{x}_t).
+\]
+
+Quando ciò è possibile, la simultaneità appartiene alla formulazione
+originaria del modello, ma può essere eliminata prima della simulazione.
+
+È utile quindi distinguere tra:
+
+\begin{itemize}
+    \item sistemi impliciti che possono essere trasformati analiticamente
+    in forma ricorsiva;
+    \item sistemi per i quali lo stato successivo deve essere determinato
+    numericamente a ogni periodo.
+\end{itemize}
+
+Nel caso lineare, la possibilità di ottenere una forma ricorsiva dipende
+in particolare dalla non singolarità della matrice che moltiplica le
+variabili del nuovo periodo.
+
+
+\subsection{Il caso non lineare}
+
+Consideriamo ora
+\[
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0,
+\]
+dove $G$ è non lineare.
+
+In generale potrebbe non essere possibile isolare analiticamente
+$\mathbf{x}_{t+1}$.
+
+Dato $\mathbf{x}_t$, dobbiamo quindi considerare
+\[
+H(\mathbf{y})
+=
+G(\mathbf{y},\mathbf{x}_t)
+\]
+e trovare un vettore $\mathbf{y}$ tale che
+\[
+H(\mathbf{y})=0.
+\]
+
+Una volta ottenuta la soluzione,
+\[
+\mathbf{x}_{t+1}=\mathbf{y},
+\]
+possiamo avanzare al periodo successivo.
+
+La simulazione dinamica incorpora quindi ripetutamente un problema di
+root finding:
+\[
+\boxed{
+\text{dinamica}
++
+\text{soluzione di sistemi non lineari}
+}.
+\]
+
+Possono essere utilizzati, ad esempio, il metodo di Newton e le sue
+varianti, già introdotti nella parte dedicata ai sistemi non lineari.
+
+
+\subsection{Esistenza e unicità della transizione}
+
+La possibilità di scrivere
+\[
+\mathbf{x}_{t+1}=F(\mathbf{x}_t)
+\]
+presuppone che, dato lo stato corrente, lo stato successivo sia ben
+definito.
+
+In un sistema implicito questo non è automatico.
+
+L'equazione
+\[
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0
+\]
+può avere:
+
+\begin{itemize}
+    \item una soluzione;
+    \item più soluzioni;
+    \item nessuna soluzione.
+\end{itemize}
+
+Ad esempio,
+\[
+x_{t+1}^2=x_t
+\]
+per $x_t>0$ ammette due soluzioni:
+\[
+x_{t+1}=+\sqrt{x_t}
+\]
+e
+\[
+x_{t+1}=-\sqrt{x_t}.
+\]
+
+Non esiste quindi una singola legge di movimento senza introdurre
+un'ulteriore regola di selezione.
+
+Se invece
+\[
+x_t<0,
+\]
+non esiste alcuna soluzione reale.
+
+Nei modelli dinamici impliciti diventano quindi rilevanti non soltanto il
+calcolo numerico, ma anche i problemi di esistenza e unicità della
+transizione.
+
+
+\subsection{Una condizione locale: il teorema della funzione implicita}
+
+Consideriamo
+\[
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0.
+\]
+
+Se, in un punto di interesse, la matrice Jacobiana rispetto alle variabili
+future,
+\[
+\frac{\partial G}
+{\partial\mathbf{x}_{t+1}},
+\]
+è non singolare, il teorema della funzione implicita garantisce, sotto
+opportune condizioni di regolarità, che localmente sia possibile esprimere
+le variabili future come funzione di quelle correnti:
+\[
+\mathbf{x}_{t+1}=F(\mathbf{x}_t).
+\]
+
+Il risultato generalizza al caso non lineare la condizione di invertibilità
+incontrata per i sistemi lineari.
+
+Dal punto di vista computazionale è importante perché suggerisce che,
+almeno localmente, il problema implicito possiede una soluzione ben
+definita che può essere ricercata numericamente.
+
+
+\subsection{Un esempio economico: il modello SP-DG}
+
+Un esempio di simultaneità intra-periodale è fornito dal modello SP-DG.
+
+Consideriamo, in forma semplificata, una relazione di offerta aggregata:
+\[
+\pi_t
+=
+\pi_t^e+\alpha\widehat{Y}_t+z_t^s,
+\]
+dove $\pi_t$ rappresenta l'inflazione, $\pi_t^e$ l'inflazione attesa,
+$\widehat{Y}_t$ l'output gap e $z_t^s$ uno shock di offerta.
+
+La relazione di domanda aggregata può essere rappresentata come
+\[
+\widehat{Y}_t
+=
+\widehat{x}_t-\pi_t+\widehat{Y}_{t-1}-z_t^d,
+\]
+dove $\widehat{x}_t$ rappresenta una componente esogena della domanda e
+$z_t^d$ uno shock di domanda.
+
+Le due equazioni determinano simultaneamente
+\[
+\pi_t
+\qquad\text{e}\qquad
+\widehat{Y}_t.
+\]
+
+Non possiamo quindi calcolare prima $\pi_t$ senza conoscere
+$\widehat{Y}_t$, ma non possiamo neppure calcolare
+$\widehat{Y}_t$ senza conoscere $\pi_t$.
+
+Il sistema è quindi, nella sua formulazione originaria, simultaneo.
+
+
+\subsection{Eliminare la simultaneità nel modello SP-DG}
+
+Sostituendo
+\[
+\pi_t
+=
+\pi_t^e+\alpha\widehat{Y}_t+z_t^s
+\]
+nella relazione di domanda otteniamo
+\[
+\widehat{Y}_t
+=
+\widehat{x}_t
+-
+\pi_t^e
+-
+\alpha\widehat{Y}_t
+-
+z_t^s
++
+\widehat{Y}_{t-1}
+-
+z_t^d.
+\]
+
+Raccogliendo $\widehat{Y}_t$:
+\[
+(1+\alpha)\widehat{Y}_t
+=
+\widehat{x}_t
+-
+\pi_t^e
++
+\widehat{Y}_{t-1}
+-
+z_t^s
+-
+z_t^d.
+\]
+
+Se
+\[
+1+\alpha\neq0,
+\]
+possiamo scrivere
+\[
+\widehat{Y}_t
+=
+\frac{
+\widehat{x}_t
+-
+\pi_t^e
++
+\widehat{Y}_{t-1}
+-
+z_t^s
+-
+z_t^d
+}
+{1+\alpha}.
+\]
+
+Una volta determinato $\widehat{Y}_t$, possiamo calcolare
+\[
+\pi_t
+=
+\pi_t^e+\alpha\widehat{Y}_t+z_t^s.
+\]
+
+La simultaneità è stata quindi eliminata analiticamente.
+
+Il modello può essere simulato ricorsivamente dopo aver effettuato questa
+trasformazione.
+
+
+\subsection{Aspettative adattive nel modello SP-DG}
+
+Nel modello considerato, le aspettative di inflazione sono adattive:
+\[
+\pi_t^e
+=
+\lambda\pi_{t-1}
++
+(1-\lambda)\pi_{t-1}^e.
+\]
+
+L'inflazione attesa nel periodo $t$ dipende quindi esclusivamente da
+quantità già note al termine del periodo precedente.
+
+La sequenza computazionale può essere rappresentata come
+\[
+(\pi_{t-1},\pi_{t-1}^e,\widehat{Y}_{t-1})
+\]
+\[
+\Downarrow
+\]
+\[
+\pi_t^e
+\]
+\[
+\Downarrow
+\]
+\[
+\widehat{Y}_t
+\]
+\[
+\Downarrow
+\]
+\[
+\pi_t.
+\]
+
+Dopo aver risolto la simultaneità intra-periodale, il modello diventa
+quindi pienamente ricorsivo.
+
+Questo aspetto sarà importante quando confronteremo le aspettative
+adattive con formulazioni forward-looking: nel primo caso il modello può
+essere simulato procedendo periodo per periodo; nel secondo il problema
+può richiedere una soluzione intertemporale preliminare.
+
+
+\subsection{Un esempio finanziario: prezzo e rendimento di un'obbligazione}
+
+Consideriamo ora un semplice esempio finanziario nel quale il rendimento
+di un'obbligazione e il suo prezzo devono essere determinati congiuntamente.
+
+Supponiamo, per semplicità, che un'obbligazione zero coupon paghi un valore
+nominale $F$ dopo $n$ periodi.
+
+Il prezzo e il rendimento a scadenza sono legati dalla relazione
+\[
+P_{t+1}
+=
+\frac{F}
+{(1+y_{t+1})^n}.
+\]
+
+Supponiamo inoltre che il rendimento del periodo successivo sia determinato
+da una relazione di mercato della forma
+\[
+y_{t+1}
+=
+\bar{y}
++
+\gamma(P_{t+1}-P_t),
+\]
+dove $\bar{y}$ rappresenta un livello di riferimento e $\gamma$ misura la
+risposta del rendimento alla variazione del prezzo.
+
+Le due variabili
+\[
+P_{t+1}
+\qquad\text{e}\qquad
+y_{t+1}
+\]
+devono essere determinate simultaneamente.
+
+Il sistema è
+\[
+\begin{cases}
+P_{t+1}
+=
+\dfrac{F}{(1+y_{t+1})^n},\\[3mm]
+y_{t+1}
+=
+\bar{y}
++
+\gamma(P_{t+1}-P_t).
+\end{cases}
+\]
+
+Dato $P_t$, non possiamo calcolare direttamente $P_{t+1}$ perché abbiamo
+bisogno di $y_{t+1}$; allo stesso tempo, per determinare $y_{t+1}$ abbiamo
+bisogno di $P_{t+1}$.
+
+Si tratta quindi di un sistema dinamico implicito.
+
+
+\subsection{Riduzione a un problema di root finding}
+
+Sostituendo la seconda equazione nella prima otteniamo
+\[
+P_{t+1}
+=
+\frac{F}
+{
+\left[
+1+\bar{y}
++
+\gamma(P_{t+1}-P_t)
+\right]^n
+}.
+\]
+
+Portando tutti i termini a sinistra:
+\[
+H(P_{t+1};P_t)
+=
+P_{t+1}
+-
+\frac{F}
+{
+\left[
+1+\bar{y}
++
+\gamma(P_{t+1}-P_t)
+\right]^n
+}
+=
+0.
+\]
+
+Dato $P_t$, il valore di $P_{t+1}$ deve quindi essere determinato
+numericamente risolvendo
+\[
+H(P_{t+1};P_t)=0.
+\]
+
+Una volta ottenuto $P_{t+1}$, possiamo calcolare
+\[
+y_{t+1}
+=
+\bar{y}
++
+\gamma(P_{t+1}-P_t).
+\]
+
+L'algoritmo assume quindi la forma
+\[
+P_t
+\longrightarrow
+\boxed{\text{root finding}}
+\longrightarrow
+P_{t+1}
+\longrightarrow
+y_{t+1}.
+\]
+
+Questo esempio mostra come una relazione finanziaria non lineare possa
+rendere implicita una transizione dinamica e richiedere la soluzione
+numerica di un'equazione a ogni periodo.
+
+
+\subsection{Il ruolo della soluzione iniziale nei metodi iterativi}
+
+Quando a ogni periodo viene utilizzato un metodo iterativo, come Newton,
+occorre specificare anche un valore iniziale per il solver.
+
+Nel problema
+\[
+H(P_{t+1};P_t)=0,
+\]
+una scelta naturale può essere utilizzare
+\[
+P_t
+\]
+come valore iniziale per la ricerca di $P_{t+1}$.
+
+Questa strategia sfrutta una caratteristica comune dei modelli dinamici:
+quando la variazione tra periodi consecutivi non è eccessivamente grande,
+lo stato corrente può costituire una buona approssimazione iniziale dello
+stato successivo.
+
+Il problema dinamico genera quindi anche una sequenza naturale di
+\emph{warm starts} per il metodo numerico.
+
+
+\subsection{Errore del solver e dinamica}
+
+Nei sistemi espliciti:
+\[
+\mathbf{x}_{t+1}=F(\mathbf{x}_t),
+\]
+una volta specificata la legge di movimento, la transizione viene
+calcolata direttamente, salvo gli ordinari errori numerici di
+rappresentazione.
+
+Nei sistemi impliciti risolti numericamente compare invece una nuova fonte
+di approssimazione.
+
+Supponiamo che il solver produca
+\[
+\widehat{\mathbf{x}}_{t+1}
+\]
+tale che
+\[
+G(\widehat{\mathbf{x}}_{t+1},\mathbf{x}_t)
+\approx0.
+\]
+
+Il valore approssimato viene poi utilizzato come stato per il periodo
+successivo.
+
+Gli errori numerici possono quindi propagarsi lungo la traiettoria.
+
+Diventano importanti:
+
+\begin{itemize}
+    \item la tolleranza del solver;
+    \item il criterio di arresto;
+    \item il numero massimo di iterazioni;
+    \item la qualità del valore iniziale;
+    \item la stabilità del problema dinamico.
+\end{itemize}
+
+Un sistema dinamicamente stabile tende, in alcune situazioni, ad attenuare
+piccole perturbazioni numeriche; un sistema instabile può invece
+amplificarle.
+
+La stabilità economica e le proprietà numeriche dell'algoritmo possono
+quindi interagire.
+
+
+\subsection{Due esempi, due livelli di difficoltà}
+
+Gli esempi precedenti mostrano due diversi casi di sistema implicito.
+
+Nel modello SP-DG, la simultaneità può essere eliminata analiticamente:
+\[
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0
+\quad\longrightarrow\quad
+\mathbf{x}_{t+1}=F(\mathbf{x}_t).
+\]
+
+Il problema computazionale viene quindi risolto una volta, nella fase di
+manipolazione del modello.
+
+Nel modello finanziario, invece, la relazione non lineare rende utile
+risolvere numericamente
+\[
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0
+\]
+a ogni periodo.
+
+Possiamo quindi distinguere:
+\[
+\boxed{
+\begin{array}{c}
+\text{simultaneità eliminabile analiticamente}\\
+\Downarrow\\
+\text{ricorsione diretta}
+\end{array}
+}
+\]
+e
+\[
+\boxed{
+\begin{array}{c}
+\text{simultaneità da risolvere numericamente}\\
+\Downarrow\\
+\text{solver a ogni periodo}
+\end{array}
+}.
+\]
+
+Questo confronto mostra ancora una volta come modelli economicamente
+differenti possano richiedere tecniche computazionali differenti pur
+appartenendo alla stessa classe generale di sistemi dinamici impliciti.
+
+
+\subsection{Dai sistemi impliciti ai sistemi forward-looking}
+
+Finora, anche quando il sistema era implicito, dato lo stato corrente era
+possibile determinare lo stato successivo risolvendo un problema
+intra-periodale:
+\[
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0.
+\]
+
+Una difficoltà qualitativamente diversa emerge quando la determinazione
+delle variabili correnti dipende dalle condizioni future del sistema.
+
+In questo caso possono comparire relazioni del tipo
+\[
+G(E_t\mathbf{x}_{t+1},
+\mathbf{x}_t,
+\mathbf{x}_{t-1})=0.
+\]
+
+La difficoltà non consiste più soltanto nel risolvere un sistema di
+equazioni al periodo corrente. Occorre determinare una traiettoria
+intertemporale coerente con le condizioni forward-looking.
+
+Nel caso dei modelli con aspettative razionali, questo conduce alla
+distinzione tra variabili predeterminate e variabili forward-looking e,
+nei sistemi lineari, a problemi basati sugli autovalori generalizzati.
+
+Prima di affrontare questa ulteriore complicazione, completeremo però lo
+studio dei sistemi deterministici considerando il caso non lineare e
+mostrando come l'analisi locale della stabilità possa essere ricondotta,
+ancora una volta, al calcolo degli autovalori.
+
+\section{Modelli dinamici forward-looking}
+
+Finora abbiamo considerato sistemi nei quali, dato lo stato corrente,
+lo stato del periodo successivo poteva essere determinato direttamente
+oppure risolvendo un sistema di equazioni intra-periodale.
+
+Nel caso esplicito:
+\[
+\mathbf{x}_{t+1}=F(\mathbf{x}_t),
+\]
+lo stato successivo è ottenuto mediante una semplice valutazione della
+legge di movimento.
+
+Nel caso implicito:
+\[
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0,
+\]
+dato $\mathbf{x}_t$, è necessario risolvere un sistema di equazioni per
+determinare $\mathbf{x}_{t+1}$.
+
+In entrambi i casi, tuttavia, una volta noto lo stato corrente il
+problema può essere affrontato procedendo periodo per periodo.
+
+Una difficoltà differente emerge quando alcune variabili correnti
+dipendono da valori futuri del sistema. Questi modelli vengono indicati
+come \emph{forward-looking}.
+
+Una rappresentazione schematica può essere
+\[
+G(\mathbf{x}_{t+1},\mathbf{x}_t,\mathbf{x}_{t-1})=0.
+\]
+
+La presenza di $\mathbf{x}_{t+1}$ in una condizione che determina
+$\mathbf{x}_t$ modifica profondamente la natura del problema
+computazionale. Il valore corrente non può essere determinato
+utilizzando esclusivamente la storia passata del sistema.
+
+
+\subsection{Perché la forward iteration non è sufficiente}
+
+Consideriamo una semplice relazione
+\[
+q_t
+=
+x_t+\beta q_{t+1},
+\]
+dove $q_t$ è una variabile forward-looking e $x_t$ è una variabile
+determinata dallo stato corrente.
+
+Supponiamo inoltre che
+\[
+x_{t+1}=a x_t.
+\]
+
+Dato $x_0$, possiamo calcolare immediatamente
+\[
+x_1=ax_0,
+\]
+poi
+\[
+x_2=a x_1,
+\]
+e così via.
+
+Per determinare $q_0$, invece, abbiamo bisogno di conoscere $q_1$:
+\[
+q_0=x_0+\beta q_1.
+\]
+
+Ma
+\[
+q_1=x_1+\beta q_2,
+\]
+e quindi il calcolo di $q_1$ richiede $q_2$.
+
+Analogamente,
+\[
+q_2=x_2+\beta q_3.
+\]
+
+Otteniamo quindi una sequenza del tipo
+\[
+q_0
+\longleftarrow
+q_1
+\longleftarrow
+q_2
+\longleftarrow
+q_3
+\longleftarrow
+\cdots.
+\]
+
+La semplice forward iteration utilizzata nei sistemi ricorsivi non
+chiude quindi il problema.
+
+
+\subsection{Soluzione forward}
+
+Possiamo sostituire ricorsivamente i valori futuri.
+
+Partendo da
+\[
+q_t
+=
+x_t+\beta q_{t+1},
+\]
+utilizziamo
+\[
+q_{t+1}
+=
+x_{t+1}+\beta q_{t+2}
+\]
+e otteniamo
+\[
+q_t
+=
+x_t+\beta x_{t+1}
++\beta^2q_{t+2}.
+\]
+
+Continuando:
+\[
+q_t
+=
+x_t
++
+\beta x_{t+1}
++
+\beta^2x_{t+2}
++
+\cdots
++
+\beta^Tq_{t+T}.
+\]
+
+Se imponiamo una condizione che escluda una componente esplosiva della
+soluzione, il termine terminale tende a zero e possiamo ottenere
+\[
+q_t
+=
+\sum_{j=0}^{\infty}
+\beta^j x_{t+j}.
+\]
+
+La variabile corrente dipende quindi dall'intera sequenza futura della
+variabile fondamentale.
+
+Questo è il tratto caratteristico dei modelli forward-looking:
+\[
+\boxed{
+\text{il presente dipende dalle condizioni future}
+}.
+\]
+
+
+\subsection{Un caso con soluzione analitica}
+
+Supponiamo che
+\[
+x_{t+1}=a x_t.
+\]
+
+Allora
+\[
+x_{t+j}=a^j x_t.
+\]
+
+La soluzione forward diventa
+\[
+q_t
+=
+x_t
+\sum_{j=0}^{\infty}
+(\beta a)^j.
+\]
+
+Se
+\[
+|\beta a|<1,
+\]
+la serie geometrica converge e otteniamo
+\[
+q_t
+=
+\frac{x_t}{1-\beta a}.
+\]
+
+Possiamo quindi scrivere
+\[
+q_t=P x_t,
+\]
+dove
+\[
+P=\frac{1}{1-\beta a}.
+\]
+
+Una volta trovata questa relazione, il modello può nuovamente essere
+simulato procedendo in avanti.
+
+Il problema computazionale è quindi composto da due fasi:
+\[
+\boxed{
+\text{SOLVE}
+\longrightarrow
+\text{SIMULATE}
+}.
+\]
+
+
+\subsection{Sistemi forward-looking e condizioni terminali}
+
+Nei sistemi forward-looking la condizione iniziale non è generalmente
+sufficiente a determinare la soluzione.
+
+Nei modelli ricorsivi avevamo un Initial Value Problem:
+\[
+\begin{cases}
+\mathbf{x}_{t+1}=F(\mathbf{x}_t),\\
+\mathbf{x}_0=\bar{\mathbf{x}}.
+\end{cases}
+\]
+
+Il passato determina lo stato iniziale e la legge di movimento permette
+di procedere in avanti.
+
+Nei sistemi forward-looking compaiono invece anche condizioni che
+riguardano il comportamento futuro del sistema.
+
+Queste possono assumere la forma di:
+
+\begin{itemize}
+    \item una condizione terminale;
+    \item una condizione di non esplosività;
+    \item una condizione di trasversalità;
+    \item una condizione di equilibrio sulle aspettative.
+\end{itemize}
+
+Il problema assume quindi alcune caratteristiche tipiche di un
+\emph{boundary value problem}: alcune condizioni provengono dal passato,
+mentre altre limitano il comportamento futuro della traiettoria.
+
+
+\subsection{Variabili predeterminate e variabili forward-looking}
+
+Nei modelli intertemporali è utile distinguere tra due tipi di variabili.
+
+Una variabile \emph{predeterminata} è determinata dalla storia del sistema.
+Il suo valore al tempo $t$ è già noto quando vengono prese le decisioni
+del periodo.
+
+Un esempio tipico è uno stock:
+\[
+k_t.
+\]
+
+Il valore di $k_t$ dipende dalle decisioni e dagli eventi dei periodi
+precedenti e non può generalmente modificarsi istantaneamente.
+
+Una variabile \emph{forward-looking}, invece, può reagire immediatamente
+alle informazioni sulle condizioni future.
+
+Un prezzo finanziario costituisce un esempio naturale: nuove informazioni
+sui dividendi o sui tassi futuri possono modificare immediatamente il
+prezzo corrente.
+
+La distinzione tra variabili predeterminate e forward-looking è centrale
+per determinare quali traiettorie siano compatibili con l'equilibrio del
+modello.
+
+
+\subsection{Un semplice sistema lineare forward-looking}
+
+Consideriamo, a titolo illustrativo, un sistema composto da una variabile
+predeterminata $x_t$ e da una variabile forward-looking $q_t$:
+\[
+x_{t+1}=a x_t,
+\]
+\[
+q_t=x_t+\beta q_{t+1}.
+\]
+
+Risolvendo la seconda relazione rispetto a $q_{t+1}$:
+\[
+q_{t+1}
+=
+\frac{1}{\beta}q_t
+-
+\frac{1}{\beta}x_t.
+\]
+
+Possiamo quindi scrivere
+\[
+\begin{bmatrix}
+x_{t+1}\\
+q_{t+1}
+\end{bmatrix}
+=
+\begin{bmatrix}
+a&0\\
+-\frac{1}{\beta}&\frac{1}{\beta}
+\end{bmatrix}
+\begin{bmatrix}
+x_t\\
+q_t
+\end{bmatrix}.
+\]
+
+Gli autovalori della matrice sono
+\[
+\lambda_1=a
+\]
+e
+\[
+\lambda_2=\frac{1}{\beta}.
+\]
+
+Se
+\[
+|a|<1
+\]
+e
+\[
+0<\beta<1,
+\]
+abbiamo
+\[
+|\lambda_1|<1
+\]
+ma
+\[
+|\lambda_2|>1.
+\]
+
+Se applicassimo la condizione utilizzata per i normali sistemi
+ricorsivi, concluderemmo che il sistema è instabile.
+
+Nei modelli forward-looking questa conclusione sarebbe però incompleta.
+
+
+\subsection{Il ruolo delle radici instabili}
+
+La presenza di un autovalore fuori dal cerchio unitario non implica
+necessariamente che l'equilibrio forward-looking sia esplosivo.
+
+Nel precedente esempio, $x_t$ è predeterminata, mentre $q_t$ può
+aggiustarsi immediatamente.
+
+Il valore iniziale $q_0$ non è quindi arbitrariamente assegnato.
+Deve essere scelto in modo che la componente associata alla radice
+esplosiva venga eliminata.
+
+La soluzione
+\[
+q_t
+=
+\frac{x_t}{1-\beta a}
+\]
+individua precisamente la traiettoria che soddisfa questa condizione.
+
+La variabile forward-looking ``salta'' quindi sul percorso compatibile
+con la soluzione non esplosiva.
+
+
+\subsection{Dalla stabilità alla determinazione dell'equilibrio}
+
+Nei sistemi ricorsivi lineari la domanda principale era:
+\[
+\text{tutte le radici sono all'interno del cerchio unitario?}
+\]
+
+La condizione
+\[
+\rho(A)<1
+\]
+garantiva la stabilità asintotica.
+
+Nei sistemi forward-looking la domanda cambia.
+
+Alcune radici possono trovarsi fuori dal cerchio unitario, perché le
+variabili forward-looking possono aggiustarsi in modo da eliminare le
+componenti esplosive.
+
+Diventa quindi importante confrontare:
+
+\[
+\text{numero delle radici instabili}
+\]
+con
+\[
+\text{numero delle variabili forward-looking}.
+\]
+
+Questa idea costituisce la base delle condizioni di
+\emph{Blanchard--Kahn} utilizzate nei modelli lineari con aspettative
+razionali.
+
+
+\subsection{Esistenza, unicità e indeterminatezza}
+
+In una formulazione standard, e sotto opportune condizioni di regolarità,
+possiamo distinguere tre casi.
+
+Se il numero delle radici instabili coincide con il numero delle variabili
+forward-looking, il modello può possedere una soluzione non esplosiva
+unica.
+
+Se le radici instabili sono troppo poche rispetto alle variabili
+forward-looking, possono esistere molte traiettorie compatibili con
+l'equilibrio. Si parla di \emph{indeterminatezza}.
+
+Se le radici instabili sono troppe, può non esistere una traiettoria
+non esplosiva compatibile con le condizioni del modello.
+
+Il problema degli autovalori assume quindi una nuova funzione.
+
+Nei sistemi ricorsivi veniva utilizzato soprattutto per studiare la
+stabilità.
+
+Nei sistemi forward-looking viene utilizzato anche per analizzare:
+\[
+\boxed{
+\text{esistenza}
+\quad
+\text{e}
+\quad
+\text{unicità della soluzione}
+}.
+\]
+
+
+\subsection{Aspettative razionali}
+
+Finora abbiamo formulato il problema in termini deterministici.
+
+Quando viene introdotta l'incertezza, le variabili future non sono note con
+certezza. Le condizioni forward-looking coinvolgono quindi aspettative
+condizionate:
+\[
+E_t\mathbf{x}_{t+1}.
+\]
+
+Una possibile rappresentazione è
+\[
+A E_t\mathbf{x}_{t+1}
+=
+B\mathbf{x}_t
++
+C\boldsymbol{\varepsilon}_t.
+\]
+
+Nei modelli con aspettative razionali, le aspettative utilizzate dagli
+agenti devono essere coerenti con la distribuzione delle variabili
+generata dal modello stesso.
+
+Non è quindi possibile specificare arbitrariamente
+\[
+E_t\mathbf{x}_{t+1}.
+\]
+
+La soluzione deve essere tale che le aspettative formulate all'interno
+del modello coincidano con quelle implicate dalla stessa soluzione.
+
+
+\subsection{Un nuovo problema agli autovalori}
+
+Nei sistemi lineari standard avevamo
+\[
+\mathbf{x}_{t+1}=A\mathbf{x}_t
+\]
+e studiavamo gli autovalori della singola matrice $A$.
+
+Nei modelli forward-looking si incontrano frequentemente sistemi della
+forma
+\[
+A E_t\mathbf{x}_{t+1}
+=
+B\mathbf{x}_t.
+\]
+
+La dinamica dipende quindi dalla coppia di matrici $(A,B)$.
+
+Gli autovalori rilevanti soddisfano
+\[
+\det(B-\lambda A)=0.
+\]
+
+Si tratta di un \emph{generalized eigenvalue problem}.
+
+Il passaggio
+\[
+\text{eigenvalues}
+\longrightarrow
+\text{generalized eigenvalues}
+\]
+riflette quindi una differenza nella struttura economica del modello,
+non soltanto una maggiore complessità matematica.
+
+
+\subsection{La decomposizione QZ}
+
+Il problema agli autovalori generalizzati può essere affrontato
+numericamente attraverso la \emph{generalized Schur decomposition},
+comunemente associata all'algoritmo QZ.
+
+L'idea generale è trasformare la coppia di matrici $(A,B)$ in una forma
+numericamente più conveniente, preservando le informazioni necessarie
+per determinare gli autovalori generalizzati.
+
+Nei modelli macroeconomici lineari con aspettative razionali questo
+permette, tra le altre cose, di:
+
+\begin{itemize}
+    \item distinguere radici stabili e instabili;
+    \item ordinare le radici rispetto al cerchio unitario;
+    \item verificare le condizioni di determinazione;
+    \item ricavare la legge di movimento della soluzione.
+\end{itemize}
+
+Dal punto di vista computazionale la logica generale è quindi
+\[
+\boxed{
+\text{modello strutturale}
+\longrightarrow
+\text{QZ / generalized eigenvalues}
+\longrightarrow
+\text{solution rule}
+\longrightarrow
+\text{simulazione}
+}.
+\]
+
+
+\subsection{Un esempio economico: inflazione forward-looking}
+
+Consideriamo una relazione molto semplice nella quale l'inflazione
+corrente dipende dall'inflazione futura attesa e dall'output gap:
+\[
+\pi_t
+=
+\beta E_t\pi_{t+1}
++
+\kappa y_t.
+\]
+
+Questa struttura è qualitativamente diversa dalla regola di aspettative
+adattive considerata nel modello SP-DG:
+\[
+\pi_t^e
+=
+\lambda\pi_{t-1}
++
+(1-\lambda)\pi_{t-1}^e.
+\]
+
+Nel caso delle aspettative adattive, l'aspettativa corrente è ottenuta
+esclusivamente da variabili passate. Il modello può quindi essere
+simulato ricorsivamente.
+
+Nella relazione forward-looking:
+\[
+\pi_t
+=
+\beta E_t\pi_{t+1}
++
+\kappa y_t,
+\]
+invece, per determinare $\pi_t$ dobbiamo conoscere le aspettative sulla
+dinamica futura dell'inflazione.
+
+La semplice forward iteration non è quindi sufficiente.
+
+Se, ad esempio, la dinamica dell'output gap fosse
+\[
+y_{t+1}=a y_t,
+\]
+una soluzione potrebbe essere cercata nella forma
+\[
+\pi_t=P y_t.
+\]
+
+Sostituendo:
+\[
+P y_t
+=
+\beta P a y_t
++
+\kappa y_t.
+\]
+
+Pertanto
+\[
+P
+=
+\beta aP+\kappa,
+\]
+da cui
+\[
+P
+=
+\frac{\kappa}{1-\beta a}.
+\]
+
+Una volta determinato $P$, il modello diventa simulabile:
+\[
+\pi_t
+=
+\frac{\kappa}{1-\beta a}y_t.
+\]
+
+Ancora una volta:
+\[
+\boxed{
+\text{SOLVE}
+\longrightarrow
+\text{SIMULATE}
+}.
+\]
+
+
+\subsection{Un esempio finanziario: il prezzo di un'attività}
+
+I modelli di asset pricing forniscono un esempio particolarmente naturale
+di struttura forward-looking.
+
+In una formulazione estremamente semplice, il prezzo corrente di
+un'attività può essere scritto come
+\[
+P_t
+=
+D_t+\beta E_tP_{t+1},
+\]
+dove $D_t$ rappresenta un payoff corrente e $\beta$ un fattore di sconto.
+
+Iterando in avanti:
+\[
+P_t
+=
+D_t
++
+\beta E_tD_{t+1}
++
+\beta^2E_tP_{t+2}.
+\]
+
+Continuando:
+\[
+P_t
+=
+D_t
++
+\beta E_tD_{t+1}
++
+\beta^2E_tD_{t+2}
++
+\cdots.
+\]
+
+Sotto una condizione di non esplosività appropriata, otteniamo
+\[
+P_t
+=
+\sum_{j=0}^{\infty}
+\beta^j E_tD_{t+j}.
+\]
+
+Il prezzo corrente incorpora quindi informazioni relative all'intera
+sequenza dei payoff futuri attesi.
+
+Questo spiega perché i prezzi finanziari possono reagire immediatamente a
+informazioni riguardanti eventi futuri.
+
+
+\subsection{Una notizia futura può modificare il prezzo corrente}
+
+Supponiamo, per semplicità, che tutti i payoff siano nulli ad eccezione
+di un pagamento noto al periodo $T$:
+\[
+D_T=D>0.
+\]
+
+La soluzione è
+\[
+P_t
+=
+\beta^{T-t}D,
+\qquad t\leq T.
+\]
+
+In particolare:
+\[
+P_0=\beta^T D.
+\]
+
+Il pagamento avverrà soltanto nel periodo $T$, ma il prezzo reagisce già
+nel periodo corrente.
+
+Questa è una conseguenza diretta della natura forward-looking del prezzo:
+\[
+\boxed{
+\text{informazione sul futuro}
+\longrightarrow
+\text{aggiustamento immediato del presente}
+}.
+\]
+
+Una normale legge ricorsiva backward-looking non presenterebbe
+necessariamente questa caratteristica.
+
+
+\subsection{Il significato computazionale del confronto}
+
+Possiamo ora confrontare le tre strutture considerate finora.
+
+Nel sistema ricorsivo:
+\[
+\mathbf{x}_{t+1}=F(\mathbf{x}_t),
+\]
+il computer procede direttamente da un periodo al successivo.
+
+Nel sistema implicito:
+\[
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0,
+\]
+il computer deve risolvere un problema numerico a ogni periodo, ma la
+transizione rimane determinabile localmente.
+
+Nel sistema forward-looking:
+\[
+G(E_t\mathbf{x}_{t+1},\mathbf{x}_t,\ldots)=0,
+\]
+la soluzione corrente dipende dalla struttura futura del modello.
+
+La differenza può quindi essere sintetizzata come
+\[
+\boxed{
+\begin{array}{rcl}
+\text{ricorsivo}
+&:&
+\text{iterate},\\[1mm]
+\text{implicito}
+&:&
+\text{solve period by period},\\[1mm]
+\text{forward-looking}
+&:&
+\text{solve the intertemporal model first}.
+\end{array}
+}
+\]
+
+
+\subsection{Dai modelli deterministici ai modelli stocastici}
+
+I modelli forward-looking mostrano chiaramente perché la distinzione tra
+deterministico e stocastico costituisca una dimensione separata della
+classificazione.
+
+In un modello deterministico con previsione perfetta, il futuro è
+endogenamente determinato dal modello e gli agenti ne conoscono la
+traiettoria.
+
+In un modello stocastico, invece, il futuro non è noto. Gli agenti possono
+soltanto formulare aspettative condizionate all'informazione corrente:
+\[
+E_t\mathbf{x}_{t+1}.
+\]
+
+L'introduzione dell'incertezza modifica quindi l'oggetto della soluzione:
+non dobbiamo più determinare soltanto una traiettoria coerente, ma anche
+specificare come gli shock generano una distribuzione delle possibili
+traiettorie e come gli agenti formano aspettative su tale distribuzione.
+
+Questo ci conduce naturalmente al passo successivo nello studio dei
+modelli dinamici discreti: i modelli stocastici non controllati.
+
+
+\chapter{modelli stocastici}
+
 \end{document}
