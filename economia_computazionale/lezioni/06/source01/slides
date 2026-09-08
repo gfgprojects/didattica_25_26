@@ -1,0 +1,354 @@
+# Introduzione ai modelli dinamici
+
+Molti fenomeni economici e finanziari non possono essere descritti adeguatamente considerando un solo istante temporale.
+
+In numerosi problemi è importante studiare:
+
+- come il sistema evolve nel tempo;
+- come il presente dipende dal passato;
+- come le decisioni correnti influenzano il futuro;
+- come eventuali shock si propagano nel tempo.
+
+Questi problemi richiedono l'utilizzo di **modelli dinamici**.
+
+# Modelli statici e modelli dinamici
+
+Un **modello statico** descrive relazioni tra variabili riferite a uno stesso istante o periodo.
+
+Ad esempio:
+$$
+y=f(x)
+$$
+Un **modello dinamico** descrive invece come una o più variabili evolvono nel tempo.
+
+La dimensione temporale diventa quindi parte integrante del modello.
+
+# Lo stato del sistema
+
+Un concetto fondamentale è quello di **stato**.
+
+Lo stato raccoglie l'informazione necessaria per descrivere il sistema in un determinato momento.
+
+Nel caso di una sola variabile:
+$$
+x_t
+$$
+Nel caso multidimensionale:
+$$
+\mathbf{x}_t=
+\begin{bmatrix}
+x_{1,t}\\
+x_{2,t}\\
+\vdots\\
+x_{n,t}
+\end{bmatrix}
+$$
+Il vettore $\mathbf{x}_t$ rappresenta lo **stato del sistema al tempo $t$**.
+
+# La legge di movimento
+
+Un modello dinamico deve specificare come cambia lo stato nel tempo.
+
+Nel caso discreto, una possibile rappresentazione è:
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t)
+$$
+La funzione $F$ rappresenta la **legge di movimento** del sistema.
+
+Dato lo stato corrente, la legge di movimento determina come il sistema evolve.
+
+# La traiettoria
+
+Partendo da uno stato iniziale:
+$$
+\mathbf{x}_0
+$$
+la legge di movimento genera una successione di stati:
+$$
+\mathbf{x}_0\rightarrow
+\mathbf{x}_1\rightarrow
+\mathbf{x}_2\rightarrow
+\cdots
+$$
+Questa successione costituisce una **traiettoria** del sistema.
+
+Lo studio dei modelli dinamici riguarda quindi non soltanto il valore delle variabili in un determinato momento, ma l'intera evoluzione temporale del sistema.
+
+# Una prima classificazione
+
+I modelli dinamici possono essere classificati secondo diverse caratteristiche.
+
+Nel corso considereremo tre distinzioni fondamentali:
+
+- **non controllati / controllati**;
+- **tempo discreto / tempo continuo**;
+- **deterministici / stocastici**.
+
+Queste caratteristiche possono essere combinate tra loro.
+
+# Modelli non controllati
+
+Nei **modelli non controllati** non è presente una variabile decisionale attraverso la quale un agente possa modificare intenzionalmente l'evoluzione del sistema.
+
+Nel caso discreto:
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t)
+$$
+Una volta specificato lo stato iniziale, possiamo studiare la traiettoria prodotta dal modello.
+
+Il problema fondamentale è quindi:
+
+> **Come evolve il sistema nel tempo?**
+
+# Modelli controllati
+
+In molti problemi economici gli agenti possono influenzare l'evoluzione del sistema attraverso le proprie decisioni.
+
+Introduciamo allora una variabile di controllo:
+$$
+\mathbf{u}_t
+$$
+e la legge di movimento diventa:
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t,\mathbf{u}_t)
+$$
+Il problema non consiste più soltanto nel determinare la traiettoria del sistema.
+
+Occorre anche determinare **quali decisioni adottare nel tempo**.
+
+# Stato e controllo
+
+È importante distinguere tra:
+
+**variabili di stato**
+$$
+\mathbf{x}_t
+$$
+che descrivono la situazione in cui si trova il sistema;
+
+e **variabili di controllo**
+$$
+\mathbf{u}_t
+$$
+che rappresentano le decisioni attraverso le quali è possibile influenzarne l'evoluzione.
+
+La distinzione tra stato e controllo è fondamentale nei problemi di ottimizzazione dinamica.
+
+# Tempo discreto
+
+Nei modelli a **tempo discreto** il tempo assume valori separati:
+$$
+t=0,1,2,\ldots
+$$
+La dinamica viene generalmente rappresentata mediante **equazioni alle differenze**:
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t)
+$$
+Il passaggio da un periodo al successivo è esplicitamente rappresentato nel modello.
+
+# Tempo continuo
+
+Nei modelli a **tempo continuo**, il tempo può assumere qualsiasi valore:
+$$
+t\in\mathbb{R}
+$$
+L'evoluzione del sistema viene descritta attraverso la variazione istantanea dello stato:
+$$
+\dot{\mathbf{x}}(t)=F(\mathbf{x}(t))
+$$
+Questi modelli conducono quindi alle **equazioni differenziali**.
+
+# Discreto e continuo: due rappresentazioni della dinamica
+
+Le due formulazioni descrivono l'evoluzione temporale in modo differente.
+
+**Tempo discreto**
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t)
+$$
+Lo stato viene aggiornato a intervalli distinti.
+
+**Tempo continuo**
+$$
+\dot{\mathbf{x}}(t)=F(\mathbf{x}(t))
+$$
+Lo stato evolve continuamente nel tempo.
+
+La scelta dipende dalla natura del problema e dalla rappresentazione più appropriata del fenomeno studiato.
+
+# La natura delle variabili e la rappresentazione del tempo
+
+La natura discreta o continua delle variabili e la scelta tra un modello a tempo discreto o continuo sono questioni distinte.
+
+Una variabile può essere continua anche all'interno di un modello a tempo discreto.
+
+Ad esempio, il capitale può assumere valori continui ma essere osservato o aggiornato annualmente:
+$$
+K_{t+1}=F(K_t)
+$$
+La scelta della rappresentazione temporale riguarda quindi **come vogliamo descrivere l'evoluzione del sistema**.
+
+# Modelli deterministici
+
+Un modello è **deterministico** quando, date le condizioni iniziali e i parametri, la sua evoluzione è completamente determinata.
+
+Ad esempio:
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t)
+$$
+Dato $\mathbf{x}_0$, otteniamo una specifica traiettoria:
+$$
+\mathbf{x}_0\rightarrow
+\mathbf{x}_1\rightarrow
+\mathbf{x}_2\rightarrow
+\cdots
+$$
+Ripetendo il calcolo con le stesse condizioni iniziali e gli stessi parametri si ottiene la stessa traiettoria.
+
+# Modelli stocastici
+
+In molti fenomeni economici e finanziari l'evoluzione dipende anche da eventi non prevedibili con certezza.
+
+Possiamo rappresentarli mediante uno shock:
+$$
+\boldsymbol{\varepsilon}_{t+1}
+$$
+La legge di movimento diventa:
+$$
+\mathbf{x}_{t+1}
+=
+F(\mathbf{x}_t,\boldsymbol{\varepsilon}_{t+1})
+$$
+In questo caso, la stessa condizione iniziale può essere associata a differenti possibili evoluzioni del sistema.
+
+# Dalla traiettoria alle possibili traiettorie
+
+Nel caso deterministico:
+$$
+\mathbf{x}_0
+\rightarrow
+\mathbf{x}_1
+\rightarrow
+\mathbf{x}_2
+\rightarrow\cdots
+$$
+abbiamo una traiettoria determinata dalle condizioni iniziali.
+
+Nel caso stocastico possiamo invece ottenere:
+$$
+\mathbf{x}_0
+\rightarrow
+\mathbf{x}^{(1)}_1
+\rightarrow
+\mathbf{x}^{(1)}_2
+\rightarrow\cdots
+$$
+oppure:
+$$
+\mathbf{x}_0
+\rightarrow
+\mathbf{x}^{(2)}_1
+\rightarrow
+\mathbf{x}^{(2)}_2
+\rightarrow\cdots
+$$
+L'oggetto di interesse diventa quindi l'insieme delle possibili traiettorie e la loro distribuzione.
+
+# La struttura della parte dinamica
+
+Organizzeremo lo studio dei modelli dinamici partendo dalla distinzione tra **modelli non controllati e modelli controllati**.
+
+Per ciascun caso distingueremo successivamente:
+
+1. tempo discreto e deterministico;
+2. tempo discreto e stocastico;
+3. tempo continuo e deterministico;
+4. tempo continuo e stocastico.
+
+In questo modo introdurremo progressivamente le diverse fonti di complessità.
+
+# Modelli non controllati
+
+Studieremo nell'ordine:
+
+**Tempo discreto**
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t)
+$$
+prima in ambiente deterministico e successivamente introducendo l'incertezza.
+
+**Tempo continuo**
+$$
+\dot{\mathbf{x}}(t)=F(\mathbf{x}(t))
+$$
+anche in questo caso passando dalla formulazione deterministica a quella stocastica.
+
+# Modelli controllati
+
+Ripeteremo successivamente la stessa progressione introducendo una variabile di controllo.
+
+**Tempo discreto**
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t,\mathbf{u}_t)
+$$
+**Tempo continuo**
+$$
+\dot{\mathbf{x}}(t)=F(\mathbf{x}(t),\mathbf{u}(t))
+$$
+Anche in questo caso distingueremo tra formulazioni deterministiche e stocastiche.
+
+# Una mappa dei modelli che studieremo
+
+\scriptsize
+
+\begin{center}
+\begin{tabular}{lcc}
+\textbf{Modelli} & \textbf{Deterministici} & \textbf{Stocastici} \\
+\hline
+Discreti non controllati &
+Equazioni alle differenze &
+Differenze stocastiche \\[2mm]
+Continui non controllati &
+Equazioni differenziali &
+Differenziali stocastiche \\[2mm]
+Discreti controllati &
+Controllo dinamico &
+Controllo dinamico stocastico \\[2mm]
+Continui controllati &
+Controllo ottimo &
+Controllo stocastico \\
+\end{tabular}
+\end{center}
+
+\normalsize
+
+Ogni passaggio introduce nuovi problemi e richiede tecniche computazionali specifiche.
+
+# Il ruolo dei metodi computazionali
+
+Nei modelli dinamici la soluzione analitica non è sempre disponibile o conveniente.
+
+Le tecniche computazionali consentono, tra le altre cose, di:
+
+- generare e visualizzare le traiettorie;
+- risolvere sistemi dinamici di grandi dimensioni;
+- analizzare il comportamento del sistema;
+- simulare l'effetto degli shock;
+- risolvere problemi dinamici con variabili di controllo;
+- studiare sistemi in presenza di incertezza.
+
+La tecnica appropriata dipenderà dalla struttura del modello.
+
+# Il percorso
+
+Partiremo dal caso più semplice:
+
+tempo discreto + deterministico + non controllato
+
+e introdurremo progressivamente nuove caratteristiche:
+
+- incertezza;
+- tempo continuo;
+- controllo.
+
+L'obiettivo sarà comprendere, per ogni classe di modelli, **quale problema computazionale deve essere risolto e quali tecniche sono più appropriate**.

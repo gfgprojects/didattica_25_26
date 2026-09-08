@@ -1,0 +1,480 @@
+# Modelli dinamici a tempo discreto non controllati
+
+Consideriamo ora modelli dinamici:
+
+- a **tempo discreto**;
+- **senza variabili di controllo**.
+
+Il tempo assume valori:
+$$
+t=0,1,2,\ldots
+$$
+e l'obiettivo è descrivere e analizzare l'evoluzione del sistema nel tempo.
+
+# Molti modelli, diverse formulazioni
+
+Molti problemi economici e finanziari possono essere formulati in tempo discreto.
+
+Tuttavia, le loro formulazioni possono essere molto diverse.
+
+Dal punto di vista computazionale è utile distinguere tra:
+
+- **sistemi espliciti o ricorsivi**;
+- **sistemi impliciti**;
+- **sistemi forward-looking**.
+
+La differenza riguarda soprattutto **come viene determinato lo stato del sistema nel periodo successivo**.
+
+# Sistemi espliciti o ricorsivi
+
+Nel caso più semplice, lo stato successivo è espresso direttamente in funzione dello stato corrente:
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t)
+$$
+Dato $\mathbf{x}_t$, possiamo calcolare direttamente:
+$$
+\mathbf{x}_{t+1}
+$$
+e procedere periodo dopo periodo:
+$$
+\mathbf{x}_0\rightarrow
+\mathbf{x}_1\rightarrow
+\mathbf{x}_2\rightarrow
+\cdots
+$$
+Questi sistemi possono essere simulati mediante **iterazione in avanti**.
+
+# Il caso lineare
+
+Un sistema ricorsivo lineare può essere scritto come:
+$$
+\mathbf{x}_{t+1}=A\mathbf{x}_t+\mathbf{b}
+$$
+dove:
+
+- $\mathbf{x}_t$ è il vettore delle variabili di stato;
+- $A$ è la matrice di transizione;
+- $\mathbf{b}$ contiene eventuali termini costanti.
+
+Dato $\mathbf{x}_0$, possiamo calcolare successivamente tutti gli stati del sistema.
+
+# Un semplice sistema ricorsivo
+
+Consideriamo due variabili:
+$$
+\begin{aligned}
+x_{1,t+1}&=a_{11}x_{1,t}+a_{12}x_{2,t}+b_1\\
+x_{2,t+1}&=a_{21}x_{1,t}+a_{22}x_{2,t}+b_2
+\end{aligned}
+$$
+In forma matriciale:
+$$
+\begin{bmatrix}
+x_{1,t+1}\\
+x_{2,t+1}
+\end{bmatrix}
+=
+\begin{bmatrix}
+a_{11}&a_{12}\\
+a_{21}&a_{22}
+\end{bmatrix}
+\begin{bmatrix}
+x_{1,t}\\
+x_{2,t}
+\end{bmatrix}
++
+\begin{bmatrix}
+b_1\\
+b_2
+\end{bmatrix}
+$$
+Le due variabili evolvono congiuntamente nel tempo.
+
+# Sistemi impliciti
+
+Non sempre le variabili del nuovo periodo sono già isolate.
+
+Un modello può essere formulato come:
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0
+$$
+Dato $\mathbf{x}_t$, dobbiamo quindi **risolvere un sistema di equazioni** per determinare $\mathbf{x}_{t+1}$.
+
+La simulazione richiede un passaggio aggiuntivo:
+$$
+\mathbf{x}_t
+\rightarrow
+\boxed{\text{risoluzione del sistema}}
+\rightarrow
+\mathbf{x}_{t+1}
+$$
+
+# Sistemi impliciti lineari
+
+Nel caso lineare possiamo avere:
+$$
+A\mathbf{x}_{t+1}=B\mathbf{x}_t+\mathbf{c}
+$$
+Se $A$ è non singolare, matematicamente possiamo scrivere:
+$$
+\mathbf{x}_{t+1}
+=
+A^{-1}B\mathbf{x}_t+A^{-1}\mathbf{c}
+$$
+ottenendo nuovamente una rappresentazione ricorsiva.
+
+Dal punto di vista computazionale, tuttavia, è generalmente preferibile **risolvere direttamente il sistema lineare** anziché calcolare esplicitamente $A^{-1}$.
+
+# Sistemi impliciti non lineari
+
+Se il sistema è non lineare:
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0
+$$
+potrebbe non essere possibile isolare analiticamente $\mathbf{x}_{t+1}$.
+
+Dato $\mathbf{x}_t$, occorre allora determinare numericamente $\mathbf{x}_{t+1}$.
+
+Il problema dinamico incorpora quindi, a ogni periodo, un problema di **ricerca degli zeri**:
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0
+$$
+Ritroviamo così tecniche computazionali già studiate per la soluzione di sistemi non lineari.
+
+# Simultaneità e ricorsività
+
+La presenza di equazioni simultanee non implica necessariamente che il modello non possa essere ricondotto a forma ricorsiva.
+
+Possiamo partire da:
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0
+$$
+e, quando le condizioni lo consentono, ottenere:
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t)
+$$
+La possibilità di effettuare questo passaggio dipende dalla struttura del sistema.
+
+In altri casi la simultaneità deve essere risolta numericamente a ogni periodo.
+
+# Sistemi forward-looking
+
+Una difficoltà diversa emerge quando le condizioni correnti dipendono da variabili future.
+
+In ambiente deterministico possiamo avere, ad esempio:
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t,\mathbf{x}_{t-1})=0
+$$
+con alcune variabili future che contribuiscono alla determinazione delle variabili correnti.
+
+In presenza di incertezza compaiono invece frequentemente aspettative del tipo:
+$$
+E_t\mathbf{x}_{t+1}
+$$
+e il sistema può assumere la forma:
+$$
+G(E_t\mathbf{x}_{t+1},\mathbf{x}_t,\mathbf{x}_{t-1})=0
+$$
+
+# Perché i sistemi forward-looking sono diversi?
+
+Nei sistemi ricorsivi possiamo procedere direttamente:
+$$
+\mathbf{x}_t\rightarrow\mathbf{x}_{t+1}
+$$
+Nei sistemi forward-looking il valore corrente dipende anche dalla dinamica futura del sistema.
+
+Non è quindi generalmente possibile costruire la soluzione mediante una semplice iterazione in avanti.
+
+Occorre prima determinare una soluzione coerente con le condizioni intertemporali.
+
+In sintesi:
+$$
+\boxed{\text{SOLVE}\rightarrow\text{SIMULATE}}
+$$
+
+# Aspettative razionali
+
+I sistemi forward-looking assumono particolare importanza nei modelli con **aspettative razionali**.
+
+In presenza di incertezza, gli agenti formulano aspettative sulla base dell'informazione disponibile:
+$$
+E_t\mathbf{x}_{t+1}
+$$
+e tali aspettative devono essere coerenti con la dinamica generata dal modello stesso.
+
+La soluzione richiede quindi di considerare congiuntamente:
+
+- variabili predeterminate;
+- variabili forward-looking;
+- condizioni intertemporali;
+- processo che genera gli shock.
+
+Le relative tecniche computazionali verranno considerate successivamente.
+
+# Tre strutture computazionali
+
+Possiamo quindi distinguere:
+
+**Sistema ricorsivo**
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t)
+$$
+$\Rightarrow$ iterazione diretta.
+
+**Sistema implicito**
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0
+$$
+$\Rightarrow$ soluzione di un sistema a ogni periodo.
+
+**Sistema forward-looking**
+$$
+G(E_t\mathbf{x}_{t+1},\mathbf{x}_t,\ldots)=0
+$$
+$\Rightarrow$ soluzione intertemporale prima della simulazione.
+
+# Una seconda distinzione
+
+La distinzione tra sistemi ricorsivi, impliciti e forward-looking riguarda la **struttura delle relazioni dinamiche**.
+
+È distinta dalla classificazione tra:
+
+- **modelli deterministici**;
+- **modelli stocastici**.
+
+Ad esempio, un sistema ricorsivo può essere deterministico:
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t)
+$$
+oppure stocastico:
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t,\boldsymbol{\varepsilon}_{t+1})
+$$
+
+# Dal modello alla traiettoria
+
+Concentriamoci inizialmente sui modelli deterministici ricorsivi:
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t)
+$$
+La legge di movimento, da sola, non identifica una particolare traiettoria.
+
+È necessario specificare anche lo **stato iniziale**:
+$$
+\mathbf{x}_0
+$$
+Legge di movimento e condizione iniziale definiscono un **Initial Value Problem (IVP)**.
+
+# Initial Value Problem
+
+Un IVP può essere rappresentato come:
+$$
+\begin{cases}
+\mathbf{x}_{t+1}=F(\mathbf{x}_t)\\
+\mathbf{x}_0=\bar{\mathbf{x}}
+\end{cases}
+$$
+Assegnata la condizione iniziale, possiamo generare:
+$$
+\bar{\mathbf{x}}
+\rightarrow
+\mathbf{x}_1
+\rightarrow
+\mathbf{x}_2
+\rightarrow
+\cdots
+$$
+La soluzione dell'IVP è quindi una particolare **traiettoria** del sistema.
+
+# Condizioni iniziali diverse
+
+Consideriamo la stessa legge di movimento:
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t)
+$$
+ma due condizioni iniziali differenti:
+$$
+\mathbf{x}_0^{(1)}\neq\mathbf{x}_0^{(2)}
+$$
+Otteniamo generalmente due traiettorie differenti:
+$$
+\mathbf{x}_0^{(1)}
+\rightarrow
+\mathbf{x}_1^{(1)}
+\rightarrow
+\mathbf{x}_2^{(1)}
+\rightarrow\cdots
+$$
+e
+$$
+\mathbf{x}_0^{(2)}
+\rightarrow
+\mathbf{x}_1^{(2)}
+\rightarrow
+\mathbf{x}_2^{(2)}
+\rightarrow\cdots
+$$
+
+# Simulare una traiettoria
+
+Una prima operazione computazionale consiste quindi nel:
+
+1. specificare i parametri del modello;
+2. scegliere una condizione iniziale;
+3. applicare ripetutamente la legge di movimento;
+4. memorizzare gli stati ottenuti;
+5. rappresentare graficamente la traiettoria.
+
+La simulazione permette di osservare direttamente l'evoluzione del sistema.
+
+Ma una singola simulazione descrive soltanto **una particolare traiettoria**.
+
+# Le traiettorie si comportano sempre allo stesso modo?
+
+Possiamo modificare:
+
+- la condizione iniziale $\mathbf{x}_0$;
+- i parametri della legge di movimento.
+
+Le traiettorie ottenute possono presentare comportamenti molto diversi.
+
+Ad esempio, possono:
+
+- convergere verso uno stesso valore;
+- oscillare avvicinandosi a un equilibrio;
+- continuare a oscillare;
+- allontanarsi progressivamente;
+- presentare dinamiche più complesse.
+
+Osservare alcune traiettorie non è sufficiente per caratterizzare il comportamento generale del sistema.
+
+# Lo steady state
+
+Un primo punto di riferimento è lo **steady state**.
+
+Per:
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t)
+$$
+uno steady state $\mathbf{x}^*$ soddisfa:
+$$
+\mathbf{x}^*=F(\mathbf{x}^*)
+$$
+Se il sistema si trova esattamente in $\mathbf{x}^*$:
+$$
+\mathbf{x}_t=\mathbf{x}^*
+$$
+allora:
+$$
+\mathbf{x}_{t+1}=\mathbf{x}^*
+$$
+e, in assenza di perturbazioni, lo stato non cambia.
+
+# Esistenza e stabilità non sono la stessa cosa
+
+Trovare uno steady state non ci dice necessariamente come si comportino le traiettorie nelle sue vicinanze.
+
+La domanda successiva è:
+
+> **Che cosa accade se il sistema parte vicino allo steady state, ma non esattamente nello steady state?**
+
+Una piccola perturbazione potrebbe:
+
+- essere progressivamente riassorbita;
+- persistere nel tempo;
+- amplificarsi.
+
+Questo introduce il problema della **stabilità**.
+
+# Stabilità: l'idea
+
+In termini intuitivi, uno steady state è **stabile** se una piccola perturbazione non porta il sistema ad allontanarsi arbitrariamente dall'equilibrio.
+
+Una proprietà più forte è la **stabilità asintotica**.
+
+In questo caso, partendo sufficientemente vicino allo steady state:
+$$
+\lim_{t\rightarrow\infty}\mathbf{x}_t=\mathbf{x}^*
+$$
+La perturbazione viene quindi progressivamente riassorbita dal sistema.
+
+# Stabilità e simulazione
+
+Potremmo studiare il sistema simulando moltissime traiettorie:
+
+- condizioni iniziali differenti;
+- differenti valori dei parametri;
+- orizzonti temporali molto lunghi.
+
+Ma questo approccio non fornisce, in generale, una caratterizzazione completa della dinamica.
+
+Occorrono strumenti che permettano di dedurre il comportamento delle traiettorie direttamente dalle proprietà della legge di movimento.
+
+# Dal caso scalare ai sistemi
+
+Nel caso lineare con una sola variabile:
+$$
+x_{t+1}=ax_t+b
+$$
+il comportamento dinamico è strettamente legato al valore del coefficiente $a$.
+
+Con più variabili:
+$$
+\mathbf{x}_{t+1}=A\mathbf{x}_t+\mathbf{b}
+$$
+il singolo coefficiente viene sostituito dalla **matrice di transizione $A$**.
+
+La domanda diventa:
+
+> **Quali proprietà di $A$ determinano il comportamento delle traiettorie?**
+
+# Il problema degli autovalori
+
+Per comprendere la dinamica di:
+$$
+\mathbf{x}_{t+1}=A\mathbf{x}_t+\mathbf{b}
+$$
+assumono un ruolo centrale gli **autovalori** della matrice $A$:
+$$
+A\mathbf{v}=\lambda\mathbf{v}
+$$
+Gli autovalori permettono di caratterizzare il modo in cui differenti componenti della dinamica:
+
+- si attenuano;
+- persistono;
+- si amplificano;
+- possono generare oscillazioni.
+
+La loro posizione rispetto al **cerchio unitario** sarà fondamentale per l'analisi della stabilità.
+
+# Un nuovo problema computazionale
+
+L'analisi della stabilità conduce quindi a un nuovo problema:
+$$
+\boxed{\text{calcolare gli autovalori della matrice di transizione}}
+$$
+Per sistemi piccoli il problema è relativamente semplice.
+
+Quando la dimensione del sistema cresce, il calcolo dell'intero spettro può diventare costoso o non necessario.
+
+Diventa allora importante scegliere tecniche numeriche appropriate alla dimensione e alla struttura della matrice.
+
+# Il percorso che seguiremo
+
+Partiremo dall'osservazione delle traiettorie:
+$$
+\boxed{\text{modello}\rightarrow\text{IVP}\rightarrow\text{traiettoria}}
+$$
+Modificheremo condizioni iniziali e parametri:
+$$
+\boxed{\text{traiettorie diverse}\rightarrow\text{comportamenti diversi}}
+$$
+Questo ci porterà a:
+$$
+\boxed{\text{steady state}\rightarrow\text{stabilità}\rightarrow\text{autovalori}}
+$$
+e infine al problema computazionale:
+$$
+\boxed{\text{come calcolare efficientemente gli autovalori?}}
+$$
