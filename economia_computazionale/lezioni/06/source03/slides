@@ -1,0 +1,641 @@
+# Equazioni alle differenze lineari del primo ordine
+
+Il punto di partenza più semplice è una singola equazione alle differenze lineare del primo ordine:
+$$
+x_{t+1}=a x_t+b.
+$$
+$x_t$ rappresenta lo **stato del sistema** al tempo $t$.
+
+I parametri $a$ e $b$ determinano la legge di movimento.
+
+È un'equazione:
+
+- **del primo ordine**, perché $x_{t+1}$ dipende da $x_t$;
+- **lineare**, perché la relazione tra $x_{t+1}$ e $x_t$ è lineare.
+
+Per ottenere una particolare traiettoria dobbiamo specificare:
+$$
+x_0=\bar{x}.
+$$
+
+---
+
+# Un semplice Initial Value Problem
+
+Il problema dinamico è:
+$$
+\begin{cases}
+x_{t+1}=a x_t+b,\\
+x_0=\bar{x}.
+\end{cases}
+$$
+Conoscendo $x_0$, possiamo calcolare direttamente:
+$$
+x_1=a x_0+b,
+$$
+poi:
+$$
+x_2=a x_1+b,
+$$
+e così via.
+
+La traiettoria viene costruita procedendo in avanti:
+$$
+x_0\longrightarrow x_1\longrightarrow x_2
+\longrightarrow\cdots\longrightarrow x_T.
+$$
+Questa procedura prende il nome di **forward iteration**.
+
+---
+
+# Forward iteration
+
+Dal punto di vista computazionale, la procedura è molto semplice.
+
+Partiamo dalla condizione iniziale:
+$$
+x_0=\bar{x}.
+$$
+Poi applichiamo ripetutamente la legge di movimento:
+$$
+x_{t+1}=a x_t+b.
+$$
+La sequenza dei calcoli è quindi:
+$$
+x_0\longrightarrow x_1\longrightarrow x_2
+\longrightarrow\cdots\longrightarrow x_T.
+$$
+A ogni periodo il valore appena calcolato diventa l'input per il periodo successivo.
+
+Non è necessario risolvere alcun sistema simultaneo.
+
+La dinamica è quindi ottenuta mediante **iterazione diretta**.
+
+---
+
+# Dalla condizione iniziale alla traiettoria
+
+Consideriamo:
+$$
+x_{t+1}=0.8x_t+2
+$$
+con:
+$$
+x_0=5.
+$$
+Otteniamo:
+$$
+x_1=0.8(5)+2=6,
+$$
+$$
+x_2=0.8(6)+2=6.8,
+$$
+$$
+x_3=0.8(6.8)+2=7.44.
+$$
+Continuando l'iterazione possiamo costruire l'intera traiettoria.
+
+Ma verso quale valore si sta muovendo il sistema?
+
+---
+
+# Due esperimenti differenti
+
+La simulazione permette immediatamente di modificare gli input del modello.
+
+Possiamo cambiare la **condizione iniziale**:
+$$
+x_0^{(1)}\neq x_0^{(2)}.
+$$
+In questo caso studiamo diversi IVP associati alla **stessa legge di movimento**.
+
+Oppure possiamo modificare:
+$$
+a \qquad \text{o} \qquad b.
+$$
+In questo caso modifichiamo la **legge di movimento stessa**.
+
+È importante distinguere:
+
+> cambiare le condizioni iniziali $\neq$ cambiare i parametri del modello.
+
+---
+
+# Lo steady state
+
+Uno **steady state**, o punto fisso, è un valore che rimane invariato nel tempo.
+
+Deve quindi soddisfare:
+$$
+x^*=a x^*+b.
+$$
+Se $a\neq1$:
+$$
+x^*=\frac{b}{1-a}.
+$$
+Per il modello:
+$$
+x_{t+1}=0.8x_t+2
+$$
+otteniamo:
+$$
+x^*=\frac{2}{1-0.8}=10.
+$$
+Se $x_t=10$, allora:
+$$
+x_{t+1}=0.8(10)+2=10.
+$$
+
+---
+
+# Esistenza dello steady state e convergenza
+
+Aver trovato:
+$$
+x^*=10
+$$
+non significa ancora che il sistema **converga** verso 10.
+
+Dobbiamo distinguere due domande:
+
+1. **Esiste uno steady state?**
+2. **Le traiettorie convergono verso lo steady state?**
+
+La prima domanda riguarda il punto fisso della legge di movimento.
+
+La seconda riguarda la **stabilità**.
+
+Per rispondere dobbiamo studiare la dinamica delle deviazioni da $x^*$.
+
+---
+
+# La deviazione dallo steady state
+
+Definiamo:
+$$
+\tilde{x}_t=x_t-x^*.
+$$
+Abbiamo:
+$$
+x_{t+1}=a x_t+b
+$$
+e:
+$$
+x^*=a x^*+b.
+$$
+Sottraendo:
+$$
+x_{t+1}-x^*=a(x_t-x^*).
+$$
+Quindi:
+$$
+\tilde{x}_{t+1}=a\tilde{x}_t.
+$$
+La dinamica originale è stata trasformata nella dinamica della **deviazione dall'equilibrio**.
+
+---
+
+# Iterare la deviazione
+
+Partiamo da:
+$$
+\tilde{x}_{t+1}=a\tilde{x}_t.
+$$
+Iterando:
+$$
+\tilde{x}_1=a\tilde{x}_0,
+$$
+$$
+\tilde{x}_2=a^2\tilde{x}_0,
+$$
+e in generale:
+$$
+\tilde{x}_t=a^t\tilde{x}_0.
+$$
+Poiché:
+$$
+\tilde{x}_0=x_0-x^*,
+$$
+otteniamo:
+$$
+\boxed{x_t=x^*+a^t(x_0-x^*)}.
+$$
+
+---
+
+# Come leggere la soluzione
+
+La soluzione:
+$$
+x_t=x^*+a^t(x_0-x^*)
+$$
+contiene due componenti:
+$$
+\underbrace{x^*}_{\text{steady state}}
++
+\underbrace{a^t(x_0-x^*)}_{\text{deviazione dallo steady state}}.
+$$
+La dinamica dipende quindi da:
+$$
+a^t.
+$$
+La domanda fondamentale diventa:
+
+> Che cosa accade ad $a^t$ quando $t$ aumenta?
+
+Il parametro $a$ determina il comportamento dinamico del sistema.
+
+---
+
+# Caso 1: convergenza monotona
+
+Se:
+$$
+0<a<1,
+$$
+allora:
+$$
+a^t\longrightarrow0.
+$$
+Di conseguenza:
+$$
+x_t\longrightarrow x^*.
+$$
+Inoltre $a^t$ rimane positivo.
+
+La deviazione mantiene quindi lo stesso segno e diventa progressivamente più piccola.
+
+**Risultato:** convergenza monotona verso lo steady state.
+
+---
+
+# Caso 2: convergenza oscillatoria
+
+Se:
+$$
+-1<a<0,
+$$
+abbiamo ancora:
+$$
+|a|^t\longrightarrow0,
+$$
+ma il segno di $a^t$ cambia a ogni periodo.
+
+La traiettoria passa alternativamente sopra e sotto lo steady state.
+
+L'ampiezza delle oscillazioni diminuisce progressivamente.
+
+**Risultato:** convergenza oscillatoria verso lo steady state.
+
+---
+
+# Caso 3: divergenza monotona
+
+Se:
+$$
+a>1,
+$$
+allora:
+$$
+|a|^t\longrightarrow\infty.
+$$
+Una deviazione iniziale dallo steady state viene progressivamente amplificata.
+
+Poiché $a>0$, il segno della deviazione non cambia.
+
+**Risultato:** la traiettoria si allontana dallo steady state senza oscillare.
+
+---
+
+# Caso 4: divergenza oscillatoria
+
+Se:
+$$
+a<-1,
+$$
+abbiamo:
+$$
+|a|^t\longrightarrow\infty.
+$$
+Inoltre il segno di $a^t$ cambia a ogni periodo.
+
+La traiettoria passa alternativamente da un lato all'altro dello steady state, ma le deviazioni diventano sempre più grandi.
+
+**Risultato:** oscillazioni esplosive.
+
+---
+
+# I casi limite
+
+Se:
+$$
+a=1,
+$$
+allora:
+$$
+\tilde{x}_{t+1}=\tilde{x}_t.
+$$
+La deviazione non viene riassorbita.
+
+Se:
+$$
+a=-1,
+$$
+allora:
+$$
+\tilde{x}_{t+1}=-\tilde{x}_t.
+$$
+Il sistema oscilla con ampiezza costante.
+
+La condizione fondamentale per la convergenza è quindi:
+$$
+\boxed{|a|<1}.
+$$
+
+---
+
+# Una mappa della dinamica
+
+Il parametro $a$ permette di classificare immediatamente la traiettoria.
+$$
+\begin{array}{c|c}
+\text{Valore di }a & \text{Dinamica}\\
+\hline
+0<a<1 & \text{convergenza monotona}\\
+-1<a<0 & \text{convergenza oscillatoria}\\
+a>1 & \text{divergenza monotona}\\
+a<-1 & \text{divergenza oscillatoria}\\
+a=1 & \text{deviazione persistente}\\
+a=-1 & \text{oscillazione persistente}
+\end{array}
+$$
+La regione di stabilità è:
+$$
+\boxed{-1<a<1}.
+$$
+
+---
+
+# Condizioni iniziali e stabilità
+
+Consideriamo due condizioni iniziali:
+$$
+x_0^{(1)}\neq x_0^{(2)}.
+$$
+Le rispettive traiettorie sono:
+$$
+x_t^{(1)}=x^*+a^t(x_0^{(1)}-x^*)
+$$
+e:
+$$
+x_t^{(2)}=x^*+a^t(x_0^{(2)}-x^*).
+$$
+La loro distanza è:
+$$
+x_t^{(1)}-x_t^{(2)}
+=
+a^t\left(x_0^{(1)}-x_0^{(2)}\right).
+$$
+
+---
+
+# Che cosa ci dice la stabilità?
+
+Se:
+$$
+|a|<1,
+$$
+allora:
+$$
+\left|x_t^{(1)}-x_t^{(2)}\right|\longrightarrow0.
+$$
+Condizioni iniziali differenti producono traiettorie differenti nel breve periodo, ma la loro influenza scompare progressivamente.
+
+Se invece:
+$$
+|a|>1,
+$$
+piccole differenze iniziali vengono amplificate.
+
+La stabilità permette quindi di caratterizzare **un'intera famiglia di traiettorie** senza simularle una per una.
+
+---
+
+# Un esempio economico: il modello cobweb
+
+Consideriamo un mercato nel quale l'offerta reagisce con ritardo al prezzo.
+
+Domanda:
+$$
+Q_t^D=\alpha-\beta P_t,
+\qquad \beta>0.
+$$
+Offerta:
+$$
+Q_t^S=\gamma+\delta P_{t-1},
+\qquad \delta>0.
+$$
+La produzione del periodo $t$ è stata decisa utilizzando il prezzo osservato nel periodo precedente.
+
+L'equilibrio richiede:
+$$
+Q_t^D=Q_t^S.
+$$
+
+---
+
+# Dal mercato alla legge di movimento
+
+Imponendo l'equilibrio:
+$$
+\alpha-\beta P_t
+=
+\gamma+\delta P_{t-1}.
+$$
+Risolvendo rispetto a $P_t$:
+$$
+P_t=
+\frac{\alpha-\gamma}{\beta}
+-
+\frac{\delta}{\beta}P_{t-1}.
+$$
+Abbiamo quindi la stessa struttura:
+$$
+x_{t+1}=a x_t+b,
+$$
+con:
+$$
+a=-\frac{\delta}{\beta}.
+$$
+Il modello economico è diventato un semplice sistema dinamico scalare.
+
+---
+
+# Stabilità del modello cobweb
+
+La condizione generale è:
+$$
+|a|<1.
+$$
+Nel modello cobweb:
+$$
+\left|-\frac{\delta}{\beta}\right|<1.
+$$
+Quindi:
+$$
+\boxed{\delta<\beta}.
+$$
+Poiché:
+$$
+a=-\frac{\delta}{\beta}<0,
+$$
+quando il sistema è stabile la convergenza è **oscillatoria**.
+
+L'interpretazione economica è immediata:
+
+> l'offerta non deve reagire al prezzo passato più intensamente di quanto la domanda reagisca al prezzo corrente.
+
+---
+
+# Un esempio finanziario: ritorno al fondamentale
+
+Indichiamo con:
+
+- $P_t$ il prezzo di un'attività finanziaria;
+- $P^*$ il suo valore fondamentale.
+
+Supponiamo:
+$$
+P_{t+1}-P_t=\lambda(P^*-P_t).
+$$
+Il parametro $\lambda$ misura la velocità di aggiustamento verso il fondamentale.
+
+Se $P_t<P^*$, il meccanismo tende ad aumentare il prezzo.
+
+Se $P_t>P^*$, tende a ridurlo.
+
+---
+
+# La legge di movimento del prezzo
+
+Riscrivendo:
+$$
+P_{t+1}
+=
+(1-\lambda)P_t+\lambda P^*.
+$$
+Abbiamo nuovamente:
+$$
+x_{t+1}=a x_t+b,
+$$
+con:
+$$
+a=1-\lambda.
+$$
+Definiamo il mispricing:
+$$
+m_t=P_t-P^*.
+$$
+La sua dinamica è:
+$$
+m_{t+1}=(1-\lambda)m_t.
+$$
+
+---
+
+# Stabilità del prezzo
+
+La condizione di stabilità è:
+$$
+|1-\lambda|<1.
+$$
+Quindi:
+$$
+\boxed{0<\lambda<2}.
+$$
+Possiamo distinguere tre casi.
+
+Se:
+$$
+0<\lambda<1,
+$$
+il prezzo converge **monotonicamente**.
+
+Se:
+$$
+1<\lambda<2,
+$$
+il prezzo presenta **overshooting**, ma converge.
+
+Se:
+$$
+\lambda>2,
+$$
+l'overshooting genera **oscillazioni esplosive**.
+
+---
+
+# Economia e finanza: stessa struttura
+
+Abbiamo considerato due fenomeni molto diversi.
+
+**Economia:**
+$$
+\text{ritardo dell'offerta}
+\longrightarrow
+\text{dinamica del prezzo}.
+$$
+**Finanza:**
+$$
+\text{mispricing}
+\longrightarrow
+\text{aggiustamento del prezzo}.
+$$
+Entrambi conducono però a:
+$$
+\boxed{x_{t+1}=a x_t+b}.
+$$
+Cambiano l'interpretazione economica e i parametri.
+
+**Il problema computazionale rimane lo stesso.**
+
+---
+
+# Il problema computazionale
+
+Per entrambi i modelli dobbiamo:
+
+1. specificare i parametri;
+2. specificare $x_0$;
+3. iterare la legge di movimento;
+4. costruire la traiettoria;
+5. determinare lo steady state;
+6. analizzare la stabilità.
+
+Nel caso scalare tutto dipende da:
+$$
+\boxed{|a|<1}.
+$$
+Ma che cosa accade quando lo stato del sistema contiene molte variabili?
+
+---
+
+# Dalla singola equazione ai sistemi
+
+Nel caso scalare:
+$$
+x_{t+1}=a x_t+b.
+$$
+Il coefficiente $a$ determina la dinamica.
+
+Nei modelli più complessi:
+$$
+\mathbf{x}_{t+1}=A\mathbf{x}_t+\mathbf{b}.
+$$
+Il singolo coefficiente $a$ viene sostituito da una **matrice di transizione** $A$.
+
+La domanda diventa:
+
+> Qual è, per una matrice $A$, l'analogo della condizione $|a|<1$?
+
+La risposta ci condurrà agli **autovalori**.

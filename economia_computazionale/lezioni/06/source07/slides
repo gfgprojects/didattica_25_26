@@ -1,0 +1,246 @@
+# Sintesi: struttura dinamica e problema computazionale
+
+I modelli deterministici in tempo discreto possono assumere strutture differenti.
+
+A ciascuna struttura corrisponde un diverso problema computazionale:
+$$
+\begin{array}{ccl}
+\text{ricorsivo} & \longrightarrow & \text{iterazione in avanti}\\
+\text{ricorsivo multidimensionale} & \longrightarrow & \text{stabilità e autovalori}\\
+\text{implicito lineare} & \longrightarrow & \text{linear solver}\\
+\text{implicito non lineare} & \longrightarrow & \text{root finding}\\
+\text{forward-looking} & \longrightarrow & \text{BVP e soluzione intertemporale}\\
+\text{aspettative razionali} & \longrightarrow & \text{autovalori generalizzati e QZ}
+\end{array}
+$$
+La struttura matematica del modello determina quindi la **tecnica computazionale appropriata**.
+
+---
+
+# Un diverso ruolo degli autovalori
+
+Gli autovalori sono comparsi in contesti differenti.
+
+Nei sistemi ricorsivi:
+$$
+\mathbf{x}_{t+1}=A\mathbf{x}_t+\mathbf{b}
+$$
+servono principalmente a studiare la **stabilità**:
+$$
+\rho(A)<1.
+$$
+Nei modelli forward-looking servono anche a distinguere:
+$$
+\text{radici stabili}
+\qquad\text{e}\qquad
+\text{radici instabili}.
+$$
+Il confronto con il numero di variabili forward-looking contribuisce a determinare **esistenza e unicità della soluzione**.
+
+Lo stesso strumento numerico può quindi svolgere funzioni economiche differenti.
+
+---
+
+# Una precisazione: sistemi non lineari
+
+Per un sistema lineare:
+$$
+\mathbf{x}_{t+1}=A\mathbf{x}_t+\mathbf{b},
+$$
+la condizione:
+$$
+\rho(A)<1
+$$
+caratterizza direttamente la stabilità asintotica del sistema.
+
+Per un sistema non lineare:
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t),
+$$
+possiamo invece studiare la dinamica **nelle vicinanze** di uno steady state mediante una linearizzazione.
+
+Se:
+$$
+\mathbf{x}^*=F(\mathbf{x}^*),
+$$
+consideriamo la Jacobiana valutata nello steady state:
+$$
+J(\mathbf{x}^*)
+=
+\left.
+\frac{\partial F(\mathbf{x})}{\partial\mathbf{x}}
+\right|_{\mathbf{x}=\mathbf{x}^*}.
+$$
+
+---
+
+# Stabilità locale
+
+Nelle vicinanze dello steady state:
+$$
+\mathbf{x}_{t+1}-\mathbf{x}^*
+\simeq
+J(\mathbf{x}^*)
+(\mathbf{x}_t-\mathbf{x}^*).
+$$
+Possiamo quindi applicare l'analisi degli autovalori alla Jacobiana.
+
+Se:
+$$
+\rho\!\left(J(\mathbf{x}^*)\right)<1,
+$$
+lo steady state è **localmente asintoticamente stabile**.
+
+La parola *localmente* è fondamentale.
+
+Un sistema non lineare può infatti presentare:
+
+- più steady state;
+- differenti regioni di attrazione;
+- comportamenti diversi lontano dall'equilibrio.
+
+---
+
+# Analisi e simulazione sono complementari
+
+L'analisi degli autovalori permette di caratterizzare la dinamica senza simulare un numero elevato di condizioni iniziali.
+
+Nei sistemi non lineari, tuttavia, la linearizzazione fornisce informazioni principalmente sul comportamento **locale**.
+
+La simulazione permette invece di esplorare traiettorie che partono anche lontano dallo steady state.
+
+Abbiamo quindi due strumenti complementari:
+$$
+\boxed{
+\text{analisi della stabilità}
+\quad+\quad
+\text{simulazione numerica}
+}
+$$
+La prima caratterizza il comportamento locale; la seconda permette di esplorare la dinamica del modello.
+
+---
+
+# Dal deterministico allo stocastico
+
+Finora, assegnati parametri e condizioni necessarie per determinare la soluzione, il modello produceva una traiettoria:
+$$
+\mathbf{x}_0
+\rightarrow
+\mathbf{x}_1
+\rightarrow
+\mathbf{x}_2
+\rightarrow
+\cdots.
+$$
+Introduciamo ora uno shock casuale:
+$$
+\boldsymbol{\varepsilon}_{t+1}.
+$$
+La legge di movimento diventa:
+$$
+\mathbf{x}_{t+1}
+=
+F(\mathbf{x}_t,\boldsymbol{\varepsilon}_{t+1}).
+$$
+A parità di stato iniziale e parametri, realizzazioni differenti degli shock possono produrre **traiettorie differenti**.
+
+---
+
+# Non più una sola traiettoria
+
+Nel caso deterministico:
+$$
+\mathbf{x}_0
+\longrightarrow
+\boxed{\text{una traiettoria}}.
+$$
+Nel caso stocastico:
+$$
+\mathbf{x}_0
+\longrightarrow
+\boxed{\text{molte possibili traiettorie}}.
+$$
+L'oggetto di interesse cambia.
+
+Non studiamo più soltanto:
+$$
+\mathbf{x}_t,
+$$
+ma anche:
+
+- distribuzioni;
+- valori attesi;
+- varianze e altri momenti;
+- probabilità di determinati eventi.
+
+La simulazione deve quindi rappresentare anche l'**incertezza**.
+
+---
+
+# Un nuovo problema computazionale
+
+Alla simulazione della dinamica si aggiunge ora la generazione degli shock:
+$$
+\boldsymbol{\varepsilon}_1,
+\boldsymbol{\varepsilon}_2,
+\ldots,
+\boldsymbol{\varepsilon}_T.
+$$
+Una singola sequenza di shock produce una possibile traiettoria.
+
+Ripetendo l'esperimento con sequenze differenti otteniamo:
+$$
+\text{molte realizzazioni degli shock}
+\longrightarrow
+\text{molte traiettorie}.
+$$
+Questo conduce naturalmente alle tecniche di **simulazione Monte Carlo**.
+
+---
+
+# Dinamica, incertezza e aspettative
+
+Nei modelli forward-looking stocastici compare un'ulteriore difficoltà.
+
+Le decisioni correnti possono dipendere da:
+$$
+E_t\mathbf{x}_{t+1}.
+$$
+Con aspettative razionali, tali aspettative devono essere coerenti con la distribuzione futura generata dal modello.
+
+Il problema combina quindi:
+$$
+\boxed{
+\text{dinamica}
++
+\text{incertezza}
++
+\text{aspettative}
+}.
+$$
+Il passaggio allo stocastico non sostituisce i problemi computazionali già incontrati: **li amplia**.
+
+---
+
+# Il prossimo blocco
+
+Passiamo quindi dai modelli discreti deterministici:
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t)
+$$
+ai modelli discreti stocastici:
+$$
+\mathbf{x}_{t+1}
+=
+F(\mathbf{x}_t,\boldsymbol{\varepsilon}_{t+1}).
+$$
+Studieremo come:
+
+- rappresentare gli shock;
+- generare numeri pseudo-casuali;
+- simulare molte traiettorie;
+- sintetizzarne la distribuzione;
+- trattare aspettative e dinamica in presenza di incertezza.
+
+Il nuovo oggetto computazionale non è più soltanto una traiettoria, ma una **distribuzione di possibili traiettorie**.

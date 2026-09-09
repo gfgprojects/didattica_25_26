@@ -157,6 +157,26 @@ La possibilità di effettuare questo passaggio dipende dalla struttura del siste
 
 In altri casi la simultaneità deve essere risolta numericamente a ogni periodo.
 
+# Struttura del sistema e condizioni iniziali
+
+La distinzione tra sistemi **espliciti** e **impliciti** riguarda il modo in cui viene determinato lo stato successivo.
+
+Un sistema esplicito:
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t)
+$$
+permette di calcolare direttamente $\mathbf{x}_{t+1}$.
+
+Un sistema implicito:
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0
+$$
+richiede invece di risolvere un sistema di equazioni.
+
+In entrambi i casi, tuttavia, se $\mathbf{x}_{t+1}$ è determinato univocamente a partire da $\mathbf{x}_t$, una condizione iniziale $\mathbf{x}_0$ permette di costruire la traiettoria.
+
+Possiamo quindi avere **Initial Value Problems (IVP)** sia espliciti sia impliciti.
+
 # Sistemi forward-looking
 
 Una difficoltà diversa emerge quando le condizioni correnti dipendono da variabili future.
@@ -286,6 +306,73 @@ $$
 \cdots
 $$
 La soluzione dell'IVP è quindi una particolare **traiettoria** del sistema.
+
+# Non tutti i sistemi discreti sono IVP
+
+Nei sistemi ricorsivi una condizione iniziale è sufficiente per generare la traiettoria:
+$$
+\mathbf{x}_0
+\rightarrow
+\mathbf{x}_1
+\rightarrow
+\mathbf{x}_2
+\rightarrow
+\cdots
+$$
+La situazione è diversa nei modelli **forward-looking**.
+
+In questi modelli alcune variabili correnti dipendono dalla dinamica futura del sistema.
+
+La sola conoscenza di $\mathbf{x}_0$ non è quindi, in generale, sufficiente per determinare l'intera traiettoria.
+
+Occorrono ulteriori condizioni che garantiscano che la soluzione sia **intertemporalmente coerente**.
+
+# Dall'IVP al Boundary Value Problem
+
+Nei modelli forward-looking possono essere imposte condizioni riferite a momenti differenti.
+
+Possiamo avere, schematicamente:
+$$
+\text{condizione iniziale}
+\qquad + \qquad
+\text{condizione futura o terminale}.
+$$
+Il problema assume allora la struttura di un **Boundary Value Problem (BVP)**.
+
+In molti modelli economici si parla più precisamente di **mixed boundary value problem**:
+
+- alcune variabili sono determinate dalle condizioni iniziali;
+- altre devono soddisfare condizioni future o di convergenza.
+
+La traiettoria non può essere ottenuta semplicemente iterando in avanti:
+$$
+\boxed{\text{SOLVE} \;\longrightarrow\; \text{SIMULATE}}
+$$
+
+
+# IVP e BVP: una prima sintesi
+
+La struttura computazionale del problema dipende dalle informazioni necessarie per determinare la traiettoria.
+
+**Sistema esplicito**
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t)
+$$
+$\Rightarrow$ IVP $\Rightarrow$ iterazione diretta.
+
+**Sistema implicito**
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0
+$$
+$\Rightarrow$ IVP $\Rightarrow$ soluzione del sistema a ogni periodo.
+
+**Sistema forward-looking**
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t,\mathbf{x}_{t-1})=0
+$$
+$\Rightarrow$ BVP o mixed BVP $\Rightarrow$ soluzione intertemporale.
+
+La distinzione **esplicito / implicito / forward-looking** determina quindi anche il tipo di problema computazionale da affrontare.
 
 # Condizioni iniziali diverse
 
@@ -460,21 +547,39 @@ Quando la dimensione del sistema cresce, il calcolo dell'intero spettro può div
 
 Diventa allora importante scegliere tecniche numeriche appropriate alla dimensione e alla struttura della matrice.
 
+
 # Il percorso che seguiremo
 
-Partiremo dall'osservazione delle traiettorie:
+Partiremo dalla struttura del modello:
 $$
-\boxed{\text{modello}\rightarrow\text{IVP}\rightarrow\text{traiettoria}}
+\text{modello}
+\rightarrow
+\text{IVP oppure BVP}
+\rightarrow
+\text{soluzione}
+\rightarrow
+\text{traiettoria}
 $$
-Modificheremo condizioni iniziali e parametri:
+Nei casi più semplici la traiettoria può essere ottenuta mediante **iterazione in avanti**.
+
+Nei modelli forward-looking occorre invece **risolvere il problema intertemporale** prima di simulare.
+
+Una volta ottenute le traiettorie, modificheremo condizioni iniziali e parametri:
 $$
-\boxed{\text{traiettorie diverse}\rightarrow\text{comportamenti diversi}}
+\text{traiettorie diverse}
+\rightarrow
+\text{comportamenti diversi}
 $$
 Questo ci porterà a:
 $$
-\boxed{\text{steady state}\rightarrow\text{stabilità}\rightarrow\text{autovalori}}
+\text{steady state}
+\rightarrow
+\text{stabilità}
+\rightarrow
+\text{autovalori}
 $$
 e infine al problema computazionale:
-$$
-\boxed{\text{come calcolare efficientemente gli autovalori?}}
-$$
+
+**come calcolare efficientemente gli autovalori?**
+
+

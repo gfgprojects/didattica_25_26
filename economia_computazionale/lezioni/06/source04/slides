@@ -1,0 +1,960 @@
+# Sistemi lineari di equazioni alle differenze
+
+Nella sezione precedente abbiamo considerato:
+$$
+x_{t+1}=a x_t+b.
+$$
+Il comportamento dinamico dipende da un unico coefficiente $a$.
+
+La condizione:
+$$
+|a|<1
+$$
+garantisce la convergenza verso lo steady state.
+
+Molti modelli economici e finanziari richiedono però **più variabili di stato** che evolvono congiuntamente.
+
+Il problema diventa quindi multidimensionale.
+
+---
+
+# Da una variabile a più variabili
+
+Consideriamo due variabili di stato:
+$$
+x_{1,t},\qquad x_{2,t}.
+$$
+Un sistema lineare del primo ordine può essere scritto come:
+$$
+x_{1,t+1}=a_{11}x_{1,t}+a_{12}x_{2,t}+b_1,
+$$
+$$
+x_{2,t+1}=a_{21}x_{1,t}+a_{22}x_{2,t}+b_2.
+$$
+Ogni variabile può dipendere:
+
+- dal proprio valore precedente;
+- dal valore precedente delle altre variabili.
+
+Le interazioni tra le variabili diventano parte della dinamica.
+
+---
+
+# La rappresentazione matriciale
+
+Definiamo:
+$$
+\mathbf{x}_t=
+\begin{bmatrix}
+x_{1,t}\\
+x_{2,t}
+\end{bmatrix},
+\qquad
+A=
+\begin{bmatrix}
+a_{11}&a_{12}\\
+a_{21}&a_{22}
+\end{bmatrix},
+\qquad
+\mathbf{b}=
+\begin{bmatrix}
+b_1\\
+b_2
+\end{bmatrix}.
+$$
+Il sistema può essere scritto in forma compatta:
+$$
+\boxed{\mathbf{x}_{t+1}=A\mathbf{x}_t+\mathbf{b}}.
+$$
+La matrice $A$ prende il nome di **matrice di transizione**.
+
+---
+
+# Come leggere la matrice di transizione
+
+Consideriamo:
+$$
+A=
+\begin{bmatrix}
+a_{11}&a_{12}\\
+a_{21}&a_{22}
+\end{bmatrix}.
+$$
+Gli elementi sulla diagonale:
+$$
+a_{11},\qquad a_{22}
+$$
+descrivono la dipendenza di ciascuna variabile dal proprio valore precedente.
+
+Gli elementi fuori diagonale:
+$$
+a_{12},\qquad a_{21}
+$$
+descrivono invece le **interazioni dinamiche** tra le variabili.
+
+La dinamica complessiva dipende quindi non solo dalla persistenza delle singole variabili, ma anche dalle loro interazioni.
+
+---
+
+# L'Initial Value Problem
+
+Anche nel caso multidimensionale dobbiamo specificare una condizione iniziale:
+$$
+\mathbf{x}_0=\bar{\mathbf{x}}.
+$$
+L'IVP è:
+$$
+\begin{cases}
+\mathbf{x}_{t+1}=A\mathbf{x}_t+\mathbf{b},\\
+\mathbf{x}_0=\bar{\mathbf{x}}.
+\end{cases}
+$$
+La forward iteration procede come nel caso scalare:
+$$
+\mathbf{x}_1=A\mathbf{x}_0+\mathbf{b},
+$$
+$$
+\mathbf{x}_2=A\mathbf{x}_1+\mathbf{b},
+$$
+e così via.
+
+La logica della simulazione non cambia.
+
+---
+
+# Che cosa cambia rispetto al caso scalare?
+
+Nel caso scalare:
+$$
+x_{t+1}=a x_t+b
+$$
+la dinamica è governata da un solo coefficiente.
+
+Nel caso multidimensionale:
+$$
+\mathbf{x}_{t+1}=A\mathbf{x}_t+\mathbf{b}
+$$
+la dinamica dipende da **tutti gli elementi della matrice $A$ e dalle loro interazioni**.
+
+Non possiamo quindi giudicare la stabilità osservando separatamente i singoli coefficienti.
+
+Serve uno strumento capace di descrivere la dinamica della matrice nel suo complesso.
+
+---
+
+# Lo steady state
+
+Uno steady state $\mathbf{x}^*$ soddisfa:
+$$
+\mathbf{x}^*=A\mathbf{x}^*+\mathbf{b}.
+$$
+Riordinando:
+$$
+(I-A)\mathbf{x}^*=\mathbf{b}.
+$$
+Se $I-A$ è non singolare, lo steady state è unico.
+
+Dal punto di vista computazionale dobbiamo quindi risolvere:
+$$
+\boxed{(I-A)\mathbf{x}^*=\mathbf{b}}.
+$$
+
+Ritroviamo una tecnica già studiata:
+
+**calcolo dello steady state $\longrightarrow$ soluzione di un sistema lineare.**
+
+---
+
+# Inversa o soluzione del sistema?
+
+Formalmente possiamo scrivere:
+$$
+\mathbf{x}^*=(I-A)^{-1}\mathbf{b}.
+$$
+Ma questa espressione non suggerisce il metodo computazionale preferibile.
+
+In generale è meglio risolvere direttamente:
+$$
+(I-A)\mathbf{x}^*=\mathbf{b}
+$$
+piuttosto che calcolare esplicitamente:
+$$
+(I-A)^{-1}.
+$$
+La formulazione matematica e l'implementazione numerica non devono quindi essere confuse.
+
+---
+
+# La dinamica rispetto allo steady state
+
+Definiamo la deviazione:
+$$
+\tilde{\mathbf{x}}_t=\mathbf{x}_t-\mathbf{x}^*.
+$$
+Poiché:
+$$
+\mathbf{x}_{t+1}=A\mathbf{x}_t+\mathbf{b}
+$$
+e:
+$$
+\mathbf{x}^*=A\mathbf{x}^*+\mathbf{b},
+$$
+sottraendo otteniamo:
+$$
+\tilde{\mathbf{x}}_{t+1}=A\tilde{\mathbf{x}}_t.
+$$
+La dinamica delle deviazioni è quindi governata interamente dalla matrice $A$.
+
+---
+
+# Iterare il sistema
+
+Partendo da:
+$$
+\tilde{\mathbf{x}}_{t+1}=A\tilde{\mathbf{x}}_t,
+$$
+otteniamo:
+$$
+\tilde{\mathbf{x}}_1=A\tilde{\mathbf{x}}_0,
+$$
+$$
+\tilde{\mathbf{x}}_2=A^2\tilde{\mathbf{x}}_0,
+$$
+e in generale:
+$$
+\boxed{\tilde{\mathbf{x}}_t=A^t\tilde{\mathbf{x}}_0}.
+$$
+La domanda fondamentale diventa quindi:
+
+> Che cosa accade ad $A^t$ quando $t$ aumenta?
+
+È l'analogo multidimensionale della domanda sul comportamento di $a^t$.
+
+---
+
+# Dal coefficiente alla matrice
+
+Nel caso scalare avevamo:
+$$
+\tilde{x}_t=a^t\tilde{x}_0.
+$$
+La stabilità richiedeva:
+$$
+a^t\longrightarrow0.
+$$
+Nel caso multidimensionale:
+$$
+\tilde{\mathbf{x}}_t=A^t\tilde{\mathbf{x}}_0.
+$$
+La stabilità richiede:
+$$
+A^t\longrightarrow0.
+$$
+Come possiamo verificare questa condizione senza calcolare $A^t$ per valori sempre più grandi di $t$?
+
+La risposta è fornita dagli **autovalori**.
+
+---
+
+# Gli autovalori
+
+Un numero $\lambda$ è un autovalore di $A$ se esiste un vettore non nullo $\mathbf{v}$ tale che:
+$$
+A\mathbf{v}=\lambda\mathbf{v}.
+$$
+Il vettore $\mathbf{v}$ è il corrispondente **autovettore**.
+
+Se lo stato si trova nella direzione $\mathbf{v}$:
+$$
+\tilde{\mathbf{x}}_t=c_t\mathbf{v},
+$$
+allora:
+$$
+A\tilde{\mathbf{x}}_t
+=
+\lambda c_t\mathbf{v}.
+$$
+Lungo quella direzione, il sistema si comporta come una semplice equazione scalare.
+
+---
+
+# Perché gli autovalori descrivono la dinamica?
+
+Se:
+$$
+A\mathbf{v}=\lambda\mathbf{v},
+$$
+allora:
+$$
+A^2\mathbf{v}=\lambda^2\mathbf{v},
+$$
+e più in generale:
+$$
+A^t\mathbf{v}=\lambda^t\mathbf{v}.
+$$
+Quindi ogni componente associata a un autovalore evolve come:
+$$
+\lambda^t.
+$$
+Ritroviamo esattamente la logica del caso scalare:
+$$
+a^t
+\quad\longrightarrow\quad
+\lambda^t.
+$$
+
+---
+
+# Il raggio spettrale
+
+Definiamo il **raggio spettrale** della matrice $A$ come:
+$$
+\rho(A)=\max_i|\lambda_i|.
+$$
+Per un sistema lineare discreto:
+$$
+\boxed{\rho(A)<1}
+$$
+implica che tutti gli autovalori si trovano all'interno del cerchio unitario.
+
+In questo caso:
+$$
+A^t\longrightarrow0
+$$
+e quindi:
+$$
+\tilde{\mathbf{x}}_t\longrightarrow\mathbf{0}.
+$$
+Lo steady state è asintoticamente stabile.
+
+---
+
+# Dal caso scalare al caso multidimensionale
+
+La condizione scalare:
+$$
+|a|<1
+$$
+diventa:
+$$
+\boxed{\rho(A)<1}.
+$$
+Quindi:
+$$
+\boxed{
+\text{coefficiente }a
+\quad\longrightarrow\quad
+\text{autovalori di }A
+}
+$$
+e:
+$$
+\boxed{
+|a|<1
+\quad\longrightarrow\quad
+|\lambda_i|<1\;\text{per ogni }i
+}
+$$
+Gli autovalori sono quindi la naturale generalizzazione del coefficiente dinamico del caso scalare.
+
+---
+
+# Il cerchio unitario
+
+Gli autovalori possono essere rappresentati nel piano complesso.
+
+La frontiera rilevante per un sistema discreto è:
+$$
+|\lambda|=1.
+$$
+Questa frontiera prende il nome di **cerchio unitario**.
+
+Se tutti gli autovalori soddisfano:
+$$
+|\lambda_i|<1,
+$$
+il sistema è asintoticamente stabile.
+
+Se almeno un autovalore soddisfa:
+$$
+|\lambda_i|>1,
+$$
+esiste una componente della dinamica che tende ad amplificarsi.
+
+---
+
+# Autovalori e forma delle traiettorie
+
+Gli autovalori non ci dicono soltanto se il sistema converge.
+
+Se gli autovalori sono **reali e positivi**, le componenti associate tendono a muoversi senza alternanza di segno.
+
+Se sono **reali e negativi**, possono generare alternanza.
+
+Se compaiono **coppie complesse coniugate**, possono emergere dinamiche oscillanti.
+
+Il loro modulo determina invece se tali componenti:
+
+- si attenuano;
+- persistono;
+- si amplificano.
+
+---
+
+# Modulo e oscillazione
+
+Per un autovalore complesso possiamo scrivere:
+$$
+\lambda=re^{i\theta}.
+$$
+Il modulo:
+$$
+r=|\lambda|
+$$
+determina l'evoluzione dell'ampiezza.
+
+L'argomento:
+$$
+\theta
+$$
+è collegato alla componente oscillatoria.
+
+Quindi:
+
+- $r<1$: oscillazioni smorzate;
+- $r=1$: oscillazioni persistenti;
+- $r>1$: oscillazioni esplosive.
+
+Gli autovalori descrivono quindi sia la **stabilità** sia la **forma qualitativa delle traiettorie**.
+
+---
+
+# Un esempio economico: duopolio dinamico
+
+Consideriamo due imprese che scelgono le quantità:
+$$
+q_{1,t},\qquad q_{2,t}.
+$$
+Supponiamo che ciascuna impresa adegui nel periodo successivo la propria quantità alla quantità corrente del concorrente:
+$$
+q_{1,t+1}=\gamma_1-\beta_1 q_{2,t},
+$$
+$$
+q_{2,t+1}=\gamma_2-\beta_2 q_{1,t}.
+$$
+con:
+$$
+\beta_1>0,\qquad\beta_2>0.
+$$
+Le decisioni delle due imprese sono quindi dinamicamente interdipendenti.
+
+---
+
+# Il duopolio in forma matriciale
+
+Definiamo:
+$$
+\mathbf{q}_t=
+\begin{bmatrix}
+q_{1,t}\\
+q_{2,t}
+\end{bmatrix}.
+$$
+Il sistema diventa:
+$$
+\mathbf{q}_{t+1}=A\mathbf{q}_t+\mathbf{g},
+$$
+dove:
+$$
+A=
+\begin{bmatrix}
+0&-\beta_1\\
+-\beta_2&0
+\end{bmatrix},
+\qquad
+\mathbf{g}=
+\begin{bmatrix}
+\gamma_1\\
+\gamma_2
+\end{bmatrix}.
+$$
+Abbiamo quindi un sistema lineare ricorsivo multidimensionale.
+
+---
+
+# Lo steady state del duopolio
+
+Lo steady state soddisfa:
+$$
+\mathbf{q}^*=A\mathbf{q}^*+\mathbf{g}.
+$$
+Quindi:
+$$
+(I-A)\mathbf{q}^*=\mathbf{g}.
+$$
+Il calcolo dell'equilibrio richiede quindi la soluzione di un sistema lineare.
+
+Ma conoscere lo steady state non ci dice ancora se le quantità convergeranno verso di esso.
+
+Per questo dobbiamo studiare gli autovalori di $A$.
+
+---
+
+# Gli autovalori del duopolio
+
+La matrice è:
+$$
+A=
+\begin{bmatrix}
+0&-\beta_1\\
+-\beta_2&0
+\end{bmatrix}.
+$$
+Gli autovalori soddisfano:
+$$
+\det(A-\lambda I)=0.
+$$
+Quindi:
+$$
+\lambda^2-\beta_1\beta_2=0.
+$$
+Gli autovalori sono:
+$$
+\lambda_1=\sqrt{\beta_1\beta_2},
+\qquad
+\lambda_2=-\sqrt{\beta_1\beta_2}.
+$$
+Il raggio spettrale è:
+$$
+\rho(A)=\sqrt{\beta_1\beta_2}.
+$$
+
+---
+
+# Stabilità del duopolio
+
+La condizione di stabilità è:
+$$
+\rho(A)<1.
+$$
+Quindi:
+$$
+\sqrt{\beta_1\beta_2}<1,
+$$
+equivalentemente:
+$$
+\boxed{\beta_1\beta_2<1}.
+$$
+La stabilità dipende dall'**interazione tra le reazioni delle due imprese**.
+
+Le decisioni generano infatti un circuito di retroazione:
+$$
+q_{1,t}
+\longrightarrow
+q_{2,t+1}
+\longrightarrow
+q_{1,t+2}
+\longrightarrow\cdots
+$$
+
+---
+
+# L'interpretazione economica
+
+Se:
+$$
+\beta_1\beta_2<1,
+$$
+le reazioni reciproche sono sufficientemente moderate.
+
+Una perturbazione viene progressivamente attenuata.
+
+Se invece:
+$$
+\beta_1\beta_2>1,
+$$
+le reazioni sono troppo forti.
+
+Il comportamento di un'impresa induce una risposta dell'altra, che genera una nuova risposta della prima e così via.
+
+Il **feedback dinamico** può quindi amplificare progressivamente le deviazioni dall'equilibrio.
+
+---
+
+# Un esempio finanziario: prezzo e momentum
+
+Consideriamo un'attività finanziaria con valore fondamentale $P^*$.
+
+Definiamo il mispricing:
+$$
+m_t=P_t-P^*.
+$$
+Introduciamo inoltre una variabile $z_t$ che rappresenta una componente di **momentum**.
+
+Consideriamo:
+$$
+m_{t+1}=(1-\alpha)m_t+\beta z_t,
+$$
+$$
+z_{t+1}=\gamma m_t+\delta z_t.
+$$
+Il prezzo è quindi influenzato sia dal ritorno verso il fondamentale sia dal momentum.
+
+---
+
+# Il modello finanziario in forma matriciale
+
+Definiamo:
+$$
+\mathbf{x}_t=
+\begin{bmatrix}
+m_t\\
+z_t
+\end{bmatrix}.
+$$
+Otteniamo:
+$$
+\mathbf{x}_{t+1}=A\mathbf{x}_t,
+$$
+con:
+$$
+A=
+\begin{bmatrix}
+1-\alpha&\beta\\
+\gamma&\delta
+\end{bmatrix}.
+$$
+Lo steady state naturale è:
+$$
+\mathbf{x}^*=
+\begin{bmatrix}
+0\\
+0
+\end{bmatrix},
+$$
+che corrisponde a:
+$$
+P_t=P^*
+$$
+e all'assenza di momentum.
+
+---
+
+# Due meccanismi contrapposti
+
+Nel modello agiscono due forze.
+
+Il **ritorno verso il fondamentale** tende a correggere:
+$$
+m_t=P_t-P^*.
+$$
+Il **momentum** può invece propagare nel tempo i movimenti precedenti del prezzo.
+
+Non è sufficiente considerare separatamente i parametri.
+
+Dobbiamo studiare il comportamento complessivo della matrice:
+$$
+A=
+\begin{bmatrix}
+1-\alpha&\beta\\
+\gamma&\delta
+\end{bmatrix}.
+$$
+
+---
+
+# Stabilità del modello finanziario
+
+La condizione rilevante è:
+$$
+\boxed{\rho(A)<1}.
+$$
+Se questa condizione è soddisfatta, una perturbazione del prezzo o del momentum viene progressivamente riassorbita:
+$$
+(m_t,z_t)\longrightarrow(0,0).
+$$
+Se invece:
+$$
+\rho(A)>1,
+$$
+esiste almeno una componente della dinamica che tende ad amplificarsi.
+
+L'interazione tra **correzione** e **propagazione** viene quindi sintetizzata dagli autovalori della matrice di transizione.
+
+---
+
+# Due modelli, lo stesso problema
+
+Il duopolio e il modello prezzo--momentum descrivono fenomeni molto differenti.
+
+Entrambi conducono però a:
+$$
+\boxed{\mathbf{x}_{t+1}=A\mathbf{x}_t+\mathbf{b}}.
+$$
+Dal punto di vista computazionale dobbiamo:
+
+1. costruire la matrice $A$;
+2. determinare lo steady state;
+3. simulare le traiettorie;
+4. analizzare gli autovalori;
+5. calcolare il raggio spettrale.
+
+Ancora una volta, modelli diversi generano **lo stesso problema computazionale**.
+
+---
+
+# Simulare è sufficiente?
+
+Una possibile strategia consiste nel simulare:
+$$
+\mathbf{x}_0,\mathbf{x}_1,\ldots,\mathbf{x}_T
+$$
+e osservare se le variabili sembrano convergere.
+
+La simulazione è molto utile per **visualizzare la dinamica**.
+
+Ma presenta un limite:
+
+> una traiettoria riguarda una particolare condizione iniziale e un particolare orizzonte temporale.
+
+Una traiettoria apparentemente stabile non costituisce, da sola, una prova della stabilità del sistema.
+
+---
+
+# Dalla simulazione all'analisi spettrale
+
+L'analisi degli autovalori permette invece di caratterizzare direttamente la dinamica asintotica.
+
+Per:
+$$
+\mathbf{x}_{t+1}=A\mathbf{x}_t+\mathbf{b},
+$$
+abbiamo:
+$$
+\boxed{\rho(A)<1
+\quad\Longleftrightarrow\quad
+\text{stabilità asintotica}.}
+$$
+Il problema economico della stabilità diventa quindi un problema computazionale:
+
+$$
+\boxed{\text{eigenvalue computation}}.
+$$
+
+---
+
+# Come si calcolano gli autovalori?
+
+Per una matrice molto piccola possiamo utilizzare:
+$$
+\det(A-\lambda I)=0.
+$$
+Otteniamo così il **polinomio caratteristico**.
+
+Le sue radici sono gli autovalori.
+
+Questa procedura è utile per comprendere la teoria e per sistemi di piccola dimensione.
+
+Ma è una buona strategia numerica per matrici grandi?
+
+---
+
+# Perché non usare sempre il polinomio caratteristico?
+
+Per una matrice $n\times n$, il polinomio caratteristico ha grado $n$.
+
+Calcolarlo esplicitamente e determinarne numericamente tutte le radici può diventare:
+
+- costoso;
+- numericamente poco stabile;
+- inefficiente per sistemi di grandi dimensioni.
+
+Nei problemi computazionali reali si preferisce quindi lavorare **direttamente sulla matrice $A$**.
+
+Questo conduce agli algoritmi numerici per gli autovalori.
+
+---
+
+# Il metodo QR
+
+Per matrici dense di dimensione moderata, un metodo fondamentale è l'**algoritmo QR**.
+
+L'idea generale consiste nel costruire iterativamente fattorizzazioni:
+$$
+A_k=Q_kR_k
+$$
+e quindi aggiornare:
+$$
+A_{k+1}=R_kQ_k.
+$$
+Le matrici così ottenute preservano gli autovalori della matrice originale.
+
+Con opportune trasformazioni e shift, l'algoritmo converge verso una forma dalla quale gli autovalori possono essere estratti numericamente.
+
+---
+
+# Perché il metodo QR è importante?
+
+Il metodo QR è alla base di molti algoritmi utilizzati dalle librerie numeriche per matrici dense.
+
+Dal punto di vista dell'utilizzatore, normalmente non implementiamo direttamente tutte le iterazioni.
+
+Utilizziamo routine numeriche specializzate.
+
+È però importante comprendere che il comando che restituisce gli autovalori nasconde un vero **algoritmo numerico**.
+
+Il costo computazionale cresce rapidamente con la dimensione della matrice.
+
+---
+
+# Quando il sistema diventa grande
+
+Nei modelli con molte variabili di stato, la matrice $A$ può essere molto grande.
+
+Spesso, tuttavia, ogni variabile interagisce soltanto con un numero limitato di altre variabili.
+
+La matrice contiene quindi molti elementi nulli.
+
+In questo caso $A$ è una **matrice sparsa**.
+
+La struttura sparsa deve essere sfruttata anche dal punto di vista computazionale.
+
+---
+
+# Matrici sparse
+
+Per una matrice sparsa non è conveniente memorizzare tutti gli elementi.
+
+Si memorizzano soltanto:
+
+- gli elementi non nulli;
+- le loro posizioni.
+
+Questo riduce:
+
+- memoria richiesta;
+- numero di operazioni;
+- costo dei prodotti matrice--vettore.
+
+Per sistemi dinamici grandi, la struttura della matrice diventa quindi parte del problema computazionale.
+
+---
+
+# Servono sempre tutti gli autovalori?
+
+Per verificare la stabilità dobbiamo sapere se:
+$$
+\rho(A)<1.
+$$
+Quindi spesso non ci interessa conoscere **tutti** gli autovalori.
+
+Ci interessa soprattutto quello con modulo maggiore:
+$$
+\rho(A)=\max_i|\lambda_i|.
+$$
+Questo suggerisce una strategia diversa:
+
+> calcolare soltanto la parte dello spettro rilevante per il problema economico.
+
+---
+
+# Il power method
+
+Un metodo semplice per approssimare l'autovalore dominante è il **power method**.
+
+Partendo da un vettore $\mathbf{v}_0$, si applica ripetutamente la matrice:
+$$
+\mathbf{v}_{k+1}=A\mathbf{v}_k.
+$$
+Dopo opportuna normalizzazione, sotto determinate condizioni la direzione di $\mathbf{v}_k$ tende verso l'autovettore associato all'autovalore dominante.
+
+L'idea fondamentale è semplice:
+$$
+A^k\mathbf{v}_0
+$$
+amplifica progressivamente la componente associata all'autovalore di modulo maggiore.
+
+---
+
+# Metodi di Krylov
+
+Per matrici grandi e sparse si utilizzano metodi più sofisticati basati su **sottospazi di Krylov**.
+
+A partire da un vettore $\mathbf{v}$ consideriamo:
+$$
+\mathbf{v},
+\quad
+A\mathbf{v},
+\quad
+A^2\mathbf{v},
+\quad
+\ldots
+$$
+Questi vettori generano un sottospazio che contiene informazioni sulle componenti spettrali più rilevanti della matrice.
+
+Un algoritmo particolarmente importante per matrici generali è il **metodo di Arnoldi**.
+
+---
+
+# La scelta del metodo numerico
+
+Non esiste un unico metodo migliore in ogni situazione.
+
+La scelta dipende dalla struttura del problema.
+
+Per una matrice **piccola**, possiamo utilizzare anche il polinomio caratteristico per comprendere la teoria.
+
+Per una matrice **densa di dimensione moderata**, sono appropriati algoritmi basati sul metodo QR.
+
+Per una matrice **grande e sparsa**, conviene sfruttare metodi iterativi e sottospazi di Krylov.
+
+Se interessa soltanto una parte dello spettro, non è necessario calcolare tutti gli autovalori.
+
+---
+
+# Il vero problema computazionale
+
+Il passaggio:
+$$
+x_{t+1}=a x_t+b
+$$
+a:
+$$
+\mathbf{x}_{t+1}=A\mathbf{x}_t+\mathbf{b}
+$$
+sembra una semplice generalizzazione matematica.
+
+Dal punto di vista computazionale introduce invece nuovi problemi:
+
+- soluzione di sistemi lineari per lo steady state;
+- prodotti matrice--vettore per la simulazione;
+- calcolo degli autovalori;
+- gestione di matrici grandi;
+- sfruttamento della sparsità;
+- scelta della parte dello spettro realmente necessaria.
+
+La **struttura del modello** determina quindi la **tecnica numerica appropriata**.
+
+---
+
+# Dalla stabilità al prossimo problema
+
+Per un sistema lineare ricorsivo:
+$$
+\mathbf{x}_{t+1}=A\mathbf{x}_t+\mathbf{b},
+$$
+conoscendo $\mathbf{x}_t$ possiamo calcolare direttamente $\mathbf{x}_{t+1}$.
+
+Ma non tutti i sistemi dinamici hanno questa forma.
+
+Possiamo incontrare relazioni del tipo:
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0,
+$$
+nelle quali lo stato successivo non è disponibile direttamente.
+
+Il nuovo problema computazionale diventa allora:
+
+> come determinare $\mathbf{x}_{t+1}$ a ogni periodo?
+
+Questo ci conduce ai **sistemi dinamici impliciti**.

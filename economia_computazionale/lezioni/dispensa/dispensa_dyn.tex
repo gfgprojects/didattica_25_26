@@ -3972,6 +3972,308 @@ traiettorie e come gli agenti formano aspettative su tale distribuzione.
 Questo ci conduce naturalmente al passo successivo nello studio dei
 modelli dinamici discreti: i modelli stocastici non controllati.
 
+\section{Sintesi: struttura dinamica e problema computazionale}
+
+L'analisi dei modelli deterministici in tempo discreto ha mostrato che
+problemi economici e finanziari anche molto diversi possono essere
+ricondotti a un numero relativamente limitato di strutture dinamiche.
+La forma assunta dal modello determina, a sua volta, il tipo di problema
+computazionale che deve essere affrontato.
+
+Il caso più semplice è rappresentato dai sistemi ricorsivi espliciti:
+\[
+\mathbf{x}_{t+1}=F(\mathbf{x}_t).
+\]
+Una volta assegnata la condizione iniziale $\mathbf{x}_0$, lo stato
+successivo può essere ottenuto direttamente valutando la funzione
+$F$. La traiettoria viene quindi costruita mediante iterazione in avanti:
+\[
+\mathbf{x}_0
+\rightarrow
+\mathbf{x}_1
+\rightarrow
+\mathbf{x}_2
+\rightarrow
+\cdots.
+\]
+Dal punto di vista computazionale, il problema fondamentale è quindi
+la simulazione della legge di movimento.
+
+Nel caso lineare multidimensionale,
+\[
+\mathbf{x}_{t+1}=A\mathbf{x}_t+\mathbf{b},
+\]
+la stessa struttura ricorsiva permette di generare direttamente le
+traiettorie, ma emerge un ulteriore problema: stabilire se tali
+traiettorie convergano verso lo stato stazionario.
+
+Definendo
+\[
+\widetilde{\mathbf{x}}_t
+=
+\mathbf{x}_t-\mathbf{x}^*,
+\]
+la dinamica delle deviazioni dallo steady state è
+\[
+\widetilde{\mathbf{x}}_{t+1}
+=
+A\widetilde{\mathbf{x}}_t,
+\]
+e quindi
+\[
+\widetilde{\mathbf{x}}_t
+=
+A^t\widetilde{\mathbf{x}}_0.
+\]
+La stabilità dipende pertanto dagli autovalori della matrice di
+transizione. In particolare, nel caso lineare discreto lo steady state
+è asintoticamente stabile se
+\[
+\rho(A)<1,
+\]
+dove $\rho(A)$ è il raggio spettrale della matrice.
+
+L'analisi della stabilità introduce quindi un secondo importante
+problema computazionale: il calcolo degli autovalori. Per matrici dense
+di dimensione moderata possono essere utilizzati algoritmi basati sulla
+decomposizione QR. Nei sistemi di grandi dimensioni, soprattutto quando
+la matrice di transizione è sparsa, diventa invece conveniente
+utilizzare metodi iterativi che sfruttano la struttura del problema,
+come il power method e i metodi basati sui sottospazi di Krylov.
+
+Una struttura diversa emerge nei sistemi dinamici impliciti:
+\[
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0.
+\]
+In questo caso, anche conoscendo $\mathbf{x}_t$, lo stato successivo non
+è necessariamente disponibile mediante la semplice valutazione di una
+funzione. Esso deve essere determinato risolvendo un sistema di
+equazioni.
+
+Nel caso lineare,
+\[
+A\mathbf{x}_{t+1}
+=
+B\mathbf{x}_t+\mathbf{c},
+\]
+la transizione richiede la soluzione di un sistema lineare. Nel caso
+non lineare,
+\[
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0,
+\]
+essa può invece richiedere un algoritmo di ricerca degli zeri.
+
+La struttura temporale rimane tuttavia quella di un initial value
+problem, purché, dato $\mathbf{x}_t$, esista una soluzione unica per
+$\mathbf{x}_{t+1}$. La differenza rispetto al sistema esplicito riguarda
+quindi il modo in cui viene calcolata ciascuna transizione:
+\[
+\text{esplicito}
+\quad\Rightarrow\quad
+\text{evaluate},
+\]
+mentre
+\[
+\text{implicito}
+\quad\Rightarrow\quad
+\text{solve}.
+\]
+
+La situazione cambia più profondamente nei modelli forward-looking.
+In questi modelli alcune variabili correnti dipendono dal comportamento
+futuro del sistema. La sola condizione iniziale non è quindi, in
+generale, sufficiente per determinare la traiettoria.
+
+Occorre distinguere tra variabili predeterminate, il cui valore iniziale
+è ereditato dalla storia del sistema, e variabili forward-looking, che
+possono aggiustarsi immediatamente in modo da rendere la traiettoria
+compatibile con le condizioni future.
+
+Il problema assume quindi la struttura di un boundary value problem o,
+più precisamente in molti modelli economici, di un mixed boundary value
+problem. La soluzione deve soddisfare simultaneamente condizioni
+iniziali e condizioni future, terminali o di non esplosività.
+
+Dal punto di vista computazionale cambia pertanto la sequenza delle
+operazioni. Nei sistemi ricorsivi possiamo scrivere schematicamente
+\[
+\text{SIMULATE},
+\]
+mentre nei sistemi forward-looking la sequenza diventa
+\[
+\text{SOLVE}
+\rightarrow
+\text{SIMULATE}.
+\]
+Prima di generare una traiettoria occorre cioè individuare la regola di
+soluzione compatibile con le condizioni intertemporali del modello.
+
+Anche il ruolo degli autovalori cambia. Nei sistemi ricorsivi essi
+servono principalmente a stabilire se le perturbazioni tendano a
+scomparire o ad amplificarsi. Nei modelli forward-looking, invece, la
+separazione tra radici stabili e instabili contribuisce anche a
+determinare l'esistenza e l'unicità della soluzione.
+
+Nei sistemi lineari con aspettative razionali questo conduce alle
+condizioni di Blanchard--Kahn e, più in generale, a problemi agli
+autovalori generalizzati. Dal punto di vista numerico, strumenti come
+la decomposizione QZ permettono di separare le radici stabili da quelle
+instabili e di ricavare la regola di soluzione del modello.
+
+Possiamo quindi sintetizzare il percorso seguito nel modo seguente:
+\[
+\begin{array}{ccl}
+\text{sistema ricorsivo} & \longrightarrow &
+\text{iterazione in avanti},\\
+\text{sistema ricorsivo multidimensionale} & \longrightarrow &
+\text{autovalori e stabilità},\\
+\text{sistema implicito lineare} & \longrightarrow &
+\text{soluzione di sistemi lineari},\\
+\text{sistema implicito non lineare} & \longrightarrow &
+\text{root finding},\\
+\text{sistema forward-looking} & \longrightarrow &
+\text{BVP e soluzione intertemporale},\\
+\text{sistema con aspettative razionali} & \longrightarrow &
+\text{autovalori generalizzati e QZ}.
+\end{array}
+\]
+
+\subsection{Una precisazione sulla stabilità locale}
+
+L'analisi svolta per i sistemi lineari ha un'importante proprietà. Se
+\[
+\mathbf{x}_{t+1}=A\mathbf{x}_t+\mathbf{b}
+\]
+e
+\[
+\rho(A)<1,
+\]
+la condizione sugli autovalori caratterizza direttamente la dinamica
+globale del sistema lineare: qualunque deviazione iniziale dallo steady
+state viene progressivamente riassorbita.
+
+Nei sistemi non lineari la situazione è più complessa. Consideriamo
+\[
+\mathbf{x}_{t+1}=F(\mathbf{x}_t)
+\]
+e uno steady state $\mathbf{x}^*$ tale che
+\[
+\mathbf{x}^*=F(\mathbf{x}^*).
+\]
+Nelle vicinanze dello steady state possiamo approssimare il sistema
+mediante la linearizzazione
+\[
+\mathbf{x}_{t+1}-\mathbf{x}^*
+\simeq
+J(\mathbf{x}^*)
+(\mathbf{x}_t-\mathbf{x}^*),
+\]
+dove
+\[
+J(\mathbf{x}^*)
+=
+\left.
+\frac{\partial F(\mathbf{x})}
+{\partial\mathbf{x}}
+\right|_{\mathbf{x}=\mathbf{x}^*}
+\]
+è la matrice Jacobiana valutata nello steady state.
+
+Gli autovalori della Jacobiana permettono quindi di studiare il
+comportamento delle traiettorie nelle vicinanze dell'equilibrio. Se
+\[
+\rho\!\left(J(\mathbf{x}^*)\right)<1,
+\]
+lo steady state è localmente asintoticamente stabile.
+
+La parola \emph{localmente} è essenziale. La linearizzazione descrive
+il comportamento del sistema nelle vicinanze dello steady state, ma
+non necessariamente quello di traiettorie che partono molto lontano
+da esso. Un sistema non lineare può infatti presentare più steady state,
+regioni di attrazione differenti o dinamiche che non possono essere
+dedotte dalla sola analisi locale.
+
+Questo chiarisce anche la complementarità tra analisi della stabilità
+e simulazione numerica. Gli autovalori della Jacobiana forniscono
+informazioni rigorose sul comportamento locale, mentre la simulazione
+permette di esplorare la dinamica del sistema anche lontano dallo
+steady state.
+
+\subsection{Dal deterministico allo stocastico}
+
+Tutti i modelli considerati finora sono stati analizzati in un ambiente
+deterministico. Una volta assegnati i parametri e le condizioni
+necessarie per determinare la soluzione, il modello genera una
+traiettoria:
+\[
+\mathbf{x}_0,
+\mathbf{x}_1,
+\mathbf{x}_2,
+\ldots.
+\]
+
+L'introduzione dell'incertezza modifica questa struttura. Una legge di
+movimento può assumere, ad esempio, la forma
+\[
+\mathbf{x}_{t+1}
+=
+F(\mathbf{x}_t,\boldsymbol{\varepsilon}_{t+1}),
+\]
+dove $\boldsymbol{\varepsilon}_{t+1}$ rappresenta uno shock casuale.
+
+A parità di condizione iniziale e di parametri, realizzazioni differenti
+degli shock generano traiettorie differenti:
+\[
+\mathbf{x}_0
+\rightarrow
+\mathbf{x}_1^{(1)}
+\rightarrow
+\mathbf{x}_2^{(1)}
+\rightarrow\cdots,
+\]
+\[
+\mathbf{x}_0
+\rightarrow
+\mathbf{x}_1^{(2)}
+\rightarrow
+\mathbf{x}_2^{(2)}
+\rightarrow\cdots.
+\]
+
+L'oggetto di interesse non è quindi più soltanto una singola traiettoria
+deterministica. Diventano rilevanti la distribuzione delle possibili
+traiettorie, i loro momenti e la probabilità che il sistema raggiunga
+determinate regioni dello spazio degli stati.
+
+Anche il problema computazionale cambia. Alla semplice iterazione della
+legge di movimento si aggiunge la necessità di generare realizzazioni
+degli shock e di ripetere la simulazione per molte sequenze casuali.
+Questo conduce naturalmente ai metodi di simulazione stocastica e,
+in particolare, alle tecniche Monte Carlo.
+
+Nei modelli forward-looking l'incertezza introduce inoltre un ulteriore
+elemento. Le variabili correnti possono dipendere dalle aspettative
+condizionate sui valori futuri:
+\[
+E_t\mathbf{x}_{t+1}.
+\]
+Nel caso delle aspettative razionali tali aspettative devono essere
+coerenti con la distribuzione futura generata dal modello stesso.
+
+Il passaggio dal deterministico allo stocastico non elimina quindi i
+problemi computazionali incontrati finora. Al contrario, li combina con
+nuovi problemi:
+\[
+\text{dinamica}
++
+\text{incertezza}
++
+\text{aspettative}.
+\]
+
+Questa sarà la struttura di riferimento per lo studio dei modelli
+dinamici discreti stocastici.
+
 
 \chapter{modelli stocastici}
 

@@ -1,0 +1,767 @@
+# Sistemi dinamici in forma implicita
+
+Finora abbiamo considerato sistemi nei quali lo stato successivo è espresso direttamente in funzione dello stato corrente:
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t).
+$$
+Una volta noto $\mathbf{x}_t$, il computer valuta $F$ e ottiene $\mathbf{x}_{t+1}$.
+
+Molti modelli economici e finanziari non vengono però formulati direttamente in questa forma.
+
+In particolare, alcune variabili possono essere determinate **simultaneamente**.
+
+---
+
+# Una formulazione più generale
+
+Un sistema dinamico può essere scritto come:
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0.
+$$
+Dato $\mathbf{x}_t$, lo stato successivo non è ottenuto mediante la semplice valutazione di una funzione.
+
+Occorre invece determinare $\mathbf{x}_{t+1}$ risolvendo:
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0.
+$$
+Dal punto di vista computazionale:
+$$
+\mathbf{x}_t
+\longrightarrow
+\boxed{\text{soluzione del sistema}}
+\longrightarrow
+\mathbf{x}_{t+1}.
+$$
+La procedura deve essere ripetuta a ogni periodo.
+
+---
+
+# Forma esplicita e forma implicita
+
+Nel sistema esplicito:
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t)
+$$
+la transizione è ottenuta direttamente:
+$$
+\mathbf{x}_t
+\longrightarrow
+F
+\longrightarrow
+\mathbf{x}_{t+1}.
+$$
+Nel sistema implicito:
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0
+$$
+la transizione richiede:
+$$
+\mathbf{x}_t
+\longrightarrow
+\text{solver}
+\longrightarrow
+\mathbf{x}_{t+1}.
+$$
+La differenza riguarda quindi **come viene calcolata la transizione tra due periodi**.
+
+---
+
+# Un IVP può essere anche implicito
+
+La presenza di una formulazione implicita non significa che il problema non sia un Initial Value Problem.
+
+Se:
+
+- conosciamo $\mathbf{x}_0$;
+- dato $\mathbf{x}_t$, il sistema determina univocamente $\mathbf{x}_{t+1}$;
+
+possiamo procedere periodo dopo periodo.
+
+Quindi:
+$$
+\boxed{\text{esplicito / implicito}}
+$$
+riguarda la forma della transizione, mentre:
+$$
+\boxed{\text{IVP / BVP}}
+$$
+riguarda le condizioni necessarie per determinare la traiettoria.
+
+---
+
+# Il caso lineare
+
+Consideriamo:
+$$
+A\mathbf{x}_{t+1}
+=
+B\mathbf{x}_t+\mathbf{c}.
+$$
+Se $A$ è non singolare, matematicamente possiamo scrivere:
+$$
+\mathbf{x}_{t+1}
+=
+A^{-1}B\mathbf{x}_t+A^{-1}\mathbf{c}.
+$$
+Definendo:
+$$
+C=A^{-1}B,
+\qquad
+\mathbf{d}=A^{-1}\mathbf{c},
+$$
+otteniamo:
+$$
+\mathbf{x}_{t+1}=C\mathbf{x}_t+\mathbf{d}.
+$$
+Il sistema implicito può quindi essere ricondotto formalmente a una forma ricorsiva.
+
+---
+
+# Inversa o linear solver?
+
+La rappresentazione:
+$$
+\mathbf{x}_{t+1}
+=
+A^{-1}B\mathbf{x}_t+A^{-1}\mathbf{c}
+$$
+è utile per comprendere la struttura matematica.
+
+Dal punto di vista computazionale, però, è generalmente preferibile risolvere direttamente:
+$$
+A\mathbf{x}_{t+1}
+=
+B\mathbf{x}_t+\mathbf{c}.
+$$
+Quindi:
+$$
+\boxed{
+\text{sistema dinamico implicito lineare}
+\longrightarrow
+\text{linear solver a ogni periodo}
+}.
+$$
+Ritroviamo una tecnica già studiata nella parte sui sistemi lineari.
+
+---
+
+# Quando la forma ricorsiva esiste
+
+La simultaneità non implica necessariamente che il modello debba essere risolto numericamente a ogni periodo.
+
+In alcuni casi possiamo partire da:
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0
+$$
+e ottenere analiticamente:
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t).
+$$
+Possiamo quindi distinguere:
+
+- simultaneità eliminabile analiticamente;
+- simultaneità da risolvere numericamente durante la simulazione.
+
+Nel caso lineare, un ruolo centrale è svolto dall'invertibilità della matrice che moltiplica le variabili del nuovo periodo.
+
+---
+
+# Il caso non lineare
+
+Consideriamo ora:
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0,
+$$
+dove $G$ è non lineare.
+
+In generale potrebbe non essere possibile isolare analiticamente $\mathbf{x}_{t+1}$.
+
+Dato $\mathbf{x}_t$, definiamo:
+$$
+H(\mathbf{y})
+=
+G(\mathbf{y},\mathbf{x}_t).
+$$
+Dobbiamo trovare $\mathbf{y}$ tale che:
+$$
+H(\mathbf{y})=0.
+$$
+Una volta trovata la soluzione:
+$$
+\mathbf{x}_{t+1}=\mathbf{y}.
+$$
+
+---
+
+# Dinamica e root finding
+
+Nel caso non lineare, ogni transizione temporale incorpora un problema di ricerca degli zeri.
+
+La struttura diventa:
+$$
+\boxed{
+\text{dinamica}
++
+\text{root finding}
+}.
+$$
+A ogni periodo:
+
+- $\mathbf{x}_t$ è noto;
+- $\mathbf{x}_{t+1}$ è l'incognita;
+- il solver cerca una soluzione di
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0.
+$$
+Possiamo quindi riutilizzare metodi come Newton e le sue varianti.
+
+---
+
+# Esistenza e unicità della transizione
+
+Scrivere:
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0
+$$
+non garantisce che $\mathbf{x}_{t+1}$ sia ben definito.
+
+Dato $\mathbf{x}_t$, il sistema può avere:
+
+- una soluzione;
+- più soluzioni;
+- nessuna soluzione.
+
+Quindi il problema non è soltanto **calcolare** lo stato successivo.
+
+Occorre anche verificare che la transizione esista e sia univoca.
+
+---
+
+# Un semplice esempio
+
+Consideriamo:
+$$
+x_{t+1}^2=x_t.
+$$
+Se:
+$$
+x_t>0,
+$$
+abbiamo due possibili soluzioni:
+$$
+x_{t+1}=+\sqrt{x_t}
+$$
+e:
+$$
+x_{t+1}=-\sqrt{x_t}.
+$$
+Lo stato corrente non determina quindi univocamente quello successivo.
+
+Se invece:
+$$
+x_t<0,
+$$
+non esiste alcuna soluzione reale.
+
+Una formulazione implicita può quindi richiedere anche una **regola di selezione**.
+
+---
+
+# Il teorema della funzione implicita
+
+Consideriamo:
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0.
+$$
+Se, in un punto di interesse, la Jacobiana rispetto alle variabili future:
+$$
+\frac{\partial G}
+{\partial\mathbf{x}_{t+1}}
+$$
+è non singolare, il teorema della funzione implicita garantisce, sotto opportune condizioni, che localmente possiamo scrivere:
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t).
+$$
+Il risultato generalizza al caso non lineare l'idea di invertibilità incontrata nel caso lineare.
+
+---
+
+# Perché è importante computazionalmente?
+
+Il teorema della funzione implicita suggerisce che, almeno localmente, esiste una transizione ben definita:
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t).
+$$
+Anche se $F$ non è disponibile in forma analitica, possiamo cercarla numericamente risolvendo:
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0.
+$$
+Quindi:
+$$
+\boxed{
+\text{esistenza locale della funzione}
+\longrightarrow
+\text{possibilità di utilizzare un solver}
+}.
+$$
+
+---
+
+# Un esempio economico: il modello SP-DG
+
+Consideriamo una relazione di offerta aggregata:
+$$
+\pi_t
+=
+\pi_t^e+\alpha\widehat{Y}_t+z_t^s,
+$$
+dove:
+
+- $\pi_t$ è l'inflazione;
+- $\pi_t^e$ è l'inflazione attesa;
+- $\widehat{Y}_t$ è l'output gap;
+- $z_t^s$ è uno shock di offerta.
+
+La domanda aggregata è:
+$$
+\widehat{Y}_t
+=
+\widehat{x}_t-\pi_t+\widehat{Y}_{t-1}-z_t^d.
+$$
+
+---
+
+# La simultaneità nel modello SP-DG
+
+Le due equazioni determinano simultaneamente:
+$$
+\pi_t
+\qquad\text{e}\qquad
+\widehat{Y}_t.
+$$
+Per calcolare $\pi_t$ abbiamo bisogno di $\widehat{Y}_t$.
+
+Ma per calcolare $\widehat{Y}_t$ abbiamo bisogno di $\pi_t$.
+
+Quindi non possiamo procedere semplicemente:
+$$
+\pi_t
+\longrightarrow
+\widehat{Y}_t
+$$
+oppure:
+$$
+\widehat{Y}_t
+\longrightarrow
+\pi_t.
+$$
+Il sistema è simultaneo nella sua formulazione originaria.
+
+---
+
+# Eliminare la simultaneità
+
+Partiamo da:
+$$
+\pi_t
+=
+\pi_t^e+\alpha\widehat{Y}_t+z_t^s.
+$$
+Sostituendo nella domanda:
+$$
+\widehat{Y}_t
+=
+\widehat{x}_t-\pi_t^e-\alpha\widehat{Y}_t-z_t^s+\widehat{Y}_{t-1}-z_t^d.
+$$
+Raccogliendo $\widehat{Y}_t$:
+$$
+(1+\alpha)\widehat{Y}_t
+=
+\widehat{x}_t-\pi_t^e+\widehat{Y}_{t-1}-z_t^s-z_t^d.
+$$
+
+---
+
+# La forma ricorsiva del modello SP-DG
+
+Se:
+$$
+1+\alpha\neq0,
+$$
+otteniamo:
+$$
+\widehat{Y}_t
+=
+\frac{
+\widehat{x}_t-\pi_t^e+\widehat{Y}_{t-1}-z_t^s-z_t^d
+}
+{1+\alpha}.
+$$
+Una volta noto $\widehat{Y}_t$, calcoliamo:
+$$
+\pi_t
+=
+\pi_t^e+\alpha\widehat{Y}_t+z_t^s.
+$$
+La simultaneità è stata quindi eliminata **analiticamente**.
+
+Dopo questa trasformazione il modello può essere simulato ricorsivamente.
+
+---
+
+# Aspettative adattive nel modello SP-DG
+
+Le aspettative di inflazione sono adattive:
+$$
+\pi_t^e
+=
+\lambda\pi_{t-1}
++
+(1-\lambda)\pi_{t-1}^e.
+$$
+Quindi $\pi_t^e$ dipende soltanto da variabili già note.
+
+La sequenza computazionale diventa:
+$$
+(\pi_{t-1},\pi_{t-1}^e,\widehat{Y}_{t-1})
+\longrightarrow
+\pi_t^e
+\longrightarrow
+\widehat{Y}_t
+\longrightarrow
+\pi_t.
+$$
+Una volta eliminata la simultaneità, il modello è pienamente ricorsivo.
+
+---
+
+# Un punto importante sulle aspettative
+
+La presenza di una variabile chiamata “aspettativa” non rende necessariamente il modello forward-looking.
+
+Nel modello SP-DG:
+$$
+\pi_t^e
+=
+\lambda\pi_{t-1}
++
+(1-\lambda)\pi_{t-1}^e
+$$
+utilizza soltanto informazioni passate.
+
+Quindi:
+$$
+\boxed{\text{aspettative adattive}
+\longrightarrow
+\text{struttura backward-looking}}
+$$
+Il modello può essere simulato periodo per periodo.
+
+---
+
+# Un esempio finanziario: prezzo e rendimento di un'obbligazione
+
+Consideriamo uno zero coupon bond che paga un valore nominale $F$ dopo $n$ periodi.
+
+Prezzo e rendimento sono legati da:
+$$
+P_{t+1}
+=
+\frac{F}{(1+y_{t+1})^n}.
+$$
+Supponiamo inoltre:
+$$
+y_{t+1}
+=
+\bar{y}
++
+\gamma(P_{t+1}-P_t).
+$$
+Prezzo e rendimento del nuovo periodo devono quindi essere determinati **congiuntamente**.
+
+---
+
+# La simultaneità finanziaria
+
+Dato $P_t$, non possiamo calcolare direttamente $P_{t+1}$ perché abbiamo bisogno di:
+$$
+y_{t+1}.
+$$
+Ma per determinare $y_{t+1}$ abbiamo bisogno di:
+$$
+P_{t+1}.
+$$
+Il sistema è quindi:
+$$
+\begin{cases}
+P_{t+1}
+=
+\dfrac{F}{(1+y_{t+1})^n},\\
+y_{t+1}
+=
+\bar{y}
++
+\gamma(P_{t+1}-P_t).
+\end{cases}
+$$
+Si tratta di un sistema dinamico implicito.
+
+---
+
+# Riduzione a un problema di root finding
+
+Sostituendo:
+$$
+y_{t+1}
+=
+\bar{y}+\gamma(P_{t+1}-P_t)
+$$
+nella relazione di prezzo otteniamo:
+$$
+P_{t+1}
+=
+\frac{F}
+{
+[1+\bar{y}+\gamma(P_{t+1}-P_t)]^n
+}.
+$$
+Portando tutto a sinistra:
+$$
+H(P_{t+1};P_t)
+=
+P_{t+1}
+-
+\frac{F}
+{
+[1+\bar{y}+\gamma(P_{t+1}-P_t)]^n
+}
+=0.
+$$
+
+---
+
+# La transizione richiede un solver
+
+Dato $P_t$, dobbiamo risolvere:
+$$
+H(P_{t+1};P_t)=0.
+$$
+Una volta trovato $P_{t+1}$, possiamo calcolare:
+$$
+y_{t+1}
+=
+\bar{y}
++
+\gamma(P_{t+1}-P_t).
+$$
+La sequenza computazionale è quindi:
+$$
+P_t
+\longrightarrow
+\boxed{\text{root finding}}
+\longrightarrow
+P_{t+1}
+\longrightarrow
+y_{t+1}.
+$$
+In questo caso la simultaneità non viene eliminata una volta per tutte: il solver viene utilizzato durante la simulazione.
+
+---
+
+# Due esempi, due difficoltà diverse
+
+Nel modello SP-DG:
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0
+\longrightarrow
+\mathbf{x}_{t+1}=F(\mathbf{x}_t).
+$$
+La simultaneità può essere eliminata analiticamente.
+
+Nel modello finanziario:
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0
+$$
+la relazione non lineare rende utile un solver a ogni periodo.
+
+Possiamo quindi distinguere:
+$$
+\boxed{
+\text{simultaneità eliminabile}
+\longrightarrow
+\text{ricorsione diretta}
+}
+$$
+e:
+$$
+\boxed{
+\text{simultaneità non eliminata}
+\longrightarrow
+\text{solver a ogni periodo}
+}.
+$$
+
+---
+
+# Il ruolo del valore iniziale del solver
+
+Nei metodi iterativi occorre specificare un valore iniziale per la ricerca della soluzione.
+
+Per trovare $P_{t+1}$, una scelta naturale può essere:
+$$
+P_{t+1}^{(0)}=P_t.
+$$
+Se il sistema evolve gradualmente, il valore corrente può essere una buona approssimazione dello stato successivo.
+
+Questa strategia prende il nome di **warm start**.
+
+I modelli dinamici generano quindi naturalmente valori iniziali utili per i solver iterativi.
+
+---
+
+# Perché i warm starts sono utili?
+
+Supponiamo che:
+$$
+P_{t+1}\approx P_t.
+$$
+Utilizzare $P_t$ come punto iniziale può:
+
+- ridurre il numero di iterazioni;
+- aumentare la velocità del solver;
+- migliorare la probabilità di convergere alla soluzione economicamente rilevante.
+
+La struttura temporale del problema può quindi essere sfruttata anche per migliorare l'efficienza computazionale.
+
+---
+
+# Una nuova fonte di errore numerico
+
+Nei sistemi espliciti:
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t)
+$$
+la transizione è valutata direttamente.
+
+Nei sistemi impliciti risolti numericamente, invece, otteniamo una soluzione approssimata:
+$$
+\widehat{\mathbf{x}}_{t+1}
+$$
+tale che:
+$$
+G(\widehat{\mathbf{x}}_{t+1},\mathbf{x}_t)\approx0.
+$$
+Il valore approssimato diventa poi lo stato utilizzato nel periodo successivo.
+
+L'errore del solver può quindi propagarsi lungo la traiettoria.
+
+---
+
+# Solver e dinamica
+
+Diventano importanti:
+
+- la tolleranza;
+- il criterio di arresto;
+- il numero massimo di iterazioni;
+- il valore iniziale;
+- la stabilità del sistema dinamico.
+
+Se il sistema è stabile, piccole perturbazioni possono essere progressivamente attenuate.
+
+Se il sistema è instabile, gli errori numerici possono essere amplificati.
+
+Quindi **stabilità dinamica e accuratezza numerica possono interagire**.
+
+---
+
+# Il problema computazionale
+
+Per un sistema esplicito:
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t)
+$$
+abbiamo:
+$$
+\boxed{\text{evaluate}}
+$$
+Per un sistema implicito lineare:
+$$
+A\mathbf{x}_{t+1}=B\mathbf{x}_t+\mathbf{c}
+$$
+abbiamo:
+$$
+\boxed{\text{linear solve}}
+$$
+Per un sistema implicito non lineare:
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0
+$$
+abbiamo:
+$$
+\boxed{\text{nonlinear root finding}}.
+$$
+
+---
+
+# Esplicito e implicito: stessa logica temporale
+
+Nei due casi, se la transizione è univoca, partiamo comunque da:
+$$
+\mathbf{x}_0
+$$
+e procediamo:
+$$
+\mathbf{x}_0
+\longrightarrow
+\mathbf{x}_1
+\longrightarrow
+\mathbf{x}_2
+\longrightarrow\cdots.
+$$
+La differenza è nel calcolo di ogni passaggio.
+
+Quindi entrambi possono essere trattati come **Initial Value Problems**.
+
+La situazione cambia quando il presente dipende anche dalle condizioni future.
+
+---
+
+# Dai sistemi impliciti ai forward-looking
+
+Finora, dato $\mathbf{x}_t$, potevamo determinare $\mathbf{x}_{t+1}$ risolvendo un problema locale:
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0.
+$$
+Una difficoltà qualitativamente diversa emerge quando le variabili correnti dipendono da variabili future.
+
+Possiamo avere:
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t,\mathbf{x}_{t-1})=0
+$$
+in cui $\mathbf{x}_{t+1}$ contribuisce alla determinazione di $\mathbf{x}_t$.
+
+In questo caso non basta più risolvere una transizione alla volta.
+
+---
+
+# Il prossimo problema computazionale
+
+Nei sistemi forward-looking la traiettoria deve soddisfare contemporaneamente:
+
+- condizioni provenienti dal passato;
+- condizioni sul comportamento futuro.
+
+Il problema non è quindi più soltanto:
+$$
+\mathbf{x}_t
+\longrightarrow
+\mathbf{x}_{t+1}.
+$$
+Occorre trovare una traiettoria **intertemporalmente coerente**.
+
+La logica diventa:
+$$
+\boxed{\text{SOLVE}\longrightarrow\text{SIMULATE}}.
+$$
+Questo ci conduce ai **modelli dinamici forward-looking**.

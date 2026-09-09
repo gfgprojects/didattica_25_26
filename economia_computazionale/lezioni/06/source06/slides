@@ -1,0 +1,848 @@
+# Modelli dinamici forward-looking
+
+Finora abbiamo considerato sistemi nei quali, dato lo stato corrente, lo stato successivo poteva essere determinato direttamente oppure risolvendo un problema intra-periodale.
+
+Nel caso esplicito:
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t).
+$$
+Nel caso implicito:
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0.
+$$
+In entrambi i casi possiamo procedere periodo per periodo.
+
+Una difficoltà diversa emerge quando alcune variabili correnti dipendono da valori futuri.
+
+---
+
+# Una struttura forward-looking
+
+Una rappresentazione schematica è:
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t,\mathbf{x}_{t-1})=0.
+$$
+La presenza di $\mathbf{x}_{t+1}$ in una condizione che determina $\mathbf{x}_t$ modifica la natura del problema computazionale.
+
+Il valore corrente non può essere determinato utilizzando esclusivamente la storia passata.
+
+Il presente dipende anche dalla dinamica futura del sistema.
+
+---
+
+# Perché la forward iteration non basta?
+
+Consideriamo:
+$$
+q_t=x_t+\beta q_{t+1},
+$$
+dove $q_t$ è forward-looking.
+
+Supponiamo inoltre:
+$$
+x_{t+1}=a x_t.
+$$
+Dato $x_0$, possiamo calcolare:
+$$
+x_1=ax_0,
+$$
+$$
+x_2=a x_1,
+$$
+e così via.
+
+Per determinare $q_0$, invece, abbiamo bisogno di:
+$$
+q_1.
+$$
+
+---
+
+# La dipendenza dal futuro
+
+Abbiamo:
+$$
+q_0=x_0+\beta q_1.
+$$
+Ma:
+$$
+q_1=x_1+\beta q_2.
+$$
+E:
+$$
+q_2=x_2+\beta q_3.
+$$
+Quindi:
+$$
+q_0
+\longleftarrow
+q_1
+\longleftarrow
+q_2
+\longleftarrow
+q_3
+\longleftarrow
+\cdots
+$$
+La semplice iterazione in avanti non chiude il problema.
+
+---
+
+# Soluzione forward
+
+Partiamo da:
+$$
+q_t=x_t+\beta q_{t+1}.
+$$
+Sostituendo:
+$$
+q_{t+1}=x_{t+1}+\beta q_{t+2},
+$$
+otteniamo:
+$$
+q_t
+=
+x_t+\beta x_{t+1}+\beta^2q_{t+2}.
+$$
+Continuando:
+$$
+q_t
+=
+x_t+\beta x_{t+1}
++\beta^2x_{t+2}
++\cdots
++\beta^Tq_{t+T}.
+$$
+
+---
+
+# Una condizione sul futuro
+
+Per ottenere una soluzione dobbiamo imporre una condizione che elimini la componente esplosiva.
+
+Se:
+$$
+\beta^T q_{t+T}\longrightarrow0,
+$$
+allora:
+$$
+q_t
+=
+\sum_{j=0}^{\infty}
+\beta^j x_{t+j}.
+$$
+Il valore corrente dipende quindi dall'intera sequenza futura della variabile fondamentale.
+
+Questo è il tratto caratteristico dei modelli forward-looking.
+
+---
+
+# Un caso con soluzione analitica
+
+Supponiamo:
+$$
+x_{t+1}=a x_t.
+$$
+Allora:
+$$
+x_{t+j}=a^j x_t.
+$$
+Quindi:
+$$
+q_t
+=
+x_t
+\sum_{j=0}^{\infty}
+(\beta a)^j.
+$$
+Se:
+$$
+|\beta a|<1,
+$$
+la serie converge.
+
+---
+
+# La regola di soluzione
+
+Otteniamo:
+$$
+q_t
+=
+\frac{x_t}{1-\beta a}.
+$$
+Possiamo quindi scrivere:
+$$
+q_t=P x_t,
+$$
+dove:
+$$
+P=\frac{1}{1-\beta a}.
+$$
+Una volta trovata questa relazione, il modello può essere simulato procedendo in avanti.
+
+La logica è:
+$$
+\boxed{\text{SOLVE}\longrightarrow\text{SIMULATE}}.
+$$
+
+---
+
+# IVP e modelli forward-looking
+
+Nei sistemi ricorsivi avevamo:
+$$
+\begin{cases}
+\mathbf{x}_{t+1}=F(\mathbf{x}_t),\\
+\mathbf{x}_0=\bar{\mathbf{x}}.
+\end{cases}
+$$
+La condizione iniziale era sufficiente per determinare la traiettoria.
+
+Nei modelli forward-looking, invece, la sola condizione iniziale non è generalmente sufficiente.
+
+Occorrono anche condizioni sul comportamento futuro.
+
+---
+
+# Dal IVP al BVP
+
+Nei modelli forward-looking possiamo avere:
+
+- una condizione iniziale;
+- una condizione terminale;
+- una condizione di non esplosività;
+- una condizione di trasversalità;
+- una condizione di equilibrio sulle aspettative.
+
+Il problema assume quindi una struttura da **Boundary Value Problem**.
+
+In molti casi economici abbiamo condizioni poste a estremi diversi dell'orizzonte.
+
+---
+
+# Mixed boundary conditions
+
+Un problema può assumere schematicamente la forma:
+$$
+\mathbf{x}_0=\bar{\mathbf{x}},
+$$
+e:
+$$
+\mathbf{q}_T=\bar{\mathbf{q}}.
+$$
+Alcune variabili sono quindi vincolate all'inizio, altre alla fine.
+
+In questo caso parliamo di **mixed boundary conditions**.
+
+La traiettoria deve soddisfare simultaneamente condizioni provenienti dal passato e dal futuro.
+
+---
+
+# Variabili predeterminate e forward-looking
+
+È utile distinguere due tipi di variabili.
+
+Una variabile **predeterminata** è determinata dalla storia del sistema.
+
+Ad esempio:
+$$
+k_t.
+$$
+Il suo valore al tempo $t$ è già noto quando vengono prese le decisioni del periodo.
+
+Una variabile **forward-looking** può invece reagire immediatamente alle informazioni sul futuro.
+
+Un prezzo finanziario è un esempio naturale.
+
+---
+
+# Perché la distinzione è importante?
+
+Nel caso di una variabile predeterminata:
+$$
+x_0
+$$
+è assegnato dalla storia del sistema.
+
+Nel caso di una variabile forward-looking:
+$$
+q_0
+$$
+non è generalmente assegnato arbitrariamente.
+
+Deve essere scelto in modo che la traiettoria soddisfi le condizioni future.
+
+Questa distinzione è centrale per la determinazione dell'equilibrio.
+
+---
+
+# Un semplice sistema lineare forward-looking
+
+Consideriamo:
+$$
+x_{t+1}=a x_t,
+$$
+$$
+q_t=x_t+\beta q_{t+1}.
+$$
+Risolvendo la seconda relazione rispetto a $q_{t+1}$:
+$$
+q_{t+1}
+=
+\frac{1}{\beta}q_t
+-
+\frac{1}{\beta}x_t.
+$$
+Possiamo quindi scrivere:
+$$
+\begin{bmatrix}
+x_{t+1}\\
+q_{t+1}
+\end{bmatrix}
+=
+\begin{bmatrix}
+a&0\\
+-\frac{1}{\beta}&\frac{1}{\beta}
+\end{bmatrix}
+\begin{bmatrix}
+x_t\\
+q_t
+\end{bmatrix}.
+$$
+
+---
+
+# Gli autovalori del sistema
+
+Gli autovalori sono:
+$$
+\lambda_1=a
+$$
+e:
+$$
+\lambda_2=\frac{1}{\beta}.
+$$
+Se:
+$$
+|a|<1
+$$
+e:
+$$
+0<\beta<1,
+$$
+allora:
+$$
+|\lambda_1|<1,
+$$
+mentre:
+$$
+|\lambda_2|>1.
+$$
+Il sistema contiene quindi una radice stabile e una instabile.
+
+---
+
+# Perché una radice instabile non implica necessariamente divergenza?
+
+Nei sistemi ricorsivi:
+$$
+\rho(A)<1
+$$
+era la condizione di stabilità.
+
+Nei sistemi forward-looking la situazione è diversa.
+
+La variabile $q_t$ può aggiustarsi immediatamente.
+
+Il valore iniziale $q_0$ viene scelto in modo da eliminare la componente associata alla radice esplosiva.
+
+---
+
+# Il ruolo della variabile forward-looking
+
+La soluzione:
+$$
+q_t
+=
+\frac{x_t}{1-\beta a}
+$$
+individua la traiettoria non esplosiva.
+
+La variabile forward-looking “salta” quindi direttamente sulla traiettoria coerente con le condizioni future.
+
+La presenza di una radice fuori dal cerchio unitario non implica quindi automaticamente una traiettoria esplosiva.
+
+---
+
+# Dalla stabilità alla determinazione
+
+Nei sistemi ricorsivi la domanda era:
+
+> Tutti gli autovalori sono all'interno del cerchio unitario?
+
+Nei sistemi forward-looking la domanda cambia.
+
+Diventa importante confrontare:
+$$
+\text{numero delle radici instabili}
+$$
+con:
+$$
+\text{numero delle variabili forward-looking}.
+$$
+Questo confronto è alla base delle condizioni di **Blanchard--Kahn**.
+
+---
+
+# Esistenza e unicità
+
+In una formulazione standard possiamo distinguere tre casi.
+
+Se il numero delle radici instabili coincide con il numero delle variabili forward-looking:
+
+**soluzione non esplosiva unica.**
+
+Se le radici instabili sono troppo poche:
+
+**indeterminatezza.**
+
+Se le radici instabili sono troppe:
+
+**nessuna soluzione non esplosiva compatibile con il modello.**
+
+---
+
+# Un nuovo ruolo per gli autovalori
+
+Nei sistemi ricorsivi gli autovalori servivano soprattutto a studiare:
+$$
+\boxed{\text{stabilità}}.
+$$
+Nei modelli forward-looking servono anche a studiare:
+$$
+\boxed{\text{esistenza e unicità della soluzione}}.
+$$
+Quindi lo stesso strumento matematico assume un ruolo economico diverso.
+
+---
+
+# Aspettative razionali
+
+Finora abbiamo considerato un ambiente deterministico.
+
+Con l'incertezza compaiono aspettative condizionate:
+$$
+E_t\mathbf{x}_{t+1}.
+$$
+Una possibile struttura è:
+$$
+A E_t\mathbf{x}_{t+1}
+=
+B\mathbf{x}_t
++
+C\boldsymbol{\varepsilon}_t.
+$$
+Nei modelli con aspettative razionali, le aspettative devono essere coerenti con la dinamica generata dal modello stesso.
+
+---
+
+# Cosa significa aspettative razionali?
+
+Non possiamo assegnare arbitrariamente:
+$$
+E_t\mathbf{x}_{t+1}.
+$$
+La soluzione deve essere tale che le aspettative formulate dagli agenti coincidano con quelle implicate dalla stessa soluzione.
+
+Quindi:
+$$
+\boxed{
+\text{expectations}
+=
+\text{model-consistent expectations}
+}.
+$$
+La soluzione diventa un problema di equilibrio intertemporale.
+
+---
+
+# Un nuovo problema agli autovalori
+
+Nei sistemi lineari standard avevamo:
+$$
+\mathbf{x}_{t+1}=A\mathbf{x}_t.
+$$
+Nei modelli forward-looking possiamo avere:
+$$
+A E_t\mathbf{x}_{t+1}
+=
+B\mathbf{x}_t.
+$$
+La dinamica dipende quindi dalla coppia di matrici:
+$$
+(A,B).
+$$
+Gli autovalori rilevanti soddisfano:
+$$
+\det(B-\lambda A)=0.
+$$
+
+---
+
+# Autovalori generalizzati
+
+Il problema:
+$$
+\det(B-\lambda A)=0
+$$
+è un **generalized eigenvalue problem**.
+
+Il passaggio:
+$$
+\text{eigenvalues}
+\longrightarrow
+\text{generalized eigenvalues}
+$$
+riflette una differenza nella struttura economica del modello.
+
+Non è soltanto una complicazione matematica.
+
+---
+
+# La decomposizione QZ
+
+Il problema agli autovalori generalizzati può essere affrontato tramite la **generalized Schur decomposition**, associata all'algoritmo QZ.
+
+L'idea generale è trasformare la coppia:
+$$
+(A,B)
+$$
+in una forma numericamente più conveniente.
+
+Le informazioni sugli autovalori generalizzati vengono preservate.
+
+---
+
+# A cosa serve la decomposizione QZ?
+
+Nei modelli lineari forward-looking, la decomposizione QZ permette di:
+
+- distinguere radici stabili e instabili;
+- ordinare le radici rispetto al cerchio unitario;
+- verificare le condizioni di determinazione;
+- ricavare la regola di soluzione.
+
+La sequenza computazionale diventa:
+$$
+\boxed{
+\text{modello strutturale}
+\longrightarrow
+\text{QZ}
+\longrightarrow
+\text{solution rule}
+\longrightarrow
+\text{simulazione}
+}.
+$$
+
+---
+
+# Un esempio economico: inflazione forward-looking
+
+Consideriamo:
+$$
+\pi_t
+=
+\beta E_t\pi_{t+1}
++
+\kappa y_t.
+$$
+L'inflazione corrente dipende da:
+
+- inflazione futura attesa;
+- output gap corrente.
+
+Questa struttura è qualitativamente diversa dalle aspettative adattive del modello SP-DG.
+
+---
+
+# Aspettative adattive e forward-looking
+
+Nel modello SP-DG avevamo:
+$$
+\pi_t^e
+=
+\lambda\pi_{t-1}
++
+(1-\lambda)\pi_{t-1}^e.
+$$
+L'aspettativa dipende soltanto da informazioni passate.
+
+Nel modello forward-looking:
+$$
+\pi_t
+=
+\beta E_t\pi_{t+1}
++
+\kappa y_t.
+$$
+Per determinare $\pi_t$ dobbiamo conoscere la dinamica futura dell'inflazione.
+
+La semplice forward iteration non è sufficiente.
+
+---
+
+# Una soluzione semplice
+
+Supponiamo:
+$$
+y_{t+1}=a y_t.
+$$
+Cerchiamo una soluzione della forma:
+$$
+\pi_t=P y_t.
+$$
+Sostituendo:
+$$
+P y_t
+=
+\beta P a y_t
++
+\kappa y_t.
+$$
+Quindi:
+$$
+P=\beta aP+\kappa.
+$$
+
+---
+
+# La regola di soluzione dell'inflazione
+
+Risolvendo:
+$$
+P=\frac{\kappa}{1-\beta a}.
+$$
+Otteniamo:
+$$
+\pi_t
+=
+\frac{\kappa}{1-\beta a}y_t.
+$$
+Una volta trovata la regola di soluzione, possiamo simulare il modello.
+
+Ancora una volta:
+$$
+\boxed{\text{SOLVE}\longrightarrow\text{SIMULATE}}.
+$$
+
+---
+
+# Un esempio finanziario: asset pricing
+
+I modelli di asset pricing sono naturalmente forward-looking.
+
+Consideriamo:
+$$
+P_t
+=
+D_t+\beta E_tP_{t+1},
+$$
+dove:
+
+- $P_t$ è il prezzo corrente;
+- $D_t$ è il payoff corrente;
+- $\beta$ è il fattore di sconto.
+
+Il prezzo corrente dipende dal valore futuro atteso dell'attività.
+
+---
+
+# Iterazione forward del prezzo
+
+Partendo da:
+$$
+P_t
+=
+D_t+\beta E_tP_{t+1},
+$$
+otteniamo:
+$$
+P_t
+=
+D_t
++
+\beta E_tD_{t+1}
++
+\beta^2E_tP_{t+2}.
+$$
+Continuando:
+$$
+P_t
+=
+D_t
++
+\beta E_tD_{t+1}
++
+\beta^2E_tD_{t+2}
++
+\cdots
+$$
+
+---
+
+# Il prezzo come valore dei payoff futuri
+
+Sotto una condizione di non esplosività appropriata:
+$$
+P_t
+=
+\sum_{j=0}^{\infty}
+\beta^j E_tD_{t+j}.
+$$
+Il prezzo corrente incorpora quindi informazioni relative all'intera sequenza dei payoff futuri attesi.
+
+Questo spiega perché i prezzi finanziari possono reagire immediatamente a informazioni che riguardano il futuro.
+
+---
+
+# Una notizia futura modifica il prezzo corrente
+
+Supponiamo che tutti i payoff siano nulli eccetto:
+$$
+D_T=D>0.
+$$
+Allora:
+$$
+P_t
+=
+\beta^{T-t}D,
+\qquad
+t\leq T.
+$$
+In particolare:
+$$
+P_0=\beta^T D.
+$$
+Il pagamento avverrà nel periodo $T$, ma il prezzo reagisce già oggi.
+
+---
+
+# Il significato economico
+
+Nel modello forward-looking:
+$$
+\boxed{
+\text{informazione sul futuro}
+\longrightarrow
+\text{aggiustamento immediato del presente}
+}.
+$$
+Questo comportamento è naturale nei mercati finanziari.
+
+Il prezzo corrente rappresenta una valutazione dei payoff futuri attesi.
+
+La variabile forward-looking incorpora quindi immediatamente le nuove informazioni.
+
+---
+
+# Tre strutture, tre problemi computazionali
+
+**Sistema ricorsivo**
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t)
+$$
+$$
+\Rightarrow\quad \text{iterate}.
+$$
+**Sistema implicito**
+$$
+G(\mathbf{x}_{t+1},\mathbf{x}_t)=0
+$$
+$$
+\Rightarrow\quad \text{solve period by period}.
+$$
+**Sistema forward-looking**
+$$
+G(E_t\mathbf{x}_{t+1},\mathbf{x}_t,\ldots)=0
+$$
+$$
+\Rightarrow\quad \text{solve the intertemporal model first}.
+$$
+
+---
+
+# IVP e BVP
+
+La differenza può essere letta anche attraverso le condizioni necessarie per determinare la traiettoria.
+
+Nei sistemi ricorsivi e impliciti ben definiti:
+$$
+\boxed{\text{IVP}}
+$$
+una condizione iniziale permette di procedere in avanti.
+
+Nei sistemi forward-looking:
+$$
+\boxed{\text{BVP / mixed BVP}}
+$$
+occorrono condizioni iniziali e condizioni sul futuro.
+
+---
+
+# Dalla soluzione alla simulazione
+
+Nei modelli forward-looking dobbiamo distinguere chiaramente due fasi.
+
+Prima:
+$$
+\boxed{\text{SOLVE}}
+$$
+determiniamo la traiettoria o la regola di soluzione coerente con le condizioni intertemporali.
+
+Poi:
+$$
+\boxed{\text{SIMULATE}}
+$$
+utilizziamo la regola ottenuta per generare le traiettorie.
+
+Questa distinzione sarà ancora più importante nei modelli stocastici.
+
+---
+
+# Dai modelli deterministici ai modelli stocastici
+
+In un modello deterministico con previsione perfetta, il futuro è determinato dal modello e gli agenti ne conoscono la traiettoria.
+
+In un modello stocastico, invece, il futuro non è noto con certezza.
+
+Gli agenti formulano aspettative:
+$$
+E_t\mathbf{x}_{t+1}.
+$$
+L'introduzione dell'incertezza modifica quindi l'oggetto della soluzione.
+
+Non studieremo più una sola traiettoria, ma una **distribuzione di possibili traiettorie**.
+
+---
+
+# Il prossimo passo
+
+Finora abbiamo studiato modelli discreti deterministici:
+
+- ricorsivi;
+- impliciti;
+- forward-looking.
+
+Il passo successivo consiste nell'introdurre:
+$$
+\boldsymbol{\varepsilon}_{t+1}.
+$$
+La legge di movimento diventa:
+$$
+\mathbf{x}_{t+1}
+=
+F(\mathbf{x}_t,\boldsymbol{\varepsilon}_{t+1}).
+$$
+Questo ci conduce ai **modelli dinamici discreti stocastici non controllati**.
