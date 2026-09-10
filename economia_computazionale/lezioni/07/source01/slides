@@ -1,0 +1,514 @@
+# Dai modelli deterministici ai modelli stocastici
+
+Finora abbiamo considerato modelli dinamici deterministici.
+
+Nel caso ricorsivo:
+$$
+\mathbf{x}_{t+1}=F(\mathbf{x}_t).
+$$
+Date le condizioni iniziali e i parametri, l'evoluzione del sistema è determinata.
+
+Da $\mathbf{x}_0$ otteniamo una sola traiettoria:
+$$
+\mathbf{x}_0
+\rightarrow
+\mathbf{x}_1
+\rightarrow
+\mathbf{x}_2
+\rightarrow
+\cdots
+$$
+
+---
+
+# Perché introdurre l'incertezza?
+
+Molti fenomeni economici e finanziari non sono perfettamente prevedibili.
+
+- shock alla produttività;
+- variazioni inattese della domanda;
+- arrivo di nuove informazioni sui mercati finanziari;
+- cambiamenti delle condizioni macroeconomiche;
+- eventi climatici o geopolitici.
+
+Il futuro non è quindi sempre determinato univocamente dallo stato corrente.
+
+---
+
+# Una dinamica stocastica
+
+Una possibile rappresentazione è:
+$$
+\mathbf{x}_{t+1}
+=
+F(\mathbf{x}_t,\boldsymbol{\varepsilon}_{t+1}).
+$$
+$\boldsymbol{\varepsilon}_{t+1}$ rappresenta l'informazione nuova che raggiunge il sistema tra $t$ e $t+1$.
+
+Prima di osservare lo shock, non conosciamo necessariamente il valore di $\mathbf{x}_{t+1}$.
+
+Conosciamo invece i possibili risultati e il meccanismo probabilistico che li genera.
+
+---
+
+# Dal deterministico allo stocastico
+
+Nel caso deterministico:
+$$
+\mathbf{x}_t
+\quad\Longrightarrow\quad
+\mathbf{x}_{t+1}.
+$$
+Lo stato successivo è determinato univocamente.
+
+Nel caso stocastico:
+$$
+\mathbf{x}_t
+\quad\Longrightarrow\quad
+\text{distribuzione dei possibili }\mathbf{x}_{t+1}.
+$$
+Passiamo quindi da una **legge di movimento deterministica** a una **legge di transizione probabilistica**.
+
+---
+
+# Lo shock non deve essere necessariamente additivo
+
+Un modello stocastico non deve necessariamente essere scritto come:
+$$
+x_{t+1}=F(x_t)+\varepsilon_{t+1}.
+$$
+Se lo spazio degli stati è discreto, possiamo specificare direttamente:
+$$
+p_{ij}
+=
+P(x_{t+1}=j\mid x_t=i).
+$$
+Dato lo stato corrente, vengono definite le probabilità dei possibili stati futuri.
+
+---
+
+# Tempo discreto non significa stato discreto
+
+Consideriamo:
+$$
+t=0,1,2,\ldots
+$$
+Il tempo è discreto.
+
+Ma lo stato può essere continuo:
+$$
+x_t\in\mathbb{R},
+$$
+oppure discreto:
+$$
+x_t\in\{s_1,s_2,\ldots,s_N\}.
+$$
+La natura del **tempo** e la natura dello **spazio degli stati** sono due caratteristiche distinte del modello.
+
+---
+
+# Lo spazio degli stati
+
+Indichiamo con:
+$$
+\mathcal{X}
+$$
+lo **spazio degli stati**.
+
+Possiamo avere:
+
+**stato discreto**
+$$
+\mathcal{X}=\{s_1,\ldots,s_N\},
+$$
+oppure:
+
+**stato continuo**
+$$
+\mathcal{X}\subseteq\mathbb{R}^n.
+$$
+
+---
+
+# Lo spazio degli shock
+
+Nei modelli stocastici dobbiamo considerare anche:
+$$
+\mathcal{E}
+$$
+lo **spazio degli shock**.
+
+Anche lo shock può essere discreto:
+$$
+\varepsilon_t\in\{e_1,\ldots,e_K\},
+$$
+oppure continuo:
+$$
+\varepsilon_t\in\mathbb{R}^k.
+$$
+
+---
+
+# Stato e shock: quattro possibilità
+
+Le due caratteristiche sono indipendenti.
+
+Possiamo avere:
+$$
+\begin{array}{c|cc}
+ & \text{shock discreto} & \text{shock continuo}\\
+\hline
+\text{stato discreto} & DD & DC\\
+\text{stato continuo} & CD & CC
+\end{array}
+$$
+Questa distinzione avrà conseguenze importanti sulle tecniche computazionali utilizzate.
+
+---
+
+# Un esempio con stato discreto
+
+Supponiamo che l'economia possa trovarsi in due stati:
+$$
+\mathcal{X}
+=
+\{\text{recessione},\text{espansione}\}.
+$$
+La dinamica può essere descritta da:
+$$
+p_{ij}
+=
+P(x_{t+1}=j\mid x_t=i).
+$$
+Ad esempio:
+$$
+P=
+\begin{bmatrix}
+0.8 & 0.2\\
+0.1 & 0.9
+\end{bmatrix}.
+$$
+Lo stato futuro non è noto con certezza, ma conosciamo le probabilità di transizione.
+
+---
+
+# Un esempio con stato continuo
+
+Consideriamo:
+$$
+x_{t+1}
+=
+\rho x_t+\sigma\varepsilon_{t+1},
+$$
+con:
+$$
+\varepsilon_{t+1}\sim N(0,1).
+$$
+In questo caso:
+$$
+x_t\in\mathbb{R},
+\qquad
+\varepsilon_t\in\mathbb{R}.
+$$
+Stato e shock sono entrambi continui.
+
+---
+
+# Dalla traiettoria alle possibili traiettorie
+
+Nel deterministico:
+$$
+x_0
+\rightarrow
+x_1
+\rightarrow
+x_2
+\rightarrow
+x_3
+\rightarrow\cdots
+$$
+Nel caso stocastico, dallo stesso $x_0$ possono emergere traiettorie differenti.
+
+Una particolare sequenza di shock:
+$$
+\varepsilon_1^{(m)},
+\varepsilon_2^{(m)},
+\ldots,
+\varepsilon_T^{(m)}
+$$
+genera una particolare traiettoria:
+$$
+x_0,
+x_1^{(m)},
+x_2^{(m)},
+\ldots,
+x_T^{(m)}.
+$$
+
+---
+
+# Un processo stocastico
+
+Una singola traiettoria è soltanto una possibile realizzazione.
+
+Il modello descrive l'insieme delle variabili casuali:
+$$
+\{x_t\}_{t=0}^{\infty}.
+$$
+Questo insieme costituisce un **processo stocastico**.
+
+Non siamo più interessati soltanto alla traiettoria.
+
+Siamo interessati anche alla distribuzione dei possibili risultati.
+
+---
+
+# Nuovi oggetti di interesse
+
+Possiamo studiare:
+$$
+E[x_t],
+$$
+$$
+\operatorname{Var}(x_t),
+$$
+oppure:
+$$
+P(x_t\in A).
+$$
+Più in generale, possiamo studiare la **distribuzione di probabilità di $x_t$**.
+
+La dinamica riguarda quindi anche l'evoluzione delle distribuzioni nel tempo.
+
+---
+
+# Cosa accade nel lungo periodo?
+
+Nel caso deterministico stabile potevamo avere:
+$$
+x_t\rightarrow x^*.
+$$
+Con shock che continuano ad arrivare, una singola traiettoria può continuare a fluttuare.
+
+Non dobbiamo quindi aspettarci necessariamente:
+$$
+x_t\rightarrow x^*.
+$$
+Può invece essere la **distribuzione** dello stato a stabilizzarsi.
+
+---
+
+# Dallo steady state alla distribuzione stazionaria
+
+Sotto opportune condizioni:
+$$
+\mathcal{L}(x_t)
+\rightarrow
+\pi.
+$$
+$\pi$ rappresenta una distribuzione limite.
+
+Se la distribuzione rimane invariata sotto la dinamica del modello, abbiamo una **distribuzione stazionaria**.
+
+Il parallelismo è:
+$$
+\text{steady state}
+\quad\longleftrightarrow\quad
+\text{distribuzione stazionaria}.
+$$
+I due concetti sono collegati, ma non equivalenti.
+
+---
+
+# Il problema computazionale cambia
+
+Nel deterministico ricorsivo:
+$$
+\text{ITERATE}.
+$$
+Nel caso stocastico:
+$$
+\text{DRAW}
+\rightarrow
+\text{TRANSITION}
+\rightarrow
+\text{DRAW}
+\rightarrow
+\text{TRANSITION}
+\rightarrow\cdots
+$$
+Dobbiamo rappresentare o generare l'incertezza che influenza la dinamica.
+
+---
+
+# Una traiettoria non è sufficiente
+
+Una simulazione produce una particolare realizzazione:
+$$
+\{x_t^{(1)}\}_{t=0}^{T}.
+$$
+Possiamo ripetere la simulazione:
+$$
+m=1,\ldots,M.
+$$
+ottenendo:
+$$
+\{x_t^{(m)}\}_{m=1}^{M}.
+$$
+Possiamo così ricostruire numericamente le caratteristiche della distribuzione dei risultati.
+
+---
+
+# Nuovi strumenti computazionali
+
+L'incertezza introduce nuovi problemi:
+
+- generazione di numeri pseudo-casuali;
+- simulazione di variabili casuali;
+- generazione di traiettorie;
+- ripetizione degli esperimenti numerici;
+- calcolo di momenti, probabilità e quantili.
+
+Questo ci condurrà ai **metodi Monte Carlo**.
+
+---
+
+# Non sempre è necessario simulare
+
+La simulazione non è l'unico strumento disponibile.
+
+In alcuni modelli possiamo calcolare direttamente:
+
+- probabilità di transizione;
+- distribuzioni;
+- momenti;
+- distribuzioni stazionarie.
+
+La scelta tra **calcolo diretto** e **simulazione** dipende dalla struttura del modello e dalla sua dimensione.
+
+---
+
+# Manteniamo la stessa tassonomia
+
+Come nel caso deterministico, distingueremo:
+
+$$
+\boxed{\text{modelli ricorsivi stocastici}}
+$$
+$$
+\downarrow
+$$
+$$
+\boxed{\text{modelli stocastici con soluzione simultanea}}
+$$
+$$
+\downarrow
+$$
+$$
+\boxed{\text{modelli stocastici forward-looking}}
+$$
+
+---
+
+# Modelli ricorsivi stocastici
+
+La struttura generale è:
+$$
+\mathbf{x}_{t+1}
+=
+F(\mathbf{x}_t,\boldsymbol{\varepsilon}_{t+1}).
+$$
+Dato lo stato corrente e una realizzazione dello shock, possiamo determinare lo stato successivo.
+
+Il problema computazionale fondamentale diventa:
+$$
+\boxed{
+\text{DRAW}
+\rightarrow
+\text{ITERATE}
+}
+$$
+
+---
+
+# Modelli con soluzione simultanea
+
+La struttura può essere:
+$$
+G(
+\mathbf{x}_{t+1},
+\mathbf{x}_t,
+\boldsymbol{\varepsilon}_{t+1}
+)=0.
+$$
+Dato $\mathbf{x}_t$ e realizzato lo shock, dobbiamo **risolvere** il sistema per ottenere $\mathbf{x}_{t+1}$.
+
+La logica computazionale diventa:
+$$
+\boxed{
+\text{DRAW}
+\rightarrow
+\text{SOLVE}
+\rightarrow
+\text{ITERATE}
+}
+$$
+
+---
+
+# Modelli stocastici forward-looking
+
+Possiamo avere relazioni del tipo:
+$$
+G(
+E_t[\mathbf{x}_{t+1}],
+\mathbf{x}_t,
+\mathbf{x}_{t-1},
+\boldsymbol{\varepsilon}_t
+)=0.
+$$
+Il futuro è incerto e compare esplicitamente:
+$$
+E_t[\mathbf{x}_{t+1}].
+$$
+Dobbiamo quindi considerare anche **come gli agenti formano le aspettative**.
+
+---
+
+# La mappa del nuovo blocco
+
+Per ogni struttura dinamica ci chiederemo:
+
+**Qual è lo spazio degli stati?**
+$$
+\mathcal{X}
+$$
+**Qual è lo spazio degli shock?**
+$$
+\mathcal{E}
+$$
+**Come viene rappresentata l'incertezza?**
+
+**Quale problema computazionale dobbiamo risolvere?**
+
+---
+
+# Verso i modelli con controllo
+
+Nei modelli stocastici senza controllo abbiamo:
+$$
+(\mathcal{X},\mathcal{E}).
+$$
+Quando introdurremo le decisioni, aggiungeremo:
+$$
+\mathcal{U}
+=
+\text{spazio dei controlli}.
+$$
+Passeremo quindi a:
+$$
+(\mathcal{X},\mathcal{U},\mathcal{E}).
+$$
+Stato, controllo e shock potranno essere discreti oppure continui.
+
+La loro natura determinerà anche le tecniche computazionali necessarie.
