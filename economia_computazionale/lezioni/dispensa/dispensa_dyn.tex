@@ -4277,4 +4277,231 @@ dinamici discreti stocastici.
 
 \chapter{modelli stocastici}
 
+\section{Introduzione ai modelli dinamici stocastici}
+
+Nei capitoli precedenti abbiamo considerato modelli dinamici deterministici. In tali modelli, una volta specificate le condizioni iniziali e i parametri, l'evoluzione del sistema è completamente determinata. Nel caso più semplice di un modello ricorsivo a tempo discreto, la legge di movimento può essere rappresentata come
+\[
+\mathbf{x}_{t+1}=F(\mathbf{x}_t).
+\]
+Conoscendo lo stato iniziale $\mathbf{x}_0$, è quindi possibile determinare in successione
+\[
+\mathbf{x}_0\rightarrow\mathbf{x}_1\rightarrow
+\mathbf{x}_2\rightarrow\cdots,
+\]
+ottenendo una singola traiettoria del sistema.
+
+Molti fenomeni economici e finanziari sono tuttavia caratterizzati da eventi che non possono essere previsti con certezza. La produttività di un'impresa può essere influenzata da eventi inattesi, la domanda aggregata può essere soggetta a shock, i prezzi delle attività finanziarie possono reagire all'arrivo di nuove informazioni e lo stato dell'economia può passare da una fase di espansione a una fase di recessione in modo non perfettamente prevedibile.
+
+Per rappresentare questi fenomeni è necessario introdurre l'incertezza all'interno del modello dinamico. Si passa così dai modelli deterministici ai \emph{modelli dinamici stocastici}.
+
+\subsection{Dalla dinamica deterministica alla dinamica stocastica}
+
+Una possibile rappresentazione di un modello dinamico stocastico ricorsivo è
+\[
+\mathbf{x}_{t+1}
+=
+F(\mathbf{x}_t,\boldsymbol{\varepsilon}_{t+1}),
+\]
+dove $\boldsymbol{\varepsilon}_{t+1}$ rappresenta una variabile casuale, o un vettore di variabili casuali, che incorpora l'informazione nuova che raggiunge il sistema tra i periodi $t$ e $t+1$.
+
+La differenza rispetto al caso deterministico è sostanziale. Nel modello
+\[
+\mathbf{x}_{t+1}=F(\mathbf{x}_t),
+\]
+conoscere $\mathbf{x}_t$ è sufficiente per determinare $\mathbf{x}_{t+1}$. Nel modello stocastico, invece, lo stato corrente non è generalmente sufficiente per conoscere con certezza lo stato successivo. È necessario conoscere anche la realizzazione dello shock $\boldsymbol{\varepsilon}_{t+1}$.
+
+Prima che lo shock venga osservato, possiamo quindi descrivere i possibili valori futuri e le probabilità con cui essi possono verificarsi, ma non sappiamo quale di essi si realizzerà effettivamente.
+
+Il passaggio dal deterministico allo stocastico può pertanto essere interpretato come il passaggio da una legge di movimento che determina univocamente lo stato successivo a una legge di transizione che determina una distribuzione di probabilità sui possibili stati futuri.
+
+La rappresentazione mediante uno shock esplicito non è, tuttavia, l'unico modo per specificare una dinamica stocastica. Se lo spazio degli stati è discreto, ad esempio, la dinamica può essere descritta direttamente attraverso le probabilità di transizione
+\[
+p_{ij}
+=
+P(\mathbf{x}_{t+1}=j\mid\mathbf{x}_t=i).
+\]
+In questo caso non è necessario introdurre esplicitamente uno shock additivo. Ciò che caratterizza il modello come stocastico è il fatto che, dato lo stato corrente, lo stato futuro non sia determinato univocamente ma sia descritto da una distribuzione di probabilità.
+
+\subsection{Tempo, stato e shock}
+
+È importante distinguere la natura del tempo dalla natura delle variabili che compongono il modello. Un modello a tempo discreto è semplicemente un modello nel quale
+\[
+t=0,1,2,\ldots.
+\]
+Questo non implica che lo stato del sistema debba essere discreto.
+
+Possiamo, ad esempio, avere un modello a tempo discreto con
+\[
+x_t\in\mathbb{R},
+\]
+nel quale lo stato può assumere un insieme continuo di valori. In alternativa possiamo avere
+\[
+x_t\in\{s_1,s_2,\ldots,s_N\},
+\]
+nel quale lo spazio degli stati è discreto.
+
+Indichiamo in generale con
+\[
+\mathcal{X}
+\]
+lo \emph{spazio degli stati}, cioè l'insieme dei valori che lo stato del sistema può assumere.
+
+Nei modelli stocastici dobbiamo inoltre specificare la natura dell'incertezza. Indicando con
+\[
+\mathcal{E}
+\]
+lo \emph{spazio degli shock}, anche questo può essere discreto oppure continuo.
+
+Possiamo quindi distinguere quattro combinazioni fondamentali:
+\[
+\begin{array}{c|cc}
+ & \text{shock discreto} & \text{shock continuo}\\
+\hline
+\text{stato discreto} & DD & DC\\
+\text{stato continuo} & CD & CC
+\end{array}
+\]
+
+Questa classificazione non rappresenta semplicemente una distinzione terminologica. La natura degli spazi coinvolti influenza direttamente la rappresentazione matematica del modello e le tecniche computazionali necessarie per analizzarlo.
+
+Quando lo spazio degli stati è discreto, ad esempio, la dinamica può spesso essere rappresentata mediante matrici di transizione. Quando lo stato è continuo, diventa invece necessario lavorare con funzioni definite su insiemi continui. Analogamente, uno shock discreto conduce naturalmente a somme ponderate sui suoi possibili valori, mentre uno shock continuo richiede di considerare distribuzioni continue e, quando devono essere calcolati valori attesi, integrali.
+
+Queste differenze diventeranno ancora più importanti quando introdurremo i modelli dinamici con controllo. In quel caso, oltre allo spazio degli stati $\mathcal{X}$ e allo spazio degli shock $\mathcal{E}$, comparirà lo spazio dei controlli $\mathcal{U}$. Stato, controllo e shock potranno essere, separatamente, discreti o continui, dando origine a differenti problemi computazionali.
+
+\subsection{Dalla traiettoria al processo stocastico}
+
+Un'altra conseguenza fondamentale dell'introduzione dell'incertezza riguarda il significato stesso di traiettoria.
+
+In un modello deterministico, date le condizioni iniziali, abbiamo una sequenza univocamente determinata:
+\[
+\mathbf{x}_0,\mathbf{x}_1,\mathbf{x}_2,\ldots.
+\]
+
+In un modello stocastico, invece, partendo dallo stesso stato iniziale possono verificarsi differenti sequenze di shock e, di conseguenza, differenti traiettorie.
+
+Una particolare sequenza
+\[
+\boldsymbol{\varepsilon}_1^{(m)},
+\boldsymbol{\varepsilon}_2^{(m)},\ldots,
+\boldsymbol{\varepsilon}_T^{(m)}
+\]
+genera una particolare realizzazione
+\[
+\mathbf{x}_0,
+\mathbf{x}_1^{(m)},
+\mathbf{x}_2^{(m)},\ldots,
+\mathbf{x}_T^{(m)}.
+\]
+
+Una diversa sequenza degli shock produce generalmente una diversa traiettoria, pur mantenendo invariati il modello, i parametri e la condizione iniziale.
+
+Il modello stocastico descrive quindi non una singola traiettoria, ma un insieme di possibili traiettorie con le rispettive probabilità. La sequenza delle variabili casuali
+\[
+\{\mathbf{x}_t\}_{t=0}^{\infty}
+\]
+costituisce un \emph{processo stocastico}.
+
+Di conseguenza, l'analisi del modello non riguarda soltanto i valori assunti dallo stato lungo una particolare realizzazione. Possiamo essere interessati, ad esempio, alla media
+\[
+E[\mathbf{x}_t],
+\]
+alla varianza
+\[
+\operatorname{Var}(\mathbf{x}_t),
+\]
+alla probabilità che lo stato appartenga a un determinato insieme $A$,
+\[
+P(\mathbf{x}_t\in A),
+\]
+oppure, più in generale, alla distribuzione di probabilità dello stato a differenti orizzonti temporali.
+
+\subsection{Il lungo periodo nei modelli stocastici}
+
+L'introduzione dell'incertezza modifica anche il modo in cui dobbiamo interpretare il comportamento di lungo periodo.
+
+Nel caso deterministico abbiamo studiato condizioni sotto le quali
+\[
+\mathbf{x}_t\rightarrow\mathbf{x}^*,
+\]
+dove $\mathbf{x}^*$ rappresenta uno stato stazionario.
+
+Se il sistema è continuamente colpito da nuovi shock, non dobbiamo invece aspettarci, in generale, che una singola traiettoria converga e rimanga in un determinato punto. Anche un sistema che tende a riassorbire gli effetti delle perturbazioni può continuare a fluttuare perché nuovi shock arrivano in ogni periodo.
+
+Diventa quindi naturale spostare l'attenzione dal comportamento di una singola traiettoria al comportamento della sua distribuzione.
+
+Sotto opportune condizioni, la distribuzione di probabilità dello stato può convergere verso una distribuzione limite,
+\[
+\mathcal{L}(\mathbf{x}_t)\rightarrow\boldsymbol{\pi},
+\]
+che, se rimane invariata sotto la dinamica del modello, costituisce una \emph{distribuzione stazionaria}.
+
+Esiste quindi un'importante analogia tra l'analisi deterministica e quella stocastica. Nel primo caso siamo spesso interessati alla convergenza verso uno stato stazionario; nel secondo possiamo essere interessati alla convergenza verso una distribuzione stazionaria. L'analogia non implica che i due concetti siano equivalenti, ma fornisce un utile collegamento tra le due classi di modelli.
+
+\subsection{Il nuovo problema computazionale}
+
+L'incertezza introduce una nuova dimensione nel problema computazionale.
+
+Nel caso deterministico ricorsivo, una volta assegnato lo stato iniziale, possiamo applicare ripetutamente la legge di movimento:
+\[
+\mathbf{x}_0
+\rightarrow
+\mathbf{x}_1
+\rightarrow
+\mathbf{x}_2
+\rightarrow\cdots.
+\]
+
+Nel caso stocastico dobbiamo invece generare, o comunque rappresentare, le realizzazioni delle variabili casuali che influenzano il sistema. Una simulazione può essere rappresentata schematicamente come
+\[
+\text{estrazione dello shock}
+\rightarrow
+\text{transizione}
+\rightarrow
+\text{estrazione dello shock}
+\rightarrow
+\text{transizione}
+\rightarrow\cdots.
+\]
+
+Una singola simulazione produce tuttavia soltanto una delle possibili traiettorie. Se siamo interessati alla distribuzione dei risultati, possiamo ripetere l'esperimento numerico molte volte:
+\[
+m=1,\ldots,M.
+\]
+Otteniamo così un insieme di realizzazioni
+\[
+\left\{
+\mathbf{x}_t^{(m)}
+\right\}_{m=1}^{M},
+\]
+dal quale possiamo ricavare informazioni sulla distribuzione delle variabili di interesse.
+
+Emergono pertanto nuovi problemi computazionali: la generazione di numeri pseudo-casuali, la simulazione di variabili con differenti distribuzioni, la costruzione di numerose traiettorie e la sintesi statistica dei risultati. Questi problemi condurranno naturalmente ai metodi di simulazione Monte Carlo.
+
+La simulazione non è tuttavia l'unico strumento disponibile. In alcuni modelli le distribuzioni, i momenti o le probabilità di transizione possono essere calcolati direttamente mediante strumenti analitici o numerici. La scelta tra calcolo diretto e simulazione dipenderà dalla struttura e dalla dimensione del problema.
+
+\subsection{La struttura dei modelli che studieremo}
+
+Come nel caso deterministico, distingueremo i modelli stocastici a tempo discreto sulla base della loro struttura dinamica.
+
+Inizieremo dai \emph{modelli ricorsivi stocastici}, nei quali, dato lo stato corrente e una realizzazione dell'incertezza, è possibile determinare lo stato successivo. Considereremo sia spazi degli stati discreti sia spazi degli stati continui.
+
+Passeremo quindi ai \emph{modelli stocastici con soluzione simultanea}, nei quali le variabili del periodo successivo devono essere determinate risolvendo un sistema di equazioni. L'incertezza si aggiunge quindi al problema di simultaneità già incontrato nel caso deterministico.
+
+Infine considereremo i \emph{modelli stocastici forward-looking}. In questo caso l'incertezza assume un ruolo ancora più importante, poiché le decisioni o le condizioni di equilibrio correnti dipendono da aspettative relative a variabili future non ancora osservate. Compariranno quindi esplicitamente oggetti quali
+\[
+E_t[\mathbf{x}_{t+1}],
+\]
+e sarà necessario specificare come vengono formate le aspettative e come esse siano collegate alla distribuzione probabilistica generata dal modello.
+
+Manteniamo quindi la stessa sequenza utilizzata per i modelli deterministici:
+\[
+\text{ricorsivi}
+\rightarrow
+\text{simultanei}
+\rightarrow
+\text{forward-looking},
+\]
+ma osserviamo, per ciascuna classe, come l'introduzione dell'incertezza modifichi sia l'interpretazione economica sia il problema computazionale.
+
+
 \end{document}
