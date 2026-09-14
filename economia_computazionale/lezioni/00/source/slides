@@ -1,0 +1,566 @@
+# 
+
+- Docente
+
+	- Gianfranco Giulioni
+
+- Orario delle lezioni:
+	- \url{https://www.unich.it/didattica/frequentare/calendario-lezioni/area-sociale/lm-56-economics-and-finance}
+
+- Ricevimento:
+	- prima o dopo le lezioni 
+	- tutti i giorni su appuntamento da concordare via email
+	- via email o teleconferenza
+
+# Modalità d'esame
+
+- Modalità d'esame:
+	- test scritto
+	- domande aperte e a scelta multipla
+	- durata: 1 ora.
+- Syllabus
+
+\footnotesize
+\url{https://clefm.unich.it/home-economia-e-finanza-computazionale-31328}
+
+# Testi di riferimento:
+
+- Modelli economici e finanziari
+	- autori: Afonso e Vasconcelos
+	- titolo: Computational Economics a concise introduction
+	- casa editrice: Routledge
+
+\vskip-1.5cm
+\includegraphics[scale=0.06]{ce}
+
+- Metodi numerici
+	- autori: Quarteroni, Saleri e Gervasio
+	- titolo: Calcolo scientifico
+	- casa editrice: springer
+
+\vskip-1.5cm
+\includegraphics[scale=0.06]{cs}
+
+# Software
+
+A scelta dello studente. Ad esempio
+
+- R 
+- Python
+- Octave
+- Julia
+- ....
+
+# Dove reperire informazioni e materiali
+
+Piattaforma elearning:
+
+- \url{https://fad.unich.it/course/view.php?id=3375}
+
+Pagina del docente:
+
+- \url{http://erre.unich.it/giulioni/}
+
+
+
+<!--
+
+# materiali libro
+
+Economia computazionale
+
+https://routledgetextbooks.com/textbooks/9781138859661/default.php
+
+Calcolo
+
+https://paola-gervasio.unibs.it/CS/index.html
+
+# Artificial Intelligence 
+
+https://gogeometry.com/software/ai/index.html#google_vignette
+
+# Machine Learning
+
+https://vitalflux.com/great-mind-maps-for-learning-machine-learning/
+
+# Libro
+
+A gentle introduction to scientific computing
+
+Brevissime appendici su Octave, Python e Julia
+
+# Sistemi lineari
+
+- domanda offerta
+
+- modello is-lm 
+
+-->
+
+# Programma
+
+Nelle diapositive seguenti viene illustrato il programma e le tecniche numeriche che verranno utilizzate attraverso esempi economici.
+
+# Esempio 1a: mercato in autarchia
+
+$Q_{d}=\bar{Q}_{d}-aP$
+
+$Q_{s}=\bar{Q}_{s}+bP$
+
+Per una data parametrizzazione, ad es. $\bar{Q}_d=1000$, $\bar{Q}_s=250$, $a=10$, $b=5$,
+Trovare 
+
+- equilibrio
+- social welfare
+
+Cosa accade al social welfare se $\bar{Q}_{d}$ passa da 1000 a 750? 
+
+# Esempio 1b: commercio tra due paesi
+
+Vi sono due paesi dalle dimensioni simili.
+
+Indichiamo il primo con $H$ (Home),
+
+e il secondo con $F$ (Foreign).
+
+Le funzioni di domanda e di offerta nei due paesi sono:
+
+$Q_{d,H}=\bar{Q}_{d,H}-a_HP_H$
+
+$Q_{s,H}=\bar{Q}_{s,H}+b_HP_H$
+
+$Q_{d,F}=\bar{Q}_{d,F}-a_FP_F$
+
+$Q_{s,F}=\bar{Q}_{s,F}+b_FP_F$
+
+#
+
+- Determinare le quantità di beni utilizzati internamente nei due paesi, la quantità scambiate tra i due paesi e il prezzo internazionale in situazione di libero scambio.
+- Determinare cosa accade alle quantità e ai prezzi sopra determinati se $H$ intende ridurre le quantità scambiate (imponendo una tariffa sulle importazioni).
+- Determinare cosa accade alle quantità e ai prezzi sopra determinati se $F$ intende aumentare le quantità scambiate (concedendo un sussidio all'export).
+
+# Tecniche numeriche
+
+Soluzione di sistemi di equazioni lineari.
+
+- Eliminazione gaussiana
+
+
+# Esempio 2
+
+$Y=C+I+G$
+
+$C=\bar{C}+c(Y-T)$
+
+$I=\bar{I}-bR$
+
+$\frac{M}{P}=kY-hR$
+
+Dati i parametri e le variabili esogene, determinare le variabili endogene.
+
+Valutare gli effetti delle politiche monetarie e fiscali.
+
+# Tecniche numeriche
+
+Soluzione di sistemi di equazioni lineari.
+
+Metodi diretti per la soluzione di sistemi di equazioni lineari:
+
+- Scomposizione LU
+
+
+# Esempio 3a: due economie
+
+$$
+\begin{array}{ll}
+Y=C+I+G+{\color{blue}NX} & Y_f=C_f+I_f+G_f+{\color{blue}NX}_f\\
+C=\bar{C}+c(Y-T) & C_f=\bar{C}_f+c_f(Y_f-T_f)\\
+I=\bar{I}-bR & I_f=\bar{I}_f-b_fR_f\\
+{\color{blue}NX}=\bar{NX}-j(Y-Y_f)+lE\frac{\bar{P_f}}{P}\qquad&{\color{blue}NX}_f=-NX\\
+\frac{M}{P}=kY-hR & \frac{M_f}{P_f}=k_fY_f-h_fR_f\\
+\end{array}
+$$
+
+Dati i parametri e le variabili esogene, determinare le variabili endogene.
+
+Valutare gli effetti delle politiche monetarie e fiscali.
+
+# Tecniche numeriche
+
+Metodi iterativi per la soluzione di sistemi di equazioni lineari.
+
+Si usano per matrici grandi e con molti elementi nulli.
+
+
+- stazionari (Jacobi, Gauss-Seidel, successive over-relaxation)
+- non stazionari (minimum residual, Ritz-Galerkin, Petrov-Galerkin)  
+
+# Esempio 3b: Life Cycle Assessment
+
+La **Life Cycle Assessment (LCA)** permette di valutare gli impatti
+ambientali associati alla produzione di un bene o servizio.
+
+Il sistema produttivo è rappresentato attraverso una matrice tecnologica $A$.
+
+Data una domanda finale $f$, occorre determinare il livello di attività
+dei diversi processi produttivi:
+$$
+As=f
+$$
+Il vettore $s$ indica quante volte ciascun processo deve essere attivato
+per soddisfare la domanda finale.
+
+# Life Cycle Assessment: dagli input agli impatti
+
+Una volta determinati i livelli di attività $s$, i flussi ambientali sono:
+$$
+g=Bs
+$$
+dove $B$ descrive le emissioni e l'utilizzo di risorse naturali
+associati ai processi produttivi.
+
+Gli impatti ambientali sono quindi:
+$$
+h=Qg
+$$
+dove $Q$ contiene i fattori di caratterizzazione.
+
+In sintesi:
+$$
+\boxed{
+\text{domanda finale}
+\rightarrow
+\text{processi produttivi}
+\rightarrow
+\text{flussi ambientali}
+\rightarrow
+\text{impatti}
+}
+$$
+
+# Tecniche numeriche
+
+Soluzione di sistemi di equazioni lineari:
+$$
+As=f
+$$
+Calcolo matriciale:
+$$
+g=Bs
+$$
+$$
+h=Qg
+$$
+La Life Cycle Assessment può quindi essere vista come una
+**sequenza di operazioni di algebra lineare**.
+
+# Esempio 3c: la struttura a termine dei tassi di interesse
+
+Il prezzo di un'obbligazione è uguale al valore attuale dei suoi cash flow futuri:
+$$
+P_i=\sum_{t=1}^{T}CF_{it}d_t
+$$
+dove $d_t$ è il fattore di sconto relativo alla scadenza $t$.
+
+I prezzi e i cash flow delle obbligazioni sono osservabili sul mercato.
+
+I fattori di sconto non sono direttamente osservabili.
+
+**Problema finanziario:** ricavare la struttura a termine dei tassi di interesse dai prezzi delle obbligazioni.
+
+
+# Dai prezzi alla curva dei rendimenti
+
+Considerando più obbligazioni, le equazioni di pricing possono essere raccolte in un sistema lineare:
+$$
+Cd=P
+$$
+dove:
+
+- $C$ è la matrice dei cash flow;
+- $d$ è il vettore dei fattori di sconto;
+- $P$ è il vettore dei prezzi.
+
+Dai fattori di sconto possiamo ricavare i tassi spot:
+$$
+r_t=d_t^{-1/t}-1
+$$
+e costruire la **curva dei rendimenti**.
+
+
+# Tecniche numeriche
+
+Soluzione di sistemi di equazioni lineari:
+$$
+Cd=P
+$$
+**Bootstrapping** per determinare sequenzialmente i fattori di sconto.
+
+**Interpolazione** per ottenere fattori di sconto alle scadenze non direttamente osservate.
+
+- interpolazione lineare;
+- interpolazione polinomiale;
+- spline cubiche.
+
+Analisi del **condizionamento numerico** dei sistemi lineari.
+
+# Esempio 4a
+
+$Y=C+I+G$
+
+$C=\bar{C}+c(Y-T)$
+
+$I=\bar{I}-bR$
+
+$\frac{M}{P}=\bar{L}+kY-hR$
+
+${\color{blue}Y=\bar{AK}^{\alpha}H^{1-\alpha}}$
+
+${\color{blue}\frac{\partial Y}{\partial H}=\frac{W}{P}}$
+
+Dati i parametri: $c,b,t,k,h,\alpha$
+
+e le variabili esogene: $\bar{G}  =  200; \bar{M}  =  1000; \bar{W}  =  50; \bar{L}  =  225$
+
+Calcolare $Y$, $P$ e $R$.
+
+# Tecniche numeriche
+
+Soluzione di sistemi non lineari: il metodo di Newton e varianti
+
+# Esempio 4b: il rendimento di un'obbligazione
+
+Il prezzo di un'obbligazione dipende dal suo rendimento a scadenza $y$:
+$$
+P=\sum_{t=1}^{T}\frac{C}{(1+y)^t}+\frac{F}{(1+y)^T}
+$$
+Se osserviamo il prezzo di mercato $P$ e vogliamo ricavare $y$, dobbiamo risolvere:
+$$
+f(y)=\sum_{t=1}^{T}\frac{C}{(1+y)^t}+\frac{F}{(1+y)^T}-P=0
+$$
+Il calcolo dello **Yield to Maturity** diventa quindi un problema di ricerca dello zero di un'equazione non lineare.
+
+**Tecniche numeriche:** bisezione, metodo di Newton, metodo delle secanti.
+
+
+# Dal rendimento alla curva dei rendimenti
+
+Possiamo generalizzare il problema assumendo che il tasso di interesse dipenda dalla scadenza.
+
+Ad esempio:
+$$
+r(t)=a+bt
+$$
+Il prezzo teorico dell'obbligazione $i$ diventa:
+$$
+P_i(a,b)=\sum_{t=1}^{T_i}\frac{CF_{i,t}}{(1+a+bt)^t}
+$$
+Osservando due obbligazioni possiamo imporre:
+$$
+\begin{cases}
+P_A(a,b)-P_A^{market}=0\\
+P_B(a,b)-P_B^{market}=0
+\end{cases}
+$$
+Il problema diventa quindi un **sistema di equazioni non lineari** nelle incognite $a$ e $b$.
+
+
+# Soluzione numerica del sistema
+
+In forma vettoriale il problema è:
+$$
+\mathbf{f}(\mathbf{x})=\mathbf{0}
+$$
+con:
+$$
+\mathbf{x}=
+\begin{bmatrix}
+a\\
+b
+\end{bmatrix}
+$$
+Il metodo di Newton utilizza la matrice Jacobiana e, a ogni iterazione, risolve:
+$$
+J_f(\mathbf{x}_k)\mathbf{z}_k=-\mathbf{f}(\mathbf{x}_k)
+$$
+per poi aggiornare:
+$$
+\mathbf{x}_{k+1}=\mathbf{x}_k+\mathbf{z}_k
+$$
+Un **problema non lineare** viene così risolto attraverso una successione di **sistemi lineari**.
+
+# Esempio 5
+
+n titoli rischiosi
+
+$$ \max_x c^T x$$
+
+con $x$ che soddisfa le seguenti condizioni:
+
+$$x^T H x=\bar{\sigma}^2$$
+$$\sum_{i=1}^{n}x_i=1$$
+$$x_i\ge 0$$
+
+come scegliere il portafoglio?
+
+# Tecniche numeriche
+
+- programmazione quadratica
+
+- Approccio Monte Carlo
+
+
+# Esempio 6a
+
+$Q_{d,t}=\bar{Q}_{d}-aP_t$
+
+$Q_{s,t}=\bar{Q}_{s}+bP_{t-1}$
+
+$Q_{s,t}=Q_{d,t}$
+
+simile all'esempio 1, ma vengono aggiunti gli indicatori del tempo.
+
+Questo consente di monitorare la dinamica del sistema.
+
+# Esempio 6b
+
+$Q_{d,t}=\bar{Q}_{d}-aP_t$
+
+$Q_{s,t}=\bar{Q}_{s}+bP_{t}$
+
+$P_{t+1}=P_{t}-\sigma (Q_{s,t}-Q_{d,t})$
+
+Il prezzo viene ora deciso dal produttore in base all'eccesso di offerta. 
+
+# Tecniche numeriche
+
+- Soluzione di un'equazione alle differenze. 
+
+- Stabilità dell'equilibrio.
+
+- Per giungere a conclusioni sulla stabilità del sistema saranno utili le tecniche che consentono di trovare gli zeri di un polinomio (anche di grado elevato). 
+
+# I sistemi dinamici
+
+- Equazioni alle differenze
+
+- Equazioni differenziali
+
+# Le equazioni alle differenze
+
+Equazioni alla differenze del primo ordine
+
+$y_{t+1}=f(y_t)+g$ ovvero $y_{t+1}-f(y_t)=g$
+
+- possono essere lineari o non lineari
+
+- si dicono non autonome se la variabile $t$ figura esplicitamente ($g(t)$) 
+
+- si dicono omogenee se $g=0$
+
+- si dicono di ordine $n$ se presentano la variabile $y$ ritardata di non più di $n$ periodi.
+
+
+# Esempio 7
+
+- Duopolio di Cournot dinamico in tempo discreto :
+
+	- Due imprese producono un bene omogeneo.
+
+	- Ogni impresa, al tempo $t$ osserva la produzione dell'altra e ipotizza che essa rimarrà la stessa.
+
+- La condizione di massimizzazione del profitto (costo marginale uguale al ricavo marginale) dà vita 
+ un sistema di equazioni alle differenze del primo ordine.
+
+- La stabilità del sistema dipende dagli autovalori della matrice che caratterizza il sistema di equazioni omogeneo associato.
+
+
+# Tecniche numeriche
+
+Il calcolo degli autovalori può essere fatto con il metodo di trasformazione o con metodo iterativo.
+
+Vedremo l'algoritmo QR per quanto riguarda la trasformazione.
+
+I metodi iterativi sono più appropriati per grandi sistemi. Vedremo in particolare il metodo Arnoldi.
+
+# Esempio 8
+
+Il modello Phillips Curve e Demand Growth
+
+$\pi^e_t=\lambda \pi_{t-1}+(1-\lambda)\pi^e_{t-1}$ formazione delle aspettative.
+
+$\pi_t=\pi_t^e+\alpha \hat{Y}_t+z^s_t$ curva di Phillips di breve periodo. 
+
+$\hat{Y}_t=\hat{x}_t-\pi_t+\hat{Y}_{t-1}-z_t^d$ demand growth.
+
+dove
+
+$\pi$ inflazione, $\hat{Y}$ log di output gap (output gap= deviazione percentuale dell'output dalla produzione naturale), $z^s$ shock da offerta, $z^d$ shock da domanda, $\hat{x}$ tasso di crescita dell'output nominale.
+
+# Tecniche
+
+costruzione di un algoritmo che consenta di simulare la dinamica del sistema a seguito di uno shock.
+
+Ciclo for sul tempo, e ad ogni iterazione risolvere il sistema di equazioni (lineari).
+
+# Esempio 9
+
+Il modello di Solow
+
+$\dot{k}=sk^{\alpha}-(\delta+n)k$
+
+Si tratta di una equazione differenziale.
+
+Cosa accade se aumenta il tasso di ammortamento $\delta$?
+
+Cosa accade se migliora la tecnologia?
+
+# Tecniche numeriche
+
+Soluzione di un'equazione differenziale:
+conoscendo la derivata di una funzione determinare la funzione incognita.
+
+Ci sono infinite funzioni che hanno la stessa derivata (traslazione).
+
+Se ci viene dato il valore iniziale riusciamo ad individuare una sola soluzione.
+
+Parliamo in questo caso di problema di valore iniziale.
+
+Soluzione attraverso il metodo di Eulero: ogni punto successivo viene calcolato muovendo lungo la curva tangente al punto di partenza.
+
+# Esempio 10 
+
+Modello di Ramsey-Cass-Koopmans
+
+riprendendo il modello di Solow
+
+$\dot{k}=sk^{\alpha}-(\delta+n)k$
+
+l'elemento $sk^{\alpha}$ è il risparmio, possiamo dunque esprimerlo come $k^{\alpha}-c$.
+
+Possiamo ora ampliare l'analisi costruendo un modello che dà indicazioni sulla dinamica del consumo. 
+
+Il modello finale è dunque costituito da due equazioni differenziali:
+
+$\dot{k}=f(k,c)$
+
+$\dot{c}=g(k,c)$
+
+# Tecniche numeriche
+
+Soluzione di un sistema di equazioni differenziali.
+
+Oltre alle condizioni iniziali delle variabili endogene, servono altre condizioni da rispettare. Quando abbiamo altre condizioni oltre a quelle iniziali si passa da un \textit{initial value problem} a un \textit{Boundary value problem}
+
+Vedremo i seguenti metodi:
+
+- Finite difference method
+
+- Collocation method
+
+
+
+
+
+
+
