@@ -1,0 +1,285 @@
+# Balance of payments
+
+- In the following slides, we will construct the accounting document in which transactions between residents and non-residents are recorded.
+
+- This document is called the Balance of Payments 
+
+- It is compiled using double-entry accounting, whereby each transaction is recorded twice.
+
+# Types of Transactions
+
+The types of transactions that we will analyze to progressively build the Balance of Payments are the following:
+
+- purchase and sale of goods and services
+
+- purchase and sale of production factors
+
+- Transfers of funds that do not involve purchases or sales
+ 
+- purchase and sale of securities by
+
+	- entities other than the national central bank
+
+	- the National Central Bank
+
+# Balance of Payments Sections
+
+The Balance of Payments is divided into three sections:
+
+- Current account
+
+- Capital account
+
+- Financial account
+
+Each section includes:
+
+- of items with a positive sign (credit items)
+
+- of items with a negative sign (debit items)
+
+
+# Accounting for transactions
+
+- As mentioned above, each transaction generates two accounting entries
+
+- For each of them we will highlight in the following slides:
+
+	- the accounting item used\footnote{For reasons of space, the generic names increase/reduction of financial assets/liabilities are used in the financial account, without specifying the type of security involved.\\}
+
+	- the section of the balance of payments involved
+
+	- the sign of the transaction (credit or debit) 
+
+# Buying and selling goods and services
+
+\includegraphics[scale=0.5]{bp_ex_en-0.pdf}
+
+# Buying and selling goods and services
+
+\includegraphics[scale=0.5]{bp_im_ex_en-0.pdf}
+
+
+# Buying and selling production inputs
+
+\includegraphics[scale=0.5]{bp_sell_factors_en-0.pdf}  
+
+# Buying and selling production inputs
+
+\includegraphics[scale=0.5]{bp_sell_buy_factors_en-0.pdf}  
+
+# Recurring Unilateral Transfers
+
+\includegraphics[scale=0.5]{bp_ut_cc_en-0.pdf}
+
+# Recurring Unilateral Transfers
+
+\includegraphics[scale=0.5]{bp_ut_cc_en1-0.pdf}
+
+# One-time unilateral transfers
+
+\includegraphics[scale=0.5]{bp_ut_ccap_en-0.pdf}
+
+# One-time unilateral transfers
+
+\includegraphics[scale=0.5]{bp_ut_ccap_en1-0.pdf}
+
+# Buying and selling securities by the private sector
+
+\includegraphics[scale=0.4]{bp_titoli_en-0.pdf}
+
+# Buying and selling securities by the private sector
+
+\includegraphics[scale=0.4]{bp_titoli_en1-0.pdf}
+
+
+# Buying and selling securities by the national central bank
+
+\includegraphics[scale=0.4]{bp_ru_en-0.pdf}
+
+# Buying and selling securities by the national central bank
+
+\includegraphics[scale=0.4]{bp_ru_en1-0.pdf}
+
+# The relationship between the balances of the three sections
+
+- The use of double-entry implies the following relationship between the balances of the three sections of the Balance of Payments:
+
+- current account balance + capital account balance = financial account balance
+
+- However, the fact that data is collected by different institutions and that flows can occur asynchronously causes that this equality may not hold exactly in the recorded data.
+
+- In order to balance the document, an errors and omissions item (or statistical discrepancy) is included
+
+# Errors and omissions (statistical discrepancy)
+
+\vskip0.1cm
+\hskip3cm\includegraphics[scale=0.55]{bp_errori_en-0.pdf}
+
+# The relationship between section balances
+
+- The relationship between balances is therefore:
+
+- current account balance + capital account balance + errors and omissions = financial account balance
+
+For example, for Italy, in 2022 the following balances were recorded (data in millions of euros):
+
+Current account -23265
+
+Capital Account 10332
+
+Financial Account -17568
+
+Errors and Omissions -4635
+
+therefore, we can verify that:
+
+-24365 +10332 - 4635 = -17568
+
+# Current account balance and national accounts
+
+In the following slides, we highlight the link between the current account balance and the national accounts.
+
+To do this, we will use the following notation:
+
+- $EX =$ Exports
+
+- $IM =$ Imports
+
+- $Y_{in} =$ income from abroad
+
+- $Y_{out} =$ incom paid abroad
+
+- $TUC_{in} =$ current unilateral transfers from abroad
+
+- $TUC_{out} =$ current unilateral transfers abroad
+
+- $CA =$ current account balance
+
+# The balance of the current account
+
+the current account balance can be expressed in the form of an equation as follows: $$CA=EX-IM+Y_{in}-Y_{out}+TUC_{in}-TUC_{out}$$
+
+We will see later how this equation allows us to move from Gross Domestic Product to Gross National Income.
+
+<!--
+# GDP through the Economic Accounts of the institutional sectors
+
+We use the following simplified economic accounts of the 4 institutional sectors
+
+\includegraphics[scale=0.7]{monetary_econ_balances_economic-0.pdf}
+
+# GDP through Economic Accounts
+
+\includegraphics[scale=0.7]{monetary_econ_balances_economic-1.pdf}
+
+\footnotesize
+the value of finished products is equal to the revenues of the companies
+
+$$PIL=\colorbox{blue!20!white}{$Y$}=\colorbox{red!50!white}{$C_{naz}+G+I+EX$}$$
+
+-->
+
+# GDP and GNP
+
+$$GNP=GDP+Y_{in}-Y_{out}$$
+
+$Y_{in} =$ labour and capital income earned by Italian residents abroad 
+
+$Y_{out} =$ labour and capital income earned by foreign residents in Italy 
+
+# GDP and GNP: a graphical representation 
+
+\includegraphics[scale=0.2]{gnp.png}\hskip1cm
+\includegraphics[scale=0.2]{gdp.png}
+
+\hskip3cm GNP \hskip4cm GDP
+
+GNP = value of final goods and services produced by Italian factors of production 
+
+GDP = value of finished products and services produced in Italy
+
+
+# GNP and GNI
+
+GNI = Gross National Income
+
+$$GNI=GNP+TUC_{in}-TUC_{out}$$
+
+$TUC_{in} =$ current unilateral transfers from abroad
+
+$TUC_{out} =$ current unilateral transfers abroad
+
+\vskip1cm 
+but since
+$$GNP=GDP+Y_{in}-Y_{out}$$
+
+We can write
+
+$$GNI=GDP+Y_{in}-Y_{out}+TUC_{in}-TUC_{out}$$
+
+
+# National Income
+
+GNI is consumed or saved:
+
+$$GNI=C_{naz}+IM+S$$
+
+By defining $C_{tot}=C_{naz}+IM$ we can write
+
+$$GNI=C_{tot}+S$$
+
+# GDP and balance of payments
+
+We express production in terms of total consumption
+
+$$GDP=\color{blue}C_{naz}\color{black}+G+I+EX$$
+
+$$GDP=\underbrace{C_{naz}\color{red}+IM\color{black}}_{C_{tot}}+G+I+EX\color{red}-IM\color{black}$$
+
+$$GDP=\color{blue}C_{tot}\color{black}+G+I+EX-IM$$
+
+# GNI and balance of payments
+
+We therefore have
+
+$$GNI=GDP+Y_{in}-Y_{out}+TUC_{in}-TUC_{out}$$
+
+$$GDP=C_{tot}+G+I+EX-IM$$
+
+
+substituting the second equation into the first
+
+$$GNI=C_{tot}+G+I+\underbrace{EX-IM+Y_{in}-Y_{out}+TUC_{in}-TUC_{out}}_{\textnormal{current account balance}}$$
+
+$$GNI=C_{tot}+G+I+CA$$
+
+# Economic Accounts: savings
+
+We have previously derived two expressions for GNI:
+
+$$GNI=C_{tot}+G+I+CA$$
+
+$$GNI=C_{tot}+S$$
+
+From these we derive the saving identity:
+
+$$\underbrace{C_{tot}+S}_{GNI}=\underbrace{C_{tot}+G+I+CA}_{GNI}$$
+
+$$S=G+I+CA$$
+
+# Economic Accounts: private savings
+
+The previous result can be refined by considering taxes:
+
+$$GNI-T=C_{tot}+G-T+I+CA$$
+
+$$\underbrace{GNI-T-C_{tot}}_{S_p}=-\underbrace{(T-G)}_{S_g}+I+CA$$
+
+A country's private saving can finance:
+
+- Investments
+- The public sector
+- other countries
+
+
