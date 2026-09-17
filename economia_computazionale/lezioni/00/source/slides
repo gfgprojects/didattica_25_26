@@ -105,7 +105,7 @@ Prima di passare agli esempi illustriamo:
 
 - come è strutturata l'analisi dei modelli: dalla loro descrizione ai metodi numerici
 - come è organizzata la sequenza dei modelli: dai modelli statici a quelli dinamici
-
+- quali problemi computazionali incontreremo
 
 # Dai modelli ai metodi numerici
 
