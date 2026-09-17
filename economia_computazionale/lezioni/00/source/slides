@@ -99,13 +99,12 @@ Brevissime appendici su Octave, Python e Julia
 
 # Programma
 
-Nelle diapositive seguenti viene illustrato il programma e le tecniche numeriche che verranno utilizzate attraverso modelli economici.
+Nelle diapositive seguenti vengono illustrati il programma e le tecniche numeriche che verranno utilizzate attraverso alcuni modelli economici e finanziari.
 
-Prima di passare agli esempio illustriamo:
+Prima di passare agli esempi illustriamo:
 
-- com'è strutturata l'analisi dei modelli: dalla loro descrizione ai metodi numerici
-
-- come progredisce la sequenza dei modelli: dai modelli statici a quelli dinamici
+- come è strutturata l'analisi dei modelli: dalla loro descrizione ai metodi numerici
+- come è organizzata la sequenza dei modelli: dai modelli statici a quelli dinamici
 
 
 # Dai modelli ai metodi numerici
@@ -507,7 +506,7 @@ $Q_{s,t}=\bar{Q}_{s}+bP_{t-1}$
 
 $Q_{s,t}=Q_{d,t}$
 
-simile all'esempio 1, ma vengono aggiunti gli indicatori del tempo per introdurre la possibilità che alcune variabili cambiano con ritardo.
+simile all'esempio 1, ma vengono aggiunti gli indicatori del tempo per introdurre la possibilità che alcune variabili cambino con ritardo.
 
 Questo consente di monitorare la dinamica del sistema.
 
@@ -648,7 +647,8 @@ $\dot{c}=g(k,c)$
 
 - Soluzione di un sistema di equazioni differenziali.
 
-- Oltre alle condizioni iniziali delle variabili endogene, servono altre condizioni da rispettare. Quando abbiamo altre condizioni oltre a quelle iniziali si passa da un **initial value problem (IVP)** a un **Boundary value problem (BVP)**
+- Oltre alle condizioni iniziali delle variabili endogene, servono altre condizioni da rispettare. Quando abbiamo altre condizioni
+specificate in punti diversi dell'intervallo, ad esempio al tempo iniziale e al tempo finale, si passa da un **initial value problem (IVP)** a un **Boundary value problem (BVP)**
 
 - Vedremo i seguenti metodi:
 
