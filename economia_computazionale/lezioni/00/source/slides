@@ -99,9 +99,89 @@ Brevissime appendici su Octave, Python e Julia
 
 # Programma
 
-Nelle diapositive seguenti viene illustrato il programma e le tecniche numeriche che verranno utilizzate attraverso esempi economici.
+Nelle diapositive seguenti viene illustrato il programma e le tecniche numeriche che verranno utilizzate attraverso modelli economici.
 
-# Esempio 1a: mercato in autarchia
+Prima di passare agli esempio illustriamo:
+
+- com'è strutturata l'analisi dei modelli: dalla loro descrizione ai metodi numerici
+
+- come progredisce la sequenza dei modelli: dai modelli statici a quelli dinamici
+
+
+# Dai modelli ai metodi numerici
+
+Nel corso seguiremo un percorso comune nello sviluppo degli esempi
+economici e finanziari:
+
+\begin{center}
+\textbf{Modello economico o finanziario}\\
+$\downarrow$\\
+\textbf{Formulazione matematica}\\
+$\downarrow$\\
+\textbf{Problema computazionale}\\
+$\downarrow$\\
+\textbf{Metodo numerico}\\
+$\downarrow$\\
+\textbf{Soluzione e analisi dei risultati}
+\end{center}
+
+Uno stesso metodo numerico può essere utilizzato per risolvere
+problemi economici e finanziari anche molto diversi tra loro.
+
+# Modelli statici e modelli dinamici
+
+Una prima distinzione riguarda il ruolo del \textbf{tempo} nel modello.
+
+Un \textbf{modello statico} descrive le relazioni tra le variabili
+senza rappresentarne esplicitamente l'evoluzione nel tempo.
+
+Ad esempio, un equilibrio può essere rappresentato come:
+$$
+\mathbf{F}(\mathbf{x})=\mathbf{0}.
+$$
+Un \textbf{modello dinamico} descrive invece come le variabili
+evolvono nel tempo.
+
+In tempo discreto:
+$$
+\mathbf{x}_{t+1}=\mathbf{F}(\mathbf{x}_t).
+$$
+In tempo continuo:
+$$
+\dot{\mathbf{x}}(t)=\mathbf{F}(\mathbf{x}(t)).
+$$
+
+La distinzione tra modelli statici e dinamici determina anche
+il tipo di problema computazionale che dobbiamo affrontare.
+
+# Quali problemi computazionali incontreremo?
+
+Nei \textbf{modelli statici} incontreremo principalmente problemi
+come:
+
+- risolvere sistemi di equazioni;
+- trovare gli zeri di una funzione;
+- interpolare dati;
+- risolvere problemi di ottimizzazione.
+
+Nei \textbf{modelli dinamici} saremo interessati principalmente a:
+
+- determinare l'evoluzione delle variabili nel tempo;
+- simulare la risposta del sistema a shock;
+- studiare la stabilità degli equilibri;
+- risolvere equazioni alle differenze ed equazioni differenziali.
+
+A problemi diversi corrispondono \textbf{tecniche numeriche diverse}.
+
+#
+
+\hrule
+\vskip2mm
+\centering Modelli statici
+\vskip2mm
+\hrule
+
+# Modello 1a: mercato in autarchia
 
 $Q_{d}=\bar{Q}_{d}-aP$
 
@@ -111,11 +191,11 @@ Per una data parametrizzazione, ad es. $\bar{Q}_d=1000$, $\bar{Q}_s=250$, $a=10$
 Trovare 
 
 - equilibrio
-- social welfare
+- surplus totale = surplus del consumatore + surplus del produttore
 
-Cosa accade al social welfare se $\bar{Q}_{d}$ passa da 1000 a 750? 
+Cosa accade al surplus totale se $\bar{Q}_{d}$ passa da 1000 a 750? 
 
-# Esempio 1b: commercio tra due paesi
+# Modello 1b: commercio tra due paesi
 
 Vi sono due paesi dalle dimensioni simili.
 
@@ -146,7 +226,7 @@ Soluzione di sistemi di equazioni lineari.
 - Eliminazione gaussiana
 
 
-# Esempio 2
+# Modello 2
 
 $Y=C+I+G$
 
@@ -169,7 +249,7 @@ Metodi diretti per la soluzione di sistemi di equazioni lineari:
 - Scomposizione LU
 
 
-# Esempio 3a: due economie
+# Modello 3a: due economie
 
 $$
 \begin{array}{ll}
@@ -195,7 +275,7 @@ Si usano per matrici grandi e con molti elementi nulli.
 - stazionari (Jacobi, Gauss-Seidel, successive over-relaxation)
 - non stazionari (minimum residual, Ritz-Galerkin, Petrov-Galerkin)  
 
-# Esempio 3b: Life Cycle Assessment
+# Modello 3b: Life Cycle Assessment
 
 La **Life Cycle Assessment (LCA)** permette di valutare gli impatti
 ambientali associati alla produzione di un bene o servizio.
@@ -256,7 +336,9 @@ $$
 La Life Cycle Assessment può quindi essere vista come una
 **sequenza di operazioni di algebra lineare**.
 
-# Esempio 3c: la struttura a termine dei tassi di interesse
+Nei database LCA reali, $A$ può essere una matrice molto grande e sparsa.
+
+# Modello 3c: la struttura a termine dei tassi di interesse
 
 Il prezzo di un'obbligazione è uguale al valore attuale dei suoi cash flow futuri:
 $$
@@ -296,7 +378,6 @@ Soluzione di sistemi di equazioni lineari:
 $$
 Cd=P
 $$
-**Bootstrapping** per determinare sequenzialmente i fattori di sconto.
 
 **Interpolazione** per ottenere fattori di sconto alle scadenze non direttamente osservate.
 
@@ -304,9 +385,9 @@ $$
 - interpolazione polinomiale;
 - spline cubiche.
 
-Analisi del **condizionamento numerico** dei sistemi lineari.
+<!-- Analisi del **condizionamento numerico** dei sistemi lineari.-->
 
-# Esempio 4a
+# Modello 4a
 
 $Y=C+I+G$
 
@@ -330,7 +411,7 @@ Calcolare $Y$, $P$ e $R$.
 
 Soluzione di sistemi non lineari: il metodo di Newton e varianti
 
-# Esempio 4b: il rendimento di un'obbligazione
+# Modello 4b: il rendimento di un'obbligazione
 
 Il prezzo di un'obbligazione dipende dal suo rendimento a scadenza $y$:
 $$
@@ -347,7 +428,7 @@ Il calcolo dello **Yield to Maturity** diventa quindi un problema di ricerca del
 
 # Dal rendimento alla curva dei rendimenti
 
-Possiamo generalizzare il problema assumendo che il tasso di interesse dipenda dalla scadenza.
+Consideriamo, a fini didattici, una parametrizzazione lineare della struttura a termine.
 
 Ad esempio:
 $$
@@ -391,15 +472,14 @@ $$
 $$
 Un **problema non lineare** viene così risolto attraverso una successione di **sistemi lineari**.
 
-# Esempio 5
+# Modello 5
 
 n titoli rischiosi
 
-$$ \max_x c^T x$$
+$$\min_x x^T H x$$
 
 con $x$ che soddisfa le seguenti condizioni:
-
-$$x^T H x=\bar{\sigma}^2$$
+$$c^T x\ge \bar{c}$$
 $$\sum_{i=1}^{n}x_i=1$$
 $$x_i\ge 0$$
 
@@ -411,8 +491,15 @@ come scegliere il portafoglio?
 
 - Approccio Monte Carlo
 
+#
 
-# Esempio 6a
+\hrule
+\vskip2mm
+\centering Modelli dinamici
+\vskip2mm
+\hrule
+
+# Modello 6a
 
 $Q_{d,t}=\bar{Q}_{d}-aP_t$
 
@@ -420,11 +507,11 @@ $Q_{s,t}=\bar{Q}_{s}+bP_{t-1}$
 
 $Q_{s,t}=Q_{d,t}$
 
-simile all'esempio 1, ma vengono aggiunti gli indicatori del tempo.
+simile all'esempio 1, ma vengono aggiunti gli indicatori del tempo per introdurre la possibilità che alcune variabili cambiano con ritardo.
 
 Questo consente di monitorare la dinamica del sistema.
 
-# Esempio 6b
+# Modello 6b
 
 $Q_{d,t}=\bar{Q}_{d}-aP_t$
 
@@ -432,7 +519,7 @@ $Q_{s,t}=\bar{Q}_{s}+bP_{t}$
 
 $P_{t+1}=P_{t}-\sigma (Q_{s,t}-Q_{d,t})$
 
-Il prezzo viene ora deciso dal produttore in base all'eccesso di offerta. 
+Il prezzo si muove in funzione dello squilibrio di mercato. 
 
 # Tecniche numeriche
 
@@ -442,6 +529,7 @@ Il prezzo viene ora deciso dal produttore in base all'eccesso di offerta.
 
 - Per giungere a conclusioni sulla stabilità del sistema saranno utili le tecniche che consentono di trovare gli zeri di un polinomio (anche di grado elevato). 
 
+<!--
 # I sistemi dinamici
 
 - Equazioni alle differenze
@@ -462,8 +550,9 @@ $y_{t+1}=f(y_t)+g$ ovvero $y_{t+1}-f(y_t)=g$
 
 - si dicono di ordine $n$ se presentano la variabile $y$ ritardata di non più di $n$ periodi.
 
+-->
 
-# Esempio 7
+# Modello 7
 
 - Duopolio di Cournot dinamico in tempo discreto :
 
@@ -479,13 +568,17 @@ $y_{t+1}=f(y_t)+g$ ovvero $y_{t+1}-f(y_t)=g$
 
 # Tecniche numeriche
 
-Il calcolo degli autovalori può essere fatto con il metodo di trasformazione o con metodo iterativo.
+- Si tratta di un sistema di equazioni alle differenze
 
-Vedremo l'algoritmo QR per quanto riguarda la trasformazione.
+- Valutazione della stabilità attraverso gli autovalori
 
-I metodi iterativi sono più appropriati per grandi sistemi. Vedremo in particolare il metodo Arnoldi.
+	- Il calcolo degli autovalori può essere fatto con il metodo di trasformazione o con metodo iterativo.
 
-# Esempio 8
+	- Vedremo l'algoritmo QR per quanto riguarda la trasformazione.
+
+	- I metodi iterativi sono più appropriati per grandi sistemi. Vedremo in particolare il metodo Arnoldi.
+
+# Modello 8
 
 Il modello Phillips Curve e Demand Growth
 
@@ -501,11 +594,14 @@ $\pi$ inflazione, $\hat{Y}$ log di output gap (output gap= deviazione percentual
 
 # Tecniche
 
-costruzione di un algoritmo che consenta di simulare la dinamica del sistema a seguito di uno shock.
+- si tratta di un sistema di 3 equazioni alle differenze implicito
 
-Ciclo for sul tempo, e ad ogni iterazione risolvere il sistema di equazioni (lineari).
+- ciclo for sul tempo, e ad ogni iterazione risolvere il sistema di equazioni (lineari).
 
-# Esempio 9
+- costruzione di un algoritmo che consenta di simulare la dinamica del sistema a seguito di uno shock.
+
+
+# Modello 9
 
 Il modello di Solow
 
@@ -519,18 +615,18 @@ Cosa accade se migliora la tecnologia?
 
 # Tecniche numeriche
 
-Soluzione di un'equazione differenziale:
+- Soluzione di un'equazione differenziale:
 conoscendo la derivata di una funzione determinare la funzione incognita.
 
-Ci sono infinite funzioni che hanno la stessa derivata (traslazione).
+- L'equazione differenziale definisce una famiglia di traiettorie; la condizione iniziale seleziona la traiettoria corrispondente.
 
-Se ci viene dato il valore iniziale riusciamo ad individuare una sola soluzione.
+- Se ci viene dato il valore iniziale riusciamo ad individuare una sola soluzione.
 
-Parliamo in questo caso di problema di valore iniziale.
+- Parliamo in questo caso di **Initial Value Problem (IVP)**.
 
 Soluzione attraverso il metodo di Eulero: ogni punto successivo viene calcolato muovendo lungo la curva tangente al punto di partenza.
 
-# Esempio 10 
+# Modello 10 
 
 Modello di Ramsey-Cass-Koopmans
 
@@ -550,19 +646,52 @@ $\dot{c}=g(k,c)$
 
 # Tecniche numeriche
 
-Soluzione di un sistema di equazioni differenziali.
+- Soluzione di un sistema di equazioni differenziali.
 
-Oltre alle condizioni iniziali delle variabili endogene, servono altre condizioni da rispettare. Quando abbiamo altre condizioni oltre a quelle iniziali si passa da un \textit{initial value problem} a un \textit{Boundary value problem}
+- Oltre alle condizioni iniziali delle variabili endogene, servono altre condizioni da rispettare. Quando abbiamo altre condizioni oltre a quelle iniziali si passa da un **initial value problem (IVP)** a un **Boundary value problem (BVP)**
 
-Vedremo i seguenti metodi:
+- Vedremo i seguenti metodi:
 
-- Finite difference method
+	- Finite difference method
 
-- Collocation method
-
-
+	- Collocation method
 
 
+#
 
+\hrule
+\vskip2mm
+\centering Considerazioni finali
+\vskip2mm
+\hrule
 
+# Una mappa del corso
+
+\begin{center}
+\textbf{MODELLI STATICI}
+\end{center}
+
+\begin{tabular}{ll}
+Sistemi lineari & Gauss, LU, metodi iterativi \\
+Interpolazione & lineare, polinomiale, spline \\
+Equazioni non lineari & bisezione, Newton, secanti \\
+Ottimizzazione & programmazione quadratica,\\ 
+		& ricerca stocastica \\
+\end{tabular}
+
+\vspace{0.5cm}
+
+\begin{center}
+\textbf{MODELLI DINAMICI}
+\end{center}
+
+\begin{tabular}{ll}
+Tempo discreto & iterazione, stabilità, autovalori \\
+Tempo continuo -- IVP & metodi numerici per ODE \\
+Tempo continuo -- BVP & differenze finite, collocazione \\
+\end{tabular}
+
+#
+
+\includegraphics[width=\textwidth]{all}
 
