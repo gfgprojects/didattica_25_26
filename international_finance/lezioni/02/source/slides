@@ -122,19 +122,19 @@ Each section includes:
 
 - current account balance + capital account balance + errors and omissions = financial account balance
 
-For example, for Italy, in 2022 the following balances were recorded (data in millions of euros):
+For example, for Italy, in 2025 the following balances were recorded (data in millions of euros):
 
-Current account -23265
+Current account 20676
 
-Capital Account 10332
+Capital Account 2304
 
-Financial Account -17568
+Financial Account 44748
 
-Errors and Omissions -4635
+Errors and Omissions 21767
 
 therefore, we can verify that:
 
--24365 +10332 - 4635 = -17568
+20676 + 2304 + 21767 $\approx$ 44748
 
 # Current account balance and national accounts
 
