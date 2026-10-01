@@ -49,7 +49,7 @@ Ogni flusso di cassa deve essere scontato utilizzando il fattore di sconto corri
 
 $$P=CF_1d_1+CF_2d_2+\cdots+CF_Td_T$$
 
----
+#
 
 Equivalentemente:
 
@@ -87,12 +87,17 @@ Osservando più obbligazioni otteniamo quindi più equazioni che possono essere 
 
 Supponiamo di osservare tre obbligazioni con i seguenti flussi di cassa e prezzi:
 
-| Obbligazione | $t=1$ | $t=2$ | $t=3$ | Prezzo |
-|:-------------:|------:|------:|------:|------:|
-| A | 105 | 0 | 0 | 100 |
-| B | 4 | 104 | 0 | 99 |
-| C | 5 | 5 | 105 | 98 |
-
+\begin{center}
+\begin{tabular}{ccccc}
+\hline
+Obbligazione & $t=1$ & $t=2$ & $t=3$ & Prezzo \\
+\hline
+A & 105 & 0 & 0 & 100 \\
+B & 4 & 104 & 0 & 99 \\
+C & 5 & 5 & 105 & 98 \\
+\hline
+\end{tabular}
+\end{center}
 Le equazioni di valutazione sono:
 $$105d_1=100$$
 $$4d_1+104d_2=99$$
@@ -156,6 +161,15 @@ Informazioni sui titoli di Stato italiani:
 	https://www.simpletoolsforinvestors.eu/index.shtml
 	
 	(scegli Bond tools - Monitors, poi scegli Italia)
+
+# I dati
+
+- Possiamo ottenere i dati da tabelle contenute in pagine internet (web scraping)
+
+- utilizziamo questa tecnica per ottenere i dati della tabella nel sito simpletoolsforinvestors
+
+- vediamo che le tipologie di titoli di stato contenute nella tabella sono quelle elencate nella slide seguente
+
 
 # Titoli di Stato italiani
 
@@ -290,17 +304,22 @@ Per semplicità, nella prima applicazione utilizzeremo comunque soltanto BOT e B
 
 Per costruire il nostro esempio utilizzeremo:
 
-| Strumento | Struttura | Utilizzato |
-|---|---|:---:|
-| BOT | Zero-coupon | Sì |
-| BTP nominale a tasso fisso | Cedola fissa | Sì |
-| BTP Green a tasso fisso | Cedola fissa | No |
-| BTP Italia | Indicizzato | No |
-| BTP€i | Indicizzato | No |
-| BTP Valore | Step-up | No |
-| BTP Futura | Step-up | No |
-| BTP Più | Step-up | No |
-
+\begin{center}
+\begin{tabular}{llc}
+\hline
+Strumento & Struttura & Utilizzato \\
+\hline
+BOT & Zero-coupon & Sì \\
+BTP nominale a tasso fisso & Cedola fissa & Sì \\
+BTP Green a tasso fisso & Cedola fissa & No \\
+BTP Italia & Indicizzato & No \\
+BTP€i & Indicizzato & No \\
+BTP Valore & Step-up & No \\
+BTP Futura & Step-up & No \\
+BTP Più & Step-up & No \\
+\hline
+\end{tabular}
+\end{center}
 La scelta non dipende dall'importanza finanziaria dei diversi strumenti, ma dalla necessità di partire da strutture di cash flow semplici e note.
 
 
@@ -318,6 +337,23 @@ L'obiettivo computazionale rimane ricondurre il problema finanziario alla soluzi
 
 $$Ax=b$$
 
+# Curva dei fattori di sconto dei BOT
+
+- Dopo aver ottenuto i dati dalla pagina simpletoolsforinvestors
+
+- Selezioniamo soltanto i dati relativi ai BOT
+
+- Calcoliamo il fattore di sconto diviento il prezzo per 100
+
+- Calcoliamo i giorni rimanenti alla scadenza e li esprimiamo in frazione di anno
+
+# I dati dei BOT (1/10/2026)
+
+\centering \includegraphics[scale=0.3]{screen_bot}
+
+# Il grafico
+
+\centering \includegraphics{d_bot}
 
 # Dai punti osservati alla curva
 
@@ -375,12 +411,16 @@ Per valutare il pagamento alla scadenza abbiamo bisogno del fattore di sconto re
 Ma nel nostro dataset non esiste un BOT con questa esatta scadenza.
 
 I BOT più vicini sono:
-
-| Titolo | Scadenza | Discount factor |
-|---|---|---:|
-| BOT 14/10/2026 ZC | 14/10/2026 | $d_1$ |
-| BOT 13/11/2026 ZC | 13/11/2026 | $d_2$ |
-
+\begin{center}
+\begin{tabular}{llc}
+\hline
+Titolo & Scadenza & Discount factor \\
+\hline
+BOT 14/10/2026 ZC & 14/10/2026 & $d_1$ \\
+BOT 13/11/2026 ZC & 13/11/2026 & $d_2$ \\
+\hline
+\end{tabular}
+\end{center}
 Come possiamo ottenere il fattore di sconto al 01/11/2026?
 
 # Soluzione
@@ -459,7 +499,7 @@ $$\kappa(A)=\|A\|\|A^{-1}\|$$
 Una perturbazione di $b$ può produrre una variazione della soluzione che soddisfa:
 $$\frac{\|\Delta x\|}{\|x\|}\leq\kappa(A)\frac{\|\Delta b\|}{\|b\|}$$
 
----
+#
 
 Interpretazione:
 
@@ -595,19 +635,24 @@ Otteniamo così un sistema quadrato.
 # Il sistema lineare della spline
 
 Per i nostri 15 BOT:
-
-| Condizioni | Equazioni |
-|---|---:|
-| Interpolazione dei nodi | 28 |
-| Continuità di $S'$ | 13 |
-| Continuità di $S''$ | 13 |
-| Condizioni al contorno | 2 |
-| **Totale** | **56** |
-
+\begin{center}
+\begin{tabular}{lr}
+\hline
+Condizioni & Equazioni \\
+\hline
+Interpolazione dei nodi & 28 \\
+Continuità di $S'$ & 13 \\
+Continuità di $S''$ & 13 \\
+Condizioni al contorno & 2 \\
+\hline
+\textbf{Totale} & \textbf{56} \\
+\hline
+\end{tabular}
+\end{center}
 Abbiamo quindi:
 $$56\text{ equazioni}\qquad56\text{ incognite}$$
 
----
+#
 
 Il problema può essere scritto nella forma:
 
