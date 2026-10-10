@@ -1,0 +1,576 @@
+
+# Currency derivatives
+
+Examples from the article:
+
+A primer on currency derivatives by Gregory P. Hopper published in Business Review, May/June 1995
+
+# The situation
+
+- In Japan, a computer screen is sold for 10,000 yen and in the US for $105.
+
+- The exchange rate is 100 yen per dollar
+
+- an American merchant makes a calculation and finds it convenient to buy the screens in Japan at a cost of 100 dollars (10000/100) and resell them in the USA
+
+- the merchant decides to buy 1250 screens
+
+- The Japanese manufacturer will take a year to produce and deliver them.
+
+- Payment will be made on delivery
+
+# The problem
+
+- the merchant will earn $5 if the exchange rate does not change to 100 yen per dollar
+
+- but if the dollar depreciates against the yen, the gain will be reduced and may turn into a loss if the depreciation is particularly strong.
+
+- For example, if the exchange rate is 95 yen per dollar, the merchant will lose 26 cents on each screen:
+
+$$105-\frac{10000}{95}=105-105,26=-0,26$$
+
+# The Fixed-term contract
+
+- The merchant could conclude a contract in which it promises to buy in a year's time the 12.5 million yen needed to buy the 1250 screens at an exchange rate of 97 yen per dollar.
+
+- In this case it would be sure to earn 1 dollar and 29 cents for each monitor: 
+ 
+$$105-\frac{10000}{97}=105-103,1=1,9$$
+
+# The Futures Contract (1)
+
+- The trader buys securities whose price is pegged to the dollar-for-yen exchange rate
+
+- Buy 12.5 million of these stocks at a price of 0.01 worth $125000
+
+- the contract provides for the periodic payment (e.g. daily) of the price change observed in the period and it is not necessary to commit the 125000 dollars
+
+- example, if in one day the price goes from 0.01 to 0.01001, at the end of the day the subject receives 125 dollars:
+
+$$(0.01001-0.01)\times 12.5\ million=125$$ 
+
+# The Futures Contract (2)
+
+- suppose that the exchange rate gradually changes to 95 yen per dollar and consequently 
+
+- the price of each security gradually rises to 0.01052
+
+- the subject therefore accumulates 6500 dollars
+
+- the dealer receives the monitors and pays by buying 12.5 million yen for 131579, then sells the monitors at a loss of $329
+$$105\times 1250-131579=-329$$
+
+- Considering the gains obtained with the financial contract, the transaction yielded $6171
+$$6500-329=6171$$
+
+# The Options
+
+- The merchant concludes a contract that provides for the payment of $0.0001 per yen to reserve the right to buy or not buy 12.5 million yen at an exchange rate of 97 yen per dollar
+
+- the merchant will in any case have to parage $1250
+
+- if the exchange rate is for example 95, the merchant buys the yen earning 1134 dollars
+$$1250 \times 105 - (1/97)\times 12.5\ mln - 1250=1134$$ 
+
+- if the exchange rate will be for example 98, the trader does not buy the yen using this contract, but on the market he earns 2449 dollars
+$$1250 \times 105 - (1/98)\times 12.5\ mln - 1250=2449$$ 
+
+# Futures and options
+
+Futures and options are standardized contracts that can be traded on centralized and regulated markets (\textit{in the counter})
+
+# Swaps
+
+Swaps are bilateral contracts whose content is not standardised. The parties are therefore free to adapt the contracts to their needs.
+
+The swap market is therefore decentralized and not subject to specific regulation (\textit{over the counter}).
+
+# A typical example of a swap
+
+Generally, an exchange rate swap is a sale of spot currency combined with a forward repurchase of the same.
+
+Example: An international merchant receives foreign currency in payment and knows that he will have to use it in the future to pay a supplier.
+
+The swap involves lower transaction fees than two separate transactions. 
+
+# An atypical example
+- the merchant learns that there is a Japanese company that has bought footballs in the USA and will have to pay 128000 dollars in a year
+
+- the trader concludes a contract with this Japanese company which stipulates that he will pay the American balloon manufacturer and the Japanese balloon importer will pay the Japanese company for the monitors
+
+
+# The Origins of Currency Swaps: IBM and the World Bank (1981)
+
+- In August 1981, IBM and the World Bank entered into a landmark currency swap arranged by Salomon Brothers.
+- The transaction is widely regarded as a milestone in the development of the modern currency swap market.
+- The two institutions had different financing needs:
+  - **IBM** wanted to reduce its exposure to liabilities denominated in Deutsche marks (DEM) and Swiss francs (CHF).
+  - **The World Bank** wanted to obtain financing in DEM and CHF, while benefiting from its access to the US dollar bond market.
+
+**The solution:** exchange payment obligations denominated in different currencies.
+
+---
+
+# IBM and the World Bank: The Initial Situation
+
+**IBM**
+
+- Had outstanding debt denominated in DEM and CHF.
+- Had benefited from changes in exchange rates.
+- Wanted to transform its foreign-currency liabilities into US dollar obligations.
+
+**World Bank**
+
+- Needed financing in DEM and CHF.
+- Could raise funds efficiently by issuing US dollar bonds.
+- Wanted to obtain foreign-currency funding without directly issuing new bonds in those currencies.
+
+The two institutions had **complementary currency needs**.
+
+---
+
+# IBM and the World Bank: The Currency Swap
+
+The World Bank issued bonds denominated in US dollars.
+
+IBM and the World Bank then entered into a currency swap:
+
+- **IBM** agreed to make payments denominated in US dollars.
+- **The World Bank** agreed to make payments denominated in DEM and CHF.
+
+The swap transformed the economic exposure of their liabilities without requiring the original bondholders to change their contracts.
+
+**Cash flows under the swap:**
+
+- IBM pays USD and receives DEM and CHF.
+- The World Bank pays DEM and CHF and receives USD.
+
+
+
+# IBM and the World Bank: Currency Swap (1981)
+
+The two institutions exchanged payment obligations in different currencies.
+
+\begin{center}
+\begin{tikzpicture}[
+    >=stealth,
+    thick,
+    every node/.style={font=\small}
+]
+
+\node[draw, rounded corners, minimum width=2.8cm,
+      minimum height=1.2cm] (IBM) at (0,0) {IBM};
+
+\node[draw, rounded corners, minimum width=2.8cm,
+      minimum height=1.2cm] (WB) at (7,0) {World Bank};
+
+\draw[->, blue] ([yshift=0.25cm]IBM.east) --
+    node[above] {USD payments}
+    ([yshift=0.25cm]WB.west);
+
+\draw[->, red] ([yshift=-0.25cm]WB.west) --
+    node[below] {DEM and CHF payments}
+    ([yshift=-0.25cm]IBM.east);
+
+\end{tikzpicture}
+\end{center}
+
+- IBM transformed its foreign-currency debt exposure into USD.
+- The World Bank obtained financing exposure in DEM and CHF.
+
+
+
+---
+
+# IBM and the World Bank: Economic Benefits
+
+**For IBM:**
+
+- Reduced its exposure to future appreciation of DEM and CHF.
+- Transformed its foreign-currency debt into synthetic dollar debt.
+- Could lock in the benefits of favorable exchange-rate movements.
+
+**For the World Bank:**
+
+- Obtained financing exposure in DEM and CHF.
+- Exploited its ability to borrow in the US dollar market.
+- Diversified its sources of funding.
+
+**Key insight:** currency swaps allow institutions to separate the currency in which they borrow from the currency in which they ultimately want to be financed.
+
+---
+
+# A Traditional Cross-Currency Swap
+
+A **cross-currency swap** is a financial contract in which two counterparties exchange cash flows denominated in different currencies.
+
+A traditional fixed-for-fixed cross-currency swap typically involves:
+
+1. An initial exchange of principal amounts in two currencies.
+2. Periodic exchanges of interest payments.
+3. A final re-exchange of principal amounts at the agreed exchange rate.
+
+The contract allows each counterparty to obtain funding exposure in a different currency.
+
+---
+
+# Cross-Currency Swap: A Numerical Example
+
+Consider two companies:
+
+- **Company A (USA):** needs EUR 10 million to finance an investment in Europe.
+- **Company B (Europe):** needs USD 12 million to finance an investment in the United States.
+
+Assume:
+
+- Spot exchange rate: EUR 1 = USD 1.20.
+- Swap maturity: 3 years.
+- Fixed interest rate on EUR: 3%.
+- Fixed interest rate on USD: 4%.
+
+**At the beginning of the contract:**
+
+- Company A pays USD 12 million and receives EUR 10 million.
+- Company B pays EUR 10 million and receives USD 12 million.
+
+Each company obtains the currency it needs.
+
+---
+
+# Cross-Currency Swap: Interest Payments
+
+During the three-year contract, the companies exchange annual interest payments.
+
+**Company A pays interest in EUR:**
+
+$$
+10{,}000{,}000 \times 0.03 = 300{,}000 \text{ EUR}
+$$
+
+**Company B pays interest in USD:**
+
+$$
+12{,}000{,}000 \times 0.04 = 480{,}000 \text{ USD}
+$$
+
+**Each year:**
+
+- Company A pays EUR 300,000 and receives USD 480,000.
+- Company B pays USD 480,000 and receives EUR 300,000.
+
+Interest payments are exchanged in different currencies and are not automatically netted against each other.
+
+---
+
+# Cross-Currency Swap: Maturity and Exchange Rate Risk
+
+At the end of year 3, the companies exchange the original principal amounts again.
+
+- **Company A** returns EUR 10 million and receives USD 12 million.
+- **Company B** returns USD 12 million and receives EUR 10 million.
+
+The principal amounts remain fixed regardless of the spot exchange rate at maturity.
+
+For example, even if the exchange rate changes to:
+
+$$
+1 \text{ EUR} = 1.40 \text{ USD}
+$$
+
+the companies still exchange EUR 10 million against USD 12 million.
+
+**The swap fixes the contractual currency flows, helping companies manage exchange rate risk.**
+
+---
+
+# Currency Swaps: Pricing and Economic Advantages
+
+A newly negotiated currency swap is generally structured to have approximately **zero market value at inception**.
+
+Its terms are determined by:
+
+- Interest rates in the two currencies.
+- Spot and forward exchange rates.
+- Cross-currency basis and funding conditions.
+- Counterparty credit risk and collateral arrangements.
+
+Financial intermediaries may charge a margin through the quoted swap terms.
+
+**Main economic advantages:**
+
+- Managing exchange rate risk.
+- Obtaining funding exposure in a desired currency.
+- Potentially reducing financing costs when market access or funding conditions differ.
+- Changing the currency composition of liabilities without refinancing existing debt.
+
+**Important:** a currency swap does not automatically create financing savings. Its market price reflects the relative costs of funding in different currencies.
+
+
+# Currency Swap: Initial Cash Flows ($t=0$)
+
+\begin{center}
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+    >=Stealth,
+    thick,
+    every node/.style={font=\small},
+    company/.style={
+        draw,rounded corners,
+        minimum width=3cm,
+        minimum height=0.8cm,
+        align=center
+    },
+    lender/.style={
+        draw,dashed,rounded corners,
+        minimum width=3cm,
+        minimum height=0.8cm,
+        align=center
+    }
+]
+
+% WITHOUT SWAP
+\node at (0,3.8) {\textbf{WITHOUT SWAP}};
+
+\node[lender] (EL1) at (0,2.5)
+    {European EUR Lender\\6\%};
+
+\node[company] (A1) at (0,0.8)
+    {American Company (A)};
+
+\draw[->,blue] (EL1) --
+    node[right]{EUR 10m} (A1);
+
+\node[lender] (UL1) at (0,-1.2)
+    {American USD Lender\\5\%};
+
+\node[company] (B1) at (0,-2.9)
+    {European Company (B)};
+
+\draw[->,blue] (UL1) --
+    node[right]{USD 12m} (B1);
+
+% SEPARATOR
+\draw[dashed,gray] (3,-4) -- (3,4);
+
+% WITH SWAP
+\node at (9,3.8) {\textbf{WITH SWAP}};
+
+\node[lender] (UL2) at (6,2.5)
+    {American USD Lender\\4\%};
+
+\node[lender] (EL2) at (12,2.5)
+    {European EUR Lender\\3\%};
+
+\node[company] (A2) at (6,0)
+    {American Company (A)};
+
+\node[company] (B2) at (12,0)
+    {European Company (B)};
+
+% DOMESTIC LOANS
+\draw[->,blue] (UL2) --
+    node[left]{USD 12m} (A2);
+
+\draw[->,blue] (EL2) --
+    node[right]{EUR 10m} (B2);
+
+% SWAP
+\draw[->,red] ([yshift=0.22cm]A2.east) --
+    node[above]{USD 12m}
+    ([yshift=0.22cm]B2.west);
+
+\draw[->,red] ([yshift=-0.22cm]B2.west) --
+    node[below]{EUR 10m}
+    ([yshift=-0.22cm]A2.east);
+
+\end{tikzpicture}%
+}
+\end{center}
+
+**At $t=0$:**
+
+- Without swap: A borrows EUR 10m at 6\%; B borrows USD 12m at 5\%.
+- With swap: A borrows USD 12m at 4\%; B borrows EUR 10m at 3\%.
+- The two companies exchange principal through the swap.
+
+---
+
+# Currency Swap: Interest Payments ($t=1,2$)
+
+\begin{center}
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+    >=Stealth,
+    thick,
+    every node/.style={font=\small},
+    company/.style={
+        draw,rounded corners,
+        minimum width=3cm,
+        minimum height=0.8cm,
+        align=center
+    },
+    lender/.style={
+        draw,dashed,rounded corners,
+        minimum width=3cm,
+        minimum height=0.8cm,
+        align=center
+    }
+]
+
+% WITHOUT SWAP
+\node at (0,3.8) {\textbf{WITHOUT SWAP}};
+
+\node[lender] (EL1) at (0,2.5)
+    {European EUR Lender\\6\%};
+
+\node[company] (A1) at (0,0.8)
+    {American Company (A)};
+
+\draw[->,blue] (A1) --
+    node[right]{EUR 600,000} (EL1);
+
+\node[lender] (UL1) at (0,-1.2)
+    {American USD Lender\\5\%};
+
+\node[company] (B1) at (0,-2.9)
+    {European Company (B)};
+
+\draw[->,blue] (B1) --
+    node[right]{USD 600,000} (UL1);
+
+% SEPARATOR
+\draw[dashed,gray] (3,-4) -- (3,4);
+
+% WITH SWAP
+\node at (9,3.8) {\textbf{WITH SWAP}};
+
+\node[lender] (UL2) at (6,2.5)
+    {American USD Lender\\4\%};
+
+\node[lender] (EL2) at (12,2.5)
+    {European EUR Lender\\3\%};
+
+\node[company] (A2) at (6,0)
+    {American Company (A)};
+
+\node[company] (B2) at (12,0)
+    {European Company (B)};
+
+% LOAN INTEREST
+\draw[->,blue] (A2) --
+    node[left]{USD 480,000} (UL2);
+
+\draw[->,blue] (B2) --
+    node[right]{EUR 300,000} (EL2);
+
+% SWAP INTEREST
+\draw[->,red] ([yshift=0.22cm]A2.east) --
+    node[above]{EUR 300,000}
+    ([yshift=0.22cm]B2.west);
+
+\draw[->,red] ([yshift=-0.22cm]B2.west) --
+    node[below]{USD 480,000}
+    ([yshift=-0.22cm]A2.east);
+
+\end{tikzpicture}%
+}
+\end{center}
+
+**At $t=1$ and $t=2$:**
+
+- Without swap: A pays EUR 600,000; B pays USD 600,000.
+- With swap: A pays EUR 300,000 and receives USD 480,000.
+- B pays USD 480,000 and receives EUR 300,000.
+- Swap receipts cover the interest payments on domestic loans.
+
+---
+
+# Currency Swap: Final Cash Flows ($t=3$)
+
+\begin{center}
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+    >=Stealth,
+    thick,
+    every node/.style={font=\small},
+    company/.style={
+        draw,rounded corners,
+        minimum width=3cm,
+        minimum height=0.8cm,
+        align=center
+    },
+    lender/.style={
+        draw,dashed,rounded corners,
+        minimum width=3cm,
+        minimum height=0.8cm,
+        align=center
+    }
+]
+
+% WITHOUT SWAP
+\node at (0,3.8) {\textbf{WITHOUT SWAP}};
+
+\node[lender] (EL1) at (0,2.5)
+    {European EUR Lender\\6\%};
+
+\node[company] (A1) at (0,0.8)
+    {American Company (A)};
+
+\draw[->,blue] (A1) --
+    node[right]{EUR 10.6m} (EL1);
+
+\node[lender] (UL1) at (0,-1.2)
+    {American USD Lender\\5\%};
+
+\node[company] (B1) at (0,-2.9)
+    {European Company (B)};
+
+\draw[->,blue] (B1) --
+    node[right]{USD 12.6m} (UL1);
+
+% SEPARATOR
+\draw[dashed,gray] (3,-4) -- (3,4);
+
+% WITH SWAP
+\node at (9,3.8) {\textbf{WITH SWAP}};
+
+\node[lender] (UL2) at (6,2.5)
+    {American USD Lender\\4\%};
+
+\node[lender] (EL2) at (12,2.5)
+    {European EUR Lender\\3\%};
+
+\node[company] (A2) at (6,0)
+    {American Company (A)};
+
+\node[company] (B2) at (12,0)
+    {European Company (B)};
+
+% LOAN REPAYMENTS
+\draw[->,blue] (A2) --
+    node[left]{USD 12.48m} (UL2);
+
+\draw[->,blue] (B2) --
+    node[right]{EUR 10.3m} (EL2);
+
+% SWAP PRINCIPAL + FINAL INTEREST
+\draw[->,red] ([yshift=0.22cm]A2.east) --
+    node[above]{EUR 10.3m}
+    ([yshift=0.22cm]B2.west);
+
+\draw[->,red] ([yshift=-0.22cm]B2.west) --
+    node[below]{USD 12.48m}
+    ([yshift=-0.22cm]A2.east);
+
+\end{tikzpicture}%
+}
+\end{center}
+
+**At $t=3$:**
+
+- Without swap: A repays EUR 10.6m; B repays USD 12.6m.
+- With swap: A pays EUR 10.3m and receives USD 12.48m.
+- B pays USD 12.48m and receives EUR 10.3m.
+- Swap receipts cover the final interest and principal repayments.
+
+
