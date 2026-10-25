@@ -1,0 +1,323 @@
+
+# Obiettivi della lezione
+
+- Acquisire una tabella da una pagina web.
+- Pulire e trasformare i dati importati.
+- Riconoscere automaticamente diverse tipologie di titoli.
+- Selezionare i BOT e calcolarne i fattori di sconto.
+- Visualizzare i risultati con un grafico.
+
+**Caso di studio:** lo script `curva_dei_rendimenti_bot.R`.
+
+# I pacchetti utilizzati
+
+    library(dplyr)   # manipolazione di tabelle
+    library(rvest)   # web scraping di pagine HTML
+    library(readr)   # conversione di numeri testuali
+    library(stringr) # analisi di stringhe di testo
+
+Per installare un pacchetto (solo la prima volta):
+
+    install.packages("rvest")
+
+`library()` rende disponibili le funzioni del pacchetto nella sessione corrente.
+
+# Il flusso di lavoro
+
+1. Collegarsi alla pagina web.
+2. Individuare e importare la tabella HTML.
+3. Selezionare e convertire le colonne.
+4. Classificare i titoli mediante la descrizione.
+5. Filtrare i BOT, calcolare la scadenza residua e il fattore di sconto.
+6. Disegnare il grafico.
+
+# La pipe `|>`
+
+La pipe passa il risultato dell'operazione a sinistra come primo argomento della funzione a destra.
+
+    risultato <- dati |>
+      filter(prezzo > 90) |>
+      arrange(scadenza)
+
+È equivalente a:
+
+    risultato <- arrange(filter(dati, prezzo > 90), scadenza)
+
+La pipe `|>` è una funzione di **R base**, non del pacchetto `dplyr`.
+
+# `rvest`: leggere una pagina web
+
+    url <- paste0(
+      "https://www.simpletoolsforinvestors.eu/",
+      "monitor_info.php?monitor=5&timescale=DUR&",
+      "yieldtype=G&issuer=GOV_IT&volumerating=0"
+    )
+    page <- read_html(url)
+
+- `read_html()` scarica e interpreta il contenuto HTML della pagina.
+- `page` contiene un documento HTML, non ancora una tabella R.
+- Lo scraping dipende dalla struttura della pagina e dalla sua accessibilità.
+
+# `rvest`: individuare le tabelle
+
+    tables <- page |>
+      html_elements("table") |>
+      html_table(fill = TRUE)
+
+    btp_table <- tables[[1]]
+
+- `html_elements("table")` trova tutti gli elementi HTML `<table>`.
+- `html_table()` converte ciascuna tabella HTML in una tabella R.
+- `fill = TRUE` aiuta a gestire righe con celle mancanti.
+- `tables[[1]]` estrae la prima tabella dalla lista.
+
+**Attenzione:** la prima tabella non è necessariamente quella desiderata se il sito cambia.
+
+# Controllare i dati importati
+
+Prima delle trasformazioni è utile ispezionare la tabella:
+
+    names(btp_table)
+    head(btp_table)
+    str(btp_table)
+
+- `names()` mostra i nomi delle colonne.
+- `head()` mostra le prime righe.
+- `str()` mostra struttura e tipi delle variabili.
+
+Queste funzioni sono di **R base**; sono suggerimenti didattici aggiuntivi, non istruzioni presenti nello script.
+
+# `dplyr`: selezionare e rinominare con `transmute()`
+
+    btp <- btp_table |>
+      transmute(
+        isin = `Codice ISIN`,
+        descrizione = Descrizione,
+        scadenza = as.Date(Datascadenza),
+        mercato = Mercato
+      )
+
+- `transmute()` crea le colonne indicate e scarta le altre.
+- `nuovo_nome = vecchio_nome` rinomina una variabile.
+- I backtick permettono di usare nomi di colonne con spazi.
+- `as.Date()` converte valori in date (funzione di R base).
+
+Nello script originale vengono convertiti anche prezzo e rendimento.
+
+# `readr`: convertire numeri scritti come testo
+
+    prezzo = parse_number(
+      `Prezzo diriferimento`,
+      locale = locale(decimal_mark = ",")
+    )
+
+- `parse_number()` estrae un valore numerico da una stringa.
+- `locale(decimal_mark = ",")` indica che la virgola è il separatore decimale.
+- La stessa conversione viene applicata alla colonna `Yield`.
+
+**Esempio:** il testo `"98,75"` diventa il numero `98.75`.
+
+# `dplyr`: aggiungere colonne con `mutate()`
+
+    btp <- btp |>
+      mutate(tipo = "Da classificare")
+
+- `mutate()` crea o modifica una o più colonne.
+- A differenza di `transmute()`, mantiene le colonne già presenti.
+- Le nuove variabili possono dipendere dalle altre colonne.
+
+Nello script `mutate()` è utilizzata per classificare i titoli e calcolare le scadenze residue e i fattori di sconto.
+
+# `stringr`: riconoscere un testo con `str_detect()`
+
+    str_detect("BOT 15/12/2026", "^BOT ")
+    # TRUE
+
+    str_detect("BTP GREEN 2035",
+               regex("GREEN", ignore_case = TRUE))
+    # TRUE
+
+- `str_detect(testo, modello)` restituisce `TRUE` o `FALSE`.
+- `^BOT ` cerca la stringa `BOT ` **all'inizio** del testo.
+- `regex(..., ignore_case = TRUE)` ignora maiuscole e minuscole.
+
+# `dplyr`: classificazione con `case_when()`
+
+    btp <- btp |>
+      mutate(tipo = case_when(
+        str_detect(descrizione, "^BOT ") ~ "BOT",
+        str_detect(descrizione, "^BTP Italia") ~ "BTP Italia",
+        str_detect(descrizione, "^BTPi ") ~ "BTPi",
+        str_detect(descrizione, "^BTP ") ~ "BTP plain vanilla",
+        TRUE ~ "Altro"
+      ))
+
+- `case_when()` valuta le condizioni nell'ordine scritto.
+- Restituisce il valore associato alla **prima condizione vera**.
+- `TRUE ~ "Altro"` definisce il caso residuale.
+
+*Esempio abbreviato:* nello script sono riconosciuti anche BTP Valore, Futura, Più e Green.
+
+# Perché l'ordine delle condizioni conta
+
+    case_when(
+      str_detect(descrizione, "GREEN") ~ "BTP Green",
+      str_detect(descrizione, "^BTP ") ~ "BTP plain vanilla",
+      TRUE ~ "Altro"
+    )
+
+Se una descrizione soddisfa più condizioni, viene scelta la prima.
+
+Nello script il controllo di `GREEN` precede quello generale di `^BTP `, evitando di classificare alcuni BTP Green come titoli ordinari.
+
+# Elencare le tipologie presenti
+
+    tipi_presenti <- levels(as.factor(btp$tipo))
+    print(tipi_presenti)
+
+- `$` accede a una colonna del data frame.
+- `as.factor()` converte la variabile in un fattore.
+- `levels()` restituisce le categorie del fattore.
+- `print()` visualizza il risultato.
+
+Sono tutte funzioni di **R base**.
+
+# `dplyr`: filtrare e ordinare
+
+    titoli_selezionati <- btp |>
+      filter(tipo %in% c("BOT", "BTP plain vanilla")) |>
+      arrange(scadenza)
+
+- `filter()` conserva solo le righe che soddisfano la condizione.
+- `%in%` verifica l'appartenenza a un insieme di valori.
+- `c()` costruisce un vettore.
+- `arrange(scadenza)` ordina per scadenza crescente.
+
+# `dplyr`: scegliere le colonne con `select()`
+
+    titoli_selezionati |>
+      select(isin, descrizione, tipo,
+             scadenza, prezzo, yield)
+
+- `select()` conserva le colonne indicate.
+- `filter()` agisce sulle **righe**; `select()` sulle **colonne**.
+- A differenza di `transmute()`, `select()` non calcola nuove variabili.
+
+# Separare BOT e BTP ordinari
+
+    bot <- titoli_selezionati |>
+      filter(tipo == "BOT")
+
+    btp_plain <- titoli_selezionati |>
+      filter(tipo == "BTP plain vanilla")
+
+- `==` confronta due valori.
+- Il risultato è una condizione logica utilizzata da `filter()`.
+- I due oggetti contengono sottoinsiemi distinti della tabella.
+
+# Eliminare i prezzi mancanti
+
+    bot <- bot |>
+      filter(!is.na(prezzo))
+
+- `is.na(prezzo)` individua i valori mancanti.
+- `!` nega la condizione.
+- `filter(!is.na(prezzo))` conserva i titoli con prezzo disponibile.
+
+`is.na()` è una funzione di R base.
+
+# Calcolare la vita residua dei BOT
+
+    data_valutazione <- Sys.Date()
+
+    bot <- bot |>
+      mutate(
+        giorni_scadenza = as.numeric(scadenza - data_valutazione),
+        T = giorni_scadenza / 365
+      ) |>
+      filter(T > 0)
+
+- `Sys.Date()` restituisce la data corrente.
+- La sottrazione tra date calcola la distanza temporale.
+- `as.numeric()` esprime la differenza in giorni.
+- `T` è la vita residua in anni, secondo la convenzione **giorni/365**.
+- `filter(T > 0)` esclude i titoli già scaduti.
+
+# Dai prezzi ai fattori di sconto
+
+Per un BOT zero coupon, con valore nominale pari a 100, il fattore di sconto è:
+$$
+D(T)=\frac{P(T)}{100}
+$$
+
+    bot <- bot |>
+      mutate(discount_factor = prezzo / 100)
+
+Il calcolo assume che `prezzo` sia espresso per 100 unità di valore nominale e che il BOT sia trattato come titolo zero coupon.
+
+# Visualizzare i risultati
+
+    plot(
+      bot$T,
+      bot$discount_factor,
+      xlab = "Maturity (anni)",
+      ylab = "Discount factor",
+      main = "Discount factors ricavati dai BOT",
+      pch = 19
+    )
+
+- `plot()` crea un grafico (R base).
+- `xlab`, `ylab` definiscono le etichette degli assi.
+- `main` definisce il titolo.
+- `pch = 19` usa punti pieni.
+
+# Esportare i risultati
+
+Nello script sono presenti, ma commentate, istruzioni di esportazione:
+
+    # pdf("fig_fasttori_di_sconto_bot.pdf")
+    # plot(...)
+    # dev.off()
+
+    # write.csv(bot, "bot20261022.csv", row.names = FALSE)
+    # write.csv(btp_plain, "btp20261022.csv", row.names = FALSE)
+
+- `pdf()` apre un dispositivo grafico PDF.
+- `dev.off()` lo chiude.
+- `write.csv()` salva una tabella in formato CSV.
+- `row.names = FALSE` evita di esportare i numeri di riga.
+
+# Riepilogo delle funzioni
+
+\begin{center}
+\scriptsize
+\begin{tabular}{@{}p{0.17\textwidth}p{0.76\textwidth}@{}}
+\hline
+\textbf{Pacchetto} & \textbf{Funzioni principali} \\
+\hline
+\texttt{rvest} & \texttt{read\_html()}, \texttt{html\_elements()}, \texttt{html\_table()} \\
+\texttt{dplyr} & \texttt{transmute()}, \texttt{mutate()}, \texttt{case\_when()}, \texttt{filter()}, \texttt{arrange()}, \texttt{select()} \\
+\texttt{readr} & \texttt{parse\_number()}, \texttt{locale()} \\
+\texttt{stringr} & \texttt{str\_detect()}, \texttt{regex()} \\
+R base & \texttt{\detokenize{|>}}, \texttt{as.Date()}, \texttt{Sys.Date()}, \texttt{as.numeric()}, \texttt{is.na()}, \texttt{plot()}, \texttt{write.csv()} \\
+\hline
+\end{tabular}
+\end{center}
+
+# Esercizio per gli studenti
+
+A partire dallo script originale:
+
+1. Contare quanti BOT sono presenti nella tabella.
+2. Individuare il BOT con scadenza più vicina.
+3. Creare un grafico del rendimento (`yield`) in funzione della scadenza residua (`T`).
+
+**Suggerimento:** utilizzare `filter()`, `arrange()`, `nrow()` e `plot()`.
+
+# Considerazioni finali
+
+- Lo scraping permette di trasformare dati pubblicati sul web in oggetti R.
+- La pulizia è essenziale: i numeri e le date devono avere il tipo corretto.
+- `dplyr` consente di descrivere la trasformazione dei dati in passaggi leggibili.
+- Le regole di classificazione testuale devono essere controllate quando cambia il formato delle descrizioni.
+- I dati scaricati sono dinamici: risultati e numero di titoli possono variare nel tempo.
