@@ -1,5 +1,5 @@
 
-\chapter{La struttura a termine dei tassi di interesse}
+\chapter{Sistemi lineari e interpolazione}
 \newpage
 \minitoc
 \newpage
@@ -148,7 +148,7 @@ siamo interessati ai tassi spot $r_t$ e ai corrispondenti fattori
 di sconto $d_t$, e non direttamente allo YTM dei singoli titoli.
 
 
-\subsection{Valutazione di un'obbligazione mediante fattori di sconto}
+\subsection{Valutazione di un'obbligazione}
 
 Consideriamo ora un'obbligazione che genera i flussi di cassa
 $$
@@ -821,8 +821,9 @@ informazioni.
 Questo passaggio ci porterà dall'esempio teorico alla costruzione
 della struttura a termine utilizzando dati finanziari reali.
 
-\subsection{Un esempio utilizzando i BOT}
+\section{Un esempio utilizzando i BOT}
 
+\subsection{Descrizione e risultati}
 Elaboriamo in questo paragrafo uno script che ha l'obiettivo di ricavare i \textbf{fattori di sconto dai prezzi di mercato dei BOT} (Buoni Ordinari del Tesoro), utilizzando dati disponibili online.
 
 Inizialmente vengono caricate alcune librerie di R necessarie per la gestione dei dati, la lettura delle pagine web e la manipolazione delle stringhe di testo. Attraverso una procedura di \textit{web scraping}, lo script accede al sito \textit{Simple Tools for Investors} ed estrae una tabella contenente informazioni sui titoli di Stato italiani.
@@ -895,6 +896,182 @@ La figura \ref{fig:fds} permette di osservare la struttura per scadenza dei fatt
 \paragraph{Nota metodologica.}
 Il calcolo $P(0,T)/100$ assume che il prezzo utilizzato sia effettivamente il prezzo pagato per acquistare il titolo, espresso per 100 euro di valore nominale, e che non vi siano altri flussi di cassa. Inoltre, i fattori di sconto così ottenuti sono osservazioni relative alle singole scadenze disponibili, non ancora una curva continua. Per ottenere una curva completa sarà necessario ricorrere a tecniche di interpolazione o ad altre procedure di stima.
 
+
+
+
+\subsection{Web scraping e manipolazione dei dati con R}
+\label{sec:web_scraping_dplyr}
+
+L'analisi quantitativa richiede spesso di acquisire informazioni da fonti esterne e di trasformarle in una struttura adatta alle successive elaborazioni. I dati pubblicati su Internet, per esempio, non sono sempre disponibili come file CSV o fogli di calcolo: possono essere presentati direttamente all'interno di pagine web sotto forma di tabelle HTML. In questi casi è possibile ricorrere al \emph{web scraping}, cioè all'estrazione automatizzata di informazioni dal contenuto di una pagina web. Dopo l'acquisizione, è generalmente necessario selezionare le variabili, correggere i formati, classificare le osservazioni ed eliminare quelle non pertinenti.
+
+Consideriamo come esempio uno script R che legge una tabella di titoli di Stato italiani dal sito Simple Tools for Investors, distingue alcune categorie di strumenti e utilizza le quotazioni dei BOT per costruire una serie di fattori di sconto. L'esempio permette di illustrare quattro pacchetti: \texttt{rvest}, per leggere pagine HTML; \texttt{dplyr}, per manipolare tabelle; \texttt{readr}, per convertire dati testuali in numeri; e \texttt{stringr}, per riconoscere particolari sequenze di caratteri.
+
+\subsubsection{Caricamento dei pacchetti e operatore pipe}
+
+All'inizio dello script vengono caricati i pacchetti necessari mediante \texttt{library()}:
+\begin{verbatim}
+library(dplyr)
+library(rvest)
+library(readr)
+library(stringr)
+\end{verbatim}
+Il comando \texttt{library()} rende disponibili nella sessione corrente le funzioni del pacchetto, che deve essere stato precedentemente installato. In molti passaggi viene impiegato l'operatore \emph{pipe} nativo di R, \texttt{|>}. Esso passa il risultato dell'espressione alla sua sinistra alla funzione successiva, normalmente come primo argomento. Per esempio:
+\begin{verbatim}
+dati |> filter(prezzo > 90) |> arrange(scadenza)
+\end{verbatim}
+L'istruzione seleziona le righe con prezzo superiore a 90 e successivamente le ordina per scadenza. La scrittura con pipe rende più evidente la successione delle trasformazioni e riduce la necessità di creare oggetti intermedi.
+
+\subsubsection{Acquisizione di tabelle HTML con \texttt{rvest}}
+
+Una pagina web è normalmente descritta da un documento HTML, nel quale i diversi elementi sono identificati da appositi tag. Le tabelle, per esempio, sono contenute in elementi \texttt{table}. Il pacchetto \texttt{rvest} consente di leggere la struttura della pagina e di estrarne gli elementi di interesse.
+
+Nello script l'indirizzo della pagina è assegnato all'oggetto \texttt{url}; la funzione \texttt{read\_html()} ne acquisisce e interpreta il contenuto:
+\begin{verbatim}
+page <- read_html(url)
+\end{verbatim}
+L'oggetto \texttt{page} non è ancora una tabella R: rappresenta il documento HTML. Per cercare tutte le tabelle presenti nella pagina si utilizza \texttt{html\_elements("table")}. La funzione \texttt{html\_table()} prova poi a convertire ciascun elemento individuato in una tabella utilizzabile in R:
+\begin{verbatim}
+tables <- page |>
+  html_elements("table") |>
+  html_table(fill = TRUE)
+\end{verbatim}
+L'argomento \texttt{fill = TRUE} permette di gestire tabelle HTML nelle quali alcune righe hanno un numero diverso di celle, completando dove necessario la struttura. Il risultato è una lista di tabelle, non un'unica tabella. Con l'istruzione
+\begin{verbatim}
+btp_table <- tables[[1]]
+\end{verbatim}
+si estrae il primo elemento della lista. La notazione \texttt{[[1]]} serve infatti a recuperare il contenuto di un singolo elemento. Questa scelta presuppone che la tabella desiderata sia effettivamente la prima: se la struttura del sito cambia, potrebbe essere necessario modificare l'indice o identificare la tabella in altro modo.
+
+Il web scraping dipende quindi dalla struttura della pagina e dalla sua disponibilità. Per un utilizzo ripetuto è opportuno controllare che la tabella individuata contenga le colonne attese e rispettare le condizioni d'uso del sito.
+
+\subsubsection{Selezione e trasformazione delle colonne con \texttt{dplyr}}
+
+Una tabella importata dal web può contenere molte variabili, con nomi poco comodi da utilizzare e formati non adeguati ai calcoli. La funzione \texttt{transmute()} del pacchetto \texttt{dplyr} consente di costruire una nuova tabella mantenendo soltanto le colonne specificate e, contemporaneamente, di rinominarle o trasformarle. Nello script vengono create le variabili \texttt{isin}, \texttt{descrizione}, \texttt{scadenza}, \texttt{prezzo}, \texttt{yield} e \texttt{mercato}. Un estratto del codice è:
+\begin{verbatim}
+btp <- btp_table |>
+  transmute(
+    isin = `Codice ISIN`,
+    descrizione = Descrizione,
+    scadenza = as.Date(Datascadenza),
+    prezzo = parse_number(
+      `Prezzo diriferimento`,
+      locale = locale(decimal_mark = ",")
+    )
+  )
+\end{verbatim}
+I nomi delle colonne originali che contengono spazi possono essere racchiusi tra accenti gravi, come \texttt{`Codice ISIN`}. La funzione \texttt{as.Date()} converte la scadenza in un oggetto di tipo data, se il formato originario è riconosciuto. \texttt{parse\_number()}, appartenente a \texttt{readr}, estrae invece un numero da una stringa. L'argomento \texttt{locale(decimal\_mark = ",")} specifica che la virgola è il separatore decimale: questo dettaglio è importante per i dati espressi secondo le convenzioni italiane. Nello script la stessa conversione è applicata al rendimento, indicato dalla colonna \texttt{Yield}.
+
+È utile distinguere \texttt{transmute()} da \texttt{mutate()}: la prima restituisce le colonne create o esplicitamente selezionate, mentre la seconda aggiunge o modifica variabili conservando anche le altre colonne della tabella.
+
+\subsubsection{Classificazione dei titoli con \texttt{mutate()}, \texttt{case\_when()} e \texttt{stringr}}
+
+Le descrizioni dei titoli contengono informazioni utili per identificarne la tipologia. Per automatizzare questa classificazione, lo script crea una nuova colonna \texttt{tipo} combinando \texttt{mutate()} e \texttt{case\_when()}. Quest'ultima funzione valuta una sequenza di condizioni e assegna a ogni osservazione il valore corrispondente alla prima condizione soddisfatta.
+
+Le condizioni sono formulate mediante \texttt{str\_detect()}, funzione del pacchetto \texttt{stringr} che restituisce \texttt{TRUE} quando una stringa contiene un certo modello testuale. Per esempio:
+\begin{verbatim}
+btp <- btp |>
+  mutate(
+    tipo = case_when(
+      str_detect(descrizione, "^BOT ") ~ "BOT",
+      str_detect(descrizione, "^BTP Italia") ~ "BTP Italia",
+      str_detect(descrizione, "^BTP ") ~ "BTP plain vanilla",
+      TRUE ~ "Altro"
+    )
+  )
+\end{verbatim}
+Questo è un esempio semplificato: lo script completo riconosce anche BTP indicizzati all'inflazione, BTP Valore, Futura, Più e Green. Il simbolo \texttt{\^} all'interno del modello indica l'inizio della stringa: \texttt{"\^BOT "} riconosce dunque una descrizione che comincia con ``BOT'' seguito da uno spazio. Si tratta di un'espressione regolare, cioè di una sintassi per descrivere modelli di testo. La funzione \texttt{regex("GREEN", ignore\_case = TRUE)} permette invece di cercare la parola ``GREEN'' senza distinguere maiuscole e minuscole.
+
+L'ordine delle condizioni in \texttt{case\_when()} è importante. Una categoria generica, come i BTP ordinari, deve essere verificata dopo le categorie più specifiche, altrimenti potrebbe assorbire osservazioni destinate a queste ultime. La condizione finale \texttt{TRUE \textasciitilde{} "Altro"} attribuisce un'etichetta alle osservazioni che non soddisfano nessuna regola precedente.
+
+Per verificare quali categorie sono presenti, lo script utilizza:
+\begin{verbatim}
+tipi_presenti <- levels(as.factor(btp$tipo))
+print(tipi_presenti)
+\end{verbatim}
+\texttt{as.factor()} trasforma i valori della variabile in categorie, mentre \texttt{levels()} ne restituisce i livelli; \texttt{print()} li visualizza nella console.
+
+\subsubsection{Filtraggio, ordinamento e separazione dei dati}
+
+Una volta classificati i titoli, si possono selezionare soltanto quelli necessari all'analisi. \texttt{filter()} mantiene le righe che soddisfano una condizione logica; \texttt{arrange()} ordina le osservazioni; \texttt{select()} sceglie le colonne da visualizzare o conservare. Nello script:
+\begin{verbatim}
+titoli_selezionati <- btp |>
+  filter(tipo %in% c("BOT", "BTP plain vanilla")) |>
+  arrange(scadenza)
+\end{verbatim}
+L'operatore \texttt{\%in\%} controlla se ciascun valore di \texttt{tipo} appartiene all'insieme indicato con \texttt{c()}. I titoli selezionati sono poi ordinati per scadenza crescente. Una successiva \texttt{select()} mostra le variabili più rilevanti, senza modificare l'oggetto \texttt{titoli\_selezionati} se il risultato non viene assegnato.
+
+Infine, i due gruppi vengono separati in altrettante tabelle:
+\begin{verbatim}
+bot <- titoli_selezionati |>
+  filter(tipo == "BOT")
+
+btp_plain <- titoli_selezionati |>
+  filter(tipo == "BTP plain vanilla")
+\end{verbatim}
+L'operatore \texttt{==} verifica l'uguaglianza, mentre \texttt{=} è utilizzato, tra l'altro, per assegnare valori agli argomenti delle funzioni.
+
+\subsubsection{Gestione dei valori mancanti e calcolo delle scadenze}
+
+Prima di procedere ai calcoli finanziari, lo script elimina i BOT per i quali manca il prezzo:
+\begin{verbatim}
+bot <- bot |> filter(!is.na(prezzo))
+\end{verbatim}
+In R i valori mancanti sono rappresentati da \texttt{NA}. La funzione \texttt{is.na()} li individua e l'operatore \texttt{!} nega la condizione; pertanto vengono conservate soltanto le osservazioni con un prezzo disponibile.
+
+La data di valutazione viene fissata al giorno in cui lo script è eseguito, mediante \texttt{Sys.Date()}. Per ogni BOT si calcola quindi il numero di giorni residui e lo si converte in anni:
+\begin{verbatim}
+data_valutazione <- Sys.Date()
+bot <- bot |>
+  mutate(
+    giorni_scadenza = as.numeric(scadenza - data_valutazione),
+    T = giorni_scadenza / 365
+  ) |>
+  filter(T > 0)
+\end{verbatim}
+La sottrazione tra due date produce una durata; \texttt{as.numeric()} la esprime numericamente in giorni. Dividendo per 365 si ottiene una misura approssimata della vita residua in anni, secondo la convenzione adottata nello script. L'ultimo filtro esclude i titoli già scaduti o con scadenza coincidente con la data di valutazione. Poiché \texttt{Sys.Date()} cambia da un giorno all'altro, anche le scadenze residue cambiano quando lo script viene rieseguito.
+
+\subsubsection{Dai prezzi dei BOT ai fattori di sconto}
+
+Un fattore di sconto relativo alla scadenza $T$, indicato con $D(T)$, rappresenta il valore attuale di un'unità monetaria pagata alla data $T$. Per uno strumento a sconto che non distribuisce cedole e rimborsa il valore nominale $N$ alla scadenza, la relazione tra prezzo e fattore di sconto è
+$$
+P(T)=N D(T).
+$$
+Di conseguenza,
+$$
+D(T)=\frac{P(T)}{N}.
+$$
+Nel caso di un prezzo espresso in percentuale del valore nominale, ponendo $N=100$, si ottiene
+$$
+D(T)=\frac{P(T)}{100}.
+$$
+Lo script applica questa relazione mediante una nuova variabile:
+\begin{verbatim}
+bot <- bot |>
+  mutate(discount_factor = prezzo / 100)
+\end{verbatim}
+Questa operazione interpreta il prezzo riportato come prezzo di uno zero-coupon con rimborso pari a 100. È una semplificazione utile per l'esercizio didattico: in un'applicazione finanziaria occorre verificare la definizione esatta del prezzo acquisito, le convenzioni di mercato e gli eventuali aggiustamenti necessari.
+
+\subsubsection{Rappresentazione grafica ed esportazione}
+
+Dopo aver costruito i fattori di sconto, lo script li rappresenta in funzione della vita residua utilizzando la funzione \texttt{plot()} di R base:
+\begin{verbatim}
+plot(
+  bot$T,
+  bot$discount_factor,
+  xlab = "Maturity (anni)",
+  ylab = "Discount factor",
+  main = "Discount factors ricavati dai BOT",
+  pch = 19
+)
+\end{verbatim}
+Il simbolo \texttt{\$} permette di accedere a una colonna di una tabella: \texttt{bot\$T} contiene le scadenze e \texttt{bot\$discount\_factor} i corrispondenti fattori di sconto. Gli argomenti \texttt{xlab}, \texttt{ylab} e \texttt{main} specificano rispettivamente le etichette degli assi e il titolo del grafico; \texttt{pch = 19} sceglie un simbolo pieno per i punti.
+
+Lo script contiene inoltre, come istruzioni commentate, i comandi \texttt{pdf()}, \texttt{dev.off()} e \texttt{write.csv()}. I primi due permettono di aprire e chiudere un dispositivo grafico PDF, salvando il grafico in un file; \texttt{write.csv()} esporta una tabella in formato CSV. L'opzione \texttt{row.names = FALSE} evita di scrivere nel file una colonna aggiuntiva con i numeri delle righe.
+
+\subsubsection{Considerazioni conclusive}
+
+L'esempio mostra una tipica sequenza di lavoro con dati acquisiti dal web: lettura della pagina HTML, individuazione della tabella, conversione dei tipi di dato, classificazione delle osservazioni, selezione dei titoli rilevanti e costruzione di nuove variabili per l'analisi economica. Il vantaggio di questa impostazione è la riproducibilità: le operazioni vengono descritte in un unico script e possono essere ripetute quando i dati disponibili sulla pagina vengono aggiornati.
+
+La riproducibilità, tuttavia, richiede alcuni controlli. La struttura HTML può cambiare, i nomi delle colonne possono essere modificati e le date o i numeri possono essere pubblicati in formati differenti. Inoltre, la correttezza delle trasformazioni statistiche non garantisce da sola la correttezza dell'interpretazione economica dei dati. È quindi opportuno verificare sia il risultato dell'importazione sia il significato finanziario delle variabili prima di utilizzare i fattori di sconto per ulteriori elaborazioni, come l'interpolazione della curva per scadenze non osservate.
 
 \section{Interpolazione numerica}
 \label{sec:interpolazione}
@@ -1030,7 +1207,7 @@ Anche il problema dell'interpolazione può quindi essere ricondotto
 alla soluzione di un sistema lineare.
 
 
-\subsection{Interpolazione lineare come sistema di equazioni}
+\subsubsection{Interpolazione lineare come sistema di equazioni}
 
 Le due equazioni precedenti possono essere scritte in forma
 matriciale:
@@ -1097,7 +1274,7 @@ Una volta determinata questa funzione, essa può essere valutata in
 qualunque punto dell'intervallo considerato.
 
 
-\subsection{Un esempio con dati finanziari reali}
+\subsubsection{Un esempio con dati finanziari reali}
 
 Il problema appena descritto emerge direttamente nei dati relativi
 ai titoli di Stato.
@@ -1169,7 +1346,7 @@ scadenze dei BOT dai quali possiamo osservare direttamente i fattori
 di sconto.
 
 
-\subsection{Dall'interpolazione lineare all'interpolazione polinomiale}
+\subsubsection{Dall'interpolazione lineare all'interpolazione polinomiale}
 
 L'interpolazione lineare utilizza due punti osservati e costruisce una
 retta che li collega:
@@ -1261,7 +1438,7 @@ Ancora una volta, un problema apparentemente differente può essere
 ricondotto alla soluzione di un sistema di equazioni lineari.
 
 
-\subsection{La matrice di Vandermonde}
+\subsubsection{La matrice di Vandermonde}
 
 Il sistema dell'interpolazione polinomiale può essere scritto in
 forma matriciale:
@@ -1320,7 +1497,7 @@ strumenti numerici studiati nel corso: la stessa struttura matematica
 compare nella soluzione di problemi economici, ambientali e
 finanziari e, ora, anche nella costruzione di una funzione interpolante.
 
-\subsection{Interpolazione con dati sui BOT}
+\subsubsection{Interpolazione con dati sui BOT}
 
 Effettuiamo l'interpolazione polinomiale con sei dei BOT elencati nella tabella \ref{tab:allbot}:
 
@@ -1343,7 +1520,7 @@ Il polinomio interpolante vien mostrato nella figura \ref{fig:interp_bot_6}. La 
 \end{figure}
 
 
-\subsection{Perché non utilizzare semplicemente molti punti?}
+\subsubsection{Perché non utilizzare semplicemente molti punti?}
 
 A prima vista sembrerebbe naturale utilizzare il maggior numero
 possibile di osservazioni.
@@ -1371,7 +1548,7 @@ misurate numericamente e possono essere soggetti ad arrotondamenti,
 errori di misura o piccole variazioni di mercato.
 
 
-\subsection{Il numero di condizionamento}
+\subsubsection{Il numero di condizionamento}
 
 Consideriamo nuovamente un sistema lineare
 
@@ -1429,7 +1606,7 @@ $\kappa(A)$ è molto grande, una perturbazione apparentemente
 trascurabile nei dati può essere fortemente amplificata.
 
 
-\subsection{Interpretazione del condizionamento}
+\subsubsection{Interpretazione del condizionamento}
 
 In termini qualitativi possiamo distinguere tre situazioni:
 
@@ -1467,7 +1644,7 @@ costruire un polinomio che passa esattamente attraverso tutte le
 osservazioni, ma può contemporaneamente peggiorare le proprietà
 numeriche del problema.
 
-\subsection{Il numero di condizionamento per l'esempio dei BOT}
+\subsubsection{Il numero di condizionamento per l'esempio dei BOT}
 
 Calcoliamo il numero di condizionamento utilizzando le dunzioni messe a disposizione dal nostro software.
 In particolare confrontiamo una stima fatta con 6 titoli, con una in cui consideriamo 15 titoli. Il risultato è il seguente
@@ -1487,7 +1664,7 @@ La risposta conduce a una diversa tecnica di interpolazione, basata
 sull'utilizzo di polinomi di basso grado definiti localmente su
 intervalli successivi: le \emph{spline}.
 
-\section{Interpolazione mediante spline cubiche}
+\subsection{Interpolazione mediante spline cubiche}
 \label{sec:spline}
 
 Nella sezione precedente abbiamo visto che l'interpolazione polinomiale
@@ -1513,7 +1690,7 @@ polinomi di basso grado, ciascuno valido soltanto localmente.
 Questa è l'idea fondamentale alla base delle \emph{spline}.
 
 
-\subsection{L'idea delle spline}
+\subsubsection{L'idea delle spline}
 
 Supponiamo di disporre di $n$ punti osservati
 
@@ -1568,7 +1745,7 @@ $S_i(T)$ e nel collegarli in modo tale che, nel loro insieme,
 costituiscano una curva sufficientemente regolare.
 
 
-\subsection{La spline cubica}
+\subsubsection{La spline cubica}
 
 Una scelta molto comune consiste nell'utilizzare polinomi di terzo
 grado. In questo caso si parla di \emph{spline cubica}.
@@ -1626,7 +1803,7 @@ desideriamo imporre alla spline generano precisamente le equazioni
 necessarie per determinare questi coefficienti.
 
 
-\subsection{Prima condizione: interpolazione dei nodi}
+\subsubsection{Prima condizione: interpolazione dei nodi}
 
 La prima proprietà è la stessa che caratterizza qualsiasi funzione
 interpolante: la spline deve passare attraverso i punti osservati.
@@ -1675,7 +1852,7 @@ Le condizioni di interpolazione forniscono dunque 28 delle 56
 equazioni necessarie.
 
 
-\subsection{Seconda condizione: continuità della derivata prima}
+\subsubsection{Seconda condizione: continuità della derivata prima}
 
 Il semplice passaggio attraverso i nodi non è sufficiente.
 
@@ -1730,7 +1907,7 @@ Con 15 nodi:
 Abbiamo quindi altre 13 equazioni.
 
 
-\subsection{Terza condizione: continuità della derivata seconda}
+\subsubsection{Terza condizione: continuità della derivata seconda}
 
 Richiediamo una condizione ulteriore di regolarità.
 
@@ -1778,7 +1955,7 @@ Nel nostro esempio:
 Abbiamo quindi ottenuto altre 13 equazioni.
 
 
-\subsection{Il conteggio delle equazioni}
+\subsubsection{Il conteggio delle equazioni}
 
 A questo punto è utile verificare quante equazioni abbiamo costruito.
 
@@ -1829,7 +2006,7 @@ Per determinare univocamente tutti i coefficienti della spline sono
 quindi necessarie altre due condizioni.
 
 
-\subsection{Condizioni al contorno e spline cubica naturale}
+\subsubsection{Condizioni al contorno e spline cubica naturale}
 
 Le ultime due equazioni vengono ottenute imponendo delle condizioni
 agli estremi dell'intervallo.
@@ -1889,7 +2066,7 @@ equazioni, esattamente pari al numero
 di coefficienti incogniti.
 
 
-\subsection{La spline come sistema lineare}
+\subsubsection{La spline come sistema lineare}
 
 Possiamo ora tornare al nostro esempio con 15 BOT.
 
