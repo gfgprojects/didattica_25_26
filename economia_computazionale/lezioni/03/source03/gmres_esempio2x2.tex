@@ -1,0 +1,134 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb}
+\usepackage{bm}
+\usetheme{Madrid}
+
+\title{GMRES: esempio di soluzione di un sistema 2x2}
+\author{}
+\institute{}
+\date{}
+
+\begin{document}
+
+\frame{\titlepage}
+
+%------------------------------------------------
+\begin{frame}{Dati del problema}
+Vogliamo risolvere $Ax=b$ con GMRES, a partire da $x_0=\bm{0}$.
+\[
+A=\begin{bmatrix}4&1\\[2pt]2&3\end{bmatrix},\qquad
+b=\begin{bmatrix}1\\[2pt]0\end{bmatrix},\qquad
+x_0=\begin{bmatrix}0\\[2pt]0\end{bmatrix}.
+\]
+Calcolo residuo iniziale:
+\[
+r_0=b-Ax_0=\begin{bmatrix}1\\[2pt]0\end{bmatrix}
+\]
+il vettore deve essere normalizzato, ovvero avere norma pari a 1. Per poterlo fare occorre calcolare la norma e dividerlo per il relativo valore:
+\[
+\beta=\|r_0\|_2=1,\quad
+v_1=\frac{r_0}{\beta}=\begin{bmatrix}1\\[2pt]0\end{bmatrix}.
+\]
+Obiettivo al passo $k$: trovare $x_k=x_0+V_k y_k$ che minimizza $\|b-Ax_k\|_2$ con $x_k\in x_0+\mathcal{K}_k(A,r_0)$.
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Arnoldi: costruzione di $V_2$ e $\bar H$}
+\textbf{Passo 1} (prima colonna):
+\[
+w=Av_1=\begin{bmatrix}4\\[2pt]2\end{bmatrix},\quad
+h_{11}=v_1^\top w=4,\quad
+w\leftarrow w-h_{11}v_1=\begin{bmatrix}0\\[2pt]2\end{bmatrix},
+\]
+\[
+h_{21}=\|w\|_2=2,\qquad
+v_2=\frac{w}{h_{21}}=\begin{bmatrix}0\\[2pt]1\end{bmatrix}.
+\]
+
+\textbf{Passo 2} (seconda colonna):
+\[
+w=Av_2=\begin{bmatrix}1\\[2pt]3\end{bmatrix},\quad
+h_{12}=v_1^\top w=1,\quad
+w\leftarrow w-h_{12}v_1=\begin{bmatrix}0\\[2pt]3\end{bmatrix},
+\]
+\[
+h_{22}=v_2^\top w=3,\quad
+w\leftarrow w-h_{22}v_2=\begin{bmatrix}0\\[2pt]0\end{bmatrix}\Rightarrow h_{32}=0.
+\]
+
+Quindi $V_2=[v_1\ v_2]=I_2$ e
+\[
+\bar H_{3\times 2}=
+\begin{bmatrix}
+4 & 1\\
+2 & 3\\
+0 & 0
+\end{bmatrix},\qquad
+H_{2\times 2}=
+\begin{bmatrix}
+4 & 1\\
+2 & 3
+\end{bmatrix}.
+\]
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{GMRES come minimi quadrati}
+A ogni passo $k$, GMRES risolve:
+\[
+\min_{y\in\mathbb{R}^k}\ \big\|\beta e_1-\bar H_k\,y\big\|_2,\qquad
+x_k=x_0+V_k y_k.
+\]
+
+\textbf{Iterazione 1 ($k=1$)}:
+\[
+\bar H_1=\begin{bmatrix}4\\[2pt]2\end{bmatrix},\qquad
+\min_{y\in\mathbb{R}}\left\|
+\begin{bmatrix}1\\[2pt]0\end{bmatrix}-
+\begin{bmatrix}4\\[2pt]2\end{bmatrix}y
+\right\|_2.
+\]
+Soluzione LS:
+\[
+y_1=\frac{4\cdot 1+2\cdot 0}{4^2+2^2}=\frac{4}{20}=0.2,\qquad
+x_1=V_1 y_1=v_1\,y_1=\begin{bmatrix}0.2\\[2pt]0\end{bmatrix}.
+\]
+Residuo:
+\[
+r_1=b-Ax_1=\begin{bmatrix}0.2\\[2pt]-0.4\end{bmatrix},\quad \|r_1\|_2=\sqrt{0.2^2+(-0.4)^2}\approx 0.4472.
+\]
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Iterazione 2: soluzione esatta}
+\textbf{Iterazione 2 ($k=2$)}: poiché $h_{32}=0$, il LSQ diventa sistema quadrato
+\[
+H y_2=\beta e_1,\qquad
+\begin{bmatrix}4&1\\[2pt]2&3\end{bmatrix}
+\begin{bmatrix}y_{2,1}\\[2pt]y_{2,2}\end{bmatrix}
+=\begin{bmatrix}1\\[2pt]0\end{bmatrix}.
+\]
+Si ricava
+\[
+y_2=\begin{bmatrix}0.3\\[2pt]-0.2\end{bmatrix},\qquad
+x_2=x_0+V_2 y_2=I_2\,y_2=\begin{bmatrix}0.3\\[2pt]-0.2\end{bmatrix}.
+\]
+Residuo:
+\[
+r_2=b-Ax_2=\bm{0}\quad\Rightarrow\quad \text{soluzione esatta in 2 passi (dimensione 2)}.
+\]
+\end{frame}
+
+%------------------------------------------------
+\begin{frame}{Commenti finali}
+\begin{itemize}
+  \item Dopo 1 passo: $x_1=(0.2,\,0)^\top$, $\|r_1\|\approx 0.4472$.
+  \item Dopo 2 passi: $x_2=(0.3,\,-0.2)^\top$, residuo nullo.
+  \item In generale, GMRES minimizza $\|b-Ax_k\|_2$ su $x_0+\mathcal{K}_k(A,r_0)$ usando Arnoldi.
+  \item Per matrici $n\times n$, se Arnoldi genera una base completa in $\le n$ passi senza breakdown, si può ottenere la soluzione esatta a $k\le n$.
+\end{itemize}
+\end{frame}
+
+\end{document}
+

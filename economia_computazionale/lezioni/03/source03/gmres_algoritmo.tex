@@ -1,0 +1,197 @@
+\documentclass[aspectratio=169]{beamer}
+
+% -------------------------------------------------------
+% Lingua e pacchetti
+\usepackage[italian]{babel}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{bm}
+
+\title{Algoritmo GMRES}
+\subtitle{Generalized Minimal Residual Method}
+\author{}
+\date{}
+
+\begin{document}
+
+% -------------------------------------------------------
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% -------------------------------------------------------
+\begin{frame}{Obiettivo del GMRES}
+\textbf{Problema:} risolvere un sistema lineare di grandi dimensioni
+\[
+A x = b,
+\]
+dove $A \in \mathbb{R}^{n\times n}$ è in generale non simmetrica.
+
+\medskip
+\textbf{Idea:}
+\begin{itemize}
+  \item Costruire approssimazioni $x_k$ nello spazio di Krylov
+  \[
+  \mathcal{K}_k(A,r_0)=\mathrm{span}\{r_0, A r_0, A^2 r_0, \dots, A^{k-1} r_0\},
+  \]
+  dove $r_0=b-Ax_0$ è il residuo iniziale.
+  \item Cercare $x_k$ che \emph{minimizza la norma del residuo}:
+  \[
+  \|r_k\| = \|b - A x_k\| = \min_{x \in x_0+\mathcal{K}_k(A,r_0)} \|b - A x\|.
+  \]
+\end{itemize}
+\end{frame}
+
+% -------------------------------------------------------
+\begin{frame}{Forma del vettore di approssimazione}
+Il vettore approssimato $x_k$ è della forma
+\[
+x_k = x_0 + V_k y_k,
+\]
+dove:
+\begin{itemize}
+  \item $V_k = [v_1, \dots, v_k]$ è la base ortonormale della sottospazio di Krylov (ottenuta con Arnoldi);
+  \item $y_k \in \mathbb{R}^k$ è il vettore dei coefficienti da determinare;
+  \item il residuo corrispondente è $r_k = b - A x_k$.
+\end{itemize}
+
+\medskip
+Applicando la relazione di Arnoldi
+\[
+A V_k = V_{k+1}\,\underline{H}_k,
+\]
+si può scrivere
+\[
+r_k = \beta v_1 - V_{k+1}\underline{H}_k y_k,
+\qquad \beta = \|r_0\|.
+\]
+\end{frame}
+
+% -------------------------------------------------------
+\begin{frame}{Problema ai minimi quadrati}
+Poiché le colonne di $V_{k+1}$ sono ortonormali,
+\[
+\|r_k\| = \|\beta e_1 - \underline{H}_k y_k\|,
+\]
+dove $\underline{H}_k$ è una matrice $(k+1)\times k$ di Hessenberg superiore.
+
+\medskip
+\textbf{Problema ai minimi quadrati:}
+\[
+y_k = \arg\min_y \|\beta e_1 - \underline{H}_k y\|.
+\]
+\textbf{Soluzione:}
+\begin{itemize}
+  \item Il problema è di dimensione piccola ($k\times k$);
+  \item Si risolve facilmente con fattorizzazione QR o rotazioni di Givens;
+  \item Il residuo minimo è $\|r_k\| = \|\beta e_1 - \underline{H}_k y_k\|$.
+\end{itemize}
+\end{frame}
+
+% -------------------------------------------------------
+\begin{frame}{Algoritmo GMRES passo per passo}
+\textbf{Input:} $A$, $b$, $x_0$, tolleranza, numero massimo di passi $m$.
+
+\medskip
+\textbf{1.} Calcola $r_0 = b - A x_0$, $\beta = \|r_0\|$, $v_1 = r_0 / \beta$.
+
+\textbf{2.} Per $k = 1,2,\dots,m$:
+\begin{enumerate}
+  \item Esegui \textbf{una} iterazione di Arnoldi per ottenere $v_{k+1}$ e $\underline{H}_k$;
+  \item Aggiorna il problema ai minimi quadrati
+        $\min_y \|\beta e_1 - \underline{H}_k y\|$
+        usando rotazioni di Givens;
+  \item Se $\|r_k\|/\|b\|$ è sotto la tolleranza, \textbf{stop}.
+\end{enumerate}
+
+\textbf{3.} Calcola $y_k$ (back-substitution) e
+\[
+x_k = x_0 + V_k y_k.
+\]
+\end{frame}
+
+% -------------------------------------------------------
+\begin{frame}{Caratteristiche principali}
+\begin{itemize}
+  \item Il metodo \textbf{non costruisce} $x_{k+1}$ da $x_k$ direttamente,
+        ma trova la migliore approssimazione nello spazio $\mathcal{K}_k(A,r_0)$.
+  \item Il processo è \textbf{incrementale}:
+        ad ogni passo si aggiunge un nuovo vettore alla base di Arnoldi.
+  \item Il residuo $\|r_k\|$ è \textbf{monotonicamente decrescente}.
+  \item È necessaria solo la moltiplicazione $A v_k$ (non l’inversione di $A$).
+  \item Se la memoria cresce troppo, si usa la versione \textbf{GMRES(m)} con \emph{restarts}.
+\end{itemize}
+\end{frame}
+
+% -------------------------------------------------------
+\begin{frame}{GMRES con restart}
+\textbf{Problema:} il costo e la memoria crescono con il numero di passi $k$ (serve salvare tutti i $v_i$).
+
+\medskip
+\textbf{Soluzione: Restart GMRES (GMRES(m)):}
+\begin{enumerate}
+  \item Esegui GMRES per $m$ passi $\Rightarrow$ ottieni $x_m$;
+  \item Usa $x_0 \leftarrow x_m$ come nuova approssimazione iniziale;
+  \item Ricomincia il processo con il nuovo residuo $r_0=b-Ax_0$.
+\end{enumerate}
+
+\textbf{Osservazione:} GMRES(m) mantiene la memoria costante ma può convergere più lentamente.
+\end{frame}
+
+% -------------------------------------------------------
+\begin{frame}{Riepilogo visivo}
+\begin{itemize}
+  \item GMRES costruisce una successione di sottospazi di Krylov:
+  \[
+  \mathcal{K}_1 \subset \mathcal{K}_2 \subset \dots \subset \mathcal{K}_k.
+  \]
+  \item Ad ogni passo:
+  \begin{enumerate}
+    \item Si espande la base ortonormale (Arnoldi);
+    \item Si risolve un piccolo problema ai minimi quadrati;
+    \item Si ottiene la soluzione $x_k$ che minimizza $\|r_k\|$.
+  \end{enumerate}
+  \item La norma del residuo decresce e la soluzione converge a quella esatta.
+\end{itemize}
+\end{frame}
+
+% -------------------------------------------------------
+\begin{frame}{Vantaggi e limiti del GMRES}
+\textbf{Vantaggi:}
+\begin{itemize}
+  \item Funziona per matrici non simmetriche;
+  \item Minimizza esplicitamente la norma del residuo;
+  \item Non richiede la conoscenza della matrice inversa.
+\end{itemize}
+
+\textbf{Limiti:}
+\begin{itemize}
+  \item Crescita del costo e della memoria con $k$;
+  \item Richiede ortogonalizzazione di tutti i vettori precedenti;
+  \item Può perdere ortogonalità numerica (richiede ri-ortogonalizzazione);
+  \item Possibile convergenza lenta senza \textbf{precondizionamento}.
+\end{itemize}
+\end{frame}
+
+% -------------------------------------------------------
+\begin{frame}{Schema sintetico dell'algoritmo GMRES}
+\begin{block}{}
+\begin{align*}
+r_0 &= b - A x_0, \qquad \beta = \|r_0\|, \quad v_1 = r_0 / \beta,\\
+\text{per } j &= 1,2,\dots,k:\\
+&\quad w = A v_j,\\
+&\quad \text{per } i=1,\dots,j:\; h_{ij} = v_i^\top w,\; w \leftarrow w - h_{ij}v_i,\\
+&\quad h_{j+1,j} = \|w\|,\; v_{j+1} = w / h_{j+1,j},\\
+&\quad \text{aggiorna } \|\beta e_1 - \underline{H}_j y\| \text{ con rotazioni di Givens.}
+\end{align*}
+\end{block}
+
+\[
+x_k = x_0 + V_k y_k, \qquad \|r_k\| = \|\beta e_1 - \underline{H}_k y_k\|.
+\]
+\end{frame}
+
+\end{document}
+

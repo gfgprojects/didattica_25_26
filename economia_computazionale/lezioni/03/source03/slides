@@ -1,0 +1,261 @@
+# polinomio di una matrice
+
+dato un polinomio in una variabile $x$
+$$
+p(x) = a_0 + a_1 x + a_2 x^2 + \cdots + a_n x^n
+$$
+definiamo il corrispondente polinomio della matrice $A$ come:
+$$
+p(A) = a_0 I + a_1 A + a_2 A^2 + \cdots + a_n A^n
+$$
+dove $P(A)$ è una matrice con elementi calcolati come segue
+$$
+p(A)_{ij} = a_0 I_{ij} + a_1 A_{ij} + a_2 A^2_{ij} + \cdots + a_n A^n_{ij}
+$$
+
+
+
+# Esempio
+
+$$
+p(x) = 2 + x + x^2,
+$$
+se
+$$
+A =
+\begin{bmatrix}
+1 & 2 \\
+0 & 3
+\end{bmatrix},
+\quad
+I =
+\begin{bmatrix}
+1 & 0 \\
+0 & 1
+\end{bmatrix}.
+$$
+
+Calcoliamo
+$$
+A^2 =
+\begin{bmatrix}
+1 & 2 \\
+0 & 3
+\end{bmatrix}^2
+=
+\begin{bmatrix}
+1 & 2 \\
+0 & 3
+\end{bmatrix}
+\begin{bmatrix}
+1 & 2 \\
+0 & 3
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 & 8 \\
+0 & 9
+\end{bmatrix}.
+$$
+
+Il polinomio della matrice è dunque:
+$$
+p(A) = 2I + A + A^2
+= 2
+\begin{bmatrix}
+1 & 0 \\
+0 & 1
+\end{bmatrix}
++
+\begin{bmatrix}
+1 & 2 \\
+0 & 3
+\end{bmatrix}
++
+\begin{bmatrix}
+1 & 8 \\
+0 & 9
+\end{bmatrix}
+=
+\begin{bmatrix}
+4 & 10 \\
+0 & 14
+\end{bmatrix}.
+$$
+
+# Il polinomio caratteristico
+definizione:
+$$p_A(x) = \det(x I - A)$$
+il suo sviluppo è
+$$p_A(x) = x^n + c_{n-1}x^{n-1} + \cdots + c_1x + c_0$$
+
+dove i coefficienti sono:
+
+- $c_{n-1} = -tr(A)$
+- $c_0 = (-1)^n \det(A)$
+- I coefficienti intermedi corrispondono alle somme dei prodotti degli autovalori presi \( k \) a \( k \), con segni alterni.
+
+# Utilizzi del polinomio caratteristico
+
+- Determinazione degli autovalori  
+- Studio della diagonalizzabilità  
+- Calcolo del polinomio minimo  
+- **Applicazione del teorema di Cayley–Hamilton**  
+- Relazione con traccia e determinante  
+- Analisi di stabilità nei sistemi dinamici
+
+# Polinomio caratteristico e teorema di Cayley–Hamilton
+
+Dato il polinomio caratteristico
+$$p_A(x) = x^n + c_{n-1}x^{n-1} + \cdots + c_1x + c_0$$
+ricordando il contenuto della diapositiva 2 possiamo scrivere
+$$p_A(A) = A^n + c_{n-1}A^{n-1} + \cdots + c_1A + c_0I$$
+
+Il teorema di Cayley–Hamilton dimostra che calcolando $p_A(A)$, la matrice che si ottiene è composta da tutti zeri:
+$$p_A(A)=\begin{bmatrix}
+0 & \cdots &0 \\
+\vdots&\ddots &\vdots\\
+0 & \cdots &0
+\end{bmatrix}$$
+
+# Applicazioni del teorema
+
+**Calcolo della potenza di una matrice**:
+$$A^n + c_{n-1}A^{n-1} + \cdots + c_1A + c_0I=0$$
+allora
+$$A^n=-(c_{n-1}A^{n-1} + \cdots + c_1A + c_0I)$$
+
+**Calcolo dell'inversa**:
+$$A^n + c_{n-1}A^{n-1} + \cdots + c_1A + c_0I=0$$
+moltiplicando per $A^{-1}$ abbiamo
+$$A^{n-1} + c_{n-1}A^{n-2} + \cdots + c_1I + c_0A^{-1}=0$$
+risolvendo per $A^{-1}$
+$$A^{-1}=-{1\over c_0}(A^{n-1} + c_{n-1}A^{n-2} + \cdots + c_1I) $$
+
+# Sottospazi di Krylov
+
+Vogliamo risolvere un grande sistema lineare:
+$$
+A x = b
+$$
+
+where:
+
+- $A \in \mathbb{R}^{n \times n}$ è grande e sparsa  
+- $b \in \mathbb{R}^n$ è il vettore dei termini noti
+
+I metodi diretti (come l’eliminazione di Gauss) sono costosi,  
+quindi si utilizzano **metodi iterativi** basati sui **sottospazi di Krylov**.
+
+# Definizione di Sottospazio di Krylov
+
+Dato una matrice $A$ e un vettore $r_0$ (residuo iniziale),  
+il **sottospazio di Krylov** di ordine $k$ è definito come:
+
+$$
+\mathcal{K}_k(A, r_0) = span\{ r_0, A r_0, A^2 r_0, \ldots, A^{k-1} r_0 \}
+$$
+
+dove
+$$
+\operatorname{span}\{v_1, v_2, \ldots, v_k\}
+= \left\{ \alpha_1 v_1 + \alpha_2 v_2 + \cdots + \alpha_k v_k \;\middle|\; \alpha_i \in \mathbb{R} \right\}.
+$$
+
+Ogni iterazione espande questo spazio di una dimensione.
+
+# Intuizione
+
+- Si parte da una stima iniziale \( x_0 \)  
+- Si calcola il residuo \( r_0 = b - A x_0 \)  
+- Si cerca la prossima approssimazione \( x_k \) all’interno del sottospazio  
+
+$$
+x_k \in x_0 + \mathcal{K}_k(A, r_0)
+$$
+
+In pratica, si cerca la soluzione nello spazio generato dai prodotti successivi tra la matrice e il residuo iniziale.
+
+# Costruzione dei Sottospazi
+
+Si noti che dato $r_0$, Il prodotto $Ar_0$ è un nuovo vettore. In sostanza $A$ trasforma $r_0$. moltiplicando per $A$ ripetutamente il risultato si ottiene una sequenza di vettori
+$$r_0, A r_0, A^2 r_0, \ldots, A^{k-1} r_0$$
+Per maggiore compattezza indichiamo questi vettori come segue:
+$$v_1, v_2, v_3, \ldots, v_k$$
+
+Ogni nuovo vettore si ottiene moltiplicando il precedente per la matrice \( A \):
+
+$$
+v_{k+1} = A v_k
+$$
+
+# I sottospazi di Krylov
+
+$$\mathcal{K}_1(A, r_0)= \left\{ \alpha_1 v_1 \;\middle|\; \alpha_i \in \mathbb{R} \right\}$$
+$$\mathcal{K}_2(A, r_0)= \left\{ \alpha_1 v_1 + \alpha_2 v_2 \;\middle|\; \alpha_i \in \mathbb{R} \right\}$$
+$$\mathcal{K}_3(A, r_0)= \left\{ \alpha_1 v_1 + \alpha_2 v_2 +\alpha_3 v_3 \;\middle|\; \alpha_i \in \mathbb{R} \right\}$$
+$$\qquad \vdots \hskip5cm \vdots$$
+$$\mathcal{K}_k(A, r_0)= \left\{ \alpha_1 v_1 + \alpha_2 v_2 + \cdots + \alpha_k v_k \;\middle|\; \alpha_i \in \mathbb{R} \right\}$$ 
+
+Per mantenere la stabilità numerica,  
+per ogni sottospazio, si costruisce una **base ortonormale** mediante il **processo di Arnoldi** (o di **Lanczos** per matrici simmetriche).
+
+# Algoritmi basati sui Sottospazi di Krylov
+
+\begin{center}
+\begin{tabular}{lll}
+\textbf{Algoritmo} & \textbf{Tipo di matrice} & \textbf{Ortonormalizzazione} \\
+\hline
+CG & S e DF & \(A\)-ortonormale \\
+GMRES & Generale & Processo di Arnoldi \\
+MINRES & Simmetrica & Processo di Lanczos \\
+\end{tabular}
+\end{center}
+
+CG = Gradiente Coniugato
+
+S e DF = simmetrica e definita positiva
+
+Ogni algoritmo minimizza il residuo $\| b - A x_k \|$  
+all’interno del sottospazio di Krylov di dimensione crescente.
+
+# Interpretazione Geometrica
+
+- $\mathcal{K}_1(A, r_0)$: retta passante per \( r_0 \)  
+- $\mathcal{K}_2(A, r_0)$: piano generato da \( \{r_0, Ar_0\} \)  
+- $\mathcal{K}_3(A, r_0)$: sottospazio tridimensionale, e così via  
+
+Ogni iterazione trova la miglior approssimazione della soluzione entro il sottospazio corrente.
+
+# Idea Chiave del GMRES
+
+Il metodo **GMRES** minimizza la norma del residuo:
+
+$$
+\| b - A x_k \|
+$$
+
+soggetta al vincolo:
+
+$$
+x_k \in x_0 + \mathcal{K}_k(A, r_0)
+$$
+
+Il residuo finale è ortogonale allo spazio $A \mathcal{K}_k(A, r_0)$.
+
+
+# Riepilogo
+
+- I sottospazi di Krylov sono generati da $\{r_0, A r_0, A^2 r_0, \ldots\}$  
+- Contengono approssimazioni sempre migliori della soluzione esatta  
+- Sono alla base di metodi iterativi come **CG**, **GMRES**, **MINRES**  
+- Evitano di calcolare direttamente l’inversa di $A$, ideale per sistemi grandi e sparsi  
+
+
+## Conclusione
+
+I metodi basati sui sottospazi di Krylov proiettano il grande problema $A x = b$  
+su un piccolo sottospazio che cresce iterativamente,  
+offrendo una **convergenza rapida** senza memorizzare l’inversa di $A$.
+
+
