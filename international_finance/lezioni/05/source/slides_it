@@ -1,0 +1,347 @@
+# Notazione
+
+Nelle diapositive seguenti verranno utilizzate le seguenti abbreviazioni
+
+- naz = nazionale
+- stra = stranieto
+- vn = valuta nazionale
+- vs = valuta straniera 
+
+# La legge del prezzo unico
+
+- Afferma che in un mercato concorrenziale, beni identici devono avere lo stesso prezzo. Ne segue che:
+	- un soggetto sostiene lo stesso costo di acquisto indipendentemente dal venditore da cui intende acquistare.
+
+- In Economia Internazionale: un soggetto sostiene lo stesso costo indipendentemente dal paese in cui intende acquistare il bene
+
+$$\underbrace{P^i_{naz}}_{\substack{prezzo \\ in \ vn \\ del \\ bene \\ naz}}=\underbrace{\underbrace{E_{vn/vs}}_{\substack{\text{quantità} \ di \ vn \\ per \ 1 \ \text{unità} \ di \ vs }} \times \underbrace{P^i_{stra}}_{\substack{Prezzo \ in \\ vs \ del \\ bene \\ sraniero}}}_{prezzo \ in \ vn \ del \ bene \ straniero}$$
+
+
+# Esempi
+
+- Per un americano si ha
+$$\underbrace{P^i_{US}}_{\substack{prezzo \\ in \ \$ \\ del \\ bene \\ americano}}=\underbrace{\underbrace{E_{\$/euro}}_{\substack{numero \ di \ \$ \\ per \ 1 \ euro }} \times \underbrace{P^i_{EU}}_{\substack{Prezzo \ in \\ euro \ del \\ bene \\ europeo}}}_{prezzo \ in \ \$ \ del \ bene \ europeo}$$
+
+- Per un europeo si ha
+$$\underbrace{P^i_{EU}}_{\substack{prezzo \\ in \ euro \\ del \\ bene \\ europeo}}=\underbrace{\underbrace{E_{euro/\$}}_{\substack{numero \ di \ euro \\ per \ 1 \ \$ }} \times \underbrace{P^i_{US}}_{\substack{Prezzo \ in \\ \$ \ del \\ bene \\ americano}}}_{prezzo \ in \ euro \ del \ bene \ americano}$$
+
+# La parità dei poteri d'acquisto in termini assoluti (PPP)
+
+- non riguarda un singolo bene (come la legge del prezzo unico), ma
+- riguarda un paniere di beni.
+- Pertanto, non si usa $P^i$, ma si usa $P$ che è il prezzo del paniere
+
+  
+$$\underbrace{P_{naz}}_{\substack{prezzo \\ in \ vn \\ del \\ paniere \\ naz.}}=\underbrace{\underbrace{E_{vn/vs}}_{\substack{\text{quantità} \ di \ vn \\ per \ 1 \ \text{unità} \ di \ vs }} \times \underbrace{P_{stra}}_{\substack{Prezzo \ in \\ vs \ del \\ paniere \\ stra.}}}_{prezzo \ in \ vn \ del \ paniere \ straniero}$$
+
+# Relazione tra legge del prezzo unico e PPP
+
+- Dato un paniere,
+	- se vale la legge del prezzo unico per ogni bene del paniere, allora vale anche la PPP, ma
+	- la PPP può valere anche se non vale la legge del prezzo unico per ogni bene del paniere.
+
+Ne segue che la teoria che stiamo elaborando può essere considerata valida anche se non vale la legge del prezzo unico.
+
+
+# La PPP come teoria del tasso di cambio
+
+La PPP prevede che
+$$E_{vn/vs}P_{stra}=P_{naz}$$
+dividendo ambo i lati per $P_{stra}$ abbiamo
+$$E_{vn/vs}=\frac{P_{naz}}{P_{stra}}$$
+
+Ne segue che il tasso di cambio è determinato dai prezzi nei due paesi:
+
+- la vn si deprezza sulla vs se aumenta $P_{naz}$ o se si riduce $P_{stra}$
+- la vn si aprezza sulla vs se si riduce $P_{naz}$ o se aumenta $P_{stra}$
+
+
+# Esempio
+
+Per gli americani si ha
+$$E_{\$/euro}P_{EU}=P_{US}$$
+dividendo ambo i lati per $P_{EU}$ abbiamo
+$$E_{\$/euro}=\frac{P_{US}}{P_{EU}}$$
+
+Ne segue che:
+
+- Il \$ si deprezza sull'Euro se aumenta $P_{US}$ o se si riduce $P_{EU}$
+- Il \$ si aprezza sull'Euro se si riduce $P_{US}$ o se aumenta $P_{EU}$
+
+# Il tasso di cambio e la teoria monetaria della determinazione del prezzo
+
+Ricordiamo ora l'equazione 4.5 a pagina 120 del libro di testo:
+
+- il prezzo in un paese è pari al rapporto tra offerta di moneta ($M^s$) e domanda reale di moneta ($L(R,Y)$)
+$$P=\frac{M^s}{L(R,Y)}$$
+Possiamo dunque esprimere la PPP come segue:
+$$E_{vn/vs}=\frac{P_{naz}}{P_{stra}}=\frac{\frac{M^s_{naz}}{L(R_{naz},Y_{naz})}}{\frac{M^s_{stra}}{L(R_{stra},Y_{stra})}}$$
+
+# Il tasso di cambio e le variabili che influenzano il mercato della moneta
+
+Le variabili che influenzano gli equilibri sui mercati della moneta dei due paesi sono:
+
+- $M^s_{naz}$: l'offerta di moneta nazionale
+- $R_{naz}$: il tasso di interesse nazionale
+- $Y_{naz}$: il reddito nazionale
+- $M^s_{stra}$: l'offerta di moneta straniera
+- $R_{stra}$: il tasso di interesse straniera
+- $Y_{stra}$: il reddito straniero
+
+Queste influenzano i prezzi e dunque anche il tasso di cambio.
+
+# Le variazioni del tasso di cambio
+Data l'equazione che abbiamo derivato in precedenza: 
+$$E_{vn/vs}=\frac{P_{naz}}{P_{stra}}=\frac{\frac{M^s_{naz}}{L(R_{naz},Y_{naz})}}{\frac{M^s_{stra}}{L(R_{stra},Y_{stra})}}$$
+possiamo osservare che
+
+- $M^s_{naz}\uparrow \qquad \Rightarrow \qquad P_{naz}\uparrow \qquad \Rightarrow \ \ E_{vn/vs}\uparrow$ (deprezzam.)
+- $R_{naz}\uparrow \ \ \Rightarrow \ \ L_{naz}\downarrow \ \ \Rightarrow \ \ P_{naz}\uparrow  \ \ \Rightarrow E_{vn/vs}\uparrow$ (deprezzam.)
+- $Y_{naz}\uparrow \ \ \Rightarrow \ \ L_{naz}\uparrow \ \ \Rightarrow \ \ P_{naz}\downarrow  \ \ \Rightarrow E_{vn/vs}\downarrow$ (apprezzam.)
+- $M^s_{stra}\uparrow \qquad \Rightarrow \qquad P_{stra}\uparrow  \qquad \Rightarrow \ \ E_{vn/vs}\downarrow$ (apprezzam.)
+- $R_{stra}\uparrow \ \ \Rightarrow \ \ L_{stra}\downarrow \ \ \Rightarrow \ \ P_{stra}\uparrow  \ \ \Rightarrow E_{vn/vs}\downarrow$ (apprezzam.)
+- $Y_{stra}\uparrow \ \ \Rightarrow \ \ L_{stra}\uparrow \ \ \Rightarrow \ \ P_{stra}\downarrow  \ \ \Rightarrow E_{vn/vs}\uparrow$ (deprezzam.)
+- le relazioni sono invertite nei casi contrari.
+
+# Discordanza tra parità dei tassi di interesse e PPP
+
+Un risultato della diapositiva precedente è che 
+
+- un aumento del tasso di interesse nazionale implica un deprezzamento del tasso di cambio
+
+mentre secondo la teoria della parità dei tassi di interesse studiata al capitolo 3
+
+- un aumento del tasso di interesse nazionale implica un apprezzamento del tasso di cambio
+
+Il primo risultato può essere spiegato in un contesto dinamico che contempla variazioni continue della quantità di moneta. Si veda la diapositiva \ref{pg:RandE} per la spiegazione, mentre nelle diapositive seguenti restiamo nel contesto statico.
+
+<!--
+Come vedremo in una delle prossime diapositive, questo dipende dalle diverse ipotesi sulla velocità di variazione della quantità di moneta e del livello dei prezzi.
+
+# La PPP in termini relativi
+
+La PPP in termini assoluti è un requisito troppo restrittivo. 
+
+Si passa pertanto alla PPP in termini relativi che si ottiene calcolando i tassi di crescita nella PPP in termini assoluti. In altre parole, da
+$$E_{\$/euro}=\frac{P_{naz}}{P_{stra}}$$
+si ottiene
+$$\underbrace{\frac{E_{\$/euro,t}-E_{\$/euro,t-1}}{E_{\$/euro,t-1}}}_{deprezzamento \ \%}=\underbrace{\frac{P_{naz,t}-P_{naz,t-1}}{P_{naz,t-1}}}_{\substack{inflazione \ in \ naz \\ \pi_{naz,t}}}-\underbrace{\frac{P_{stra,t}-P_{stra,t-1}}{P_{stra,t-1}}}_{\substack{inflazione \ in \ stra \\  \pi_{stra,t}}}$$
+
+-->
+
+# La PPP e la realtà
+
+- La teoria della determinazione del tasso di cambio basata sulla PPP viene parzialmente riflessa nei dati.
+
+- In questa teoria
+
+	- il tasso di cambio è determinato dai prezzi
+	- si usa una teoria monetaria della determinazione dei prezzi
+
+- MA i prezzi non vengono determinati unicamente da fattori monetari: essi vengono determinati anche da domanda e offerta nel mercato dei beni (fattori reali).
+
+- Nelle prossime diapositive illustreremo le determinanti reali del tasso di cambio.
+
+# Il tasso di cambio reale (q)
+
+è dato dal rapporto tra
+
+- $E_{vn/vs} \times P_{straniero}$: prezzo espresso in valuta nazionale di un paniere di beni stranieri e
+- $P_{nazionale}$: prezzo in valuta nazionale di un paniere nazionale
+
+$$q=\frac{E_{vn/vs} \times P_{straniero}}{P_{nazionale}}$$
+
+# Apprezzamento e deprezzamento reale
+
+ In caso di deprezzamento reale ($q\uparrow$)
+
+- ci vogliono più panieri nazionali per acquistare i panieri stranieri
+- il paniere nazionale vale di meno in temini di panieri stranieri
+
+In caso di apprezzamento reale ($q\downarrow$)
+
+- ci vogliono meno panieri nazionali per acquistare i panieri stranieri
+- il paniere nazionale vale di più in termini di panieri stranieri
+
+
+# Determinanti del tasso di cambio reale
+
+Le determinanti del tasso di cambio reale sono:
+
+- la domanda relativa dei prodotti nazionali rispetto alla domanda di beni stranieri:
+$$\frac{D_{naz}}{D_{stra}}$$
+- l'offerta relativa dei prodotti nazionali rispetto all'offerta di beni stranieri:
+$$\frac{Y_{naz}}{Y_{stra}}$$
+
+# Le variazioni del tasso di cambio reale
+
+- se la domanda relativa di beni nazionali aumenta, il tasso di cambio reale si apprezza:
+$$D_{naz}/D_{stra}\uparrow \qquad \Rightarrow \qquad q\downarrow$$
+i produttori nazionali diminuiranno la quantità di paniere nazionale scambiata con un paniere straniero
+- se l'offerta relativa di beni nazionali aumenta, il tasso di cambio reale si deprezza:
+$$Y_{naz}/Y_{stra}\uparrow \qquad \Rightarrow \qquad q\uparrow$$
+i produttori nazionali aumenteranno la quantità di paniere nazionale scambiata con un paniere straniero
+- le relazioni si invertono nei casi contrari.
+
+# Dal tasso di cambio reale al tasso di cambio nominale
+
+Riprendendo la definizione
+$$q=\frac{E_{vn/vs} \times P_{straniero}}{P_{nazionale}}$$
+e risolvendo rispetto a $E$ si ha
+$$E_{vn/vs}= q \times\frac{ P_{nazionale}}{P_{straniero}}$$
+
+# Le determinanti del tasso di cambio nominale
+
+$$E_{vn/vs}= \underbrace{q}_{determinanti \ reali} \times \underbrace{\frac{ P_{nazionale}}{P_{straniero}}}_{determinanti \ monetarie}$$
+
+Il tasso di cambio nominale ha dunque delle determinanti 
+
+- monetarie
+- reali
+
+# Le determinanti monetarie
+
+- Le determinanti monetarie sono state individuate nelle diapositive 9 e 10
+
+- Le variazioni del tasso di cambio nominale rispetto alle sue determinanti sono state individuate nella dispositiva 11.
+
+- Considerando l'equazione della diapositiva precedente, possiamo affermare che le conclusioni sono valide anche in questo contesto.
+
+# Le variazioni del tasso di cambio nominale dovute a fattori reali
+
+Riprendendo il contenuto della diapositiva 17 e l'equazione della diapositiva 19 possiamo osservare che
+
+- $D_{naz}/D_{stra}\uparrow \ \ \Rightarrow \ \ q\downarrow \ \ \Rightarrow \ \ E_{vn/vs}\downarrow$ (apprezzamento)
+- $Y_{naz}/Y_{stra}\uparrow \ \ \Rightarrow \ \ q\uparrow \ \ \Rightarrow \ \ E_{vn/vs}\uparrow$ (deprezzamento)
+- le relazioni sono invertite nei casi contrari.
+
+# L'interazione tra fattori reali e monetari
+
+Nel caso di variazioni di $Y_{naz}$, si hanno due effetti contrastanti:
+
+- dal lato reale abbiamo (si veda diapositiva precedente)
+ $$Y_{naz}/Y_{stra}\uparrow \ \ \Rightarrow \ \ q\uparrow \ \ \Rightarrow \ \ E_{vn/vs}\uparrow \ (deprezzamento)$$
+- dal lato monetario si ha (si veda diapositiva 11)
+$$Y_{naz}\uparrow \ \ \Rightarrow \ \ L_{naz}\uparrow \ \ \Rightarrow \ \ P_{naz}\downarrow  \ \ \Rightarrow E_{vn/vs}\downarrow \ \ (apprezzam.)$$
+
+L'effeto complessivo sul tasso di cambio nominale è pertanto indeterminato.
+
+#
+
+\hrule
+
+\vskip 5mm
+\centerline{Dinamica}
+
+\vskip5mm
+\hrule
+
+# La PPP in termini relativi
+
+- La PPP in termini relativi si ottiene dalla PPP in termini assoluti, effettuando il passaggio ai tassi di variazione.
+- Ci sono vari modi per otenere una buona approssimazione del tasso di variazione 
+	- si veda la nota 1 a pag. 125 del libro di testo
+	- oppure facendo la derivata del logaritmo della variabile rispetto al tempo 
+- In queste diapositive utilizzeremo i seguenti risultati:
+	- quando una variabile è il prodotto tra due altre variabili, il suo tasso di variazione è la somma dei tassi di variazione delle due variabili che lo determinano
+	- quando una variabile è il quoziente di due variabili, il suo tasso di variazione è la differenza dei tassi di variazione delle variabili che lo determinano
+
+# Esempi
+
+Ricordiamo che il tasso di variazione di una variabile $X$ è
+$$\frac{X_t-X_{t-1}}{X_{t-1}}$$
+
+- il tasso di variazione di $P_{naz}=E\times P_{stra}$ è approssimato da
+$$\frac{P_{naz,t}-P_{naz,t-1}}{P_{naz,t-1}}=\frac{E_t-E_{t-1}}{E_{t-1}}+\frac{P_{stra,t}-P_{stra,t-1}}{P_{stra,t-1}}$$
+- il tasso di variazione di $E=\frac{P_{naz}}{P_{stra}}$ è approssimato da
+$$\frac{E_t-E_{t-1}}{E_{t-1}}=\frac{P_{naz,t}-P_{naz,t-1}}{P_{naz,t-1}}-\frac{P_{stra,t}-P_{stra,t-1}}{P_{stra,t-1}}$$
+
+#
+
+- Il tasso di variazione dei prezzi in economia viene denominato inflazione e, in queste diapositive, viene indicato con la notazione $\pi$
+
+- L'ultima equazione della diapositiva precedente può essere dunque espressa come l'equazione 5.2 del libro di testo
+$$\frac{E_t-E_{t-1}}{E_{t-1}}=\pi_{naz,t}-\pi_{stra,t}$$
+
+- si tratta dell'equazione della PPP in termini relativi.
+
+# Vantaggi della PPP in termini relativi
+
+- La PPP in termini relativi potrebbe risultare verificata anche se la PPP in termini assoluti non lo è.
+- In particolare può essere verificata anche se il livello generale dei prezzi è calcolato utilizzando panieri con composizione differente.
+
+# Politica monetaria in modelli dinamici
+
+- La politica monetaria viene implementata in genere facendo variare la quantità di moneta di una certa percentuale in ongni periodo.
+
+- Le decisioni di politica monetaria consistono quindi in movimenti del tasso di variazione della quantità di moneta.
+
+- Si ricorda che con l'ipotesi di prezzi completamente flessibili, un certo tasso di variazione della quantità di moneta genera un uguale tasso di variazione del livello dei prezzi.
+
+- In altre parole l'inflazione è pari al tasso di variazione della quantità di moneta.
+
+# Aspettative nei modelli dinamici
+
+- Nei modelli dinamici assume importanza l'aspetto prospettico e dunque le aspettative.
+
+- Possiamo dunque passare alla versione prospettica della PPP in termini relativi
+$$\frac{E^e-E}{E}=\pi^e_{naz}-\pi^e_{stra}$$
+
+# Inflazione e tassi di interesse
+
+- Combinando la versione prospettica della PPP in termini relativi con la parità dei tassi di interesse possiamo giungere alla relazione tra tassi di interesse e tassi di inflazione.
+
+$$\overbrace{R_{naz}-R_{stra}=\frac{E^e-E}{E}}^{\textnormal{parità dei tassi}}=\pi^e_{naz}-\pi^e_{stra}$$
+\vskip-13.5mm
+$$R_{naz}-R_{stra}=\underbrace{\frac{E^e-E}{E}=\pi^e_{naz}-\pi^e_{stra}}_{\textnormal{PPP relativa}}$$
+
+si ottiene
+$$R_{naz}-R_{stra}=\pi^e_{naz}-\pi^e_{stra}$$
+ovvero il differenziale dei tassi di interesse tra due paesi è determinato dal differenziale dei tassi di inflazione
+
+# L'effetto Fisher
+
+\small
+In situazioni di inflazione persistente, il tasso di interesse nominale varia in base al tasso di inflazione.
+
+- Chi dà a prestito richiede un compenso in termini reali, ovvero richiede un certo tasso di interesse reale ($r$).
+
+- Se c'è inflazione, il tasso di interesse nominale verrà fissato ad un livello che compensa la perdita di potere d'acquisto dovuta all'inflazione:
+$$R=r+\pi^e$$
+
+- In un'ottica prospettica possiamo definire il tasso di interesse reale che sarà ottenuto come: $r^e=R-\pi^e$
+
+- l'equazione a cui siamo giunti nella diapositiva precedente può essere espressa come:
+$\underbrace{R_{naz}-\pi^e_{naz}}_{r^e_{naz}}=\underbrace{R_{stra}-\pi^e_{stra}}_{r^e_{stra}}$
+
+# Dinamica a seguito di variazione della politica monetaria
+
+Utilizzando le nozioni esposte, è possibile spiegare che un aumento  del tasso di crescita della moneta dà vita alle dinamiche mostrate nella figura 5.1 del libro di testo.
+
+
+# Spiegazione della figura 5.1
+
+\label{pg:RandE}
+
+- L'aumento del tasso di crescita della moneta genera aspettative di inflazione $\pi^e_{naz}\uparrow$
+- a parità di inflazione straniera, questo genera un'aspettativa di deprezzamento del tasso di cambio ($(E^e-E)/E=\pi^e_{naz}-\pi^e_{stra}$)
+- L'aspettativa di deprezzamento fa aumentare il tasso di interesse ($R_{naz}=R_{stra}+(e^e-E)/E$). (Questo genera il salto nel grafico b della figura)
+- L'aumento del tasso di interesse implica una riduzione della domanda di saldi monetari reali ($L$), e pertanto del livello dei prezzi ($P_{naz}=M^s_{naz}/L_{naz}$). (questo genera il salto nel grafico c).
+- La dinamica del tasso di cambio segue quella dei prezzi per la PPP ($E=P_{naz}/P_{stra}$).
+
+# Modifiche dovute al tasso di cambio reale
+
+Arricchendo lo schema con il tasso di cambio reale abbiamo
+$$E=q\frac{P_{NAZ}}{P_{STRA}}$$
+passando ai tassi di variazione
+
+$$\frac{E^e-E}{E}=\frac{q^e-q}{q}+\pi^e_{naz}-\pi^e_{stra}$$
+Utilizzando la parità dei tassi di interesse si ha
+$$R_{naz}-R_{stra}=\frac{q^e-q}{q}+\pi^e_{naz}-\pi^e_{stra}$$
+$$R_{naz}-\pi^e_{naz}-(R_{stra}-\pi^e_{stra})=\frac{q^e-q}{q}$$
+$$r^e_{naz}-r^e_{stra}=\frac{q^e-q}{q}$$
+
+#
+
+Ovvero, il differenziale dei tassi di interesse reali attesi uguaglia il deprezzamento del tasso di cambio reale.
+

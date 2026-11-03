@@ -1,0 +1,351 @@
+# Notation
+
+The following abbreviations will be used in the following slides
+
+- nat = national
+- for = foreign
+- nc = national currency
+- fc = foreign currency 
+
+# The law of one price
+
+- It states that in a competitive market, identical goods must have the same price. It follows that:
+	- a person incurs the same purchase cost regardless of the seller from whom he intends to buy.
+
+- In International Economics: a person bears the same cost regardless of the country in which he intends to purchase the asset
+
+$$\underbrace{P^i_{nat}}_{\substack{price \\ in \ nc \\ of \\ nat \\ good}}=\underbrace{\underbrace{E_{nc/fc}}_{\substack{\text{quantity} \ of \ nc \\ per \ 1 \ \text{unit} \ di \ fc }} \times \underbrace{P^i_{for}}_{\substack{Price \ in \\ fc \ of \\ foreign \\ good}}}_{price \ in \ nc \ of \ foreign \ good}$$
+
+
+# Examples
+
+- For an American we have
+$$\underbrace{P^i_{US}}_{\substack{price \\ in \ \$ \\ of \\ US \\ good}}=\underbrace{\underbrace{E_{\$/euro}}_{\substack{\text{quantity} \ of \ \$ \\ per \ 1 \ euro }} \times \underbrace{P^i_{for}}_{\substack{Price \ in \\ euro \ of \\ EU \\ good}}}_{price \ in \ nc \ of \ EU \ good}$$
+
+<!--
+- For a European we have
+$$\underbrace{P^i_{EU}}_{\substack{prezzo \\ in \ euro \\ del \\ bene \\ europeo}}=\underbrace{\underbrace{E_{euro/\$}}_{\substack{numero \ di \ euro \\ per \ 1 \ \$ }} \times \underbrace{P^i_{US}}_{\substack{Prezzo \ in \\ \$ \ del \\ bene \\ americano}}}_{prezzo \ in \ euro \ del \ bene \ americano}$$
+-->
+
+# Purchasing power parity in absolute terms (PPP)
+
+- it does not concern a single good (like the law of one price), but
+- concerns a basket of goods.
+- Therefore, you don't use $P^i$, but $P$ (the price of a basket of goods) is used
+
+  
+$$\underbrace{P_{nat}}_{\substack{price \\ in \ nc \\ of \\ nat. \\ basket}}=\underbrace{\underbrace{E_{nc/fc}}_{\substack{\text{quantity} \ of \ nc \\ for \ 1 \ \text{unit} \ of \ fc }} \times \underbrace{P_{for}}_{\substack{Price \ in \\ fc \ of \\ for. \\ basket}}}_{price \ in \ nc \ of \ for. \ basket}$$
+
+# Relationship between the law of one price and PPP
+
+- Given a basket,
+	- if the law of one price for each good in the basket holds, then PPP also holds, but
+	- PPP can be valid even if the law of one price for each good in the basket does not holds.
+
+It follows that the theory we are developing can be considered valid even if the law of one price does not holds.
+
+# PPP as an exchange rate theory
+
+PPP implies that:
+$$E_{nc/fc}P_{for}=P_{nat}$$
+dividing both sides by $P_{for}$ we have
+$$E_{nc/fc}=\frac{P_{nat}}{P_{for}}$$
+
+It follows that the exchange rate is determined by the prices in the two countries:
+
+- the nc depreciates on the fc if $P_{nat}$ increases or if $P_{for}$ decreases
+- the nc appreciates on the fc if $P_{nat}$ decreases or if $P_{for}$ increases
+
+
+# Example
+
+For the Americans, we have
+$$E_{\$/euro}P_{EU}=P_{US}$$
+dividing both sides by $P_{EU}$ we have
+$$E_{\$/euro}=\frac{P_{US}}{P_{EU}}$$
+
+It follows that:
+
+- The \$ depreciates against the Euro if $P_{US}$ increases or if $P_{EU}$ decreases
+- The \$ appreciates against the Euro if $P_{US}$ decreases or if $P_{EU}$ increases
+
+# The Exchange Rate and the Monetary Theory of Pricing
+
+Now let's remember equation 4.5 of the textbook:
+
+- the price in a country is equal to the ratio between the money supply ($M^s$) and the real demand for money ($L(R,Y)$)
+$$P=\frac{M^s}{L(R,Y)}$$
+We can therefore express PPP as follows:
+$$E_{nc/fc}=\frac{P_{nat}}{P_{for}}=\frac{\frac{M^s_{nat}}{L(R_{nat},Y_{nat})}}{\frac{M^s_{for}}{L(R_{for},Y_{for})}}$$
+
+# The exchange rate and variables that affect the currency market
+
+The variables that affect the equilibrium on the currency market are:
+
+- $M^s_{nat}$: the national money supply
+- $R_{nat}$: the national interest rate
+- $Y_{nat}$: national income
+- $M^s_{for}$: the supply of foreign money
+- $R_{for}$: the foreign interest rate
+- $Y_{for}$: foreign income
+
+These affect prices and therefore also the exchange rate.
+
+# Exchange rate changes
+Given the equation we derived earlier: 
+$$E_{nc/fc}=\frac{P_{nat}}{P_{for}}=\frac{\frac{M^s_{nat}}{L(R_{nat},Y_{nat})}}{\frac{M^s_{for}}{L(R_{for},Y_{for})}}$$
+we can observe that
+
+- $M^s_{nat}\uparrow \qquad \Rightarrow \qquad P_{nat}\uparrow \qquad \Rightarrow \ \ E_{nc/fc}\uparrow$ (depreciation)
+- $R_{nat}\uparrow \ \ \Rightarrow \ \ L_{nat}\downarrow \ \ \Rightarrow \ \ P_{nat}\uparrow  \ \ \Rightarrow E_{nc/fc}\uparrow$ (depreciation)
+- $Y_{nat}\uparrow \ \ \Rightarrow \ \ L_{nat}\uparrow \ \ \Rightarrow \ \ P_{nat}\downarrow  \ \ \Rightarrow E_{nc/fc}\downarrow$ (appreciation)
+- $M^s_{for}\uparrow \qquad \Rightarrow \qquad P_{for}\uparrow  \qquad \Rightarrow \ \ E_{nc/fc}\downarrow$ (appreciation)
+- $R_{for}\uparrow \ \ \Rightarrow \ \ L_{for}\downarrow \ \ \Rightarrow \ \ P_{for}\uparrow  \ \ \Rightarrow E_{nc/fc}\downarrow$ (appreciation)
+- $Y_{for}\uparrow \ \ \Rightarrow \ \ L_{for}\uparrow \ \ \Rightarrow \ \ P_{for}\downarrow  \ \ \Rightarrow E_{nc/fc}\uparrow$ (depreciation)
+- relations are reversed in the opposite cases.
+
+# Discordance between interest rate parity and PPP
+
+A result of the previous slide is that 
+
+- an increase in the national interest rate implies a depreciation of the exchange rate
+
+while according to the theory of interest rate parity studied in chapter 3
+
+- an increase in the national interest rate implies a appreciation of the exchange rate
+
+The first result can be explained in a dynamic context that contemplates continuous variations in the quantity of money. See the slide \ref{pg:RandE} for the explanation, while in the following slides we remain in the static context.
+
+<!--
+As we will see in one of the next slides, this depends on the different assumptions about the speed of change in the quantity of money and the price level.
+
+# PPP in relative terms
+
+PPP in absolute terms is too restrictive a requirement. 
+
+We then move on to PPP in relative terms, which is obtained by calculating the growth rates in PPP in absolute terms. In other words, from
+$$E_{\$/euro}=\frac{P_{naz}}{P_{for}}$$
+we obtain
+$$\underbrace{\frac{E_{\$/euro,t}-E_{\$/euro,t-1}}{E_{\$/euro,t-1}}}_{depreciation \ \%}=\underbrace{\frac{P_{naz,t}-P_{naz,t-1}}{P_{naz,t-1}}}_{\substack{inflation \ in \ naz \\ \pi_{naz,t}}}-\underbrace{\frac{P_{for,t}-P_{stra,t-1}}{P_{stra,t-1}}}_{\substack{inflation \ in \ stra\\ \pi_{stra,t}}}$$
+
+-->
+
+# PPP and reality
+
+- The PPP-based theory of exchange rate determination is partially reflected in the data.
+
+- In this theory
+
+	- the exchange rate is determined by the prices
+	- a monetary theory of price determination is used
+
+- BUT prices are not determined solely by monetary factors: they are also determined by supply and demand in the goods market (real factors).
+
+- In the next few slides, we will illustrate the real determinants of the exchange rate.
+
+# The real exchange rate (q)
+
+is given by the ratio between
+
+- $E_{nc/fc} \times P_{foreign}$: price expressed in national currency of a basket of foreign goods, and
+- $P_{national}$: price in national currency of a national basket
+
+$$q=\frac{E_{nc/fc} \times P_{foreigner}}{P_{domestic}}$$
+
+# Real appreciation and depreciation
+
+ In case of real depreciation ($q\uparrow$)
+
+- it takes more domestic baskets to buy foreign baskets
+- the national basket is worth less in terms of foreign baskets
+
+In case of real appreciation ($q\downarrow$)
+
+- it takes fewer domestic baskets to buy foreign baskets
+- the national basket is worth more in terms of foreign baskets
+
+
+# Real Exchange Rate Determinants
+
+The determinants of the real exchange rate are:
+
+- the relative demand for domestic products compared to the demand for foreign goods;
+$$\frac{D_{nat}}{D_{for}}$$
+- the relative supply of domestic products compared to the supply of foreign goods;
+$$\frac{Y_{nat}}{Y_{for}}$$
+
+# Changes in the real exchange rate
+
+- If the relative demand for domestic goods increases, the real exchange rate appreciates:
+$$D_{nat}/D_{for}\uparrow \qquad \Rightarrow \qquad q\downarrow$$
+domestic producers will decrease the amount of domestic basket exchanged against a foreign basket
+- If the relative supply of domestic goods increases, the real exchange rate depreciates:
+$$Y_{nat}/Y_{for}\uparrow \qquad \Rightarrow \qquad q\uparrow$$
+domestic producers will increase the amount of domestic basket exchanged against a foreign basket
+- relations are reversed in opposite cases.
+
+# From the real exchange rate to the nominal exchange rate
+
+Taking up the definition
+$$q=\frac{E_{nc/fc} \times P_{foreigner}}{P_{domestic}}$$
+and solving with respect to $E$ we have
+$$E_{nc/fc}= q \times\frac{ P_{national}}{P_{foreigner}}$$
+
+# The determinants of the nominal exchange rate
+
+The determinats of the nominal exchange rate are: 
+
+- Monetary
+- Real
+
+$$E_{nc/fc}= \underbrace{q}_{real \ determinants} \times \underbrace{\frac{ P_{domestic}}{P_{foreigner}}}_{monetary \ determinants}$$
+
+# Monetary determinants
+
+- Monetary determinants have been identified on slides 9 and 10
+
+- Changes in the nominal exchange rate with respect to its determinants have been identified in slide 11.
+
+- Considering the equation of the previous slide, we can say that conclusions in slide 11 are valid in this context as well.
+
+# Changes in the nominal exchange rate due to real factors
+
+Taking up the content of slide 17 and the equation in slide 19 we can observe that
+
+- $D_{nat}/D_{for}\uparrow \ \ \Rightarrow \ \ q\downarrow \ \ \Rightarrow \ \ E_{nc/fc}\downarrow$ (appreciation)
+- $Y_{nat}/Y_{for}\uparrow \ \ \Rightarrow \ \ q\uparrow \ \ \Rightarrow \ \ E_{nc/fc}\uparrow$ (depreciation)
+- relations are reversed in the opposite cases.
+
+# The interaction between real and monetary factors
+
+In the case of changes in $Y_{nat}$, there are two contrasting effects:
+
+- on the real side we have (see previous slide)
+ $$Y_{nat}/Y_{for}\uparrow \ \ \Rightarrow \ \ q\uparrow \ \ \Rightarrow \ \ E_{nc/fc}\uparrow \ (depreciation)$$
+- on the monetary side we have (see slide 11)
+$$Y_{nat}\uparrow \ \ \Rightarrow \ \ L_{nat}\uparrow \ \ \Rightarrow \ \ P_{nat}\downarrow  \ \ \Rightarrow E_{nc/fc}\downarrow \ \ (appreciation)$$
+
+The total effect on the nominal exchange rate is therefore undetermined.
+
+#
+
+\hrule
+
+\vskip 5mm
+\centerline{Dynamic}
+
+\vskip5mm
+\hrule
+
+# PPP in relative terms
+
+- PPP in relative terms is obtained from PPP in absolute terms, making the transition to rates of change.
+- There are several ways to get a good approximation of the rate of change 
+	- see note 1 in section 5.2 of the textbook
+	- or by making the derivative of the logarithm of the variable with respect to time 
+- In these slides, we'll use the following results:
+	- when a variable is the product of two other variables, its rate of change is the sum of the rates of change of the two variables in the product
+	- when a variable is the quotient of two variables, its rate of change is the difference of the rates of change of the variables in the ratio
+
+# Examples
+
+Recall that the rate of change of a variable $X$ is
+$$\frac{X_t-X_{t-1}}{X_{t-1}}$$
+
+- the rate of change of $P_{nat}=E\times P_{for}$ is approximated by
+$$\frac{P_{nat,t}-P_{nat,t-1}}{P_{nat,t-1}}=\frac{E_t-E_{t-1}}{E_{t-1}}+\frac{P_{for,t}-P_{for,t-1}}{P_{for,t-1}}$$
+- the rate of change of $E=\frac{P_{nat}}{P_{for}}$ is approximated by
+$$\frac{E_t-E_{t-1}}{E_{t-1}}=\frac{P_{nat,t}-P_{nat,t-1}}{P_{nat,t-1}}-\frac{P_{for,t}-P_{for,t-1}}{P_{for,t-1}}$$
+
+#
+
+- The rate of change of prices in economics is called inflation (or deflation if negative), and in these slides, it is referred to as $\pi$
+
+- The last equation of the previous slide can therefore be expressed as equation 5.2 of the textbook
+$$\frac{E_t-E_{t-1}}{E_{t-1}}=\pi_{nat,t}-\pi_{for,t}$$
+
+- this is the equation of PPP in relative terms.
+
+# Benefits of PPP in Relative Terms
+
+- PPP in relative terms may hold even if PPP in absolute terms is not.
+- In particular, it can also hold if the general price level is calculated using baskets with different compositions.
+
+# Monetary policy in dynamic models
+
+- Monetary policy is typically implemented by varying the amount of money by a certain percentage over each period.
+
+- Monetary policy decisions therefore consist of movements in the rate of change in the quantity of money.
+
+- It should be remembered that with the hypothesis of completely flexible prices, a certain rate of change in the quantity of money generates an equal rate of change in the price level.
+
+- In other words, inflation is equal to the rate of change in the quantity of money.
+
+# Expectations in dynamic models
+
+- In dynamic models, the perspective aspect and therefore expectations take on importance.
+
+- We can then move to the prospective version of PPP in relative terms
+$$\frac{E^e-E}{E}=\pi^e_{nat}-\pi^e_{for}$$
+
+# Inflation and interest rates
+
+- By combining the prospective version of PPP in relative terms with interest rate parity, we can arrive at the relationship between interest rates and inflation rates.
+
+$$\overbrace{R_{nat}-R_{for}=\frac{E^e-E}{E}}^{\textnormal{interest rate parity}}=\pi^e_{nat}-\pi^e_{for}$$
+\vskip-13.5mm
+$$R_{nat}-R_{for}=\underbrace{\frac{E^e-E}{E}=\pi^e_{nat}-\pi^e_{for}}_{\textnormal{relative PPP}}$$
+
+we obtain
+$$R_{nat}-R_{for}=\pi^e_{nat}-\pi^e_{for}$$
+i.e. the interest rate differential between two countries is determined by the inflation rate differential
+
+# The Fisher Effect
+
+\small
+In persistent inflation situations, the nominal interest rate varies according to the inflation rate.
+
+- The lender requires compensation in real terms, i.e. he requires a certain real interest rate ($r$).
+
+- If there is inflation, the nominal interest rate will be set at a level that compensates for the loss of purchasing power due to inflation:
+$$R=r+\pi^e$$
+
+- From a prospective formulation we can define the real interest rate that will be obtained as: $r^e=R-\pi^e$
+
+- the equation we arrived at in the previous slide can be expressed as:
+$\underbrace{R_{nat}-\pi^e_{nat}}_{r^e_{nat}}=\underbrace{R_{for}-\pi^e_{for}}_{r^e_{for}}$
+
+# Dynamics as a result of changes in monetary policy
+
+Using the above notions, it is possible to show that an increase in the growth rate of money gives rise to the dynamics shown in Figure 5.1 of the textbook.
+
+# Explanation of Figure 5.1
+
+\label{pg:RandE}
+
+- Increasing the rate of growth of money generates inflation expectations $\pi^e_{nat}\uparrow$
+- with the same foreign inflation, this generates an expectation of depreciation of the exchange rate ($(E^e-E)/E=\pi^e_{nat}-\pi^e_{for}$)
+- The expectation of depreciation causes the interest rate to rise ($R_{nat}=R_{for}+(e^e-E)/E$). (This generates the jump in graph b of the figure)
+- The rise in the interest rate implies a reduction in the demand for real money balances ($L$), and therefore in the price level ($P_{nat}=M^s_{nat}/L_{nat}$). (This generates the jump in graph c).
+- The exchange rate dynamics follow the price dynamics for PPP ($E=P_{nat}/P_{for}$).
+
+# Changes due to the real exchange rate
+
+By enriching the scheme with the real exchange rate, we have
+$$E=q\frac{P_{nat}}{P_{for}}$$
+Moving to the rates of change, we have
+
+$$\frac{E^e-E}{E}=\frac{q^e-q}{q}+\pi^e_{nat}-\pi^e_{for}$$
+Using interest rate parity, we have
+$$R_{nat}-R_{for}=\frac{q^e-q}{q}+\pi^e_{nat}-\pi^e_{nat}$$
+$$R_{nat}-\pi^e_{nat}-(R_{for}-\pi^e_{for})=\frac{q^e-q}{q}$$
+$$r^e_{nat}-r^e_{for}=\frac{q^e-q}{q}$$
+
+#
+
+That is, the differential in expected real interest rates equals the depreciation of the real exchange rate.
+
+
+
+
+
