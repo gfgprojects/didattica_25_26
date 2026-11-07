@@ -1783,10 +1783,8 @@ J_{\mathbf{f}}(\mathbf{x}^{(k)})
 Esso non rappresenta direttamente la soluzione del sistema
 non lineare. Rappresenta invece la \emph{correzione} che il metodo
 di Newton suggerisce di apportare alla soluzione corrente.
-
-Se
-
 \begin{equation*}
+	\text{Se} \
     \mathbf{x}^{(k)}
     =
     \begin{pmatrix}
@@ -1795,11 +1793,9 @@ Se
         \vdots\\
         x_n^{(k)}
     \end{pmatrix}
-\end{equation*}
-
-e
-
-\begin{equation*}
+%\end{equation*}
+    ,\ \text{e} \
+%\begin{equation*}
     \mathbf{z}^{(k)}
     =
     \begin{pmatrix}
@@ -1808,11 +1804,9 @@ e
         \vdots\\
         z_n^{(k)}
     \end{pmatrix},
-\end{equation*}
-
-allora
-
-\begin{equation*}
+%\end{equation*}
+    \ \text{allora} \
+%\begin{equation*}
     \mathbf{x}^{(k+1)}
     =
     \begin{pmatrix}
@@ -1855,19 +1849,8 @@ Nel metodo di Newton, invece, abbiamo
     -\mathbf{f}(\mathbf{x}^{(k)}).
 \end{equation*}
 
-Poiché sia
-
-\begin{equation*}
-    J_{\mathbf{f}}(\mathbf{x}^{(k)})
-\end{equation*}
-
-sia
-
-\begin{equation*}
-    \mathbf{f}(\mathbf{x}^{(k)})
-\end{equation*}
-
-dipendono dall'approssimazione corrente, il sistema lineare cambia
+Poiché sia $J_{\mathbf{f}}(\mathbf{x}^{(k)})$ sia
+$\mathbf{f}(\mathbf{x}^{(k)})$ dipendono dall'approssimazione corrente, il sistema lineare cambia
 generalmente a ogni iterazione.
 
 Possiamo quindi pensare al metodo di Newton come alla soluzione di
@@ -1885,23 +1868,18 @@ A^{(2)}\mathbf{z}^{(2)}=\mathbf{d}^{(2)}\\
 \vdots
 \end{array}}
 \end{equation*}
-
 dove
-
 \begin{equation*}
     A^{(k)}
     =
     J_{\mathbf{f}}(\mathbf{x}^{(k)})
 \end{equation*}
-
 e
-
 \begin{equation*}
     \mathbf{d}^{(k)}
     =
     -\mathbf{f}(\mathbf{x}^{(k)}).
 \end{equation*}
-
 
 \subsection{Il collegamento tra problemi lineari e non lineari}
 
@@ -1909,13 +1887,10 @@ Possiamo ora comprendere perché lo studio dei sistemi lineari ha
 preceduto quello dei sistemi non lineari.
 
 Un sistema non lineare
-
 \begin{equation*}
     \mathbf{f}(\mathbf{x})=\mathbf{0}
 \end{equation*}
-
 viene approssimato localmente mediante
-
 \begin{equation*}
     \mathbf{f}(\mathbf{x}^{(k)})
     +
@@ -1926,21 +1901,17 @@ viene approssimato localmente mediante
     =
     \mathbf{0}.
 \end{equation*}
-
 Questa linearizzazione produce il sistema
-
 \begin{equation*}
     J_{\mathbf{f}}(\mathbf{x}^{(k)})
     \mathbf{z}^{(k)}
     =
     -\mathbf{f}(\mathbf{x}^{(k)}),
 \end{equation*}
-
 che sappiamo risolvere utilizzando le tecniche numeriche introdotte
 nelle sezioni precedenti.
 
 Il metodo di Newton può quindi essere sintetizzato come
-
 \small
 \begin{equation*}
 \boxed{
@@ -2068,7 +2039,7 @@ numerico non ci aspettiamo generalmente che i residui siano
 esattamente uguali a zero. Richiediamo invece che siano
 sufficientemente piccoli rispetto alla tolleranza adottata.
 
-\subsection{La funzione \texttt{nleqslv} e l'approssimazione numerica della Jacobiana}
+\subsection{La funzione \texttt{nleqslv} di R}
 \label{subsec:nleqslv_derivate}
 
 Consideriamo il problema di determinare una soluzione del sistema non lineare
@@ -2115,9 +2086,9 @@ altre, come la strategia predefinita \texttt{"dbldog"}, si basano sulle \emph{re
 %tra le opzioni disponibili figurano \texttt{"none"}, \texttt{"gline"}, \texttt{"qline"}, \texttt{"cline"}, \texttt{"dbldog"} e \texttt{"hook"}. 
 l'argomento \texttt{control} consente di impostare tolleranze, limiti al numero di iterazioni e altri parametri dell'algoritmo; gli eventuali argomenti aggiuntivi, indicati con \texttt{...}, vengono trasmessi alle funzioni definite dall'utente.
 
-\section{derivazione numerica}
-\paragraph{le differenze finite.}
-per comprendere come sia possibile utilizzare il metodo di newton senza calcolare esplicitamente tutte le derivate, consideriamo dapprima una funzione scalare $f:\mathbb{r}\to\mathbb{r}$. se $f$ è derivabile nel punto $x$, per definizione
+\section{Derivazione numerica}
+\paragraph{Metodo delle differenze finite.}
+per comprendere come sia possibile utilizzare il metodo di newton senza calcolare esplicitamente tutte le derivate, consideriamo dapprima una funzione scalare $f:\mathbb{R}\to\mathbb{R}$. se $f$ è derivabile nel punto $x$, per definizione
 \begin{equation*}
  f'(x)=\lim_{h\to 0}\frac{f(x+h)-f(x)}{h}.
  \label{eq:derivata_definizione}
@@ -2139,10 +2110,10 @@ una terza possibilità consiste nel considerare due punti simmetrici rispetto a 
 \end{equation*}
 le tre espressioni convergono a $f'(x)$ quando $h$ tende a zero, purché siano soddisfatte le necessarie condizioni di regolarità. tuttavia, per un passo finito producono in generale approssimazioni diverse. è quindi importante studiarne l'errore.
 
-\paragraph{la notazione $o$ grande e l'ordine di accuratezza.}
+\paragraph{La notazione $o$ grande e l'ordine di accuratezza.}
 per descrivere come varia l'errore quando il passo si riduce, utilizziamo la notazione asintotica $o$ grande. scrivere
 \begin{equation*}
- r(h)=o(h^p),\qquad h\to 0,
+ r(h)=O(h^p),\qquad h\to 0,
  \label{eq:big_o_def}
 \end{equation*}
 significa che esistono costanti $c>0$ e $\delta>0$ tali che
@@ -2151,59 +2122,59 @@ significa che esistono costanti $c>0$ e $\delta>0$ tali che
  \qquad\text{per }0<|h|<\delta.
  \label{eq:big_o_disuguaglianza}
 \end{equation*}
-in altri termini, quando $h$ è sufficientemente vicino a zero, il modulo di $r(h)$ non cresce più rapidamente di una costante moltiplicata per $|h|^p$. se l'errore di troncamento di una formula è $o(h^p)$, diciamo che la formula ha ordine di accuratezza \emph{almeno} $p$. la precisazione ``almeno'' è necessaria perché la notazione $o$ fornisce un limite superiore: 
-per esempio, un errore \(o(h^3)\) rispetta anche il limite superiore definito da \(o(h^2)\) quando \(h\to 0\), poiché per \(0<|h|<1\) si ha \(|h|^3\leq |h|^2\).
+in altri termini, quando $h$ è sufficientemente vicino a zero, il modulo di $r(h)$ non cresce più rapidamente di una costante moltiplicata per $|h|^p$. se l'errore di troncamento di una formula è $O(h^p)$, diciamo che la formula ha ordine di accuratezza \emph{almeno} $p$. la precisazione ``almeno'' è necessaria perché la notazione $o$ fornisce un limite superiore: 
+per esempio, un errore \(O(h^3)\) rispetta anche il limite superiore definito da \(O(h^2)\) quando \(h\to 0\), poiché per \(0<|h|<1\) si ha \(|h|^3\leq |h|^2\).
 
 per capire il ruolo dell'esponente, osserviamo che per $0<h<1$ le potenze di $h$ diventano più piccole all'aumentare di $p$. se $h=0.1$, allora $h^2=0.01$ e $h^3=0.001$. pertanto, a parità di costanti e per passi sufficientemente piccoli, un errore proporzionale a $h^2$ diminuisce più rapidamente di un errore proporzionale a $h$. in particolare, dimezzare $h$ riduce approssimativamente a un quarto un errore il cui termine principale è proporzionale a $h^2$, mentre dimezza un errore proporzionale a $h$. questa interpretazione riguarda l'errore di troncamento, prima di considerare gli effetti dell'arrotondamento.
 
-\paragraph{accuratezza della differenza in avanti.}
+\paragraph{Accuratezza della differenza in avanti.}
 supponiamo che $f$ sia sufficientemente regolare in un intorno di $x$. lo sviluppo di taylor fornisce
 \begin{equation*}
  f(x+h)=f(x)+hf'(x)+\frac{h^2}{2}f''(x)
- +\frac{h^3}{3!}f'''(x)+o(h^4).
+ +\frac{h^3}{3!}f'''(x)+O(h^4).
  \label{eq:taylor_avanti}
 \end{equation*}
 sottraendo $f(x)$ e dividendo per $h$ otteniamo
 \begin{equation*}
  d_h^+f(x)=f'(x)+\frac{h}{2}f''(x)
- +\frac{h^2}{3!}f'''(x)+o(h^3).
+ +\frac{h^2}{3!}f'''(x)+O(h^3).
  \label{eq:errore_avanti}
 \end{equation*}
 il termine principale dell'errore, se $f''(x)\neq0$, è dunque proporzionale a $h$. più precisamente,
 \begin{equation*}
- d_h^+f(x)-f'(x)=o(h).
+ d_h^+f(x)-f'(x)=O(h).
  \label{eq:ordine_avanti}
 \end{equation*}
-si dice perciò che la differenza in avanti è una formula del primo ordine. la differenza all'indietro ha anch'essa, in generale, errore di troncamento $o(h)$.
+si dice perciò che la differenza in avanti è una formula del primo ordine. la differenza all'indietro ha anch'essa, in generale, errore di troncamento $O(h)$.
 
-\paragraph{accuratezza della differenza centrata.}
+\paragraph{Accuratezza della differenza centrata.}
 per la formula centrata occorre confrontare gli sviluppi nei due punti simmetrici $x+h$ e $x-h$. assumendo che $f$ possieda derivate sufficientemente regolari fino al quinto ordine, possiamo scrivere
 \begin{align*}
  f(x+h)&=f(x)+hf'(x)+\frac{h^2}{2}f''(x)
- +\frac{h^3}{6}f'''(x)+\frac{h^4}{24}f^{(4)}(x)+o(h^5),
+ +\frac{h^3}{6}f'''(x)+\frac{h^4}{24}f^{(4)}(x)+O(h^5),\\
  %\label{eq:taylor_centrata_piu}\\
  f(x-h)&=f(x)-hf'(x)+\frac{h^2}{2}f''(x)
- -\frac{h^3}{6}f'''(x)+\frac{h^4}{24}f^{(4)}(x)+o(h^5).
+ -\frac{h^3}{6}f'''(x)+\frac{h^4}{24}f^{(4)}(x)+O(h^5).
  %\label{eq:taylor_centrata_meno}
 \end{align*}
 sottraendo la seconda espressione dalla prima, i termini di ordine pari si cancellano, mentre quelli di ordine dispari si sommano:
 \begin{equation*}
- f(x+h)-f(x-h)=2hf'(x)+\frac{h^3}{3}f'''(x)+o(h^5).
+ f(x+h)-f(x-h)=2hf'(x)+\frac{h^3}{3}f'''(x)+O(h^5).
  \label{eq:taylor_centrata_sottrazione}
 \end{equation*}
 dividendo entrambi i membri per $2h$ troviamo
 \begin{equation*}
- d_h^0f(x)=f'(x)+\frac{h^2}{6}f'''(x)+o(h^4),
+ d_h^0f(x)=f'(x)+\frac{h^2}{6}f'''(x)+O(h^4),
  \label{eq:errore_centrata}
 \end{equation*}
 da cui
 \begin{equation*}
- d_h^0f(x)-f'(x)=o(h^2).
+ d_h^0f(x)-f'(x)=O(h^2).
  \label{eq:ordine_centrata}
 \end{equation*}
 la differenza centrata è quindi una formula del secondo ordine: in condizioni regolari e per passi sufficientemente piccoli, il suo errore di troncamento diminuisce più rapidamente rispetto a quello della differenza in avanti. il vantaggio deriva dalla simmetria dei punti utilizzati, che elimina il termine di errore proporzionale a $h$. la formula centrata richiede due valutazioni della funzione nei punti $x-h$ e $x+h$; per contro, una differenza in avanti può richiedere una sola nuova valutazione se $f(x)$ è già stata calcolata.
 
-\paragraph{la scelta del passo e gli errori di arrotondamento.}
+\paragraph{La scelta del passo e gli errori di arrotondamento.}
 le formule precedenti sembrerebbero suggerire di scegliere $h$ il più piccolo possibile. questo ragionamento è corretto in aritmetica esatta, ma non necessariamente in un calcolatore. i numeri reali vengono rappresentati con un numero finito di cifre, per cui le operazioni introducono errori di arrotondamento. nella differenza in avanti, per esempio, il numeratore $f(x+h)-f(x)$ è la sottrazione di due numeri molto vicini quando $h$ è piccolo. tale sottrazione può provocare una perdita di cifre significative; inoltre, l'errore presente nel numeratore viene amplificato dalla divisione per $h$.
 
 indichiamo con $\varepsilon$ la \emph{precisione di macchina}, ossia, nel formato numerico considerato, la distanza tra $1$ e il più piccolo numero rappresentabile maggiore di $1$. in un modello semplificato dell'errore della differenza in avanti, possiamo scrivere
@@ -2226,7 +2197,7 @@ imponendo $e'(h)=0$ otteniamo
 \end{equation}
 il rapporto $c_2/c_1$ non scompare: costituisce un fattore moltiplicativo che dipende dal problema. possiamo tuttavia affermare che, mantenendo fisse tali costanti, il passo ottimale è \emph{proporzionale} a $\sqrt{\varepsilon}$, ossia $h_{\mathrm{opt}}\propto\sqrt{\varepsilon}$. si tratta di una stima teorica basata su un modello semplificato, non di un valore esatto valido per ogni funzione. se, per esempio, il termine principale di troncamento si annulla, anche il bilanciamento degli errori può cambiare.
 
-\paragraph{come scelgono il passo i software scientifici?}
+\paragraph{Come scelgono il passo i software scientifici?}
 i software di calcolo scientifico conoscono il formato numerico utilizzato e possono determinarne la precisione di macchina. in r, per la normale aritmetica in doppia precisione, il comando \texttt{.machine\$double.eps} restituisce un valore vicino a $2.22\times10^{-16}$. di conseguenza, $\sqrt{\varepsilon}\approx1.49\times10^{-8}$. per applicare direttamente la formula \eqref{eq:passo_ottimale}, però, bisognerebbe conoscere anche $c_1$ e $c_2$, che dipendono dalla funzione e non sono generalmente disponibili.
 
 per questa ragione molti algoritmi non cercano di calcolare esplicitamente tali costanti, ma adottano regole pratiche basate sull'ordine di grandezza di $\sqrt{\varepsilon}$ e sulla scala delle variabili. una scelta indicativa, per la derivazione rispetto alla variabile $x_j$, è
@@ -2236,7 +2207,7 @@ per questa ragione molti algoritmi non cercano di calcolare esplicitamente tali 
 \end{equation*}
 in questo modo il passo cresce quando la variabile ha un valore assoluto elevato e non diventa automaticamente troppo piccolo quando $x_j$ è vicino a zero. questa espressione rappresenta un criterio diffuso, non una formula universale né necessariamente la regola esatta adottata da \texttt{nleqslv}: i diversi software possono utilizzare scalature, soglie e strategie differenti. il punto fondamentale è che la scelta del passo cerca di bilanciare l'errore di troncamento con quello di arrotondamento.
 
-\paragraph{approssimazione numerica della matrice jacobiana.}
+\paragraph{Approssimazione numerica della matrice jacobiana.}
 torniamo ora al sistema vettoriale \eqref{eq:nleqslv_sistema}. La matrice Jacobiana contiene tutte le derivate parziali delle componenti di $F$ rispetto alle incognite. Per approssimare la derivata rispetto a $x_j$, modifichiamo soltanto la $j$-esima componente del vettore $x$, lasciando invariate le altre. Se $e_j$ è il $j$-esimo vettore della base canonica di $\mathbb{R}^n$, il vettore $x+h_je_j$ differisce da $x$ soltanto nella componente $j$, incrementata di $h_j$.
 
 Applicando la differenza in avanti alla funzione $f_i$ rispetto a $x_j$ otteniamo
