@@ -2134,6 +2134,45 @@ procedure computazionali più articolate.
 
 \subsubsection{Applicazione ai dati dei BOT}
 
+\`E possibile implementare la procedura descritta sopra per ottenere e visualizzare la linea interpolatrice.
+
+Possiamo in alternativa utilizzare le funzioni messe a disposizione del software che stiamo utilizzando. In particolare, per il software R possiamo utilizzare le seguenti funzioni del pacchetto \verb+stats+.
+
+Il pacchetto \texttt{stats} di R mette a disposizione le
+funzioni \texttt{spline()} e \texttt{splinefun()}, che
+consentono di effettuare un'interpolazione mediante spline
+cubiche a partire da un insieme di punti noti.
+
+La funzione \texttt{spline()} calcola direttamente i valori
+interpolati in corrispondenza delle ascisse specificate
+dall'utente attraverso l'argomento \texttt{xout}.
+Il risultato è una lista contenente due vettori:
+\texttt{x}, con le ascisse dei punti considerati, e
+\texttt{y}, con i corrispondenti valori interpolati.
+
+La funzione \texttt{splinefun()}, invece, restituisce una
+funzione interpolante che può essere successivamente
+valutata in diversi punti. Questa seconda possibilità
+risulta particolarmente utile quando è necessario
+calcolare ripetutamente valori interpolati, ad esempio
+per determinare i fattori di sconto a diverse scadenze.
+
+Entrambe le funzioni permettono di selezionare il metodo
+di interpolazione mediante l'argomento \texttt{method}.
+Tra le opzioni disponibili troviamo \texttt{"fmm"},
+utilizzato per impostazione predefinita,
+\texttt{"natural"}, che costruisce una spline cubica
+naturale, e \texttt{"monoH.FC"}, che permette di
+preservare la monotonia dei dati.
+
+È importante osservare che l'interpolazione mediante
+spline cubiche standard non garantisce automaticamente
+che i fattori di sconto interpolati siano positivi e
+decrescenti. Tali proprietà devono quindi essere
+verificate quando si utilizza questo metodo per
+costruire una curva dei fattori di sconto.
+
+
 Figure \ref{fig:spline} shows the cubic spline interpolation for the BOT example.
 
 \begin{figure}
@@ -2143,7 +2182,6 @@ Figure \ref{fig:spline} shows the cubic spline interpolation for the BOT example
 \label{fig:spline}
 \end{figure}
 
-\cleardoublepage
 
 \section{Costruzione della struttura a termine con i BTP}
 \label{sec:term-structure-btp}

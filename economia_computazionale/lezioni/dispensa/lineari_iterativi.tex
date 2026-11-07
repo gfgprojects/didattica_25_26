@@ -1,0 +1,1520 @@
+
+\chapter{Modelli lineari: i metodi di soluzione iterativi}
+\newpage
+\minitoc
+\newpage
+
+Il modello presentato in questo documento è lo stesso trattato nel capitolo 3 del libro ``Computaional Economics. A concise introduction'' di Afonso e Vasconcelos pubblicato nel 2016 dalla casa editrice Routledge.  
+
+\section{Il modello IS--LM in economia aperta e i metodi iterativi}
+\label{sec:islm-aperta-iterativi}
+
+Nella parte relativa ai metodi di soluzione diretti abbiamo utilizzato il modello
+IS--LM in economia chiusa per introdurre la fattorizzazione LU.
+La fattorizzazione LU appartiene alla famiglia dei
+\emph{metodi diretti}: una volta assegnati la matrice $A$ e il
+vettore $b$, la soluzione del sistema
+
+\begin{equation*}
+    Ax=b
+\end{equation*}
+
+viene ottenuta attraverso una sequenza finita e predeterminata di
+operazioni.
+
+Consideriamo ora un'estensione del modello IS--LM nella quale due
+economie sono collegate attraverso gli scambi internazionali.
+L'aumento del numero delle equazioni e delle variabili ci offre
+l'occasione per introdurre una diversa famiglia di tecniche
+numeriche: i \emph{metodi iterativi}.
+
+A differenza dei metodi diretti, i metodi iterativi partono da una
+soluzione iniziale di prova e costruiscono una successione di
+approssimazioni della soluzione. Questi metodi risultano
+particolarmente interessanti quando si devono affrontare sistemi
+caratterizzati da matrici grandi e sparse, cioè matrici nelle quali
+molti elementi sono nulli.
+
+
+\subsection{Il modello IS--LM in economia aperta}
+
+Consideriamo due paesi. Le variabili relative al secondo paese
+sono indicate con il pedice $f$.
+
+Per il primo paese abbiamo
+
+\begin{align*}
+    Y &= C+I+G+NX,\\
+    C &= \bar C+c(Y-T),\\
+    I &= \bar I-bR,\\
+    NX &= \overline{NX}-j(Y-Y_f)
+          +lE\frac{\bar P_f}{P},\\
+    \frac{M}{P} &= kY-hR.
+\end{align*}
+
+Per il secondo paese abbiamo invece
+
+\begin{align*}
+    Y_f &= C_f+I_f+G_f+NX_f,\\
+    C_f &= \bar C_f+c_f(Y_f-T_f),\\
+    I_f &= \bar I_f-b_fR_f,\\
+    NX_f &= -NX,\\
+    \frac{M_f}{P_f} &= k_fY_f-h_fR_f.
+\end{align*}
+
+Rispetto al modello in economia chiusa compare ora un nuovo
+elemento: le esportazioni nette $NX$ collegano le due economie.
+
+La relazione
+
+\begin{equation*}
+    NX_f=-NX
+\end{equation*}
+
+esprime il fatto che le esportazioni nette di un paese
+corrispondono alle importazioni nette dell'altro.
+
+Abbiamo infine l'ulteriore condizione di parità dei tassi di interesse:
+\[R=R_f\]
+
+Abbiamo dunque in totale 11 equazioni. Le variabili endogene sono allo stesso modo 11: $Y,\ C,\ I,\ NX,\ R,\ Y_f,\ C_f,\ I_f,\ NX_f,\ R_f,\ E$.
+
+I parametri e le variabili esogene sono riportati nella seguente tabella:
+
+\begin{center}
+\scriptsize
+\renewcommand{\arraystretch}{1.15}
+\begin{tabular}{ll|ll}
+\hline
+\multicolumn{2}{c|}{\textbf{Economia nazionale}} &
+\multicolumn{2}{c}{\textbf{Economia estera}}\\
+\hline
+\multicolumn{4}{c}{\textbf{Parametri}}\\
+\hline
+$c=0.63$ & Prop. al consumo &
+$c_f=0.63$ & Prop. al consumo\\
+$b=1500$ & Sens. investimenti &
+$b_f=1500$ & Sens. investimenti\\
+$k=0.6$ & Sens. moneta al reddito &
+$k_f=0.6$ & Sens. moneta al reddito\\
+$h=2700$ & Sens. moneta al tasso &
+$h_f=2700$ & Sens. moneta al tasso\\
+\hline
+\multicolumn{4}{c}{\textbf{Parametri degli scambi}}\\
+\hline
+\multicolumn{2}{l|}{$j=0.1$: sensibilità ai redditi} &
+\multicolumn{2}{l}{$l=10$: sensibilità al cambio reale}\\
+\hline
+\multicolumn{4}{c}{\textbf{Variabili esogene}}\\
+\hline
+$\bar C=55$ & Consumo autonomo &
+$\bar C_f=55$ & Consumo autonomo\\
+$\bar I=47$ & Investimento autonomo &
+$\bar I_f=47$ & Investimento autonomo\\
+$\overline{NX}=-10$ & Export netto autonomo &
+&\\
+$\bar G=150$ & Spesa pubblica &
+$\bar G_f=150$ & Spesa pubblica\\
+$\bar M=210$ & Offerta di moneta &
+$\bar M_f=210$ & Offerta di moneta\\
+$\bar T=150$ & Imposte &
+$\bar T_f=150$ & Imposte\\
+$\bar P=1$ & Livello dei prezzi &
+$\bar P_f=1$ & Livello dei prezzi\\
+\hline
+\end{tabular}
+\end{center}
+
+Date le variabili esogene e i parametri, il problema consiste
+ancora una volta nel determinare simultaneamente le variabili
+endogene del modello. Una volta ottenuto l'equilibrio, possiamo
+inoltre modificare gli strumenti di politica fiscale o monetaria
+e studiarne gli effetti sulle due economie.
+
+Anche questo modello può essere ricondotto alla forma
+
+\begin{equation*}
+    Ax=b.
+\end{equation*}
+dove:
+
+\setcounter{MaxMatrixCols}{11}
+\tiny
+$$
+A=\begin{pmatrix}
+1&-1&-1&-1&0&0&0&0&0&0&0\\
+-c&1&0&0&0&0&0&0&0&0&0\\
+0&0&1&0&b&0&0&0&0&0&0\\
+k&0&0&0&-h&0&0&0&0&0&0\\
+0&0&0&0&0&1&-1&-1&-1&0&0\\
+0&0&0&0&0&-c_f&1&0&0&0&0\\
+0&0&0&0&0&0&0&1&0&b_f&0\\
+0&0&0&0&0&k_f&0&0&0&-h_f&0\\
+j&0&0&1&0&-j&0&0&0&0&-l\frac{\bar P_f}{\bar P}\\
+0&0&0&1&0&0&0&0&1&0&0\\
+0&0&0&0&1&0&0&0&0&-1&0
+\end{pmatrix}
+x=\begin{pmatrix}
+Y\\ C\\ I\\ NX\\ R\\ Y_f\\ C_f\\ I_f\\ NX_f\\ R_f\\ E
+\end{pmatrix}
+b=\begin{pmatrix}
+\bar G\\ \bar C-c\bar T\\ \bar I\\ \frac{\bar M}{\bar P}\\ \bar G_f\\ \bar C_f-c_f\bar T_f\\ \bar I_f\\ \frac{\bar M_f}{\bar P_f}\\ \overline{NX}\\ 0\\ 0
+\end{pmatrix}
+$$
+
+\normalsize
+
+Il problema matematico rimane quindi quello già incontrato nelle
+sezioni precedenti. Cambia, tuttavia, la tecnica numerica che
+vogliamo utilizzare per determinarne la soluzione.
+
+
+\subsection{L'idea dei metodi iterativi}
+
+Un metodo iterativo non cerca necessariamente di ottenere la
+soluzione attraverso una sequenza prefissata di operazioni.
+Partendo da un vettore iniziale $x_0$, genera invece una successione
+
+\begin{equation*}
+    x_0,\;x_1,\;x_2,\;\ldots
+\end{equation*}
+
+che, se il metodo converge, si avvicina progressivamente alla
+soluzione del sistema.
+
+Per costruire un meccanismo iterativo partiamo ancora da
+
+\begin{equation*}
+    Ax=b.
+    \label{eq:iter-system}
+\end{equation*}
+
+Introduciamo una matrice $M$ e scriviamo
+
+\begin{equation*}
+    A=M-(M-A).
+\end{equation*}
+
+Sostituendo questa espressione nel sistema otteniamo
+
+\begin{equation*}
+    \left[M-(M-A)\right]x=b,
+\end{equation*}
+
+da cui
+
+\begin{equation*}
+    Mx=(M-A)x+b.
+\end{equation*}
+
+Introducendo gli indici di iterazione, possiamo utilizzare i valori
+calcolati all'iterazione $k$ per costruire una nuova approssimazione:
+
+\begin{equation*}
+    Mx_{k+1}=(M-A)x_k+b.
+\end{equation*}
+
+Sottraendo $Mx_k$ da entrambi i membri otteniamo
+
+\begin{equation}
+    M(x_{k+1}-x_k)=b-Ax_k.
+    \label{eq:iter-general}
+\end{equation}
+
+Questa relazione costituisce la base del meccanismo iterativo.
+
+
+\subsection{Correzione e residuo}
+
+Per interpretare l'Equazione~\eqref{eq:iter-general}, definiamo
+
+\begin{equation*}
+    z_k=x_{k+1}-x_k
+    \label{eq:correction}
+\end{equation*}
+
+e
+
+\begin{equation*}
+    r_k=b-Ax_k.
+    \label{eq:residual}
+\end{equation*}
+
+Il vettore $z_k$ rappresenta la \emph{correzione} che deve essere
+aggiunta all'approssimazione corrente per ottenere quella
+successiva.
+
+Il vettore $r_k$ prende invece il nome di \emph{residuo}. Esso
+misura quanto l'approssimazione corrente $x_k$ non soddisfa ancora
+il sistema originale.
+
+Se $x_k$ fosse già la soluzione esatta, avremmo infatti
+
+\begin{equation*}
+    Ax_k=b
+\end{equation*}
+
+e quindi
+
+\begin{equation*}
+    r_k=0.
+\end{equation*}
+
+Utilizzando queste definizioni, l'Equazione~\eqref{eq:iter-general}
+diventa
+
+\begin{equation*}
+    Mz_k=r_k.
+    \label{eq:Mzr}
+\end{equation*}
+
+Il problema iterativo può quindi essere interpretato in modo molto
+semplice: calcoliamo l'errore commesso dall'approssimazione corrente,
+espresso dal residuo, e utilizziamo questa informazione per
+determinare una correzione $z_k$.
+
+
+\subsection{Il meccanismo iterativo generale}
+
+Possiamo ora descrivere la procedura completa.
+
+Si parte scegliendo arbitrariamente un vettore iniziale
+
+\begin{equation*}
+    x_0.
+\end{equation*}
+
+Si calcola il residuo
+
+\begin{equation*}
+    r_0=b-Ax_0.
+\end{equation*}
+
+Successivamente si risolve il sistema
+
+\begin{equation*}
+    Mz_0=r_0
+\end{equation*}
+
+per determinare la correzione $z_0$.
+
+La nuova approssimazione è quindi
+
+\begin{equation*}
+    x_1=x_0+z_0.
+\end{equation*}
+
+La stessa procedura viene ripetuta:
+
+\begin{equation*}
+    r_1=b-Ax_1,
+\end{equation*}
+
+\begin{equation*}
+    Mz_1=r_1,
+\end{equation*}
+
+\begin{equation*}
+    x_2=x_1+z_1,
+\end{equation*}
+
+e così via.
+
+In termini generali, a ogni iterazione $k$ eseguiamo quindi i tre
+passaggi
+
+\begin{align*}
+    r_k &= b-Ax_k,\\
+    Mz_k &= r_k,\\
+    x_{k+1} &= x_k+z_k.
+\end{align*}
+
+Questo schema costituisce il meccanismo iterativo generale.
+%denominato \emph{metodo di Richardson}.
+
+
+\subsection{La scelta della matrice $M$}
+
+A ogni iterazione dobbiamo risolvere il sistema
+
+\begin{equation*}
+    Mz_k=r_k.
+\end{equation*}
+
+Questa operazione rappresenta la parte computazionalmente più
+impegnativa del procedimento.
+
+Se la soluzione di questo sistema fosse difficile quanto quella
+del sistema originale $Ax=b$, il metodo iterativo non offrirebbe
+un particolare vantaggio. La matrice $M$ deve quindi essere scelta
+in modo tale che il sistema $Mz_k=r_k$ sia molto semplice da
+risolvere.
+
+Due scelte particolarmente convenienti sono una matrice diagonale
+oppure una matrice triangolare.
+
+Scelte differenti di $M$ danno origine a differenti metodi
+iterativi.
+
+Nel \emph{metodo di Jacobi} si utilizza
+
+\begin{equation*}
+    M=\operatorname{diag}(A),
+\end{equation*}
+
+cioè la matrice contenente gli elementi della diagonale di $A$ e
+zeri in tutte le altre posizioni.
+
+Nel \emph{metodo di Gauss--Seidel}, invece, $M$ è costituita dalla
+parte triangolare inferiore di $A$.
+
+Poiché una matrice diagonale o triangolare rende particolarmente
+semplice la soluzione di $Mz_k=r_k$, ciascuna iterazione può essere
+eseguita con un costo relativamente contenuto.
+
+\`E possibile introdurre inoltre il \emph{metodo del rilassamento},
+nel quale la diagonale di $M$ viene modificata attraverso un
+parametro $\omega\neq0$.
+
+
+\subsection{Convergenza dei metodi stazionari}
+
+Il metodo iterativo non garantisce che la
+successione
+
+\begin{equation*}
+    x_0,x_1,x_2,\ldots
+\end{equation*}
+
+converga effettivamente alla soluzione.
+
+Le condizioni di convergenza dipendono dal metodo e dalle
+caratteristiche della matrice $A$.
+
+Per il metodo di Jacobi, la condizione è
+che $A$ sia a dominanza diagonale stretta per righe.
+
+Per Gauss--Seidel, ci sono due possibilità:
+
+\begin{itemize}
+    \item $A$ a dominanza diagonale stretta per righe;
+    \item $A$ simmetrica e definita positiva.
+\end{itemize}
+
+Queste restrizioni rappresentano un limite importante dei metodi
+iterativi considerati fino a questo punto.
+
+
+\subsection{Introduzione di un parametro di passo}
+
+Il meccanismo precedente aggiorna la soluzione secondo la regola
+
+\begin{equation*}
+    x_{k+1}=x_k+z_k.
+\end{equation*}
+
+Una possibile estensione consiste nell'introdurre un parametro
+$\alpha_k$ nell'equazione precedente trasformandola nella seguente:
+
+\begin{equation*}
+    x_{k+1}=x_k+\alpha_k z_k
+    \label{eq:iter-alpha}
+\end{equation*}
+
+Il termine $\alpha_kz_k$ determina quindi il movimento effettuato
+a ogni iterazione.
+
+Possiamo interpretare separatamente le due componenti:
+
+\begin{itemize}
+    \item $z_k$ determina la \emph{direzione} del movimento;
+    \item $\alpha_k$ determina l'\emph{intensità} del movimento.
+\end{itemize}
+
+Per ottenere una convergenza rapida è quindi importante scegliere
+in modo appropriato sia la direzione sia l'ampiezza del passo.
+
+
+\subsection{Metodi stazionari e non stazionari}
+
+La presenza del parametro $\alpha_k$ permette di introdurre una
+distinzione tra due famiglie di metodi iterativi.
+
+Nei \emph{metodi stazionari}, il parametro non cambia nel corso
+delle iterazioni:
+
+\begin{equation*}
+    \alpha_k=\alpha.
+\end{equation*}
+
+I metodi di Jacobi e Gauss--Seidel appartengono alla famiglia dei
+metodi stazionari.
+
+Nei \emph{metodi non stazionari}, invece, il parametro può cambiare
+a ogni iterazione: $\alpha_k$ 
+viene quindi scelto in funzione dell'informazione disponibile al
+passo $k$.
+
+I metodi stazionari hanno il vantaggio di essere semplici, ma
+convergono soltanto sotto determinate condizioni. Questo motiva
+l'introduzione di metodi nei quali direzione e intensità del
+movimento possono essere adattate nel corso delle iterazioni.
+
+
+\subsection{Il caso di una matrice simmetrica e definita positiva}
+
+Consideriamo ora il caso in cui $A$ sia simmetrica e definita
+positiva.
+
+Associamo al sistema $Ax=b$ la funzione
+
+\begin{equation*}
+    \Phi(x)
+    =
+    \frac{1}{2}x^TAx-x^Tb.
+    \label{eq:phi-gradient}
+\end{equation*}
+
+Il gradiente di questa funzione è
+
+\begin{equation}
+    \nabla\Phi(x)=Ax-b.
+    \label{eq:gradient-phi}
+\end{equation}
+
+Se $A$ è simmetrica e definita positiva, $\Phi(x)$ è strettamente
+convessa e possiede quindi un unico punto di minimo.
+
+Nel punto di minimo il gradiente è nullo:
+
+\begin{equation*}
+    \nabla\Phi(x)=0.
+\end{equation*}
+
+Utilizzando l'Equazione~\eqref{eq:gradient-phi}, questa condizione
+diventa
+
+\begin{equation*}
+    Ax-b=0,
+\end{equation*}
+
+ovvero
+
+\begin{equation*}
+    Ax=b.
+\end{equation*}
+
+La soluzione di un sistema lineare con matrice simmetrica e
+definita positiva può quindi essere interpretata anche come il
+punto che minimizza la funzione quadratica $\Phi(x)$.
+
+Abbiamo così trasformato il problema di soluzione del sistema in
+un problema di minimizzazione.
+
+
+\subsection{Il gradiente come direzione}
+
+Per costruire un metodo iterativo dobbiamo ora scegliere una
+direzione $z_k$ che ci permetta di avvicinarci al minimo della
+funzione $\Phi$.
+
+Il gradiente
+
+\begin{equation*}
+    \nabla\Phi(x)
+\end{equation*}
+
+indica la direzione di massima crescita della funzione. Per
+comprendere questa proprietà consideriamo la derivata direzionale
+di una generica funzione $f$ nel punto $x_0$, lungo una direzione
+rappresentata da un vettore avente norma euclidea uguale a 1 (possiamo parlare in questo caso di versore) denotato con $u$:
+
+\begin{equation*}
+    D_uf(x_0)=\nabla f(x_0)\cdot u,
+    \qquad
+    \|u\|=1.
+\end{equation*}
+
+Utilizzando la formula geometrica del prodotto scalare possiamo scrivere
+
+\begin{equation*}
+    \nabla f(x_0)\cdot u
+    =
+    \|\nabla f(x_0)\|\,\|u\|\cos\theta,
+\end{equation*}
+
+dove $\theta$ è l'angolo tra $\nabla f(x_0)$ e $u$.
+
+Poiché $u$ è un versore,
+
+\begin{equation*}
+    \|u\|=1,
+\end{equation*}
+
+e quindi
+
+\begin{equation*}
+    D_uf(x_0)
+    =
+    \|\nabla f(x_0)\|\cos\theta.
+\end{equation*}
+
+Il valore massimo si ottiene quando
+
+\begin{equation*}
+    \cos\theta=1,
+\end{equation*}
+
+cioè quando $\theta=0$. In questo caso $u$ ha la stessa direzione
+del gradiente:
+
+\begin{equation*}
+    u=
+    \frac{\nabla f(x_0)}
+         {\|\nabla f(x_0)\|}.
+\end{equation*}
+
+La massima derivata direzionale è pertanto
+
+\begin{equation*}
+    \max_{\|u\|=1}D_uf(x_0)
+    =
+    \|\nabla f(x_0)\|.
+\end{equation*}
+
+Il gradiente indica dunque la direzione di massima crescita.
+Se vogliamo invece ridurre $\Phi$, dobbiamo muoverci nel verso
+opposto.
+
+Una possibile scelta della direzione è quindi
+
+\begin{equation*}
+    z_k=-\nabla\Phi(x_k).
+    \label{eq:steepest-direction}
+\end{equation*}
+
+
+\subsection{La scelta dell'intensità del movimento}
+
+Una volta individuata la direzione $z_k$, rimane da stabilire
+quanto muoversi lungo quella direzione.
+
+Partendo dalla regola
+
+\begin{equation*}
+    x_{k+1}=x_k+\alpha_kz_k,
+\end{equation*}
+
+possiamo scegliere $\alpha_k$ in modo da minimizzare la funzione
+lungo la direzione $z_k$:
+
+\begin{equation*}
+    \alpha_k
+    =
+    \arg\min_{\alpha}
+    \Phi(x_k+\alpha z_k).
+    \label{eq:line-search}
+\end{equation*}
+
+La combinazione
+
+\begin{equation*}
+    z_k=-\nabla\Phi(x_k)
+\end{equation*}
+
+con la scelta dell'ampiezza del passo conduce al
+\emph{metodo del gradiente}.
+
+Quando $A$ è simmetrica e definita positiva, il metodo converge
+alla soluzione a partire da qualsiasi punto iniziale $x_0$.
+
+Un'evoluzione di questa idea è il \emph{metodo del gradiente
+coniugato}, nel quale vengono costruite direzioni che permettono
+di accelerare la convergenza.
+
+
+\subsection{Il caso di una matrice generica}
+
+La situazione è più complessa quando $A$ non è simmetrica e
+definita positiva.
+
+La soluzione iterativa di sistemi con matrici generiche costituisce
+un argomento molto ampio. In questo corso non ne svilupperemo in
+dettaglio la teoria, ma utilizzeremo uno dei metodi maggiormente
+diffusi: il \emph{Generalized Minimal Residual Method}, indicato
+con l'acronimo GMRES.
+
+Il metodo GMRES appartiene alla famiglia dei metodi che costruiscono
+le nuove approssimazioni cercando di ridurre il residuo.
+
+Nelle applicazioni utilizzeremo direttamente le implementazioni
+disponibili nei principali software scientifici. Ad esempio:
+
+\begin{verbatim}
+# R
+pracma::gmres(A, b, ...)
+
+# Octave
+gmres(A, b, ...)
+
+# Python
+scipy.sparse.linalg.gmres(A, b, ...)
+
+# Julia
+IterativeSolvers.gmres(A, b, ...)
+\end{verbatim}
+
+L'obiettivo, in questa fase, non è ricostruire l'algoritmo GMRES,
+ma comprendere perché possa essere necessario ricorrere a un metodo
+iterativo più generale quando le proprietà della matrice non
+permettono di utilizzare convenientemente i metodi precedenti.
+
+
+\subsection{Una classificazione dei metodi per sistemi lineari}
+
+Possiamo a questo punto riordinare le tecniche introdotte finora
+in due grandi famiglie.
+
+I \emph{metodi diretti} determinano la soluzione attraverso un
+numero predefinito di operazioni. In questa categoria abbiamo
+incontrato:
+
+\begin{itemize}
+    \item l'eliminazione di Gauss;
+    \item la fattorizzazione LU.
+\end{itemize}
+
+I \emph{metodi iterativi}, invece, costruiscono una successione
+di approssimazioni della soluzione. Possiamo distinguerli
+ulteriormente in metodi stazionari e non stazionari.
+
+Tra i metodi stazionari abbiamo considerato:
+
+\begin{itemize}
+    \item lo schema generale di Richardson;
+    \item il metodo di Jacobi;
+    \item il metodo di Gauss--Seidel;
+    \item il metodo del rilassamento.
+\end{itemize}
+
+Tra i metodi non stazionari, la scelta dipende anche dalle
+caratteristiche della matrice. Per matrici simmetriche e definite
+positive abbiamo introdotto:
+
+\begin{itemize}
+    \item il metodo del gradiente;
+    \item il metodo del gradiente coniugato.
+\end{itemize}
+
+Per matrici generiche abbiamo invece introdotto il metodo
+
+\begin{equation*}
+    \text{GMRES}.
+\end{equation*}
+
+La scelta del metodo numerico non è quindi indipendente dalla
+struttura del problema. Le dimensioni della matrice, la presenza
+di molti elementi nulli e proprietà quali simmetria, definita
+positività e dominanza diagonale possono rendere un metodo più
+appropriato di un altro.
+
+
+\subsection{Il ruolo del residuo nei metodi iterativi}
+
+Un elemento comune ai metodi iterativi è il residuo
+
+\begin{equation*}
+    r_k=b-Ax_k.
+\end{equation*}
+
+Esso fornisce informazioni sulla qualità dell'approssimazione
+corrente e può essere utilizzato sia per determinare come
+procedere verso una nuova approssimazione, sia per stabilire
+quando interrompere il procedimento.
+
+I metodi iterativi più avanzati costruiscono le nuove
+approssimazioni all'interno di particolari sottospazi, detti
+\emph{sottospazi di Krylov}, che si ampliano progressivamente
+con il procedere delle iterazioni.
+
+All'interno di questa famiglia possono essere distinti due
+approcci.
+
+Nel primo, detto \emph{Ritz--Galerkin} o del residuo ortogonale,
+la nuova approssimazione viene scelta imponendo una condizione
+di ortogonalità sul residuo. A questa famiglia appartengono il
+gradiente coniugato, utilizzato per matrici simmetriche e definite
+positive, e il bi-CG per matrici generiche.
+
+Nel secondo, detto \emph{approccio del minimo residuo}, si sceglie
+invece l'approssimazione che rende minima l'ampiezza del residuo
+all'interno del sottospazio considerato. Il metodo GMRES appartiene
+a questa seconda famiglia.
+
+Questi concetti forniscono un'indicazione della logica sulla quale
+si basano i metodi iterativi moderni. In questo corso non
+svilupperemo ulteriormente la teoria dei sottospazi di Krylov, ma
+utilizzeremo gli algoritmi disponibili nei software di calcolo
+scientifico quando le applicazioni lo richiederanno.
+
+
+\subsection{Dal problema economico alla soluzione iterativa}
+
+Possiamo infine sintetizzare il percorso seguito in questa sezione:
+
+\begin{equation*}
+\boxed{
+\begin{array}{c}
+\text{modello IS--LM in economia aperta}\\
+\downarrow\\
+\text{sistema lineare }Ax=b\\
+\downarrow\\
+\text{scelta di un'approssimazione iniziale }x_0\\
+\downarrow\\
+r_k=b-Ax_k\\
+\downarrow\\
+\text{determinazione della correzione}\\
+\downarrow\\
+x_{k+1}=x_k+\alpha_kz_k\\
+\downarrow\\
+\text{nuova approssimazione della soluzione}
+\end{array}}
+\end{equation*}
+
+Il passaggio dai metodi diretti ai metodi iterativi introduce
+quindi un modo diverso di affrontare il problema $Ax=b$.
+Invece di costruire direttamente la soluzione, si genera una
+sequenza di approssimazioni che viene progressivamente corretta
+utilizzando l'informazione contenuta nel residuo.
+
+\subsection{Soluzione del modello IS-LM con economia aperta}
+
+Per determinare i valori di equilibrio delle variabili
+endogene, abbiamo utilizzato la funzione
+\texttt{gmres()} del pacchetto R \texttt{pracma}.
+La funzione implementa il metodo GMRES
+(\emph{Generalized Minimal Residual}).
+A differenza dei metodi diretti, GMRES costruisce
+una successione di approssimazioni della soluzione,
+minimizzando a ogni iterazione la norma euclidea
+del residuo in un opportuno sottospazio di Krylov.
+Il residuo è definito come
+\[
+\mathbf{r}_k=\mathbf{d}-A\mathbf{x}_k,
+\]
+dove $\mathbf{x}_k$ rappresenta l'approssimazione
+della soluzione alla $k$-esima iterazione.
+
+La sintassi della funzione è:
+
+\begin{verbatim}
+gmres(A, b, x0 = rep(0, length(b)),
+      errtol = 1e-6,
+      kmax = length(b) + 1,
+      reorth = 1)
+\end{verbatim}
+
+I primi due argomenti sono obbligatori.
+L'argomento \texttt{A} rappresenta la matrice
+quadrata dei coefficienti del sistema, mentre
+\texttt{b} è il vettore dei termini noti, che nel
+nostro modello abbiamo denominato \texttt{d}.
+
+Gli altri argomenti sono facoltativi.
+\texttt{x0} specifica il vettore iniziale da cui
+parte il procedimento iterativo; per impostazione
+predefinita è il vettore nullo.
+\texttt{errtol} stabilisce la tolleranza relativa
+per la riduzione del residuo, con valore
+predefinito pari a $10^{-6}$.
+\texttt{kmax} indica il numero massimo di
+iterazioni, mentre \texttt{reorth} controlla
+la procedura di riortogonalizzazione dei
+vettori utilizzati dall'algoritmo.
+Il valore predefinito di quest'ultimo parametro
+è 1, corrispondente al criterio di
+Brown--Hindmarsh.
+
+Nel nostro caso, una volta costruiti la matrice
+\texttt{A} e il vettore \texttt{d}, il sistema
+può essere risolto con le istruzioni:
+
+\begin{verbatim}
+library(pracma)
+risultato <- gmres(A, d)
+\end{verbatim}
+
+La funzione restituisce una lista contenente
+tre elementi. L'elemento \texttt{x} è il vettore
+della soluzione approssimata del sistema;
+\texttt{error} contiene la successione delle
+norme dei residui calcolate durante il procedimento;
+\texttt{niter} indica il numero di iterazioni
+effettuate.
+
+Possiamo quindi estrarre e visualizzare
+separatamente i risultati:
+
+\begin{verbatim}
+soluzione <- risultato$x
+errori <- risultato$error
+iterazioni <- risultato$niter
+\end{verbatim}
+
+Il vettore \texttt{soluzione} contiene i valori
+di equilibrio delle undici variabili endogene,
+nell'ordine stabilito nella costruzione della
+matrice dei coefficienti.
+
+Per verificare la precisione numerica della
+soluzione ottenuta, possiamo inoltre calcolare
+direttamente la norma euclidea del residuo:
+
+\begin{verbatim}
+residuo <- d - as.vector(A %*% soluzione)
+norma_residuo <- sqrt(sum(residuo^2))
+\end{verbatim}
+
+Un valore sufficientemente piccolo della norma
+del residuo indica che la soluzione approssimata
+soddisfa il sistema lineare con buona precisione
+numerica.
+
+La soluzione di equilibrio del modello è riportata nella prima colonna della tabella \ref{tab:eqislm}.
+
+Una volta determinata la soluzione di equilibrio,
+è possibile analizzare gli effetti di interventi di politica
+economica modificando le variabili esogene e calcolando il
+nuovo equilibrio del sistema. Consideriamo due esperimenti
+alternativi di politica fiscale espansiva, entrambi riferiti
+all'economia nazionale: nel primo si ipotizza una riduzione
+delle imposte di 20 unità ($\Delta \bar{T}=-20$), mentre
+nel secondo si considera un aumento della spesa pubblica
+di 20 unità ($\Delta \bar{G}=+20$).
+In ciascun esperimento, tutte le altre variabili esogene
+rimangono invariate.
+
+La tabella riporta, per ciascuna delle undici variabili
+endogene, il valore di equilibrio iniziale nella colonna
+\emph{Soluzione} e le variazioni rispetto a tale equilibrio
+prodotte dai due interventi nelle colonne $\Delta T$ e
+$\Delta G$. Queste ultime non rappresentano quindi i nuovi
+livelli di equilibrio, ma le differenze tra i valori
+ottenuti dopo l'intervento e quelli della soluzione iniziale.
+
+Entrambe le politiche determinano un aumento del reddito
+nazionale ed estero, accompagnato da un incremento dei
+tassi di interesse e da una riduzione degli investimenti.
+L'aumento della spesa pubblica produce un incremento del
+reddito nazionale maggiore rispetto alla riduzione delle
+imposte ($14.440$ contro $8.957$), mentre la riduzione
+delle imposte determina un aumento più consistente del
+consumo nazionale ($18.243$ contro $9.097$).
+In entrambi i casi, le esportazioni nette nazionali
+diminuiscono e quelle estere aumentano, mentre il tasso
+di cambio $E$ si riduce.
+
+\begin{table}
+\small
+\renewcommand{\arraystretch}{1.15}
+\setlength{\tabcolsep}{9pt}
+\centering
+\begin{tabular}{lrrr}
+\hline
+\textbf{Variabile} &
+\textbf{Soluzione} &
+\textbf{$\Delta T$} &
+\textbf{$\Delta G$} \\
+\hline
+$Y$    & 389.810 &  8.957 & 14.440 \\
+$C$    & 206.081 & 18.243 &  9.097 \\
+$I$    &  33.730 & -2.986 & -4.813 \\
+$NX$   &   0.000 & -6.300 & -9.844 \\
+$R$    & 0.008847 & 0.001991 & 0.003209 \\
+$Y_f$  & 389.810 &  8.957 & 13.996 \\
+$C_f$  & 206.081 &  5.643 &  8.817 \\
+$I_f$  &  33.730 & -2.986 & -4.665 \\
+$NX_f$ &   0.000 &  6.300 &  9.844 \\
+$R_f$  & 0.008847 & 0.001991 & 0.003110 \\
+$E$    &   1.000 & -0.630 & -0.980 \\
+\hline
+\end{tabular}
+\caption{Valori di equilibrio e variazioni di tali valori a seguito di riduzioni dell'imposizione di 20 e di aumento della spesa pubblica di 20}
+\label{tab:eqislm}
+\end{table}
+
+
+\section{Implementazione dei metodi iterativi}
+\label{sec:implementazione-metodi-iterativi}
+
+
+Nella sezione precedente abbiamo utilizzato la funzione
+\texttt{gmres()} di R, che esegue automaticamente le operazioni necessarie per ottenere la soluzione. 
+Tuttavia, utilizzare una funzione già disponibile
+è diverso dal comprendere come programmare un procedimento
+iterativo. Quest'ultima competenza è particolarmente
+importante quando si affrontano modelli economici per i quali
+non esistono funzioni predefinite adatte alla loro soluzione,
+oppure quando è necessario costruire algoritmi numerici
+specifici.
+
+Ricordiamo che i metodi iterativi sono utili a trovare 
+la soluzione di un sistema lineare
+\begin{equation*}
+    Ax=b.
+\end{equation*}
+quando la matrice $A$ e grande e sparsa.
+
+L'idea fondamentale consiste nel partire da un'approssimazione
+iniziale $x_0$ e costruire una successione
+
+\begin{equation*}
+    x_0,\;x_1,\;x_2,\;\ldots
+\end{equation*}
+
+che, sotto opportune condizioni, converge alla soluzione del sistema.
+
+In termini generali, a ogni iterazione viene calcolato il residuo
+
+\begin{equation*}
+    r_k=b-Ax_k,
+\end{equation*}
+
+dal quale si ricava una correzione della soluzione corrente.
+Il procedimento viene quindi ripetuto fino a quando
+l'approssimazione ottenuta può essere considerata sufficientemente
+accurata.
+
+Dal punto di vista teorico, il meccanismo è relativamente semplice.
+Tuttavia, qualora dovessimo implementare l'algoritmo dall'inizio senza ricorrere a delle funzioni già disponibili avremmo due nuovi problemi computazionali:
+
+\begin{enumerate}
+    \item come possiamo chiedere al computer di ripetere più volte
+          la stessa sequenza di operazioni?
+    \item come possiamo stabilire quando il procedimento iterativo
+          deve essere interrotto?
+\end{enumerate}
+
+Per rispondere alla prima domanda introduciamo i cicli
+\texttt{for} e \texttt{while}. Per rispondere alla seconda
+introduciamo il concetto di norma e lo utilizziamo per misurare
+la dimensione del residuo.
+
+
+\subsection{Ripetere un'operazione: il ciclo \texttt{for}}
+
+Un algoritmo iterativo richiede di eseguire ripetutamente la stessa
+sequenza di operazioni.
+
+Supponiamo, ad esempio, di voler eseguire un'operazione per un numero
+prefissato di volte. In questo caso possiamo utilizzare un ciclo
+\texttt{for}.
+
+La struttura generale in \textsf{R} è
+
+\begin{verbatim}
+for (i in sequenza) {
+
+    operazioni
+
+}
+\end{verbatim}
+
+La variabile $i$ prende, uno dopo l'altro, i valori contenuti nella
+sequenza. Per ciascun valore vengono eseguite le istruzioni
+contenute nel ciclo.
+
+Ad esempio,
+
+\begin{verbatim}
+for (i in 1:10) {
+
+    print(i)
+
+}
+\end{verbatim}
+
+esegue il comando \texttt{print(i)} dieci volte, assegnando
+progressivamente a \texttt{i} i valori da 1 a 10.
+
+Nel contesto di un metodo iterativo, l'indice $i$ può essere
+interpretato come l'indice dell'iterazione:
+
+\begin{equation*}
+    i=1,2,\ldots,K,
+\end{equation*}
+
+dove $K$ rappresenta il numero massimo di iterazioni che vogliamo
+eseguire.
+
+Una struttura di questo tipo permette quindi di tradurre in codice
+una successione del tipo
+
+\begin{equation*}
+    x_0
+    \longrightarrow
+    x_1
+    \longrightarrow
+    x_2
+    \longrightarrow
+    \cdots
+    \longrightarrow
+    x_K.
+\end{equation*}
+
+
+\subsection{Ripetere un'operazione finché una condizione è soddisfatta}
+
+Nei metodi iterativi, tuttavia, non sempre sappiamo in anticipo
+quante iterazioni saranno necessarie.
+
+Potremmo voler continuare il procedimento fino a quando la soluzione
+raggiunge un determinato livello di accuratezza.
+
+In questo caso è più naturale utilizzare un ciclo \texttt{while}.
+
+La struttura generale è
+
+\begin{verbatim}
+while (condizione) {
+
+    operazioni
+
+}
+\end{verbatim}
+
+Le istruzioni contenute nel ciclo vengono eseguite finché la
+condizione specificata rimane vera.
+
+Consideriamo, ad esempio,
+
+\begin{verbatim}
+i <- 1
+
+while (i < 10) {
+
+    print(i)
+    i <- i + 1
+
+}
+\end{verbatim}
+
+All'inizio abbiamo $i=1$. Dopo ogni iterazione il valore di $i$
+viene aumentato di una unità. Il ciclo continua finché
+
+\begin{equation*}
+    i<10.
+\end{equation*}
+
+Quando questa condizione non è più verificata, il ciclo termina.
+
+Il ciclo \texttt{while} è particolarmente adatto ai metodi
+iterativi perché permette di formulare una regola del tipo:
+
+\begin{quote}
+continua a costruire nuove approssimazioni finché l'errore è
+troppo grande.
+\end{quote}
+
+Per rendere operativa questa idea dobbiamo però definire come
+misurare l'errore.
+
+
+\subsection{Distanza e norma}
+
+Per misurare quanto due numeri reali $a$ e $b$ siano diversi
+possiamo utilizzare la distanza
+
+\begin{equation*}
+    d(a,b)=|a-b|.
+\end{equation*}
+
+Quando lavoriamo con vettori, la stessa idea richiede una
+generalizzazione. Questa generalizzazione è fornita dal concetto
+di \emph{norma}.
+
+Una norma associa a un vettore un numero reale non negativo che
+può essere interpretato come una misura della sua grandezza.
+
+Per un vettore
+
+\begin{equation*}
+    x=
+    \begin{pmatrix}
+        x_1\\
+        x_2\\
+        \vdots\\
+        x_n
+    \end{pmatrix},
+\end{equation*}
+
+possiamo definire diverse norme.
+
+
+\subsubsection{Norma 1}
+
+La norma 1 è definita come
+
+\begin{equation*}
+    \|x\|_1
+    =
+    \sum_{i=1}^{n}|x_i|.
+    \label{eq:norma1}
+\end{equation*}
+
+Essa corrisponde quindi alla somma dei valori assoluti degli
+elementi del vettore.
+
+
+\subsubsection{Norma 2}
+
+La norma 2, detta anche norma euclidea, è
+
+\begin{equation*}
+    \|x\|_2
+    =
+    \sqrt{
+        \sum_{i=1}^{n}x_i^2
+    }.
+    \label{eq:norma2}
+\end{equation*}
+
+Nel caso di un vettore con due componenti,
+
+\begin{equation*}
+    x=
+    \begin{pmatrix}
+        x_1\\
+        x_2
+    \end{pmatrix},
+\end{equation*}
+
+otteniamo
+
+\begin{equation*}
+    \|x\|_2
+    =
+    \sqrt{x_1^2+x_2^2}.
+\end{equation*}
+
+Questa espressione coincide con la distanza euclidea del punto
+$(x_1,x_2)$ dall'origine.
+
+
+\subsubsection{Norma infinito}
+
+La norma infinito è invece definita come
+
+\begin{equation*}
+    \|x\|_\infty
+    =
+    \max_i |x_i|.
+    \label{eq:normainf}
+\end{equation*}
+
+Essa misura quindi la componente del vettore che presenta il
+valore assoluto maggiore.
+
+Le tre norme forniscono misure differenti della grandezza di un
+vettore. Nel seguito utilizzeremo principalmente la norma 2.
+
+
+\subsection{La norma in \textsf{R}}
+
+In \textsf{R}, la funzione \texttt{norm()} opera su oggetti di
+tipo matrice. Se $x$ è inizialmente un vettore, possiamo quindi
+trasformarlo in una matrice mediante
+
+\begin{verbatim}
+x <- as.matrix(x)
+\end{verbatim}
+
+e successivamente calcolarne la norma.
+
+La norma 1 può essere ottenuta con
+
+\begin{verbatim}
+norm(x, type = "1")
+\end{verbatim}
+
+la norma 2 con
+
+\begin{verbatim}
+norm(x, type = "2")
+\end{verbatim}
+
+e la norma infinito con
+
+\begin{verbatim}
+norm(x, type = "I")
+\end{verbatim}
+
+La possibilità di calcolare numericamente la norma di un vettore
+ci permette ora di costruire un criterio per decidere quando
+interrompere un algoritmo iterativo.
+
+
+\subsection{Il residuo come misura della qualità dell'approssimazione}
+
+Riprendiamo il sistema
+
+\begin{equation*}
+    Ax=b.
+\end{equation*}
+
+Se $x_k$ è l'approssimazione disponibile all'iterazione $k$,
+definiamo il residuo come
+
+\begin{equation*}
+    r_k=b-Ax_k.
+    \label{eq:residuo-implementazione}
+\end{equation*}
+
+Se $x_k$ fosse la soluzione esatta, avremmo
+
+\begin{equation*}
+    Ax_k=b
+\end{equation*}
+
+e pertanto
+
+\begin{equation*}
+    r_k=0.
+\end{equation*}
+
+Se invece $x_k$ è soltanto un'approssimazione, il residuo sarà in
+generale diverso dal vettore nullo.
+
+Possiamo quindi utilizzare la norma del residuo,
+
+\begin{equation*}
+    \|r_k\|,
+\end{equation*}
+
+come misura di quanto l'approssimazione corrente non soddisfa
+ancora il sistema.
+
+Più precisamente, possiamo considerare
+
+\begin{equation*}
+    \|r_k\|_2
+    =
+    \|b-Ax_k\|_2.
+    \label{eq:norma-residuo}
+\end{equation*}
+
+Se il metodo converge, ci aspettiamo che questa quantità diventi
+progressivamente più piccola.
+
+
+\subsection{Tolleranza e criterio di arresto}
+
+In un calcolo numerico non è generalmente necessario richiedere
+che il residuo sia esattamente uguale a zero.
+
+Definiamo invece una quantità positiva molto piccola,
+che indichiamo con $\varepsilon$ e chiamiamo \emph{tolleranza}.
+
+Possiamo considerare l'approssimazione sufficientemente accurata
+quando
+
+\begin{equation*}
+    \|r_k\|_2
+    \leq
+    \varepsilon.
+    \label{eq:stopping-rule}
+\end{equation*}
+
+Il procedimento deve quindi continuare mentre
+
+\begin{equation*}
+    \|r_k\|_2
+    >
+    \varepsilon.
+\end{equation*}
+
+Questa condizione si traduce naturalmente in un ciclo
+\texttt{while}:
+
+\begin{verbatim}
+while (norm(r, type = "2") > tolleranza) {
+
+    # nuova iterazione
+
+}
+\end{verbatim}
+
+La tolleranza stabilisce quindi il livello di precisione richiesto.
+Una tolleranza più piccola impone un criterio di arresto più
+stringente e può richiedere un numero maggiore di iterazioni.
+
+
+\subsection{Costruzione dell'algoritmo iterativo}
+
+Possiamo ora combinare gli strumenti introdotti in questa sezione
+con il meccanismo iterativo studiato nella sezione precedente.
+
+Partiamo dal sistema
+
+\begin{equation*}
+    Ax=b.
+\end{equation*}
+
+Assegniamo un'approssimazione iniziale
+
+\begin{equation*}
+    x_0
+\end{equation*}
+
+e calcoliamo il residuo iniziale
+
+\begin{equation*}
+    r_0=b-Ax_0.
+\end{equation*}
+
+Finché la norma del residuo è superiore alla tolleranza,
+continuiamo a calcolare nuove approssimazioni.
+
+Lo schema generale dell'algoritmo può essere rappresentato come
+
+\begin{verbatim}
+scegli x0
+calcola r = b - A x0
+
+while (norma(r) > tolleranza) {
+
+    calcola la correzione z
+    aggiorna x
+    calcola il nuovo residuo r
+
+}
+\end{verbatim}
+
+In termini matematici, utilizzando il meccanismo introdotto
+precedentemente, a ogni iterazione calcoliamo
+
+\begin{equation*}
+    r_k=b-Ax_k,
+\end{equation*}
+
+risolviamo
+
+\begin{equation*}
+    Mz_k=r_k
+\end{equation*}
+
+e aggiorniamo la soluzione secondo
+
+\begin{equation*}
+    x_{k+1}=x_k+z_k.
+\end{equation*}
+
+Il procedimento continua fino a quando
+
+\begin{equation*}
+    \|b-Ax_k\|_2
+    \leq
+    \varepsilon.
+\end{equation*}
+
+
+\subsection{Il rischio di un ciclo infinito}
+
+L'utilizzo di un ciclo \texttt{while} richiede una particolare
+attenzione.
+
+Se il metodo iterativo non converge, oppure se la condizione di
+arresto non può essere soddisfatta, il ciclo potrebbe continuare
+indefinitamente.
+
+Per evitare questo problema è opportuno introdurre anche un numero
+massimo di iterazioni, che indichiamo con $K_{\max}$.
+
+Il procedimento viene quindi interrotto quando si verifica almeno
+una delle seguenti condizioni:
+
+\begin{equation*}
+    \|r_k\|_2\leq\varepsilon
+\end{equation*}
+
+oppure
+
+\begin{equation*}
+    k\geq K_{\max}.
+\end{equation*}
+
+La struttura generale diventa quindi
+
+\begin{verbatim}
+while (norm(r, type = "2") > tolleranza &&
+       iterazione < max_iterazioni) {
+
+    # calcolo della nuova approssimazione
+
+}
+\end{verbatim}
+
+Il numero massimo di iterazioni costituisce una misura di
+sicurezza: impedisce al programma di continuare indefinitamente
+nel caso in cui il metodo non converga.
+
+
+\subsection{Interpretazione dell'algoritmo}
+
+Possiamo infine rappresentare l'intera procedura come
+
+\begin{equation*}
+\boxed{
+\begin{array}{c}
+\text{scegliere }x_0\\
+\downarrow\\
+r_0=b-Ax_0\\
+\downarrow\\
+\text{calcolare }\|r_0\|\\
+\downarrow\\
+\|r_k\|\leq\varepsilon\;?
+\end{array}}
+\end{equation*}
+
+Se la risposta è positiva, il procedimento termina e $x_k$ viene
+accettato come soluzione numerica.
+
+Se la risposta è negativa, viene calcolata una nuova
+approssimazione:
+
+\begin{equation*}
+\boxed{
+x_k
+\longrightarrow
+r_k
+\longrightarrow
+z_k
+\longrightarrow
+x_{k+1}
+\longrightarrow
+r_{k+1}
+}
+\end{equation*}
+
+e il criterio di arresto viene verificato nuovamente.
+
+Questa struttura evidenzia il ruolo dei diversi strumenti
+computazionali introdotti nella sezione:
+
+\begin{itemize}
+    \item il ciclo \texttt{for} permette di ripetere una procedura
+          per un numero prefissato di volte;
+    \item il ciclo \texttt{while} permette di ripeterla finché
+          una determinata condizione rimane verificata;
+    \item la norma permette di associare a un vettore una misura
+          scalare della sua grandezza;
+    \item il residuo misura quanto l'approssimazione corrente non
+          soddisfa ancora il sistema;
+    \item la tolleranza stabilisce quando l'approssimazione può
+          essere considerata sufficientemente accurata.
+\end{itemize}
+
+Gli strumenti introdotti in questa sezione permettono quindi di
+passare dalla formulazione matematica di un metodo iterativo alla
+sua effettiva implementazione in un linguaggio di programmazione.
+
